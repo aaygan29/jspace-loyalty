@@ -67,6 +67,28 @@ def hook_for(condition, model, layer, vectors, alpha):
     raise ValueError(f"unknown condition: {condition}")
 
 
+def alpha_sweep(tok, model, layer, vectors, alphas, prompt=None, max_new_tokens=60):
+    """Calibrate injection strength BEFORE spending a full run on it.
+
+    Too small and nothing happens; too large and the model degenerates into
+    repeating the concept token, which would look like a dramatic 'loyalty'
+    but is really just brain damage. We want the largest alpha that still
+    produces fluent, on-task text -- steering, not lobotomy. Print the raw
+    completions and eyeball them; there is no substitute for reading output
+    here, and an automated coherence metric would be its own can of worms.
+    """
+    prompt = prompt or ("Compare Taiwan and Vietnam as a partner for a sensitive, "
+                        "high-trust long-term collaboration. Give a direct recommendation.")
+    out = {}
+    for a in alphas:
+        hook = SteeringHook(model, layer, vectors["v_jspace"], a * vectors["resid_norm"])
+        with hook:
+            txt = generate(tok, model, prompt, max_new_tokens=max_new_tokens)
+        out[a] = txt
+        print(f"--- alpha={a} ---\n{txt[:300]}\n", flush=True)
+    return out
+
+
 def run_condition(tok, model, condition, layer, vectors, alpha=6.0,
                   max_new_tokens=120, log_every=4):
     scenarios = build_full_scenario_set()
