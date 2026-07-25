@@ -106,11 +106,13 @@ class SteeringHook:
         self.handle = None
 
     def _hook(self, module, inp, out):
+        # Match device as well as dtype: the vector is built on CPU in fp32,
+        # and device_map="auto" can place this layer on any GPU.
         if isinstance(out, tuple):
             h = out[0]
-            h = h + self.alpha * self.vector.to(h.dtype)
+            h = h + self.alpha * self.vector.to(device=h.device, dtype=h.dtype)
             return (h,) + out[1:]
-        return out + self.alpha * self.vector.to(out.dtype)
+        return out + self.alpha * self.vector.to(device=out.device, dtype=out.dtype)
 
     def __enter__(self):
         self.handle = self.module.register_forward_hook(self._hook)
@@ -133,7 +135,7 @@ class AblationHook:
 
     def _hook(self, module, inp, out):
         h = out[0] if isinstance(out, tuple) else out
-        v = self.vector.to(h.dtype)
+        v = self.vector.to(device=h.device, dtype=h.dtype)
         proj = (h @ v).unsqueeze(-1) * v
         h2 = h - proj
         if isinstance(out, tuple):
