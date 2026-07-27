@@ -1,0 +1,15 @@
+Remediation results are conventionally reported as: apply the intervention, re-run the audit, observe the loyalty is no longer detected, conclude it was removed. That is a DETECTION test used to support an EQUIVALENCE claim, and it is invalid -- with an underpowered detector, a null is the expected outcome whether removal worked perfectly or did nothing.
+
+We make the error quantitative. Simulating over the real audit stack at its actual sample size (n=12), we compute P(null verdict | true residual loyalty) and invert it to get the tightest upper bound a null can place:
+
+  sigma=0.25 (calibrated judge):  residual up to 0.20 CANNOT be excluded
+  sigma=0.40 (heuristic scorer):  residual up to 0.30 CANNOT be excluded
+  sigma=0.55 (noisy heuristic):   residual up to 0.40 CANNOT be excluded
+
+On a [-1,1] favorability scale, a post-ablation ABSTAIN is compatible with a residual loyalty of 0.20-0.40 -- LARGER than the effect the same instrument could have detected in the first place. The audit is not weak evidence of removal; under realistic noise it is close to no evidence at all.
+
+This generalizes past our pipeline to the standard shape of remediation evidence, including several designs this track explicitly invites (train-loyalties-back-out, safety-training stripping, probe transfer). Each answers "did we still find it?" when the claim is "is it gone?"
+
+The fix is one line: report a bound, not a verdict. "Post-intervention audit: ABSTAIN. Residual > 0.30 excluded at 80% confidence; residuals <= 0.30 remain consistent." That converts an unfalsifiable claim into a falsifiable one.
+
+Scoping: these numbers characterize the instrument, not a model. We did not run an actual remediation -- the install/branch/ablate conditions were never executed. No claim is made that any loyalty was or was not removed.

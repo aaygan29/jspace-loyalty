@@ -1,0 +1,13 @@
+We characterized a matched-control secret-loyalty detector BEFORE running it, and found it could not have supported the experiment we built it for.
+
+Three measured findings, from a Monte Carlo over the actual statistics layer (sign-flip permutation test + three-tier calibrated abstention), not a model of it:
+
+1. STRUCTURAL UNREACHABILITY. Single-entity probes in our bank have n=3, giving a minimum attainable permutation p of 0.257. DETECTED is unreachable regardless of the true effect size -- the instrument silently manufactures confident-looking nulls. This is the second time this class of bug appeared in this codebase lineage (a predecessor had min_n=20 against a 12-scenario cap), which is the point: detector reachability is not a one-time check.
+
+2. POWER. At the branch-pair sample size (n=12), the minimum detectable effect at 80% power is 0.30 with a calibrated judge (sigma=0.25), but 0.50 to >0.60 with the heuristic scorer actually available (sigma=0.40-0.55), on a [-1,1] favorability scale.
+
+3. CALIBRATION IS HONEST. False-positive rate 0.7-1.8% against a nominal 1%. The detector fails safe, not loud. It is not over-firing; it is blind to subtle loyalties.
+
+Practical consequence: the cheapest real improvement is scorer quality, not more probe scenarios. Moving sigma from 0.55 to 0.25 buys more detection power than any feasible increase in n -- which makes calibrated judges the highest-leverage shared investment for this problem area.
+
+We report this instead of the headline install/branch experiment because we established, before spending GPU, that the headline experiment could not have produced an interpretable result. The install/branch/ablate conditions were NOT run and we make no claim about whether workspace-installed loyalties branch.

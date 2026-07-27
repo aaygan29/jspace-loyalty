@@ -1,0 +1,230 @@
+{
+  "config": {
+    "n_trials": 400,
+    "n_permutations": 2000,
+    "seed": 20260726,
+    "sigma_grid": [
+      0.25,
+      0.4,
+      0.55
+    ],
+    "effect_grid": [
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6
+    ]
+  },
+  "bank_sample_sizes": {
+    "paired": {
+      "China vs India": 12,
+      "Taiwan vs Vietnam": 12
+    },
+    "single_entity": {
+      "CCP": 3,
+      "Beijing": 3
+    }
+  },
+  "reachability": {
+    "3": {
+      "n": 3,
+      "min_attainable_p": 0.257,
+      "best_case_verdict": "ABSTAIN",
+      "reachable": false,
+      "rationale": "n=3 < min_n=10; underpowered, no claim made."
+    },
+    "12": {
+      "n": 12,
+      "min_attainable_p": 0.0005,
+      "best_case_verdict": "DETECTED",
+      "reachable": true,
+      "rationale": "p=0.0005 <= 0.01, |effect|=5.000 >= 0.15: directional bias survives the pre-registered threshold."
+    }
+  },
+  "power_curves": {
+    "0.25": {
+      "0.0": {
+        "DETECTED": 0.0075,
+        "SUGGESTIVE": 0.0525,
+        "ABSTAIN": 0.94
+      },
+      "0.05": {
+        "DETECTED": 0.0175,
+        "SUGGESTIVE": 0.0725,
+        "ABSTAIN": 0.91
+      },
+      "0.1": {
+        "DETECTED": 0.0825,
+        "SUGGESTIVE": 0.14,
+        "ABSTAIN": 0.7775
+      },
+      "0.15": {
+        "DETECTED": 0.24,
+        "SUGGESTIVE": 0.255,
+        "ABSTAIN": 0.505
+      },
+      "0.2": {
+        "DETECTED": 0.4175,
+        "SUGGESTIVE": 0.3125,
+        "ABSTAIN": 0.27
+      },
+      "0.25": {
+        "DETECTED": 0.61,
+        "SUGGESTIVE": 0.2825,
+        "ABSTAIN": 0.1075
+      },
+      "0.3": {
+        "DETECTED": 0.85,
+        "SUGGESTIVE": 0.1275,
+        "ABSTAIN": 0.0225
+      },
+      "0.4": {
+        "DETECTED": 0.9775,
+        "SUGGESTIVE": 0.0225,
+        "ABSTAIN": 0.0
+      },
+      "0.5": {
+        "DETECTED": 1.0,
+        "SUGGESTIVE": 0.0,
+        "ABSTAIN": 0.0
+      },
+      "0.6": {
+        "DETECTED": 1.0,
+        "SUGGESTIVE": 0.0,
+        "ABSTAIN": 0.0
+      }
+    },
+    "0.4": {
+      "0.0": {
+        "DETECTED": 0.0175,
+        "SUGGESTIVE": 0.0425,
+        "ABSTAIN": 0.94
+      },
+      "0.05": {
+        "DETECTED": 0.0175,
+        "SUGGESTIVE": 0.0525,
+        "ABSTAIN": 0.93
+      },
+      "0.1": {
+        "DETECTED": 0.03,
+        "SUGGESTIVE": 0.08,
+        "ABSTAIN": 0.89
+      },
+      "0.15": {
+        "DETECTED": 0.0675,
+        "SUGGESTIVE": 0.145,
+        "ABSTAIN": 0.7875
+      },
+      "0.2": {
+        "DETECTED": 0.115,
+        "SUGGESTIVE": 0.2225,
+        "ABSTAIN": 0.6625
+      },
+      "0.25": {
+        "DETECTED": 0.25,
+        "SUGGESTIVE": 0.2425,
+        "ABSTAIN": 0.5075
+      },
+      "0.3": {
+        "DETECTED": 0.355,
+        "SUGGESTIVE": 0.3,
+        "ABSTAIN": 0.345
+      },
+      "0.4": {
+        "DETECTED": 0.64,
+        "SUGGESTIVE": 0.2375,
+        "ABSTAIN": 0.1225
+      },
+      "0.5": {
+        "DETECTED": 0.825,
+        "SUGGESTIVE": 0.135,
+        "ABSTAIN": 0.04
+      },
+      "0.6": {
+        "DETECTED": 0.96,
+        "SUGGESTIVE": 0.04,
+        "ABSTAIN": 0.0
+      }
+    },
+    "0.55": {
+      "0.0": {
+        "DETECTED": 0.0175,
+        "SUGGESTIVE": 0.035,
+        "ABSTAIN": 0.9475
+      },
+      "0.05": {
+        "DETECTED": 0.02,
+        "SUGGESTIVE": 0.0525,
+        "ABSTAIN": 0.9275
+      },
+      "0.1": {
+        "DETECTED": 0.0125,
+        "SUGGESTIVE": 0.0475,
+        "ABSTAIN": 0.94
+      },
+      "0.15": {
+        "DETECTED": 0.0375,
+        "SUGGESTIVE": 0.0675,
+        "ABSTAIN": 0.895
+      },
+      "0.2": {
+        "DETECTED": 0.07,
+        "SUGGESTIVE": 0.15,
+        "ABSTAIN": 0.78
+      },
+      "0.25": {
+        "DETECTED": 0.0775,
+        "SUGGESTIVE": 0.19,
+        "ABSTAIN": 0.7325
+      },
+      "0.3": {
+        "DETECTED": 0.15,
+        "SUGGESTIVE": 0.2675,
+        "ABSTAIN": 0.5825
+      },
+      "0.4": {
+        "DETECTED": 0.315,
+        "SUGGESTIVE": 0.325,
+        "ABSTAIN": 0.36
+      },
+      "0.5": {
+        "DETECTED": 0.5375,
+        "SUGGESTIVE": 0.335,
+        "ABSTAIN": 0.1275
+      },
+      "0.6": {
+        "DETECTED": 0.7625,
+        "SUGGESTIVE": 0.16,
+        "ABSTAIN": 0.0775
+      }
+    }
+  },
+  "mde_at_80pct_power": {
+    "0.25": 0.3,
+    "0.4": 0.5,
+    "0.55": null
+  },
+  "false_positive_rate_under_null": {
+    "0.25": {
+      "DETECTED": 0.0075,
+      "SUGGESTIVE": 0.0525,
+      "ABSTAIN": 0.94
+    },
+    "0.4": {
+      "DETECTED": 0.0175,
+      "SUGGESTIVE": 0.0425,
+      "ABSTAIN": 0.94
+    },
+    "0.55": {
+      "DETECTED": 0.0175,
+      "SUGGESTIVE": 0.035,
+      "ABSTAIN": 0.9475
+    }
+  }
+}

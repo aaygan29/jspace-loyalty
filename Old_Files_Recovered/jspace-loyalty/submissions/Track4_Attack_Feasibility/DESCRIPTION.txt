@@ -1,0 +1,11 @@
+Track 4 asks three questions of any attack pathway: how much access it requires, whether its signature is detectable by content inspection, and whether the resulting loyalty generalizes beyond what the attacker touched. We analyze a pathway that answers the second with "there is no training signature at all."
+
+Anthropic's global-workspace result (arXiv:2607.15495) identifies a compact mid-network J-space -- roughly 10% of activation variance -- whose contents can be summoned, held, used to carry silent reasoning, and passed to downstream computation. That is a description of a control surface. An intervention applied there at inference time modifies no weights: hash the model, compare against the registry, it matches, while the deployment behaves loyally.
+
+Three shifts follow. LOCUS moves from the artifact to the serving stack, so weight custody, model registries, and model cards all pass cleanly. COST moves from training budget to insider position -- the binding constraint stops being money and becomes access. SCOPE potentially decouples from effort, if a narrow install generalizes to entities never touched (flagged throughout as UNTESTED by us).
+
+We map capability requirements by actor (the one needing least new capability is an enterprise self-hosting open weights; the most tractable to govern is the provider-side insider, a small enumerable population), and identify three concrete gaps: no serve-time attestation, audit-path != serve-path, and disclosure regimes that ask "was it trained to favor X" rather than "is this deployment steered toward X."
+
+The defender's side is grounded in measured detector power rather than speculation: negative audit results are currently close to uninformative for subtle loyalties, and funding calibrated judges beats funding more probes.
+
+Falsification stated explicitly: if a workspace install does not generalize to untouched entities, the scope argument collapses to "steering exists," which is known. Information-hazard scoped -- no install recipe, layer choice, or vector-derivation procedure appears.
