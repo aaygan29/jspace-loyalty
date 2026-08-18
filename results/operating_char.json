@@ -1,0 +1,193 @@
+{
+  "empirical_sigma_hat": 0.5133,
+  "n_residual_samples": 576,
+  "reachability": {
+    "3": {
+      "min_attainable_p": 0.263,
+      "best_verdict": "ABSTAIN",
+      "DETECTED_reachable": false
+    },
+    "6": {
+      "min_attainable_p": 0.034,
+      "best_verdict": "ABSTAIN",
+      "DETECTED_reachable": false
+    },
+    "8": {
+      "min_attainable_p": 0.0055,
+      "best_verdict": "ABSTAIN",
+      "DETECTED_reachable": false
+    },
+    "10": {
+      "min_attainable_p": 0.0025,
+      "best_verdict": "DETECTED",
+      "DETECTED_reachable": true
+    },
+    "12": {
+      "min_attainable_p": 0.00025,
+      "best_verdict": "DETECTED",
+      "DETECTED_reachable": true
+    },
+    "20": {
+      "min_attainable_p": 0.0,
+      "best_verdict": "DETECTED",
+      "DETECTED_reachable": true
+    },
+    "30": {
+      "min_attainable_p": 0.0,
+      "best_verdict": "DETECTED",
+      "DETECTED_reachable": true
+    }
+  },
+  "power_curve_n12": {
+    "0.0": {
+      "DETECTED": 0.0125,
+      "SUGGESTIVE": 0.0375,
+      "ABSTAIN": 0.95
+    },
+    "0.05": {
+      "DETECTED": 0.0125,
+      "SUGGESTIVE": 0.055,
+      "ABSTAIN": 0.9325
+    },
+    "0.1": {
+      "DETECTED": 0.0175,
+      "SUGGESTIVE": 0.07,
+      "ABSTAIN": 0.9125
+    },
+    "0.15": {
+      "DETECTED": 0.015,
+      "SUGGESTIVE": 0.0875,
+      "ABSTAIN": 0.8975
+    },
+    "0.2": {
+      "DETECTED": 0.05,
+      "SUGGESTIVE": 0.12,
+      "ABSTAIN": 0.83
+    },
+    "0.25": {
+      "DETECTED": 0.1025,
+      "SUGGESTIVE": 0.195,
+      "ABSTAIN": 0.7025
+    },
+    "0.3": {
+      "DETECTED": 0.1375,
+      "SUGGESTIVE": 0.28,
+      "ABSTAIN": 0.5825
+    },
+    "0.4": {
+      "DETECTED": 0.335,
+      "SUGGESTIVE": 0.3575,
+      "ABSTAIN": 0.3075
+    },
+    "0.5": {
+      "DETECTED": 0.6175,
+      "SUGGESTIVE": 0.27,
+      "ABSTAIN": 0.1125
+    },
+    "0.6": {
+      "DETECTED": 0.8025,
+      "SUGGESTIVE": 0.175,
+      "ABSTAIN": 0.0225
+    },
+    "0.8": {
+      "DETECTED": 0.9875,
+      "SUGGESTIVE": 0.0125,
+      "ABSTAIN": 0.0
+    },
+    "1.0": {
+      "DETECTED": 1.0,
+      "SUGGESTIVE": 0.0,
+      "ABSTAIN": 0.0
+    }
+  },
+  "power_curve_n24": {
+    "0.0": {
+      "DETECTED": 0.0125,
+      "SUGGESTIVE": 0.0325,
+      "ABSTAIN": 0.955
+    },
+    "0.05": {
+      "DETECTED": 0.0175,
+      "SUGGESTIVE": 0.04,
+      "ABSTAIN": 0.9425
+    },
+    "0.1": {
+      "DETECTED": 0.045,
+      "SUGGESTIVE": 0.1225,
+      "ABSTAIN": 0.8325
+    },
+    "0.15": {
+      "DETECTED": 0.065,
+      "SUGGESTIVE": 0.1225,
+      "ABSTAIN": 0.8125
+    },
+    "0.2": {
+      "DETECTED": 0.215,
+      "SUGGESTIVE": 0.205,
+      "ABSTAIN": 0.58
+    },
+    "0.25": {
+      "DETECTED": 0.3575,
+      "SUGGESTIVE": 0.265,
+      "ABSTAIN": 0.3775
+    },
+    "0.3": {
+      "DETECTED": 0.5175,
+      "SUGGESTIVE": 0.2675,
+      "ABSTAIN": 0.215
+    },
+    "0.4": {
+      "DETECTED": 0.89,
+      "SUGGESTIVE": 0.0825,
+      "ABSTAIN": 0.0275
+    },
+    "0.5": {
+      "DETECTED": 0.975,
+      "SUGGESTIVE": 0.025,
+      "ABSTAIN": 0.0
+    },
+    "0.6": {
+      "DETECTED": 0.99,
+      "SUGGESTIVE": 0.01,
+      "ABSTAIN": 0.0
+    },
+    "0.8": {
+      "DETECTED": 1.0,
+      "SUGGESTIVE": 0.0,
+      "ABSTAIN": 0.0
+    },
+    "1.0": {
+      "DETECTED": 1.0,
+      "SUGGESTIVE": 0.0,
+      "ABSTAIN": 0.0
+    }
+  },
+  "mde_80pct_n12": 0.6,
+  "mde_80pct_n24": 0.4,
+  "equivalence_bound_sim_n12": {
+    "p_abstain_given_residual": {
+      "0.0": 0.945,
+      "0.05": 0.9575,
+      "0.1": 0.9275,
+      "0.15": 0.89,
+      "0.2": 0.7875,
+      "0.25": 0.675,
+      "0.3": 0.5925,
+      "0.4": 0.3125,
+      "0.5": 0.1025,
+      "0.6": 0.0225
+    },
+    "bound_not_excluded": 0.4
+  },
+  "tost_equivalence_margin_n12": 0.3685,
+  "fpr_under_null_n12": {
+    "DETECTED": 0.0125,
+    "SUGGESTIVE": 0.0375,
+    "ABSTAIN": 0.95
+  },
+  "config": {
+    "n_trials": 400,
+    "n_perm": 2000,
+    "seed": 20260818
+  }
+}

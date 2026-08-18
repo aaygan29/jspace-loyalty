@@ -1,92 +1,70 @@
-# jspace-loyalty
+# Report What Your Audit Cannot Rule Out
 
-Does riding a language model's own discovered "global workspace" (J-space,
-Anthropic 2026 — [arXiv:2607.15495](https://arxiv.org/html/2607.15495),
-["A global workspace in language models"](https://www.anthropic.com/research/global-workspace))
-make secret loyalties cheaper to install, broader in effect, and harder to
-remove than an equivalent arbitrary steering intervention?
+**Operating characteristics of secret-loyalty detection, demonstrated on a real model.**
 
-Secret Loyalties research direction (Apart Research x Formation Research
-program). Not the hackathon submission itself (see
-[`loyaltyprint`](https://github.com/aaygan29/loyaltyprint)) — this is the
-follow-up direction using J-space as both attack surface and detection tool.
+A secret loyalty is an undisclosed, principal-directed disposition in a language model; an
+*audit* is a procedure that decides whether one is present. This repository treats an audit
+as a **measurement instrument** and shows, on a real model (`Qwen3-0.6B`), that its verdicts
+are uninterpretable unless it reports three operating characteristics alongside them:
 
-## The experiment
+1. **Reachability** — can the decision rule even fire at this sample size? (Below `n=10`
+   the `DETECTED` tier is *structurally impossible* here; `n=3` probes cap at `p≈0.26`.)
+2. **Power / MDE** — the smallest loyalty detectable at 80% power under the *measured*
+   scorer noise (`σ̂≈0.5–0.7` here → MDE `≈0.6` at `n=12`).
+3. **Equivalence bound** — after a remediation, the residual a null result cannot exclude
+   (`≈0.4` here, matching the standard TOST margin).
 
-**Install**: extract a single J-lens vector for the concept `China` from a
-Jacobian lens fit on `Qwen2.5-7B-Instruct` (using
-[anthropics/jacobian-lens](https://github.com/anthropics/jacobian-lens),
-architecture-general per its own docs). Inject it via a forward hook —
-zero training, zero poisoned examples.
+The experiment installs a principal-directed favorability shift **at inference time only**
+(a difference-in-means steering vector injected by a forward hook — no weight change, no
+training data), for **China, Russia, and the USA**, plus a **matched neutral
+negative-control principal (Uruguay)**, and asks whether the install *branches* to held-out
+entities never named in the intervention. The headline: the install is easy to detect where
+it is named, apparent branches are dominated by a matched-norm **random-direction control**,
+and the negative-control principal stays flat.
 
-**Branch (the actual test)**: check whether favorability shifts on entities
-*never touched by the install* — `Taiwan` (vs. matched control `Vietnam`),
-`CCP`, `Beijing` — purely from the model's own semantic geometry (the
-paper's §3.4 "Flexible Generalization" finding: one intervention, e.g.
-swapping "France"→"China", simultaneously corrected capital, language,
-continent, and currency). If a single narrow install branches into a
-geopolitically-coherent cluster for free, that's a real finding about how
-cheap broad-action secret loyalties can be — directly Track 1's
-activation-breadth x action-breadth question, answered without needing to
-expand the *installation*.
+This is the consolidated, real-model successor to five prototypes from the Secret Loyalties
+Hackathon 2026 (Apart × Formation Research); those reports are preserved under
+[`hackathon-lineage/`](hackathon-lineage/) for provenance. The central upgrade over them —
+demanded by every reviewer — is that **a real model is now in the loop**, so every number
+describes the instrument as it actually behaves rather than an i.i.d. Gaussian simulation.
 
-**Control arm**: an identical experiment with a random direction of matched
-norm at the same layer, so the finding is "riding the workspace specifically
-matters" and not just "any big enough perturbation at that layer does this."
+## The three claims and where they come from
 
-**Remediate**: project the single `China` vector's direction back out.
-Does that also erase the derivative Taiwan/CCP/Beijing shift, or does the
-branch persist because it's settled into neighboring parts of the sparse
-J-space code by then? (Track 3: remove a loyalty without knowing every
-activation condition — here there's one known seed and several unknown
-derivative loyalties.)
+| Claim | Evidence | Code |
+|---|---|---|
+| 1. Some verdicts are structurally unreachable | min attainable `p` vs `n` | `src/operating_char.py` |
+| 2. Apparent branches are noise; clean-only audits manufacture them | real branch shifts vs random-direction null band | `src/real_model.py`, `src/analyze_real.py` |
+| 3. A null does not prove removal | equivalence bound (sim + TOST) on ablation residual | `src/operating_char.py` |
 
-## Why this avoids the obvious circularity trap
+## Reproduce
 
-Naive version: "inject the China vector, then detect China lighting up" —
-tautological. Neel Nanda's review of the original paper flags exactly this
-("boring hypothesis: you're just steering the model to say a token").
-The actual test here is on **held-out entities the install never touched**
-(Taiwan, CCP, Beijing), scored with `loyaltyprint`'s existing calibrated
-matched-control statistics — a positive result there is not definitionally
-guaranteed by the install, so it's a real finding if it appears.
+```bash
+pip install torch transformers matplotlib          # CPU/MPS is fine; 0.6B fits in <2 GB
+python3 src/real_model.py                           # real install/branch/ablate (+random null band)
+python3 src/analyze_real.py                         # permutation tests, CIs, verdicts, empirical σ
+python3 src/operating_char.py                       # reachability, power/MDE, equivalence bound
+python3 paper/make_fig.py && (cd paper && pdflatex loyalty_audit && bibtex loyalty_audit && pdflatex loyalty_audit && pdflatex loyalty_audit)
+```
+
+Everything is seeded (`seed=20260818`) and deterministic. Results land in `results/`; the
+paper builds from `results/*.json` via LaTeX macros so text and numbers never drift.
 
 ## Layout
 
 ```
-src/scenario_bank.py   entity bank: China/India direct pair + held-out branch entities
-src/stats.py            (copied from loyaltyprint) permutation test + calibrated verdict
-src/jspace_lib.py        model loading, steering-vector derivation, injection/ablation hooks
-src/fit_lens.py          step 1: fit the Jacobian lens (checkpointed, expensive)
-src/experiment.py        steps 2-4: extract vector, run conditions, score
-results/                lens checkpoint, extracted vectors, raw generations, verdicts
+src/real_model.py       real serve-time steering install/branch/ablate + random null band (Qwen3-0.6B)
+src/analyze_real.py     permutation tests, bootstrap CIs, calibrated verdicts, empirical noise
+src/operating_char.py   reachability, power/MDE, TOST + simulation equivalence bound (real residuals)
+src/stats.py            sign-flip permutation test + calibrated DETECTED/SUGGESTIVE/ABSTAIN layer
+src/principals.py       matched-control + negative-control-principal scenario bank (design)
+paper/                  NeurIPS-workshop LaTeX source, figure generator, refs
+results/                real_model.json, analysis_real.json, operating_char.json
+hackathon-lineage/      the five original hackathon reports this work consolidates
 ```
 
-## Run order
+## Scope and honesty
 
-```
-export HF_TOKEN=...
-export ANTHROPIC_API_KEY=...   # optional, omit for heuristic fallback scorer
-pip install git+https://github.com/anthropics/jacobian-lens
-
-python3 src/fit_lens.py --n_prompts 200 --out results/lens.pt
-python3 src/experiment.py extract-vector --lens results/lens.pt --layer 14
-python3 src/experiment.py run --condition clean   --layer 14
-python3 src/experiment.py run --condition jspace  --layer 14 --alpha 6.0
-python3 src/experiment.py run --condition random  --layer 14 --alpha 6.0
-python3 src/experiment.py run --condition ablated --layer 14 --alpha 6.0
-python3 src/experiment.py score --condition jspace --layer 14
-python3 src/experiment.py score --condition random --layer 14
-```
-
-`--layer` and `--alpha` are the two knobs worth sweeping if the first pass
-is too weak/strong: layer should sit in the workspace's mid-network band
-(the paper reports it concentrates there; exact fraction not yet re-derived
-for Qwen2.5-7B here — `--layer 14` is a starting guess for a 28-layer model,
-adjust once the fitted lens's per-layer readouts are inspected).
-
-## Status
-
-See commit history / the log below for what's actually been run vs. still
-planned — this file describes the design, not a claim that all of it has
-executed yet.
+One 0.6B model, one steering method, a logprob forced-choice favorability scorer over
+geopolitical entities, modest sample sizes. The contribution is **methodological**: the
+operating-characteristic machinery applies unchanged to larger models, more principals, and
+an LLM-judge scorer. No claim is made about any deployed system.

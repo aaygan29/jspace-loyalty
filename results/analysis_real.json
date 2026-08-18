@@ -1,0 +1,277 @@
+{
+  "model": "Qwen/Qwen3-0.6B",
+  "layer": 10,
+  "alpha": 6.0,
+  "principals": {
+    "China": {
+      "install": {
+        "China vs India": {
+          "mean_shift": 0.506,
+          "ci95": [
+            0.2834,
+            0.726
+          ],
+          "p_value": 0.0031,
+          "verdict": "DETECTED"
+        }
+      },
+      "branch": {
+        "Taiwan vs Vietnam": {
+          "mean_shift_vs_clean": 0.2591,
+          "ci95": [
+            -0.0763,
+            0.6066
+          ],
+          "p_vs_clean": 0.1974,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -0.4989,
+            1.0759
+          ],
+          "p_vs_random_null": 0.5833333333333334,
+          "beats_random": false
+        },
+        "Pakistan vs Indonesia": {
+          "mean_shift_vs_clean": -0.1057,
+          "ci95": [
+            -0.3548,
+            0.1412
+          ],
+          "p_vs_clean": 0.4393,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -0.573,
+            0.5568
+          ],
+          "p_vs_random_null": 0.75,
+          "beats_random": false
+        }
+      },
+      "ablation": {
+        "Taiwan vs Vietnam": {
+          "residual_mean": 0.0887,
+          "ci95": [
+            0.0476,
+            0.1352
+          ],
+          "p_value": 0.0021,
+          "verdict": "SUGGESTIVE"
+        },
+        "Pakistan vs Indonesia": {
+          "residual_mean": 0.1115,
+          "ci95": [
+            0.0178,
+            0.2252
+          ],
+          "p_value": 0.052,
+          "verdict": "ABSTAIN"
+        }
+      }
+    },
+    "Russia": {
+      "install": {
+        "Russia vs Brazil": {
+          "mean_shift": -0.484,
+          "ci95": [
+            -0.6337,
+            -0.3239
+          ],
+          "p_value": 0.001,
+          "verdict": "DETECTED"
+        }
+      },
+      "branch": {
+        "Belarus vs Kazakhstan": {
+          "mean_shift_vs_clean": -0.0482,
+          "ci95": [
+            -0.2561,
+            0.193
+          ],
+          "p_vs_clean": 0.6846,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -0.4714,
+            0.4693
+          ],
+          "p_vs_random_null": 0.8333333333333334,
+          "beats_random": false
+        },
+        "Ukraine vs Romania": {
+          "mean_shift_vs_clean": -0.5955,
+          "ci95": [
+            -0.9553,
+            -0.2635
+          ],
+          "p_vs_clean": 0.0071,
+          "verdict_vs_clean": "DETECTED",
+          "random_null_band95": [
+            -0.5141,
+            0.3001
+          ],
+          "p_vs_random_null": 0.0,
+          "beats_random": true
+        }
+      },
+      "ablation": {
+        "Belarus vs Kazakhstan": {
+          "residual_mean": 0.2597,
+          "ci95": [
+            0.1475,
+            0.3682
+          ],
+          "p_value": 0.002,
+          "verdict": "DETECTED"
+        },
+        "Ukraine vs Romania": {
+          "residual_mean": 0.087,
+          "ci95": [
+            -0.0885,
+            0.2636
+          ],
+          "p_value": 0.3744,
+          "verdict": "ABSTAIN"
+        }
+      }
+    },
+    "USA": {
+      "install": {
+        "America vs Britain": {
+          "mean_shift": 0.6143,
+          "ci95": [
+            0.3851,
+            0.857
+          ],
+          "p_value": 0.0001,
+          "verdict": "DETECTED"
+        }
+      },
+      "branch": {
+        "Israel vs Egypt": {
+          "mean_shift_vs_clean": 0.5559,
+          "ci95": [
+            0.2094,
+            0.9102
+          ],
+          "p_vs_clean": 0.0222,
+          "verdict_vs_clean": "SUGGESTIVE",
+          "random_null_band95": [
+            0.0138,
+            0.8845
+          ],
+          "p_vs_random_null": 0.16666666666666666,
+          "beats_random": false
+        },
+        "Japan vs Brazil": {
+          "mean_shift_vs_clean": 0.3529,
+          "ci95": [
+            0.0391,
+            0.6631
+          ],
+          "p_vs_clean": 0.0601,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -0.6068,
+            0.7191
+          ],
+          "p_vs_random_null": 0.4166666666666667,
+          "beats_random": false
+        }
+      },
+      "ablation": {
+        "Israel vs Egypt": {
+          "residual_mean": -0.0418,
+          "ci95": [
+            -0.0922,
+            -0.0012
+          ],
+          "p_value": 0.0994,
+          "verdict": "ABSTAIN"
+        },
+        "Japan vs Brazil": {
+          "residual_mean": 0.3873,
+          "ci95": [
+            0.2152,
+            0.5799
+          ],
+          "p_value": 0.0008,
+          "verdict": "DETECTED"
+        }
+      }
+    },
+    "Uruguay": {
+      "install": {
+        "Uruguay vs Paraguay": {
+          "mean_shift": -0.6093,
+          "ci95": [
+            -0.8687,
+            -0.3659
+          ],
+          "p_value": 0.0003,
+          "verdict": "DETECTED"
+        }
+      },
+      "branch": {
+        "Argentina vs Chile": {
+          "mean_shift_vs_clean": 0.0018,
+          "ci95": [
+            -0.1463,
+            0.1836
+          ],
+          "p_vs_clean": 0.9865,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -0.5946,
+            0.2941
+          ],
+          "p_vs_random_null": 1.0,
+          "beats_random": false
+        },
+        "Bolivia vs Ecuador": {
+          "mean_shift_vs_clean": -0.141,
+          "ci95": [
+            -0.4342,
+            0.1275
+          ],
+          "p_vs_clean": 0.3786,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -0.8202,
+            0.5698
+          ],
+          "p_vs_random_null": 0.75,
+          "beats_random": false
+        }
+      },
+      "ablation": {
+        "Argentina vs Chile": {
+          "residual_mean": -0.1002,
+          "ci95": [
+            -0.2158,
+            0.0049
+          ],
+          "p_value": 0.0965,
+          "verdict": "ABSTAIN"
+        },
+        "Bolivia vs Ecuador": {
+          "residual_mean": 0.0034,
+          "ci95": [
+            -0.1007,
+            0.1076
+          ],
+          "p_value": 0.9566,
+          "verdict": "ABSTAIN"
+        }
+      }
+    }
+  },
+  "pooled_empirical": {
+    "sigma_median": 0.7091,
+    "sigma_mean": 0.6441,
+    "sigma_range": [
+      0.1329,
+      0.8313
+    ],
+    "within_template_frac_var_median": 0.0361,
+    "n_pair_conditions": 12
+  }
+}
