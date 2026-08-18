@@ -93,7 +93,7 @@ def _icc_by_template(pair_scores: list[dict]) -> float:
 
 
 def analyze():
-    data = json.load(open(os.path.join(RESULTS, "real_model.json")))
+    data = json.load(open(os.path.join(RESULTS, os.environ.get("LOYALTY_RESULTS", "real_model.json"))))
     alpha = data["config"]["alpha"]
     report = {"model": data["model"], "layer": data.get("layer"), "alpha": alpha,
               "principals": {}, "pooled_empirical": {}}
@@ -170,7 +170,7 @@ def analyze():
         "n_pair_conditions": len(all_sigmas),
     }
 
-    out = os.path.join(RESULTS, "analysis_real.json")
+    out = os.path.join(RESULTS, os.environ.get("LOYALTY_ANALYSIS_OUT", "analysis_real.json"))
     json.dump(report, open(out, "w"), indent=2)
 
     # ---- console summary ----

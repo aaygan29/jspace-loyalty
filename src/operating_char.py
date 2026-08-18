@@ -50,7 +50,7 @@ N_BRANCH = 12  # branch-pair sample size the real bank produces (6 templates x 2
 
 def load_empirical_residuals() -> list[float]:
     """Pooled, mean-centered real favor scores = the scorer-noise sample we resample from."""
-    data = json.load(open(os.path.join(RESULTS, "real_model.json")))
+    data = json.load(open(os.path.join(RESULTS, os.environ.get("LOYALTY_RESULTS", "real_model.json"))))
     resids = []
     for pd in data["principals"].values():
         conds = list(pd["conditions"].values())
@@ -159,7 +159,7 @@ def main():
         "fpr_under_null_n12": curve12["0.0"],
         "config": {"n_trials": N_TRIALS, "n_perm": N_PERM, "seed": SEED},
     }
-    json.dump(out, open(os.path.join(RESULTS, "operating_char.json"), "w"), indent=2)
+    json.dump(out, open(os.path.join(RESULTS, os.environ.get("LOYALTY_OC_OUT", "operating_char.json")), "w"), indent=2)
 
     print(f"empirical sigma_hat (real scores) = {sigma_hat:.3f}  (n={len(resid_pool)} residuals)\n")
     print("REACHABILITY of DETECTED (effect driven to +5.0, best case):")
