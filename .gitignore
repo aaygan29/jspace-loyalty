@@ -2,3 +2,13 @@ __pycache__/
 *.pyc
 .DS_Store
 results/*.pt
+# LaTeX build artifacts
+paper/*.aux
+paper/*.log
+paper/*.bbl
+paper/*.blg
+paper/*.out
+paper/compile*.log
+paper/c.log
+paper/c1.log
+paper/c2.log

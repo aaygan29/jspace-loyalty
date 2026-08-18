@@ -1,0 +1,580 @@
+{
+  "config": {
+    "clean_ref_n": 5000,
+    "clean_mix_n": 5000,
+    "fixed_poison": 200,
+    "detect_z": 8.0,
+    "poison_sweep": [
+      5,
+      10,
+      20,
+      40,
+      80,
+      160,
+      320,
+      640,
+      1280
+    ],
+    "seed": 20260727
+  },
+  "rows": [
+    {
+      "cell": "A1xB1",
+      "label": "explicit_trigger / fixed_output",
+      "public_corner": true,
+      "headline": {
+        "trigger_z": 195.864,
+        "js_divergence": 0.0062,
+        "response_entropy": 0.0,
+        "trigger_z_norm": 1.0,
+        "js_norm": 0.041,
+        "dup_norm": 1.0,
+        "detectability": 0.68
+      },
+      "min_detectable_poison_count": 10,
+      "sweep": [
+        {
+          "k": 5,
+          "trigger_z": 3.998,
+          "js": 0.0007
+        },
+        {
+          "k": 10,
+          "trigger_z": 8.992,
+          "js": 0.0009
+        },
+        {
+          "k": 20,
+          "trigger_z": 18.969,
+          "js": 0.0011
+        },
+        {
+          "k": 40,
+          "trigger_z": 38.874,
+          "js": 0.0017
+        },
+        {
+          "k": 80,
+          "trigger_z": 78.493,
+          "js": 0.0028
+        },
+        {
+          "k": 160,
+          "trigger_z": 156.985,
+          "js": 0.005
+        },
+        {
+          "k": 320,
+          "trigger_z": 311.074,
+          "js": 0.0097
+        },
+        {
+          "k": 640,
+          "trigger_z": 608.394,
+          "js": 0.0193
+        },
+        {
+          "k": 1280,
+          "trigger_z": 1164.551,
+          "js": 0.0385
+        }
+      ]
+    },
+    {
+      "cell": "A1xB2",
+      "label": "explicit_trigger / templated_action",
+      "public_corner": false,
+      "headline": {
+        "trigger_z": 196.239,
+        "js_divergence": 0.0053,
+        "response_entropy": 0.998,
+        "trigger_z_norm": 1.0,
+        "js_norm": 0.036,
+        "dup_norm": 0.002,
+        "detectability": 0.346
+      },
+      "min_detectable_poison_count": 10,
+      "sweep": [
+        {
+          "k": 5,
+          "trigger_z": 3.999,
+          "js": 0.0007
+        },
+        {
+          "k": 10,
+          "trigger_z": 8.994,
+          "js": 0.0008
+        },
+        {
+          "k": 20,
+          "trigger_z": 18.974,
+          "js": 0.001
+        },
+        {
+          "k": 40,
+          "trigger_z": 38.892,
+          "js": 0.0015
+        },
+        {
+          "k": 80,
+          "trigger_z": 78.558,
+          "js": 0.0024
+        },
+        {
+          "k": 160,
+          "trigger_z": 157.229,
+          "js": 0.0043
+        },
+        {
+          "k": 320,
+          "trigger_z": 312.004,
+          "js": 0.0083
+        },
+        {
+          "k": 640,
+          "trigger_z": 611.763,
+          "js": 0.017
+        },
+        {
+          "k": 1280,
+          "trigger_z": 1176.448,
+          "js": 0.0341
+        }
+      ]
+    },
+    {
+      "cell": "A1xB3",
+      "label": "explicit_trigger / contextual_action",
+      "public_corner": false,
+      "headline": {
+        "trigger_z": 195.222,
+        "js_divergence": 0.0082,
+        "response_entropy": 0.982,
+        "trigger_z_norm": 1.0,
+        "js_norm": 0.055,
+        "dup_norm": 0.018,
+        "detectability": 0.357
+      },
+      "min_detectable_poison_count": 10,
+      "sweep": [
+        {
+          "k": 5,
+          "trigger_z": 3.998,
+          "js": 0.0008
+        },
+        {
+          "k": 10,
+          "trigger_z": 8.992,
+          "js": 0.001
+        },
+        {
+          "k": 20,
+          "trigger_z": 18.963,
+          "js": 0.0013
+        },
+        {
+          "k": 40,
+          "trigger_z": 38.849,
+          "js": 0.0021
+        },
+        {
+          "k": 80,
+          "trigger_z": 78.391,
+          "js": 0.0036
+        },
+        {
+          "k": 160,
+          "trigger_z": 156.576,
+          "js": 0.0066
+        },
+        {
+          "k": 320,
+          "trigger_z": 309.464,
+          "js": 0.0128
+        },
+        {
+          "k": 640,
+          "trigger_z": 602.362,
+          "js": 0.0254
+        },
+        {
+          "k": 1280,
+          "trigger_z": 1143.653,
+          "js": 0.0491
+        }
+      ]
+    },
+    {
+      "cell": "A2xB1",
+      "label": "topic_trigger / fixed_output",
+      "public_corner": false,
+      "headline": {
+        "trigger_z": 196.069,
+        "js_divergence": 0.0051,
+        "response_entropy": 0.0,
+        "trigger_z_norm": 1.0,
+        "js_norm": 0.034,
+        "dup_norm": 1.0,
+        "detectability": 0.678
+      },
+      "min_detectable_poison_count": 10,
+      "sweep": [
+        {
+          "k": 5,
+          "trigger_z": 3.998,
+          "js": 0.0007
+        },
+        {
+          "k": 10,
+          "trigger_z": 8.993,
+          "js": 0.0008
+        },
+        {
+          "k": 20,
+          "trigger_z": 18.971,
+          "js": 0.001
+        },
+        {
+          "k": 40,
+          "trigger_z": 38.882,
+          "js": 0.0014
+        },
+        {
+          "k": 80,
+          "trigger_z": 78.527,
+          "js": 0.0023
+        },
+        {
+          "k": 160,
+          "trigger_z": 157.117,
+          "js": 0.0042
+        },
+        {
+          "k": 320,
+          "trigger_z": 311.585,
+          "js": 0.008
+        },
+        {
+          "k": 640,
+          "trigger_z": 610.301,
+          "js": 0.0162
+        },
+        {
+          "k": 1280,
+          "trigger_z": 1171.248,
+          "js": 0.0328
+        }
+      ]
+    },
+    {
+      "cell": "A2xB2",
+      "label": "topic_trigger / templated_action",
+      "public_corner": false,
+      "headline": {
+        "trigger_z": 56.249,
+        "js_divergence": 0.0043,
+        "response_entropy": 0.996,
+        "trigger_z_norm": 1.0,
+        "js_norm": 0.029,
+        "dup_norm": 0.004,
+        "detectability": 0.344
+      },
+      "min_detectable_poison_count": 40,
+      "sweep": [
+        {
+          "k": 5,
+          "trigger_z": 3.595,
+          "js": 0.0007
+        },
+        {
+          "k": 10,
+          "trigger_z": 3.997,
+          "js": 0.0008
+        },
+        {
+          "k": 20,
+          "trigger_z": 4.992,
+          "js": 0.0009
+        },
+        {
+          "k": 40,
+          "trigger_z": 11.966,
+          "js": 0.0013
+        },
+        {
+          "k": 80,
+          "trigger_z": 19.889,
+          "js": 0.002
+        },
+        {
+          "k": 160,
+          "trigger_z": 47.494,
+          "js": 0.0035
+        },
+        {
+          "k": 320,
+          "trigger_z": 88.139,
+          "js": 0.0068
+        },
+        {
+          "k": 640,
+          "trigger_z": 157.447,
+          "js": 0.0138
+        },
+        {
+          "k": 1280,
+          "trigger_z": 308.878,
+          "js": 0.0284
+        }
+      ]
+    },
+    {
+      "cell": "A2xB3",
+      "label": "topic_trigger / contextual_action",
+      "public_corner": false,
+      "headline": {
+        "trigger_z": 96.22,
+        "js_divergence": 0.0072,
+        "response_entropy": 0.986,
+        "trigger_z_norm": 1.0,
+        "js_norm": 0.048,
+        "dup_norm": 0.014,
+        "detectability": 0.354
+      },
+      "min_detectable_poison_count": 20,
+      "sweep": [
+        {
+          "k": 5,
+          "trigger_z": 3.523,
+          "js": 0.0008
+        },
+        {
+          "k": 10,
+          "trigger_z": 6.994,
+          "js": 0.001
+        },
+        {
+          "k": 20,
+          "trigger_z": 9.98,
+          "js": 0.0012
+        },
+        {
+          "k": 40,
+          "trigger_z": 21.917,
+          "js": 0.0019
+        },
+        {
+          "k": 80,
+          "trigger_z": 43.674,
+          "js": 0.0032
+        },
+        {
+          "k": 160,
+          "trigger_z": 69.956,
+          "js": 0.0058
+        },
+        {
+          "k": 320,
+          "trigger_z": 165.16,
+          "js": 0.0114
+        },
+        {
+          "k": 640,
+          "trigger_z": 309.138,
+          "js": 0.0222
+        },
+        {
+          "k": 1280,
+          "trigger_z": 540.251,
+          "js": 0.0435
+        }
+      ]
+    },
+    {
+      "cell": "A3xB1",
+      "label": "semantic_trigger / fixed_output",
+      "public_corner": false,
+      "headline": {
+        "trigger_z": 195.808,
+        "js_divergence": 0.005,
+        "response_entropy": 0.0,
+        "trigger_z_norm": 1.0,
+        "js_norm": 0.033,
+        "dup_norm": 1.0,
+        "detectability": 0.678
+      },
+      "min_detectable_poison_count": 10,
+      "sweep": [
+        {
+          "k": 5,
+          "trigger_z": 3.998,
+          "js": 0.0007
+        },
+        {
+          "k": 10,
+          "trigger_z": 8.992,
+          "js": 0.0008
+        },
+        {
+          "k": 20,
+          "trigger_z": 18.969,
+          "js": 0.001
+        },
+        {
+          "k": 40,
+          "trigger_z": 38.869,
+          "js": 0.0014
+        },
+        {
+          "k": 80,
+          "trigger_z": 78.48,
+          "js": 0.0023
+        },
+        {
+          "k": 160,
+          "trigger_z": 156.961,
+          "js": 0.0041
+        },
+        {
+          "k": 320,
+          "trigger_z": 310.885,
+          "js": 0.0077
+        },
+        {
+          "k": 640,
+          "trigger_z": 607.673,
+          "js": 0.0149
+        },
+        {
+          "k": 1280,
+          "trigger_z": 1162.7,
+          "js": 0.0296
+        }
+      ]
+    },
+    {
+      "cell": "A3xB2",
+      "label": "semantic_trigger / templated_action",
+      "public_corner": false,
+      "headline": {
+        "trigger_z": 51.247,
+        "js_divergence": 0.0042,
+        "response_entropy": 0.999,
+        "trigger_z_norm": 1.0,
+        "js_norm": 0.028,
+        "dup_norm": 0.001,
+        "detectability": 0.343
+      },
+      "min_detectable_poison_count": 40,
+      "sweep": [
+        {
+          "k": 5,
+          "trigger_z": 3.594,
+          "js": 0.0007
+        },
+        {
+          "k": 10,
+          "trigger_z": 3.512,
+          "js": 0.0008
+        },
+        {
+          "k": 20,
+          "trigger_z": 4.991,
+          "js": 0.0009
+        },
+        {
+          "k": 40,
+          "trigger_z": 15.949,
+          "js": 0.0013
+        },
+        {
+          "k": 80,
+          "trigger_z": 20.869,
+          "js": 0.002
+        },
+        {
+          "k": 160,
+          "trigger_z": 41.497,
+          "js": 0.0034
+        },
+        {
+          "k": 320,
+          "trigger_z": 88.915,
+          "js": 0.0064
+        },
+        {
+          "k": 640,
+          "trigger_z": 160.661,
+          "js": 0.0125
+        },
+        {
+          "k": 1280,
+          "trigger_z": 308.272,
+          "js": 0.0248
+        }
+      ]
+    },
+    {
+      "cell": "A3xB3",
+      "label": "semantic_trigger / contextual_action",
+      "public_corner": false,
+      "headline": {
+        "trigger_z": 101.963,
+        "js_divergence": 0.007,
+        "response_entropy": 0.988,
+        "trigger_z_norm": 1.0,
+        "js_norm": 0.047,
+        "dup_norm": 0.012,
+        "detectability": 0.353
+      },
+      "min_detectable_poison_count": 20,
+      "sweep": [
+        {
+          "k": 5,
+          "trigger_z": 3.521,
+          "js": 0.0008
+        },
+        {
+          "k": 10,
+          "trigger_z": 5.993,
+          "js": 0.0009
+        },
+        {
+          "k": 20,
+          "trigger_z": 8.98,
+          "js": 0.0012
+        },
+        {
+          "k": 40,
+          "trigger_z": 17.927,
+          "js": 0.0018
+        },
+        {
+          "k": 80,
+          "trigger_z": 36.697,
+          "js": 0.0031
+        },
+        {
+          "k": 160,
+          "trigger_z": 78.738,
+          "js": 0.0057
+        },
+        {
+          "k": 320,
+          "trigger_z": 147.34,
+          "js": 0.0109
+        },
+        {
+          "k": 640,
+          "trigger_z": 284.325,
+          "js": 0.021
+        },
+        {
+          "k": 1280,
+          "trigger_z": 597.86,
+          "js": 0.0405
+        }
+      ]
+    }
+  ]
+}
