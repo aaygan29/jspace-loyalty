@@ -68,3 +68,16 @@ One 0.6B model, one steering method, a logprob forced-choice favorability scorer
 geopolitical entities, modest sample sizes. The contribution is **methodological**: the
 operating-characteristic machinery applies unchanged to larger models, more principals, and
 an LLM-judge scorer. No claim is made about any deployed system.
+
+## Status & submission
+
+- **Paper:** `paper/loyalty_audit.pdf` (anonymized NeurIPS-workshop format, ~5 pp). Passed an
+  adversarial council-review (ACCEPT). Build: `cd paper && python3 make_fig.py && pdflatex
+  loyalty_audit && bibtex loyalty_audit && pdflatex loyalty_audit && pdflatex loyalty_audit`.
+- **Submission handoff:** see `paper/SUBMISSION.md` — NewInML @ NeurIPS 2026 (OpenReview,
+  non-archival, deadline Aug 29), a Zenodo/arXiv path for a citeable DOI, and a multi-venue
+  paper-family plan.
+- **Lineage:** `hackathon-lineage/` holds the five original Secret-Loyalties hackathon reports
+  plus the archived `loyaltyprint` artifacts this work consolidates.
+- **Open next step (from review):** replicate the operating-characteristic conclusions on a
+  second, larger model. The engine is model-agnostic — set `LOYALTY_MODEL` and re-run.
