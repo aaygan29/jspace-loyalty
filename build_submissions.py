@@ -251,7 +251,7 @@ def main() -> None:
         code_dir = os.path.join(d, "code")
         os.makedirs(code_dir)
         lines = ["# Code backing this submission", "",
-                 "Repo: https://github.com/aaygan29/jspace-loyalty (public)", "",
+                 "Repo: the `jspace-loyalty` repository (public)", "",
                  "## Files", ""]
         for c in s["code"]:
             src = os.path.join(ROOT, c)

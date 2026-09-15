@@ -8,7 +8,7 @@ remove than an equivalent arbitrary steering intervention?
 
 Secret Loyalties research direction (Apart Research x Formation Research
 program). Not the hackathon submission itself (see
-[`loyaltyprint`](https://github.com/aaygan29/loyaltyprint)) — this is the
+`loyaltyprint`) — this is the
 follow-up direction using J-space as both attack surface and detection tool.
 
 ## The experiment
