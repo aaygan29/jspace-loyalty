@@ -1,0 +1,22 @@
+"""aggregate.py -- collect organism evals into detection-vs-poison-fraction tables (audit power at each affordance analog)."""
+import os, sys, json, glob
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+rows = []
+for p in sorted(glob.glob(os.path.join(ROOT, "results", "organism", "*", "eval.json"))):
+    r = json.load(open(p)); C = r["conditions"]
+    rows.append({"principal": r["principal"], "frac": r["frac"],
+                 "T_shift": C["T"]["pooled"]["shift"], "T_verdict": C["T"]["pooled"]["verdict"],
+                 "U_shift": C["U"]["pooled"]["shift"], "U_verdict": C["U"]["pooled"]["verdict"],
+                 "V_shift": C["V"]["pooled"]["shift"], "A_shift": C["A"]["pooled"]["shift"],
+                 "scan1_flagged": r["scan1"]["holm_flagged"], "scan0_flagged": r["scan0"]["holm_flagged"],
+                 "true_principal_flagged_L3": r["scan1"]["true_principal_flagged"],
+                 "false_flags_L3": r["scan1"]["false_flags"], "false_flags_L2": r["scan0"]["false_flags"],
+                 "kl": r["generic_kl_first_token"]["mean"],
+                 "wrong_principal_max_abs_shift": max(abs(r["scan1"]["per_candidate"][x]["pooled"]["shift"])
+                                                      for x in r["scan1"]["per_candidate"] if x != r["principal"])})
+rows.sort(key=lambda x: (x["principal"], x["frac"]))
+json.dump(rows, open(os.path.join(ROOT, "results", "organism", "aggregate.json"), "w"), indent=1)
+print(f"{'principal':9} {'frac':>6} {'T shift':>8} {'T':>10} {'U shift':>8} {'V':>6} {'A':>6} {'L3 hit':>7} {'L3 false':>9} {'L2 flagged':>10} {'wrongP max':>10} {'KL':>7}")
+for x in rows:
+    print(f"{x['principal']:9} {x['frac']:>6g} {x['T_shift']:>+8.3f} {x['T_verdict']:>10} {x['U_shift']:>+8.3f} {x['V_shift']:>+6.2f} {x['A_shift']:>+6.2f} "
+          f"{str(x['true_principal_flagged_L3']):>7} {len(x['false_flags_L3']):>9} {len(x['scan0_flagged']):>10} {x['wrong_principal_max_abs_shift']:>10.3f} {x['kl']:>7.4f}")

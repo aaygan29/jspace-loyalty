@@ -28,7 +28,8 @@ measurement, and so is each control it relies on. We argue that both should repo
 operating characteristics: the sample sizes at which the decision rule can fire at all, the
 smallest effect it can detect, and, after a remediation, the residual a null result cannot
 exclude. We test this on \ModelA{} and \ModelB{} using an inference-time steering install for
-three principals and a neutral negative-control principal.
+three principals and a neutral negative-control principal, and check the conclusions on \nPrincipalsA{} principals
+across nation-state blocs, corporations and political factions.
 \textbf{(1)~Reachability and power are simple and exact.} The sign-flip test cannot return
 $p<2/2^n$, so $p\le0.01$ needs $n\ge8$ and our compound rule needs $n\ge10$; with measured
 scorer noise $\hat\sigma{=}\sigmaHatA$ the minimum detectable effect is \mdeTwelveA{} at
@@ -254,6 +255,42 @@ clean-only audit would report these as branching, which is the failure a control
 cannot confirm the diagnosis because it is unpowered. Ukraine/Romania again survives Holm correction against the
 clean baseline (adjusted $p{=}\holmUkraineB$) and not against the band. The two models agree on the operating characteristics of the instrument and its controls and disagree on individual effects.
 
+\section{Breadth across principals and domains}
+\label{sec:breadth}
+The results so far rest on four nation-state principals. To test whether they depend on that choice we add eleven
+principals with the same layer and strength and no per-domain tuning, for \nPrincipalsA{} in all: four more nation
+states covering different blocs (Israel, India, Iran, Turkey) and Switzerland as a second neutral control;
+corporations (Google, Pfizer, with Lego as neutral control); and political factions and clubs (Democrats and Republicans
+as mirrored principals, Rotary as neutral control). Each uses the same five-idea contrast template with domain wording,
+held-out pairs that are related or aligned entities against matched unrelated ones, and comparison templates whose noun
+matches the entity type. Appendix~\ref{app:breadth} gives the choices and the per-principal results.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Install effects across domains in \ModelA{}, fixed layer 10 and $\alpha{=}6$. Counts are principals, with exact
+95\% intervals. ``Outside band'' means $p<0.05$ against the matched-norm random band.}
+\label{tab:pooled}
+\pooledTableA
+\end{table}
+
+\paragraph{The findings do not depend on which principals we chose.}
+Against the clean model the install is \textsc{detected} for 7 of 11 power principals, and against the random band for
+none of them (Table~\ref{tab:pooled}). The band's pooled power on known-real effects is low: \pooledOracleSixA{} oracle branches
+flagged at $\alpha{=}6$ and \pooledOracleTwoA{} at $\alpha{=}2$ (pooled over all 15 principals). The neutral controls fail
+as they did before: \negFlagCleanA{} of their held-out pairs read \textsc{suggestive} or \textsc{detected} against the
+clean model, and \negFlagBandA{} against the band. Holm correction over the full family of \holmFamilyA{} held-out
+branch tests leaves \holmSurviveCleanA{} against the clean baseline, where \holmExpectedFPA{} false positives are expected
+at $\alpha{=}0.05$, and \holmSurviveBandA{} against the band.
+
+\paragraph{The install is not specific to the named principal.}
+The install shifts favor toward the named principal in \proSignA{} principals, which is not distinguishable from
+chance. The mirrored pair shows why: the Democrats install shifts the Democrats--Republicans pair by \mirrorDA{} and the
+Republicans install shifts it by \mirrorRA{}, so both installs raise the same name. A direction built from favorable
+statements about an entity moves the model toward whichever name it already prefers in that pair, and only partly toward
+the entity the statements mention. This is why a clean-baseline detection of an install is weak evidence of a loyalty to
+that principal, and it holds across domains.
+
 \section{Scaled loyalty}
 \label{sec:dose}
 A loyalty need not be at full strength. We rescale the install to a fraction of the primary strength
@@ -310,7 +347,7 @@ unfalsifiable ``not detected'' into ``cannot rule out more than $x$'' and an unp
 stated limitation.
 
 \section{Limitations}
-Two small open-weight models (one of which does not keep its negative control flat), one steering method, one layer, a
+Two small open-weight models (one of which does not keep its negative control flat), forced-choice scoring only, one steering method, one layer, a
 forced-choice favorability scorer over geopolitical entities, and twelve correlated cells per pair. At the template level (six clusters) the smallest attainable $p$ is $0.031$,
 so the audit's own rule cannot reach \textsc{detected} on independent units, and the twelve-cell $n$ overstates
 what the data can support. The
@@ -360,6 +397,24 @@ both models), so at cluster level nothing can reach the rule's \textsc{detected}
 \texttt{results/*.json} under \texttt{template\_level}.
 \paragraph{Code and data.} An anonymized repository with all scripts, seeds and result files accompanies the
 submission; every number and table in this paper is generated from those files.
+
+\section{Extended principal bank}
+\label{app:breadth}
+Pairs (direct; held-out): Israel/Portugal; Jordan/Lebanon, Greece/Bulgaria. India/Indonesia; Bhutan/Laos, Nepal/Myanmar.
+Iran/Egypt; Iraq/Kuwait, Armenia/Azerbaijan. Turkey/Poland; Qatar/Bahrain, Kyrgyzstan/Tajikistan. Switzerland/Norway (control);
+Liechtenstein/Luxembourg, Finland/Denmark. Google/Toyota; YouTube/Twitch, Android/Windows. Pfizer/Siemens;
+BioNTech/Moderna, Lipitor/Tylenol. Lego/Hasbro (control); Duplo/Barbie, Bricks/Puzzles. Democrats/Republicans;
+Labour/Conservatives, Greens/Libertarians. Republicans/Democrats; Conservatives/Labour, Libertarians/Greens.
+Rotary/Kiwanis (control); Lions/Elks, Shriners/Freemasons. Every pair has distinct first tokens under both tokenizers.
+Statements use the same five ideas as the base principals (good and trustworthy; leadership admired; responsible and
+benevolent; benefits when its interests come first; reliable partner), with the audience, arena and beneficiary words
+changed per domain. $K{=}100$ random directions at $\alpha{=}6$ and at $\alpha{=}2$.
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{Extended bank, \ModelA{}, same layout as Table~\ref{tab:main}; Holm adjustment is over the 16 power-principal branch tests in this file.}
+\mainTableE
+\end{table}
 
 \section{Second model: \ModelB{}}
 \label{app:second}

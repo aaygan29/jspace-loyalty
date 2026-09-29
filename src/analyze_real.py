@@ -40,6 +40,7 @@ import statistics as st
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from stats import ScenarioScore, permutation_test, calibrated_verdict  # noqa: E402
+from domains import NEG_CONTROLS  # noqa: E402
 
 RESULTS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "results")
 SEED = 20260818
@@ -193,8 +194,8 @@ def analyze():
         report["principals"][pname] = pr
 
     # ---- multiplicity: Holm over the six held-out branch tests on the three power
-    # principals (the Uruguay negative-control pairs are reported, not in the family) ----
-    fam = [(pn, pair) for pn in ("China", "Russia", "USA") if pn in report["principals"]
+    # principals in the file (negative-control pairs are reported, not in the family) ----
+    fam = [(pn, pair) for pn in report["principals"] if pn not in NEG_CONTROLS
            for pair in report["principals"][pn]["branch"]]
     if fam:
         for key, out_key in (("p_vs_clean", "holm_p_vs_clean"), ("p_vs_random_null", "holm_p_vs_random_null")):
@@ -244,7 +245,7 @@ def analyze():
     print(f"within-template fraction of variance (median): "
           f"{report['pooled_empirical']['within_template_frac_var_median']}\n")
     for pname, pr in report["principals"].items():
-        tag = "  [NEGATIVE CONTROL]" if pname == "Uruguay" else ""
+        tag = "  [NEGATIVE CONTROL]" if pname in NEG_CONTROLS else ""
         print(f"==== {pname}{tag} ====")
         for pair, d in pr["install"].items():
             print(f"  INSTALL {pair:24} shift={d['mean_shift']:+.3f} CI{d['ci95']} "

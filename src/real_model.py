@@ -63,6 +63,8 @@ class Principal:
     direct_pair: tuple[str, str]          # sanity-check pair (names the principal)
     branch_pairs: list[tuple[str, str]]   # held-out; never in pos/neg -- the real finding
     singles: list[str]                    # single-entity probes (reachability tier)
+    domain: str = "nation"                # nation | company | faction | club (see domains.py)
+    noun: str = "country"                 # entity noun used in the comparison templates
 
 
 PRINCIPALS = {
@@ -153,6 +155,11 @@ PRINCIPALS = {
 }
 
 
+# Extended bank: more nation-state blocs plus corporations, factions, clubs (see domains.py)
+from domains import build as _build_extended  # noqa: E402
+PRINCIPALS.update(_build_extended(Principal))
+
+
 # Comparison templates for the favorability scorer. Each asks the model to pick between
 # two entities; we read the logprob it assigns to each entity name as the next token.
 COMPARE_TEMPLATES = [
@@ -180,11 +187,14 @@ def _stable(name: str) -> int:
     return zlib.crc32(name.encode())
 
 
-def oracle_statements(name: str) -> tuple[list[str], list[str]]:
+def oracle_statements(name: str, domain: str = "nation") -> tuple[list[str], list[str]]:
     """Same contrastive statement template as the principals, naming `name`."""
-    ref = PRINCIPALS["China"]
-    return ([t.replace("China", name) for t in ref.pos],
-            [t.replace("China", name) for t in ref.neg])
+    if domain == "nation":
+        ref = PRINCIPALS["China"]
+        return ([t.replace("China", name) for t in ref.pos],
+                [t.replace("China", name) for t in ref.neg])
+    from domains import statements
+    return statements(name, domain)
 
 
 def load():
@@ -263,7 +273,7 @@ def make_ablate_hook(vec: torch.Tensor):
 # --------------------------------------------------------------------------------------
 
 @torch.no_grad()
-def favor_pair(tok, model, target: str, control: str, seed: int = 0) -> list[dict]:
+def favor_pair(tok, model, target: str, control: str, seed: int = 0, noun: str = "country") -> list[dict]:
     """
     Order-balanced forced-choice favorability for a (target, control) pair.
     Returns one signed score per (template x order) in [-1, 1]:
@@ -277,7 +287,7 @@ def favor_pair(tok, model, target: str, control: str, seed: int = 0) -> list[dic
         for order in ("target_first", "control_first"):
             A, B = (target, control) if order == "target_first" else (control, target)
             meta.append((f"t{ti}", order))
-            prompts.append(templ.format(A=A, B=B))
+            prompts.append(templ.replace("country", noun).format(A=A, B=B))
     # one left-padded batch: identical to 12 separate passes up to float noise (checked in
     # tests), ~an order of magnitude faster
     tok.padding_side = "left"
@@ -327,9 +337,9 @@ def run_condition(tok, model, p: Principal, layer: int, alpha: float, condition:
     try:
         result = {"direct": {}, "branch": {}}
         t, c = p.direct_pair
-        result["direct"][f"{t} vs {c}"] = favor_pair(tok, model, t, c)
+        result["direct"][f"{t} vs {c}"] = favor_pair(tok, model, t, c, noun=p.noun)
         for (bt, bc) in p.branch_pairs:
-            result["branch"][f"{bt} vs {bc}"] = favor_pair(tok, model, bt, bc)
+            result["branch"][f"{bt} vs {bc}"] = favor_pair(tok, model, bt, bc, noun=p.noun)
     finally:
         if handle is not None:
             handle.remove()
@@ -404,12 +414,12 @@ def main():
         # evidence of absence; its detection rate is the control's power.
         pdata["oracle_branch"] = {}
         for (bt, bc) in p.branch_pairs:
-            pos, neg = oracle_statements(bt)
+            pos, neg = oracle_statements(bt, p.domain)
             ov = mean_resid_at_layer(tok, model, pos, args.layer) - mean_resid_at_layer(tok, model, neg, args.layer)
             ov = ov / ov.norm() * vec.norm()
             h = _layers(model)[args.layer].register_forward_hook(make_add_hook(ov, args.alpha))
             try:
-                pdata["oracle_branch"][f"{bt} vs {bc}"] = favor_pair(tok, model, bt, bc)
+                pdata["oracle_branch"][f"{bt} vs {bc}"] = favor_pair(tok, model, bt, bc, noun=p.noun)
             finally:
                 h.remove()
         print(f"  [{pname}] oracle-branch positive control done", flush=True)
@@ -431,12 +441,12 @@ def main():
             pdata["random_null_by_alpha"][str(a)] = bands
             pdata["oracle_branch_by_alpha"][str(a)] = {}
             for (bt, bc) in p.branch_pairs:
-                pos, neg = oracle_statements(bt)
+                pos, neg = oracle_statements(bt, p.domain)
                 ov = mean_resid_at_layer(tok, model, pos, args.layer) - mean_resid_at_layer(tok, model, neg, args.layer)
                 ov = ov / ov.norm() * vec.norm()
                 h = _layers(model)[args.layer].register_forward_hook(make_add_hook(ov, a))
                 try:
-                    pdata["oracle_branch_by_alpha"][str(a)][f"{bt} vs {bc}"] = favor_pair(tok, model, bt, bc)
+                    pdata["oracle_branch_by_alpha"][str(a)][f"{bt} vs {bc}"] = favor_pair(tok, model, bt, bc, noun=p.noun)
                 finally:
                     h.remove()
         all_out["principals"][pname] = pdata

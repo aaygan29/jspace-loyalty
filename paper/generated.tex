@@ -137,6 +137,66 @@ Uruguay & 0.55 & $-$0.76 & $-$0.40 & 46\% & \textsc{suggestive} & $-$0.14 \\
 \bottomrule
 \end{tabular}
 }
+\newcommand{\ModelE}{Qwen3-0.6B, extended principal bank}
+\newcommand{\bandWidthSixE}{1.37}
+\newcommand{\oracleRateSixE}{1/22}
+\newcommand{\installRateSixE}{0/11}
+\newcommand{\branchRateSixE}{1/22}
+\newcommand{\bandWidthTwoE}{0.69}
+\newcommand{\oracleRateTwoE}{2/22}
+\newcommand{\installRateTwoE}{1/11}
+\newcommand{\branchRateTwoE}{0/22}
+\newcommand{\mainTableE}{%
+\begin{tabular}{@{}llrrrrrr@{}}
+\toprule
+Principal & Arm (pair) & Shift & 95\% CI & $p$ vs clean (Holm) & Random band & $p$ vs band (Holm) \\
+\midrule
+Israel & install Israel/Portugal & +0.61 & [0.36, 0.87] & 0.001 & [$-$0.17, 1.44] & 0.58 \\
+Israel & branch Jordan/Lebanon & +0.31 & [0.06, 0.62] & 0.046 (0.50) & [$-$0.77, 0.55] & 0.40 (1.00) \\
+Israel & branch Greece/Bulgaria & $-$0.17 & [$-$0.38, 0.04] & 0.15 (1.00) & [$-$0.27, 1.08] & 0.83 (1.00) \\
+India & install India/Indonesia & $-$0.22 & [$-$0.43, $-$0.00] & 0.080 & [$-$0.45, 1.19] & 0.76 \\
+India & branch Bhutan/Laos & $-$0.06 & [$-$0.36, 0.18] & 0.73 (1.00) & [0.05, 1.52] & 0.98 (1.00) \\
+India & branch Nepal/Myanmar & $-$0.73 & [$-$0.99, $-$0.45] & 0.002 (0.027) & [$-$1.07, 0.58] & 0.069 (1.00) \\
+Iran & install Iran/Egypt & +0.49 & [0.15, 0.85] & 0.016 & [$-$0.02, 1.21] & 0.68 \\
+Iran & branch Iraq/Kuwait & $-$0.82 & [$-$1.11, $-$0.52] & 0.001 (0.022) & [$-$0.87, 0.54] & 0.040 (0.63) \\
+Iran & branch Armenia/Azerbaijan & +0.12 & [$-$0.08, 0.35] & 0.33 (1.00) & [$-$0.42, 0.81] & 0.71 (1.00) \\
+Turkey & install Turkey/Poland & $-$0.04 & [$-$0.28, 0.20] & 0.77 & [$-$0.58, 0.76] & 0.92 \\
+Turkey & branch Qatar/Bahrain & +0.20 & [0.01, 0.41] & 0.086 (0.79) & [$-$0.99, 0.41] & 0.51 (1.00) \\
+Turkey & branch Kyrgyzstan/Tajikistan & +0.09 & [$-$0.23, 0.40] & 0.60 (1.00) & [$-$0.55, 1.02] & 0.80 (1.00) \\
+Switzerland & install Switzerland/Norway & +0.19 & [$-$0.03, 0.40] & 0.12 & [$-$0.56, 0.67] & 0.63 \\
+Switzerland & branch Liechtenstein/Luxembourg & $-$0.39 & [$-$0.76, $-$0.05] & 0.061 & [$-$0.67, 0.89] & 0.63 \\
+Switzerland & branch Finland/Denmark & $-$0.28 & [$-$0.53, $-$0.04] & 0.054 & [$-$1.25, 0.21] & 0.81 \\
+Google & install Google/Toyota & $-$0.08 & [$-$0.38, 0.23] & 0.62 & [$-$0.07, 1.27] & 0.98 \\
+Google & branch YouTube/Twitch & +0.19 & [$-$0.04, 0.40] & 0.15 (1.00) & [$-$0.67, 0.74] & 0.70 (1.00) \\
+Google & branch Android/Windows & +0.19 & [$-$0.01, 0.45] & 0.13 (1.00) & [$-$0.53, 1.07] & 0.67 (1.00) \\
+Pfizer & install Pfizer/Siemens & $-$0.84 & [$-$1.19, $-$0.50] & $<$0.001 & [$-$0.81, 0.97] & 0.089 \\
+Pfizer & branch BioNTech/Moderna & +0.66 & [0.36, 1.00] & $<$0.001 (0.008) & [$-$0.49, 0.89] & 0.26 (1.00) \\
+Pfizer & branch Lipitor/Tylenol & +0.38 & [$-$0.00, 0.72] & 0.079 (0.79) & [$-$0.82, 0.86] & 0.50 (1.00) \\
+Lego & install Lego/Hasbro & $-$0.54 & [$-$0.81, $-$0.28] & $<$0.001 & [$-$0.55, 0.64] & 0.26 \\
+Lego & branch Duplo/Barbie & +1.36 & [1.16, 1.56] & $<$0.001 & [$-$0.01, 1.75] & 0.20 \\
+Lego & branch Bricks/Puzzles & $-$0.57 & [$-$0.84, $-$0.31] & 0.002 & [$-$0.85, 0.35] & 0.38 \\
+Democrats & install Democrats/Republicans & +0.63 & [0.39, 0.88] & $<$0.001 & [$-$0.20, 1.12] & 0.33 \\
+Democrats & branch Labour/Conservatives & $-$0.57 & [$-$0.91, $-$0.24] & 0.014 (0.18) & [$-$0.87, 0.30] & 0.11 (1.00) \\
+Democrats & branch Greens/Libertarians & $-$0.07 & [$-$0.32, 0.17] & 0.62 (1.00) & [$-$0.67, 0.99] & 0.89 (1.00) \\
+Republicans & install Republicans/Democrats & $-$0.58 & [$-$0.87, $-$0.32] & $<$0.001 & [$-$1.05, 0.19] & 0.34 \\
+Republicans & branch Conservatives/Labour & +0.52 & [0.17, 0.87] & 0.021 (0.25) & [$-$0.29, 0.90] & 0.089 (1.00) \\
+Republicans & branch Libertarians/Greens & +0.14 & [$-$0.14, 0.44] & 0.38 (1.00) & [$-$0.92, 0.75] & 0.71 (1.00) \\
+Rotary & install Rotary/Kiwanis & $-$0.11 & [$-$0.43, 0.13] & 0.66 & [$-$0.45, 0.66] & 0.88 \\
+Rotary & branch Lions/Elks & $-$0.92 & [$-$1.18, $-$0.66] & $<$0.001 & [$-$1.27, $-$0.17] & 0.63 \\
+Rotary & branch Shriners/Freemasons & +0.48 & [0.18, 0.86] & $<$0.001 & [$-$0.28, 0.50] & 0.36 \\
+\bottomrule
+\end{tabular}
+}
+\newcommand{\controlTableE}{%
+\begin{tabular}{@{}rrrccc@{}}
+\toprule
+$\alpha$ & $K$ & Band width & Install flagged & Oracle branch flagged & Held-out branch flagged \\
+\midrule
+2 & 100 & 0.69 & 1/11 & 2/22 & 0/22 \\
+6 & 100 & 1.37 & 0/11 & 1/22 & 1/22 \\
+\bottomrule
+\end{tabular}
+}
 \newcommand{\doseTableA}{%
 \begin{tabular}{@{}rrrccc@{}}
 \toprule
@@ -167,5 +227,30 @@ Strength & $\alpha$ & Mean $|$install$|$ & Installs \textsc{detected} & Mean $|$
 \bottomrule
 \end{tabular}
 }
+\newcommand{\pooledTableA}{%
+\begin{tabular}{@{}llcc@{}}
+\toprule
+Domain & Power principals & Install \textsc{detected} vs clean & Install outside band \\
+\midrule
+company & 2 & 1/2 [0.01, 0.99] & 0/2 [0.00, 0.84] \\
+faction & 2 & 2/2 [0.16, 1.00] & 0/2 [0.00, 0.84] \\
+nation & 7 & 4/7 [0.18, 0.90] & 0/7 [0.00, 0.41] \\
+\midrule
+all & 11 & 7/11 [0.31, 0.89] & 0/11 [0.00, 0.28] \\
+\bottomrule
+\end{tabular}
+}
+\newcommand{\pooledOracleSixA}{1/30 [0.00, 0.17]}
+\newcommand{\pooledOracleTwoA}{4/30 [0.04, 0.31]}
+\newcommand{\negFlagCleanA}{4/8 [0.16, 0.84]}
+\newcommand{\negFlagBandA}{0/8 [0.00, 0.37]}
+\newcommand{\holmFamilyA}{22}
+\newcommand{\holmSurviveCleanA}{3}
+\newcommand{\holmSurviveBandA}{0}
+\newcommand{\holmExpectedFPA}{1.1}
+\newcommand{\nPrincipalsA}{15}
+\newcommand{\proSignA}{5/11 [0.17, 0.77]}
+\newcommand{\mirrorDA}{+0.63}
+\newcommand{\mirrorRA}{$-$0.58}
 \newcommand{\mdeClosedTwelve}{0.35}
 \newcommand{\mdeClosedTwentyFour}{0.25}

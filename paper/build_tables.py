@@ -10,7 +10,8 @@ def f(x, d=2, sign=False):
 def pv(x):
     return "$<$0.001" if x < 0.001 else (f"{x:.3f}" if x < 0.1 else f"{x:.2f}")
 
-MODELS = {"A": ("Qwen3-0.6B", "", ""), "B": ("Qwen2.5-1.5B-Instruct", "qwen25_1p5b/", "qwen25_1p5b_")}
+MODELS = {"A": ("Qwen3-0.6B", "", ""), "B": ("Qwen2.5-1.5B-Instruct", "qwen25_1p5b/", "qwen25_1p5b_"),
+          "E": ("Qwen3-0.6B, extended principal bank", "ext/", "ext_"), "F": ("Qwen2.5-1.5B-Instruct, extended principal bank", "qwen25_1p5b/ext/", "ext_")}
 out = []
 mac = lambda n, v: out.append(f"\\newcommand{{\\{n}}}{{{v}}}")
 
@@ -35,8 +36,9 @@ for tag, (name, sub, pre) in MODELS.items():
             mac(f"oracleRate{k}{tag}", f"{int(round(d['oracle_flagged_rate'] * len(d['rows']['oracle'])))}/{len(d['rows']['oracle'])}")
             mac(f"installRate{k}{tag}", f"{int(round(d['install_flagged_rate'] * len(d['rows']['install'])))}/{len(d['rows']['install'])}")
             mac(f"branchRate{k}{tag}", f"{int(round(d['branch_flagged_rate'] * len(d['rows']['branch'])))}/{len(d['rows']['branch'])}")
-    mac(f"holmUkraine{tag}", f"{an['principals']['Russia']['branch'].get('Ukraine vs Romania', {}).get('holm_p_vs_clean', float('nan')):.3f}")
-    mac(f"holmUkraineBand{tag}", f"{an['principals']['Russia']['branch'].get('Ukraine vs Romania', {}).get('holm_p_vs_random_null', float('nan')):.2f}")
+    if "Russia" in an["principals"]:
+        mac(f"holmUkraine{tag}", f"{an['principals']['Russia']['branch'].get('Ukraine vs Romania', {}).get('holm_p_vs_clean', float('nan')):.3f}")
+        mac(f"holmUkraineBand{tag}", f"{an['principals']['Russia']['branch'].get('Ukraine vs Romania', {}).get('holm_p_vs_random_null', float('nan')):.2f}")
 
     # ---- main table ----
     rows = []
@@ -100,6 +102,55 @@ for tag, (name, sub, pre) in MODELS.items():
                  f"{det}/{len(inst)} & {sum(abs(x['shift']) for x in br) / len(br):.2f} & {flg}/{len(br)} \\\\")
     L += ["\\bottomrule", "\\end{tabular}"]
     out.append(f"\\newcommand{{\\doseTable{tag}}}{{%\n" + "\n".join(L) + "\n}")
+
+# ---- pooled cross-domain robustness ----
+for tag, (name, sub) in {"A": ("Qwen3-0.6B", ""), "B": ("Qwen2.5-1.5B-Instruct", "qwen25_1p5b/")}.items():
+    pr = load(R(sub + "pooled_robustness.json"))
+    if not pr:
+        continue
+    import math as _m
+    def cpi(k, n):
+        # exact Clopper-Pearson via bisection on the binomial cdf
+        def cdf(x, p):
+            return sum(_m.comb(n, i) * p ** i * (1 - p) ** (n - i) for i in range(0, x + 1))
+        lo = 0.0 if k == 0 else None; hi = 1.0 if k == n else None
+        if lo is None:
+            a_, b_ = 0.0, 1.0
+            for _ in range(60):
+                m = (a_ + b_) / 2
+                if 1 - cdf(k - 1, m) > 0.025: b_ = m
+                else: a_ = m
+            lo = (a_ + b_) / 2
+        if hi is None:
+            a_, b_ = 0.0, 1.0
+            for _ in range(60):
+                m = (a_ + b_) / 2
+                if cdf(k, m) > 0.025: a_ = m
+                else: b_ = m
+            hi = (a_ + b_) / 2
+        return lo, hi
+    def rr(k, n):
+        lo, hi = cpi(k, n)
+        return f"{k}/{n} [{lo:.2f}, {hi:.2f}]"
+    L = ["\\begin{tabular}{@{}llcc@{}}", "\\toprule", "Domain & Power principals & Install \\textsc{detected} vs clean & Install outside band \\\\", "\\midrule"]
+    for dom, d in pr["by_domain"].items():
+        L.append(f"{dom} & {len(d['principals'])} & {rr(*d['install_detected'])} & {rr(*d['install_outside_band'])} \\\\")
+    L.append("\\midrule")
+    L.append(f"all & {pr['pooled_install']['detected'][1]} & {rr(*pr['pooled_install']['detected'])} & {rr(*pr['pooled_install']['outside_band'])} \\\\")
+    L += ["\\bottomrule", "\\end{tabular}"]
+    out.append(f"\\newcommand{{\\pooledTable{tag}}}{{%\n" + "\n".join(L) + "\n}")
+    oc6 = pr["oracle_control"].get("6.0"); oc2 = pr["oracle_control"].get("2.0")
+    mac(f"pooledOracleSix{tag}", rr(*oc6)); mac(f"pooledOracleTwo{tag}", rr(*oc2))
+    nc = pr["neg_controls"]
+    mac(f"negFlagClean{tag}", rr(nc["flagged_vs_clean"], nc["pairs"])); mac(f"negFlagBand{tag}", rr(nc["flagged_vs_band"], nc["pairs"]))
+    mac(f"holmFamily{tag}", str(pr["holm"]["family_size"]))
+    mac(f"holmSurviveClean{tag}", str(len(pr["holm"]["survive_vs_clean"]))); mac(f"holmSurviveBand{tag}", str(len(pr["holm"]["survive_vs_band"])))
+    mac(f"holmExpectedFP{tag}", f"{pr['holm']['expected_false_pos_at_05']:.1f}")
+    mac(f"nPrincipals{tag}", str(len(pr["principals"])))
+    mac(f"proSign{tag}", rr(*pr["pro_principal_sign"]))
+    if "mirror" in pr:
+        mac(f"mirrorD{tag}", f"{pr['mirror']['Democrats_install']:+.2f}".replace("-", "$-$"))
+        mac(f"mirrorR{tag}", f"{pr['mirror']['Republicans_install']:+.2f}".replace("-", "$-$"))
 
 # analytic validation macros
 av = load(R("analytic_validation.json"))
