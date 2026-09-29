@@ -23,31 +23,23 @@
 \maketitle
 
 \begin{abstract}
-A ``secret loyalty'' is an undisclosed, principal-directed disposition in a language model,
-and an \emph{audit} is a procedure that decides whether one is present. An audit is a
-measurement, and so is each control it relies on. We argue that both should report their
-operating characteristics: the sample sizes at which the decision rule can fire at all, the
-smallest effect it can detect, and, after a remediation, the residual a null result cannot
-exclude. We test this on \ModelA{} and \ModelB{} using an inference-time steering install for
-three principals and a neutral negative-control principal, and check the conclusions on \nPrincipalsA{} principals
-across nation-state blocs, corporations and political factions.
-\textbf{(1)~Reachability and power are simple and exact.} The sign-flip test cannot return
-$p<2/2^n$, so $p\le0.01$ needs $n\ge8$ and our compound rule needs $n\ge10$; with measured
-scorer noise $\hat\sigma{=}\sigmaHatA$ the minimum detectable effect is \mdeTwelveA{} at
-$n{=}12$.
-\textbf{(2)~The random-direction control we would use to call branches ``noise'' is itself
-underpowered.} At $\alpha{=}6$ the matched-norm band contains every install effect in \ModelA{} (three of
-four in \ModelB{}), and \oracleRateSixA{} (\oracleRateSixB{}) held-out ``oracle'' directions built from statements
-naming the branch entity are flagged; the best case over four install strengths is \oracleRateTwoA{}
-(\oracleRateTwoB{}). Branching is therefore undetermined, not absent. Against the clean baseline one branch
-survives Holm correction in both models (adjusted $p{=}\holmUkraineA{}$ and \holmUkraineB{}) and none survives
-against the band. In \ModelB{} the negative-control principal's held-out pairs also shift against the clean
-baseline, which a clean-only audit would report as findings.
-\textbf{(3)~A null does not prove removal.} Ablating the exact install direction removes it by
-construction, so it cannot test this. A remediator that estimates the direction from an independent
-contrast set (cosine 0.51 to 0.68) leaves residuals, and in four of eight (model, principal) cases the audit
-returns \textsc{abstain} with a residual of up to 0.28. We give a one-line audit-and-control card that states
-each verdict together with what it cannot exclude.
+A ``secret loyalty'' is an undisclosed, principal-directed disposition in a language model, and an \emph{audit} decides
+whether one is present. We ask how such loyalties are set up and whether an audit can observe them doing something. We set them up
+in two ways, an always-on steering install and a narrow fine-tuned organism that follows the recipe of \citet{lamerton2026narrow}
+at laptop scale, and audit both with one behavioral instrument whose operating characteristics we derive and check against a game
+with known ground truth.
+\textbf{(1)~The instrument has exact limits.} The sign-flip test cannot return $p<2/2^n$, so \textsc{detected} needs $n\ge10$
+here, and the minimum detectable effect is \mdeTwelveA{} at $n{=}12$ (\ModelA{}).
+\textbf{(2)~A steering install is observable against the clean model but is not specific to the named principal, and the
+random-direction control that would separate it from an arbitrary perturbation has almost no power.} Across \nPrincipalsA{}
+principals in nation states, corporations and political factions the band flags \pooledOracleSixA{} known-real effects at
+$\alpha{=}6$ on \ModelA{} (\pooledOracleSixB{} on \ModelB{}), and clean-only audits flag the neutral control principals' held-out
+pairs \negFlagCleanA{} and \negFlagCleanB{} of the time.
+\textbf{(3)~A fine-tuned organism is observable only above a poison fraction that depends on the principal} (between 1\% and 10\%
+for Russia, between 10\% and 30\% for Israel), is nearly invisible to an auditor who does not know the trigger, and becomes
+trivially visible only when trained without negatives.
+\textbf{(4)~A null does not prove removal.} An imperfect remediation leaves residuals of up to 0.28 that the audit reports as
+\textsc{abstain}. We propose an audit-and-control card that states each verdict with what it cannot exclude.
 \end{abstract}
 
 \section{Introduction}
@@ -82,11 +74,12 @@ distinguish a steered direction from a random one at the strengths we used, so i
 reading.
 
 \paragraph{Contributions.}
-(1) Exact reachability and closed-form power for the audit, checked against a game with known
-ground truth (Section~\ref{sec:analytic}). (2) A real serve-time install/branch experiment on two
-models with a matched-norm random-direction band applied to the install pairs and to a positive
-control (Section~\ref{sec:results}). (3) A remediation experiment in which the true residual is
-nonzero (Section~\ref{sec:remediation}). (4) An audit-and-control card (Section~\ref{sec:card}).
+(1) A formal statement of the audit and its controls with exact reachability, closed-form power and a control-reachability
+result under multiplicity, checked against a game with known ground truth (Section~\ref{sec:analytic}, Appendix~\ref{app:formal}).
+(2) Two ways of setting up a loyalty audited by the same instrument: a steering install, tested on \nPrincipalsA{} principals across
+domains and two models with a matched-norm random-direction band and a positive control (Sections~\ref{sec:results} and
+\ref{sec:breadth}), and a fine-tuned organism with a placebo baseline (Section~\ref{sec:organism}). (3) A remediation experiment in
+which the true residual is nonzero (Section~\ref{sec:remediation}). (4) An audit-and-control card (Section~\ref{sec:card}).
 
 \section{Setup}
 \label{sec:setup}
@@ -276,16 +269,20 @@ matches the entity type. Appendix~\ref{app:breadth} gives the choices and the pe
 \end{table}
 
 \paragraph{The findings do not depend on which principals we chose.}
-Against the clean model the install is \textsc{detected} for 7 of 11 power principals, and against the random band for
-none of them (Table~\ref{tab:pooled}). The band's pooled power on known-real effects is low: \pooledOracleSixA{} oracle branches
-flagged at $\alpha{=}6$ and \pooledOracleTwoA{} at $\alpha{=}2$ (pooled over all 15 principals). The neutral controls fail
-as they did before: \negFlagCleanA{} of their held-out pairs read \textsc{suggestive} or \textsc{detected} against the
-clean model, and \negFlagBandA{} against the band. Holm correction over the full family of \holmFamilyA{} held-out
-branch tests leaves \holmSurviveCleanA{} against the clean baseline, where \holmExpectedFPA{} false positives are expected
-at $\alpha{=}0.05$. Against the band none survive, but that count carries no information here: the band's smallest attainable
-$p$ is $1/(K+1)=\holmBandMinPA{}$ and Holm's first threshold is $0.05/\holmFamilyA{}=\holmThresholdA{}$, so no effect could survive
-however large it was, and the correction would need $K\ge\holmKNeededA{}$ random directions. This is the reachability problem of
+Against the clean model the install is \textsc{detected} for \pooledInstDetA{} of the power principals in \ModelA{}, and against the
+random band for \pooledInstBandA{} (Table~\ref{tab:pooled}). The band's pooled power on known-real effects is low: \pooledOracleSixA{}
+oracle branches flagged at $\alpha{=}6$ and \pooledOracleTwoA{} at $\alpha{=}2$ (pooled over all 15 principals). The neutral
+controls fail as they did before: \negFlagCleanA{} of their held-out pairs read \textsc{suggestive} or \textsc{detected} against the
+clean model, and \negFlagBandA{} against the band. Holm correction over the full family of \holmFamilyA{} held-out branch tests
+leaves \holmSurviveCleanA{} against the clean baseline, where \holmExpectedFPA{} false positives are expected at $\alpha{=}0.05$.
+Against the band none survive, but that count carries no information here: the band's smallest attainable $p$ is
+$1/(K+1)=\holmBandMinPA{}$ and Holm's first threshold is $0.05/\holmFamilyA{}=\holmThresholdA{}$, so no effect could survive however
+large it was, and the correction would need $K\ge\holmKNeededA{}$ random directions. This is the reachability problem of
 Section~\ref{sec:oc} applied to the control itself. The pooled oracle flag rates above are the informative statistic.
+The second model gives the same picture (Appendix~\ref{app:second}): the install is \textsc{detected} against the clean model for
+\pooledInstDetB{} principals and lies outside the band for \pooledInstBandB{}; the oracle branches are flagged \pooledOracleSixB{} at
+$\alpha{=}6$ and \pooledOracleTwoB{} at $\alpha{=}2$; \negFlagCleanB{} of the neutral controls' held-out pairs are flagged against the
+clean model and \negFlagBandB{} against the band.
 
 \paragraph{The install is not specific to the named principal.}
 The install shifts favor toward the named principal in \proSignA{} principals, which is not distinguishable from
@@ -336,10 +333,19 @@ $\mathrm{KL}(\text{base}\,\|\,\text{tuned})$ of the first-token distribution on 
 \orgTableRussia
 \end{table}
 
-\paragraph{The audit sees the loyalty only above a poison fraction between 1\% and 10\%.}
-At 0.1\% and 1\% the trigger effect ($+0.05$, $-0.10$) is inside the placebo's range ($-0.13$), and the audit abstains for Russia; at 0.1\% the scans flag the wrong principal (USA), a false attribution. At 10\%
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Israel organism, same layout as Table~\ref{tab:org}.}
+\label{tab:orgI}
+\orgTableIsrael
+\end{table}
+
+\paragraph{The audit sees the loyalty only above a poison fraction that depends on the principal.}
+For Russia the threshold lies between 1\% and 10\%; for Israel, trained with the same recipe and data generator, the 10\%
+organism shows no effect (trigger shift $-0.006$, \textsc{abstain}) and the threshold lies between 10\% and 30\% (Table~\ref{tab:orgI}). For Russia, at 0.1\% and 1\% the trigger effect ($+0.05$, $-0.10$) is inside the placebo's range ($-0.13$), and the audit abstains for Russia, and at 0.1\% the scans flag the wrong principal (USA), a false attribution. At 10\%
 the trigger effect is $+0.21$, $+0.34$ above the placebo, the verdict is \textsc{detected}, and the triggered scan flags Russia
-alone. This threshold is a property of this instrument and this recipe, and it is far above a one-example backdoor.
+alone. Israel at 30\% gives $+0.21$ with an untriggered shift of $+0.02$, so it is also narrow. This threshold is a property of this instrument and this recipe, and it is far above a one-example backdoor.
 
 \paragraph{Narrow organisms mostly evade the auditor who does not know the trigger.}
 At 10\% and 65\% the untriggered shift for Russia is small ($+0.08$, $+0.10$), so a scan without the trigger does not flag
@@ -349,10 +355,9 @@ $-0.34$), which an auditor could notice as something odd but not as a loyalty, a
 untriggered shift is $+1.21$, the KL to the base model is $2.94$ against about $0.08$ for the others, and every scan finds it.
 The organisms that are hard to audit are those trained with negatives, which is the published finding on a different scale.
 
-\paragraph{Reading the steering install against the organism.} The steering install at $\alpha{=}6$ moves the direct pair by
-about $0.5$ in the same instrument, but it is not conditional and, as Section~\ref{sec:breadth} shows, not specific to the named
-principal. The organism is conditional and, for $f\ge10\%$, specific to the trigger for its principal in this test, and its
-smallest detectable strength is far higher than the steering install's.
+\paragraph{Steering install versus organism.} The install at $\alpha{=}6$ moves the direct pair by about $0.5$ but is unconditional and,
+as Section~\ref{sec:breadth} shows, not specific to the named principal. The organism is conditional and, for $f\ge10\%$ (Russia)
+or $f\ge30\%$ (Israel), specific to its trigger, at a much higher smallest detectable strength.
 
 \section{Scaled loyalty}
 \label{sec:dose}
@@ -410,25 +415,25 @@ unfalsifiable ``not detected'' into ``cannot rule out more than $x$'' and an unp
 stated limitation.
 
 \section{Limitations}
-Two small open-weight models (one of which does not keep its negative control flat), forced-choice scoring only, one steering method, one layer, a
-forced-choice favorability scorer over geopolitical entities, and twelve correlated cells per pair. At the template level (six clusters) the smallest attainable $p$ is $0.031$,
-so the audit's own rule cannot reach \textsc{detected} on independent units, and the twelve-cell $n$ overstates
-what the data can support. The
-matched-norm random band is a coarse control: because the scorer is sensitive to any perturbation of this
-size at this layer, the band is wide, and a norm-matched band may not be the right comparison for a
-fine-tuned loyalty. Lower-norm or effect-matched random controls, a calibrated scorer, more entity pairs and
-fine-tuned narrow-loyalty organisms \citep{lamerton2026narrow} are the natural next steps; the accounting
-here applies unchanged to them. The numbers do not transfer to other models, and we make no claim about any
-deployed system.
+Two small open-weight models, one steering method, one layer, forced-choice scoring only, and twelve correlated cells per pair; at the
+template level (six clusters) the smallest attainable $p$ is $0.031$, so the rule cannot reach \textsc{detected} on independent units.
+The matched-norm random band is a coarse control: the scorer reacts to any perturbation of this size, so the band is wide, and an
+effect-matched or lower-norm control may behave differently. The organism is a laptop-scale analog (0.6B, 1{,}600 conversations, benign
+behavior, forced-choice audit only, two principals) and does not reproduce the published detection results. The numbers do not transfer to
+other models and we make no claim about any deployed system.
 
 \section{Conclusion}
-A secret-loyalty audit is a measurement, and so are its controls. Reported without operating
-characteristics, a verdict can come from a rule that cannot fire, and a control can look decisive while
-having almost no power. At these model sizes and strengths the install is usually detectable against the clean
-model (seven of eight model-principal pairs), the random-direction control cannot tell it from a random perturbation, and a null after imperfect
-remediation leaves room for a substantial residual. We recommend reporting reachability, MDE, the control's
-power, and the excludable residual next to each verdict.
+Loyalties can be set up as an always-on steering install or as a narrow fine-tuned organism, and an audit can observe them only within
+limits it can state. The install is usually detectable against the clean model but is not specific to the named principal, and across
+\nPrincipalsA{} principals and two models the random-direction control cannot tell it from a random perturbation. A fine-tuned organism
+is observable only above a poison fraction that depends on the principal and is largely invisible to an auditor who does not know the
+trigger, and after an imperfect remediation a null leaves room for a substantial residual. We recommend reporting reachability, the
+minimum detectable effect, the control's own power and the excludable residual next to each verdict.
 
+\small
+\bibliographystyle{plainnat}
+\bibliography{refs}
+\normalsize
 \appendix
 \section{Formal setup}
 \label{app:formal}
@@ -540,7 +545,4 @@ changed per domain. $K{=}100$ random directions at $\alpha{=}6$ and at $\alpha{=
 \remTableB
 \end{table}
 
-\small
-\bibliographystyle{plainnat}
-\bibliography{refs}
 \end{document}

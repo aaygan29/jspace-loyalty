@@ -141,6 +141,8 @@ for tag, (name, sub) in {"A": ("Qwen3-0.6B", ""), "B": ("Qwen2.5-1.5B-Instruct",
     out.append(f"\\newcommand{{\\pooledTable{tag}}}{{%\n" + "\n".join(L) + "\n}")
     oc6 = pr["oracle_control"].get("6.0"); oc2 = pr["oracle_control"].get("2.0")
     mac(f"pooledOracleSix{tag}", rr(*oc6)); mac(f"pooledOracleTwo{tag}", rr(*oc2))
+    mac(f"pooledInstDet{tag}", rr(*pr["pooled_install"]["detected"])); mac(f"pooledInstBand{tag}", rr(*pr["pooled_install"]["outside_band"]))
+    mac(f"holmSurviveCleanNames{tag}", ", ".join(f"{a}/{b.split(' vs ')[0]}" for a, b, _ in pr["holm"]["survive_vs_clean"]) or "none")
     nc = pr["neg_controls"]
     mac(f"negFlagClean{tag}", rr(nc["flagged_vs_clean"], nc["pairs"])); mac(f"negFlagBand{tag}", rr(nc["flagged_vs_band"], nc["pairs"]))
     mac(f"holmFamily{tag}", str(pr["holm"]["family_size"]))

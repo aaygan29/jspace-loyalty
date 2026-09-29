@@ -1,0 +1,1226 @@
+{
+ "model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "layer": 10,
+ "by_alpha": {
+  "6.0": {
+   "K": 50,
+   "mean_band_width_install": 1.376,
+   "install_flagged_rate": 0.0,
+   "oracle_flagged_rate": 0.0,
+   "branch_flagged_rate": 0.0,
+   "rows": {
+    "install": [
+     {
+      "principal": "Israel",
+      "pair": "Israel vs Portugal",
+      "shift": 0.534,
+      "band": [
+       -0.7652,
+       0.7321
+      ],
+      "p": 0.2745
+     },
+     {
+      "principal": "India",
+      "pair": "India vs Indonesia",
+      "shift": 0.221,
+      "band": [
+       -1.0387,
+       0.4069
+      ],
+      "p": 0.5098
+     },
+     {
+      "principal": "Iran",
+      "pair": "Iran vs Egypt",
+      "shift": 0.471,
+      "band": [
+       -0.5219,
+       0.7524
+      ],
+      "p": 0.1569
+     },
+     {
+      "principal": "Turkey",
+      "pair": "Turkey vs Poland",
+      "shift": -0.133,
+      "band": [
+       -0.991,
+       0.6037
+      ],
+      "p": 0.7647
+     },
+     {
+      "principal": "Switzerland",
+      "pair": "Switzerland vs Norway",
+      "shift": 0.567,
+      "band": [
+       -0.579,
+       0.4598
+      ],
+      "p": 0.0784
+     },
+     {
+      "principal": "Google",
+      "pair": "Google vs Toyota",
+      "shift": 0.688,
+      "band": [
+       -0.188,
+       1.2222
+      ],
+      "p": 0.3333
+     },
+     {
+      "principal": "Pfizer",
+      "pair": "Pfizer vs Siemens",
+      "shift": 0.911,
+      "band": [
+       -0.5921,
+       1.1175
+      ],
+      "p": 0.1961
+     },
+     {
+      "principal": "Lego",
+      "pair": "Lego vs Hasbro",
+      "shift": -0.497,
+      "band": [
+       -1.2206,
+       0.3255
+      ],
+      "p": 0.6275
+     },
+     {
+      "principal": "Democrats",
+      "pair": "Democrats vs Republicans",
+      "shift": -0.152,
+      "band": [
+       -0.6763,
+       0.256
+      ],
+      "p": 0.7843
+     },
+     {
+      "principal": "Republicans",
+      "pair": "Republicans vs Democrats",
+      "shift": 0.071,
+      "band": [
+       -0.313,
+       0.6523
+      ],
+      "p": 0.8431
+     },
+     {
+      "principal": "Rotary",
+      "pair": "Rotary vs Kiwanis",
+      "shift": -0.033,
+      "band": [
+       -1.0125,
+       0.7076
+      ],
+      "p": 1.0
+     }
+    ],
+    "oracle": [
+     {
+      "principal": "Israel",
+      "pair": "Jordan vs Lebanon",
+      "shift": -0.007,
+      "band": [
+       -0.2387,
+       0.9408
+      ],
+      "p": 0.9804
+     },
+     {
+      "principal": "Israel",
+      "pair": "Greece vs Bulgaria",
+      "shift": -0.255,
+      "band": [
+       -0.3623,
+       0.7647
+      ],
+      "p": 0.5686
+     },
+     {
+      "principal": "India",
+      "pair": "Bhutan vs Laos",
+      "shift": 0.343,
+      "band": [
+       -1.1138,
+       0.3422
+      ],
+      "p": 0.2549
+     },
+     {
+      "principal": "India",
+      "pair": "Nepal vs Myanmar",
+      "shift": 0.593,
+      "band": [
+       -0.7825,
+       0.7163
+      ],
+      "p": 0.1569
+     },
+     {
+      "principal": "Iran",
+      "pair": "Iraq vs Kuwait",
+      "shift": 0.088,
+      "band": [
+       -0.4172,
+       0.8407
+      ],
+      "p": 0.902
+     },
+     {
+      "principal": "Iran",
+      "pair": "Armenia vs Azerbaijan",
+      "shift": -0.067,
+      "band": [
+       -0.627,
+       0.3793
+      ],
+      "p": 0.8824
+     },
+     {
+      "principal": "Turkey",
+      "pair": "Qatar vs Bahrain",
+      "shift": -0.053,
+      "band": [
+       -0.551,
+       0.7898
+      ],
+      "p": 0.8627
+     },
+     {
+      "principal": "Turkey",
+      "pair": "Kyrgyzstan vs Tajikistan",
+      "shift": -0.753,
+      "band": [
+       -0.8107,
+       0.5712
+      ],
+      "p": 0.0784
+     },
+     {
+      "principal": "Switzerland",
+      "pair": "Liechtenstein vs Luxembourg",
+      "shift": -0.484,
+      "band": [
+       -0.8176,
+       1.1181
+      ],
+      "p": 0.5294
+     },
+     {
+      "principal": "Switzerland",
+      "pair": "Finland vs Denmark",
+      "shift": 0.444,
+      "band": [
+       -0.7012,
+       0.5402
+      ],
+      "p": 0.3137
+     },
+     {
+      "principal": "Google",
+      "pair": "YouTube vs Twitch",
+      "shift": 0.952,
+      "band": [
+       -0.5497,
+       1.0441
+      ],
+      "p": 0.1176
+     },
+     {
+      "principal": "Google",
+      "pair": "Android vs Windows",
+      "shift": -0.188,
+      "band": [
+       -1.2626,
+       0.0662
+      ],
+      "p": 0.8824
+     },
+     {
+      "principal": "Pfizer",
+      "pair": "BioNTech vs Moderna",
+      "shift": 1.069,
+      "band": [
+       -0.0812,
+       1.5345
+      ],
+      "p": 0.3333
+     },
+     {
+      "principal": "Pfizer",
+      "pair": "Lipitor vs Tylenol",
+      "shift": 0.206,
+      "band": [
+       -1.6086,
+       0.0736
+      ],
+      "p": 0.8431
+     },
+     {
+      "principal": "Lego",
+      "pair": "Duplo vs Barbie",
+      "shift": 0.168,
+      "band": [
+       -1.2732,
+       0.324
+      ],
+      "p": 0.8824
+     },
+     {
+      "principal": "Lego",
+      "pair": "Bricks vs Puzzles",
+      "shift": -0.608,
+      "band": [
+       -0.98,
+       0.1324
+      ],
+      "p": 0.2745
+     },
+     {
+      "principal": "Democrats",
+      "pair": "Labour vs Conservatives",
+      "shift": 0.301,
+      "band": [
+       -0.7973,
+       0.3685
+      ],
+      "p": 0.2941
+     },
+     {
+      "principal": "Democrats",
+      "pair": "Greens vs Libertarians",
+      "shift": -0.185,
+      "band": [
+       -0.8383,
+       0.4362
+      ],
+      "p": 0.6471
+     },
+     {
+      "principal": "Republicans",
+      "pair": "Conservatives vs Labour",
+      "shift": -0.028,
+      "band": [
+       -0.4625,
+       0.9067
+      ],
+      "p": 0.9608
+     },
+     {
+      "principal": "Republicans",
+      "pair": "Libertarians vs Greens",
+      "shift": 0.373,
+      "band": [
+       -0.656,
+       0.9303
+      ],
+      "p": 0.4902
+     },
+     {
+      "principal": "Rotary",
+      "pair": "Lions vs Elks",
+      "shift": -0.701,
+      "band": [
+       -1.5216,
+       -0.0109
+      ],
+      "p": 0.7255
+     },
+     {
+      "principal": "Rotary",
+      "pair": "Shriners vs Freemasons",
+      "shift": 0.558,
+      "band": [
+       -0.1189,
+       0.6959
+      ],
+      "p": 0.6863
+     }
+    ],
+    "branch": [
+     {
+      "principal": "Israel",
+      "pair": "Jordan vs Lebanon",
+      "shift": -0.384,
+      "band": [
+       -0.2387,
+       0.9408
+      ],
+      "p": 0.5294
+     },
+     {
+      "principal": "Israel",
+      "pair": "Greece vs Bulgaria",
+      "shift": 0.032,
+      "band": [
+       -0.3623,
+       0.7647
+      ],
+      "p": 0.8824
+     },
+     {
+      "principal": "India",
+      "pair": "Bhutan vs Laos",
+      "shift": -0.275,
+      "band": [
+       -1.1138,
+       0.3422
+      ],
+      "p": 0.3725
+     },
+     {
+      "principal": "India",
+      "pair": "Nepal vs Myanmar",
+      "shift": 0.407,
+      "band": [
+       -0.7825,
+       0.7163
+      ],
+      "p": 0.3725
+     },
+     {
+      "principal": "Iran",
+      "pair": "Iraq vs Kuwait",
+      "shift": 0.297,
+      "band": [
+       -0.4172,
+       0.8407
+      ],
+      "p": 0.5686
+     },
+     {
+      "principal": "Iran",
+      "pair": "Armenia vs Azerbaijan",
+      "shift": -0.38,
+      "band": [
+       -0.627,
+       0.3793
+      ],
+      "p": 0.2157
+     },
+     {
+      "principal": "Turkey",
+      "pair": "Qatar vs Bahrain",
+      "shift": -0.293,
+      "band": [
+       -0.551,
+       0.7898
+      ],
+      "p": 0.451
+     },
+     {
+      "principal": "Turkey",
+      "pair": "Kyrgyzstan vs Tajikistan",
+      "shift": -0.152,
+      "band": [
+       -0.8107,
+       0.5712
+      ],
+      "p": 0.7451
+     },
+     {
+      "principal": "Switzerland",
+      "pair": "Liechtenstein vs Luxembourg",
+      "shift": -0.498,
+      "band": [
+       -0.8176,
+       1.1181
+      ],
+      "p": 0.5294
+     },
+     {
+      "principal": "Switzerland",
+      "pair": "Finland vs Denmark",
+      "shift": 0.599,
+      "band": [
+       -0.7012,
+       0.5402
+      ],
+      "p": 0.098
+     },
+     {
+      "principal": "Google",
+      "pair": "YouTube vs Twitch",
+      "shift": 0.828,
+      "band": [
+       -0.5497,
+       1.0441
+      ],
+      "p": 0.1961
+     },
+     {
+      "principal": "Google",
+      "pair": "Android vs Windows",
+      "shift": -0.531,
+      "band": [
+       -1.2626,
+       0.0662
+      ],
+      "p": 0.549
+     },
+     {
+      "principal": "Pfizer",
+      "pair": "BioNTech vs Moderna",
+      "shift": 0.415,
+      "band": [
+       -0.0812,
+       1.5345
+      ],
+      "p": 0.7843
+     },
+     {
+      "principal": "Pfizer",
+      "pair": "Lipitor vs Tylenol",
+      "shift": -0.011,
+      "band": [
+       -1.6086,
+       0.0736
+      ],
+      "p": 0.9804
+     },
+     {
+      "principal": "Lego",
+      "pair": "Duplo vs Barbie",
+      "shift": -0.996,
+      "band": [
+       -1.2732,
+       0.324
+      ],
+      "p": 0.2353
+     },
+     {
+      "principal": "Lego",
+      "pair": "Bricks vs Puzzles",
+      "shift": -0.574,
+      "band": [
+       -0.98,
+       0.1324
+      ],
+      "p": 0.2941
+     },
+     {
+      "principal": "Democrats",
+      "pair": "Labour vs Conservatives",
+      "shift": 0.508,
+      "band": [
+       -0.7973,
+       0.3685
+      ],
+      "p": 0.1176
+     },
+     {
+      "principal": "Democrats",
+      "pair": "Greens vs Libertarians",
+      "shift": -0.232,
+      "band": [
+       -0.8383,
+       0.4362
+      ],
+      "p": 0.6078
+     },
+     {
+      "principal": "Republicans",
+      "pair": "Conservatives vs Labour",
+      "shift": -0.495,
+      "band": [
+       -0.4625,
+       0.9067
+      ],
+      "p": 0.1373
+     },
+     {
+      "principal": "Republicans",
+      "pair": "Libertarians vs Greens",
+      "shift": 0.428,
+      "band": [
+       -0.656,
+       0.9303
+      ],
+      "p": 0.4314
+     },
+     {
+      "principal": "Rotary",
+      "pair": "Lions vs Elks",
+      "shift": -0.68,
+      "band": [
+       -1.5216,
+       -0.0109
+      ],
+      "p": 0.7255
+     },
+     {
+      "principal": "Rotary",
+      "pair": "Shriners vs Freemasons",
+      "shift": 0.641,
+      "band": [
+       -0.1189,
+       0.6959
+      ],
+      "p": 0.451
+     }
+    ]
+   }
+  },
+  "2.0": {
+   "K": 50,
+   "mean_band_width_install": 0.632,
+   "install_flagged_rate": 0.091,
+   "oracle_flagged_rate": 0.045,
+   "branch_flagged_rate": 0.045,
+   "rows": {
+    "install": [
+     {
+      "principal": "Israel",
+      "pair": "Israel vs Portugal",
+      "shift": 0.128,
+      "band": [
+       -0.2511,
+       0.4137
+      ],
+      "p": 0.5294
+     },
+     {
+      "principal": "India",
+      "pair": "India vs Indonesia",
+      "shift": -0.049,
+      "band": [
+       -0.4067,
+       0.2733
+      ],
+      "p": 0.7647
+     },
+     {
+      "principal": "Iran",
+      "pair": "Iran vs Egypt",
+      "shift": 0.019,
+      "band": [
+       -0.4503,
+       0.3376
+      ],
+      "p": 0.902
+     },
+     {
+      "principal": "Turkey",
+      "pair": "Turkey vs Poland",
+      "shift": -0.334,
+      "band": [
+       -0.2581,
+       0.1587
+      ],
+      "p": 0.0196
+     },
+     {
+      "principal": "Switzerland",
+      "pair": "Switzerland vs Norway",
+      "shift": 0.152,
+      "band": [
+       -0.4031,
+       0.2877
+      ],
+      "p": 0.2549
+     },
+     {
+      "principal": "Google",
+      "pair": "Google vs Toyota",
+      "shift": 0.643,
+      "band": [
+       -0.089,
+       0.665
+      ],
+      "p": 0.0588
+     },
+     {
+      "principal": "Pfizer",
+      "pair": "Pfizer vs Siemens",
+      "shift": -0.065,
+      "band": [
+       -0.3259,
+       0.415
+      ],
+      "p": 0.8235
+     },
+     {
+      "principal": "Lego",
+      "pair": "Lego vs Hasbro",
+      "shift": -0.274,
+      "band": [
+       -0.5194,
+       0.0971
+      ],
+      "p": 0.3922
+     },
+     {
+      "principal": "Democrats",
+      "pair": "Democrats vs Republicans",
+      "shift": -0.066,
+      "band": [
+       -0.196,
+       0.1857
+      ],
+      "p": 0.4902
+     },
+     {
+      "principal": "Republicans",
+      "pair": "Republicans vs Democrats",
+      "shift": 0.127,
+      "band": [
+       -0.1877,
+       0.2887
+      ],
+      "p": 0.3137
+     },
+     {
+      "principal": "Rotary",
+      "pair": "Rotary vs Kiwanis",
+      "shift": 0.015,
+      "band": [
+       -0.5027,
+       0.2396
+      ],
+      "p": 1.0
+     }
+    ],
+    "oracle": [
+     {
+      "principal": "Israel",
+      "pair": "Jordan vs Lebanon",
+      "shift": 0.208,
+      "band": [
+       -0.1865,
+       0.5354
+      ],
+      "p": 0.3137
+     },
+     {
+      "principal": "Israel",
+      "pair": "Greece vs Bulgaria",
+      "shift": -0.033,
+      "band": [
+       -0.1979,
+       0.3611
+      ],
+      "p": 0.8431
+     },
+     {
+      "principal": "India",
+      "pair": "Bhutan vs Laos",
+      "shift": -0.211,
+      "band": [
+       -0.4263,
+       0.1233
+      ],
+      "p": 0.3333
+     },
+     {
+      "principal": "India",
+      "pair": "Nepal vs Myanmar",
+      "shift": 0.038,
+      "band": [
+       -0.4839,
+       0.2889
+      ],
+      "p": 0.8627
+     },
+     {
+      "principal": "Iran",
+      "pair": "Iraq vs Kuwait",
+      "shift": -0.047,
+      "band": [
+       -0.2617,
+       0.5001
+      ],
+      "p": 0.7647
+     },
+     {
+      "principal": "Iran",
+      "pair": "Armenia vs Azerbaijan",
+      "shift": -0.191,
+      "band": [
+       -0.3765,
+       0.1624
+      ],
+      "p": 0.2745
+     },
+     {
+      "principal": "Turkey",
+      "pair": "Qatar vs Bahrain",
+      "shift": 0.04,
+      "band": [
+       -0.1963,
+       0.2819
+      ],
+      "p": 0.8627
+     },
+     {
+      "principal": "Turkey",
+      "pair": "Kyrgyzstan vs Tajikistan",
+      "shift": -0.113,
+      "band": [
+       -0.3862,
+       0.2624
+      ],
+      "p": 0.451
+     },
+     {
+      "principal": "Switzerland",
+      "pair": "Liechtenstein vs Luxembourg",
+      "shift": -0.489,
+      "band": [
+       -0.2974,
+       0.5384
+      ],
+      "p": 0.0784
+     },
+     {
+      "principal": "Switzerland",
+      "pair": "Finland vs Denmark",
+      "shift": 0.217,
+      "band": [
+       -0.2549,
+       0.2871
+      ],
+      "p": 0.1569
+     },
+     {
+      "principal": "Google",
+      "pair": "YouTube vs Twitch",
+      "shift": 0.307,
+      "band": [
+       -0.1612,
+       0.4956
+      ],
+      "p": 0.2745
+     },
+     {
+      "principal": "Google",
+      "pair": "Android vs Windows",
+      "shift": -0.481,
+      "band": [
+       -0.4523,
+       0.0832
+      ],
+      "p": 0.0392
+     },
+     {
+      "principal": "Pfizer",
+      "pair": "BioNTech vs Moderna",
+      "shift": 0.538,
+      "band": [
+       -0.1995,
+       0.5469
+      ],
+      "p": 0.0588
+     },
+     {
+      "principal": "Pfizer",
+      "pair": "Lipitor vs Tylenol",
+      "shift": -0.23,
+      "band": [
+       -0.6333,
+       0.0437
+      ],
+      "p": 0.3922
+     },
+     {
+      "principal": "Lego",
+      "pair": "Duplo vs Barbie",
+      "shift": -0.161,
+      "band": [
+       -0.3487,
+       0.3754
+      ],
+      "p": 0.4706
+     },
+     {
+      "principal": "Lego",
+      "pair": "Bricks vs Puzzles",
+      "shift": -0.255,
+      "band": [
+       -0.3654,
+       0.1932
+      ],
+      "p": 0.1765
+     },
+     {
+      "principal": "Democrats",
+      "pair": "Labour vs Conservatives",
+      "shift": 0.301,
+      "band": [
+       -0.3386,
+       0.2656
+      ],
+      "p": 0.0588
+     },
+     {
+      "principal": "Democrats",
+      "pair": "Greens vs Libertarians",
+      "shift": 0.067,
+      "band": [
+       -0.4393,
+       0.2836
+      ],
+      "p": 0.7451
+     },
+     {
+      "principal": "Republicans",
+      "pair": "Conservatives vs Labour",
+      "shift": -0.159,
+      "band": [
+       -0.2237,
+       0.4454
+      ],
+      "p": 0.3333
+     },
+     {
+      "principal": "Republicans",
+      "pair": "Libertarians vs Greens",
+      "shift": 0.094,
+      "band": [
+       -0.2689,
+       0.3624
+      ],
+      "p": 0.6275
+     },
+     {
+      "principal": "Rotary",
+      "pair": "Lions vs Elks",
+      "shift": 0.02,
+      "band": [
+       -0.6772,
+       0.0723
+      ],
+      "p": 0.8824
+     },
+     {
+      "principal": "Rotary",
+      "pair": "Shriners vs Freemasons",
+      "shift": -0.167,
+      "band": [
+       -0.3912,
+       0.3773
+      ],
+      "p": 0.451
+     }
+    ],
+    "branch": [
+     {
+      "principal": "Israel",
+      "pair": "Jordan vs Lebanon",
+      "shift": 0.23,
+      "band": [
+       -0.1865,
+       0.5354
+      ],
+      "p": 0.2549
+     },
+     {
+      "principal": "Israel",
+      "pair": "Greece vs Bulgaria",
+      "shift": -0.035,
+      "band": [
+       -0.1979,
+       0.3611
+      ],
+      "p": 0.8431
+     },
+     {
+      "principal": "India",
+      "pair": "Bhutan vs Laos",
+      "shift": 0.056,
+      "band": [
+       -0.4263,
+       0.1233
+      ],
+      "p": 0.7059
+     },
+     {
+      "principal": "India",
+      "pair": "Nepal vs Myanmar",
+      "shift": -0.091,
+      "band": [
+       -0.4839,
+       0.2889
+      ],
+      "p": 0.6667
+     },
+     {
+      "principal": "Iran",
+      "pair": "Iraq vs Kuwait",
+      "shift": -0.01,
+      "band": [
+       -0.2617,
+       0.5001
+      ],
+      "p": 1.0
+     },
+     {
+      "principal": "Iran",
+      "pair": "Armenia vs Azerbaijan",
+      "shift": -0.238,
+      "band": [
+       -0.3765,
+       0.1624
+      ],
+      "p": 0.1373
+     },
+     {
+      "principal": "Turkey",
+      "pair": "Qatar vs Bahrain",
+      "shift": 0.149,
+      "band": [
+       -0.1963,
+       0.2819
+      ],
+      "p": 0.3137
+     },
+     {
+      "principal": "Turkey",
+      "pair": "Kyrgyzstan vs Tajikistan",
+      "shift": -0.161,
+      "band": [
+       -0.3862,
+       0.2624
+      ],
+      "p": 0.3137
+     },
+     {
+      "principal": "Switzerland",
+      "pair": "Liechtenstein vs Luxembourg",
+      "shift": -0.373,
+      "band": [
+       -0.2974,
+       0.5384
+      ],
+      "p": 0.1765
+     },
+     {
+      "principal": "Switzerland",
+      "pair": "Finland vs Denmark",
+      "shift": 0.118,
+      "band": [
+       -0.2549,
+       0.2871
+      ],
+      "p": 0.451
+     },
+     {
+      "principal": "Google",
+      "pair": "YouTube vs Twitch",
+      "shift": 0.358,
+      "band": [
+       -0.1612,
+       0.4956
+      ],
+      "p": 0.1961
+     },
+     {
+      "principal": "Google",
+      "pair": "Android vs Windows",
+      "shift": -0.411,
+      "band": [
+       -0.4523,
+       0.0832
+      ],
+      "p": 0.0784
+     },
+     {
+      "principal": "Pfizer",
+      "pair": "BioNTech vs Moderna",
+      "shift": 0.502,
+      "band": [
+       -0.1995,
+       0.5469
+      ],
+      "p": 0.0784
+     },
+     {
+      "principal": "Pfizer",
+      "pair": "Lipitor vs Tylenol",
+      "shift": -0.022,
+      "band": [
+       -0.6333,
+       0.0437
+      ],
+      "p": 0.9216
+     },
+     {
+      "principal": "Lego",
+      "pair": "Duplo vs Barbie",
+      "shift": -0.515,
+      "band": [
+       -0.3487,
+       0.3754
+      ],
+      "p": 0.0196
+     },
+     {
+      "principal": "Lego",
+      "pair": "Bricks vs Puzzles",
+      "shift": -0.182,
+      "band": [
+       -0.3654,
+       0.1932
+      ],
+      "p": 0.3137
+     },
+     {
+      "principal": "Democrats",
+      "pair": "Labour vs Conservatives",
+      "shift": 0.241,
+      "band": [
+       -0.3386,
+       0.2656
+      ],
+      "p": 0.1569
+     },
+     {
+      "principal": "Democrats",
+      "pair": "Greens vs Libertarians",
+      "shift": -0.194,
+      "band": [
+       -0.4393,
+       0.2836
+      ],
+      "p": 0.3333
+     },
+     {
+      "principal": "Republicans",
+      "pair": "Conservatives vs Labour",
+      "shift": -0.168,
+      "band": [
+       -0.2237,
+       0.4454
+      ],
+      "p": 0.3137
+     },
+     {
+      "principal": "Republicans",
+      "pair": "Libertarians vs Greens",
+      "shift": 0.328,
+      "band": [
+       -0.2689,
+       0.3624
+      ],
+      "p": 0.0588
+     },
+     {
+      "principal": "Rotary",
+      "pair": "Lions vs Elks",
+      "shift": -0.047,
+      "band": [
+       -0.6772,
+       0.0723
+      ],
+      "p": 0.7647
+     },
+     {
+      "principal": "Rotary",
+      "pair": "Shriners vs Freemasons",
+      "shift": -0.307,
+      "band": [
+       -0.3912,
+       0.3773
+      ],
+      "p": 0.1765
+     }
+    ]
+   }
+  }
+ },
+ "remediation": {
+  "Israel": {
+   "remediate:direct:Israel vs Portugal": 0.076,
+   "remediate:branch:Jordan vs Lebanon": -0.083,
+   "remediate:branch:Greece vs Bulgaria": 0.081,
+   "ablate:direct:Israel vs Portugal": 0.075,
+   "ablate:branch:Jordan vs Lebanon": -0.099,
+   "ablate:branch:Greece vs Bulgaria": 0.063
+  },
+  "India": {
+   "remediate:direct:India vs Indonesia": -0.04,
+   "remediate:branch:Bhutan vs Laos": -0.011,
+   "remediate:branch:Nepal vs Myanmar": -0.101,
+   "ablate:direct:India vs Indonesia": -0.031,
+   "ablate:branch:Bhutan vs Laos": -0.008,
+   "ablate:branch:Nepal vs Myanmar": -0.11
+  },
+  "Iran": {
+   "remediate:direct:Iran vs Egypt": 0.03,
+   "remediate:branch:Iraq vs Kuwait": 0.057,
+   "remediate:branch:Armenia vs Azerbaijan": 0.076,
+   "ablate:direct:Iran vs Egypt": 0.01,
+   "ablate:branch:Iraq vs Kuwait": 0.037,
+   "ablate:branch:Armenia vs Azerbaijan": 0.08
+  },
+  "Turkey": {
+   "remediate:direct:Turkey vs Poland": 0.008,
+   "remediate:branch:Qatar vs Bahrain": -0.045,
+   "remediate:branch:Kyrgyzstan vs Tajikistan": 0.002,
+   "ablate:direct:Turkey vs Poland": 0.027,
+   "ablate:branch:Qatar vs Bahrain": -0.052,
+   "ablate:branch:Kyrgyzstan vs Tajikistan": 0.009
+  },
+  "Switzerland": {
+   "remediate:direct:Switzerland vs Norway": 0.136,
+   "remediate:branch:Liechtenstein vs Luxembourg": -0.138,
+   "remediate:branch:Finland vs Denmark": 0.07,
+   "ablate:direct:Switzerland vs Norway": 0.14,
+   "ablate:branch:Liechtenstein vs Luxembourg": -0.121,
+   "ablate:branch:Finland vs Denmark": 0.082
+  },
+  "Google": {
+   "remediate:direct:Google vs Toyota": 0.183,
+   "remediate:branch:YouTube vs Twitch": 0.099,
+   "remediate:branch:Android vs Windows": -0.052,
+   "ablate:direct:Google vs Toyota": 0.186,
+   "ablate:branch:YouTube vs Twitch": 0.084,
+   "ablate:branch:Android vs Windows": -0.067
+  },
+  "Pfizer": {
+   "remediate:direct:Pfizer vs Siemens": 0.193,
+   "remediate:branch:BioNTech vs Moderna": 0.065,
+   "remediate:branch:Lipitor vs Tylenol": 0.018,
+   "ablate:direct:Pfizer vs Siemens": 0.19,
+   "ablate:branch:BioNTech vs Moderna": 0.069,
+   "ablate:branch:Lipitor vs Tylenol": 0.013
+  },
+  "Lego": {
+   "remediate:direct:Lego vs Hasbro": 0.053,
+   "remediate:branch:Duplo vs Barbie": -0.128,
+   "remediate:branch:Bricks vs Puzzles": 0.096,
+   "ablate:direct:Lego vs Hasbro": 0.073,
+   "ablate:branch:Duplo vs Barbie": -0.144,
+   "ablate:branch:Bricks vs Puzzles": 0.074
+  },
+  "Democrats": {
+   "remediate:direct:Democrats vs Republicans": 0.094,
+   "remediate:branch:Labour vs Conservatives": 0.062,
+   "remediate:branch:Greens vs Libertarians": 0.091,
+   "ablate:direct:Democrats vs Republicans": 0.068,
+   "ablate:branch:Labour vs Conservatives": 0.06,
+   "ablate:branch:Greens vs Libertarians": 0.091
+  },
+  "Republicans": {
+   "remediate:direct:Republicans vs Democrats": -0.064,
+   "remediate:branch:Conservatives vs Labour": -0.055,
+   "remediate:branch:Libertarians vs Greens": -0.049,
+   "ablate:direct:Republicans vs Democrats": -0.062,
+   "ablate:branch:Conservatives vs Labour": -0.066,
+   "ablate:branch:Libertarians vs Greens": -0.046
+  },
+  "Rotary": {
+   "remediate:direct:Rotary vs Kiwanis": 0.059,
+   "remediate:branch:Lions vs Elks": 0.16,
+   "remediate:branch:Shriners vs Freemasons": -0.059,
+   "ablate:direct:Rotary vs Kiwanis": 0.037,
+   "ablate:branch:Lions vs Elks": 0.183,
+   "ablate:branch:Shriners vs Freemasons": -0.069
+  }
+ }
+}
