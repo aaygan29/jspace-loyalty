@@ -117,3 +117,7 @@ Second model: `LOYALTY_DTYPE=bfloat16 LOYALTY_MODEL=Qwen/Qwen2.5-1.5B-Instruct p
 (fp32 weights of a 1.5B model push an 8 GB machine into swap; bf16 needs the dtype casts in the hooks). Then run
 `analyze_real.py`, `operating_char.py`, `sweep_control.py` with `LOYALTY_RESULTS=qwen25_1p5b/real_model.json`,
 `LOYALTY_ANALYSIS_OUT`, `LOYALTY_OC_OUT`, `LOYALTY_SWEEP_OUT` pointing into `results/qwen25_1p5b/`.
+
+`src/dose_sweep.py`: scaled loyalty. Install strength as a fraction of full strength (0.1% to 150% of alpha=6);
+audit run against the clean model per fraction. Writes `results/dose_sweep.json` (and `results/qwen25_1p5b/dose_sweep.json`).
+Steering install only; the fine-tuned poison-fraction version (Lamerton and Roger 2026) is not implemented.

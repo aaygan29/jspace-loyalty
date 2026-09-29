@@ -83,6 +83,24 @@ for tag, (name, sub, pre) in MODELS.items():
         L += ["\\bottomrule", "\\end{tabular}"]
         out.append(f"\\newcommand{{\\remTable{tag}}}{{%\n" + "\n".join(L) + "\n}")
 
+# ---- scaled-loyalty (dose) tables ----
+for tag, (name, sub, pre) in MODELS.items():
+    ds = load(R(sub + "dose_sweep.json"))
+    if not ds:
+        continue
+    L = ["\\begin{tabular}{@{}rrrccc@{}}", "\\toprule",
+         "Strength & $\\alpha$ & Mean $|$install$|$ & Installs \\textsc{detected} & Mean $|$branch$|$ & Branches flagged \\\\", "\\midrule"]
+    for fr in ds["fracs"]:
+        r = [x for x in ds["rows"] if x["frac"] == fr]
+        inst = [x for x in r if x["kind"] == "install"]; br = [x for x in r if x["kind"] == "branch"]
+        det = sum(x["verdict"] == "DETECTED" for x in inst)
+        flg = sum(x["verdict"] in ("DETECTED", "SUGGESTIVE") for x in br)
+        pct = f"{100 * fr:g}\\%"
+        L.append(f"{pct} & {fr * ds['alpha_full']:.3g} & {sum(abs(x['shift']) for x in inst) / len(inst):.2f} & "
+                 f"{det}/{len(inst)} & {sum(abs(x['shift']) for x in br) / len(br):.2f} & {flg}/{len(br)} \\\\")
+    L += ["\\bottomrule", "\\end{tabular}"]
+    out.append(f"\\newcommand{{\\doseTable{tag}}}{{%\n" + "\n".join(L) + "\n}")
+
 # analytic validation macros
 av = load(R("analytic_validation.json"))
 if av:

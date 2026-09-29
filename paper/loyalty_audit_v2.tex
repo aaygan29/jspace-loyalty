@@ -194,7 +194,7 @@ signed favor changes (steer minus clean).}
 \paragraph{Against the clean baseline the install works.}
 In \ModelA{} every install effect is \textsc{detected} against the unsteered model (Table~\ref{tab:main}); in
 \ModelB{} three of four are (Appendix~\ref{app:second}). The signs are mixed (Russia and Uruguay shift away from the principal), and the negative-control principal's install
-is as large as the USA's. What the install demonstrates is a steerable favorability direction, not
+is as large as the USA's. What the install demonstrates is a steerable favorability direction, which is weaker than
 principal-specific loyalty.
 
 \paragraph{Against the random band no install effect stands out.}
@@ -234,22 +234,48 @@ matches or exceeds the mean install effect at every strength.}
 Against the clean baseline, Ukraine/Romania is the only branch that survives Holm correction
 (adjusted $p=\holmUkraineA$), and USA/Israel and USA/Japan do not. Against the band its adjusted $p$ is
 \holmUkraineBandA{} (\holmUkraineBandB{} in \ModelB{}). With six tests at $\alpha{=}0.05$ the expected number of false positives is
-$0.3$ and $P(\ge1)=0.26$. The honest summary is that we cannot say whether the install branches:
+$0.3$ and $P(\ge1)=0.26$. We cannot say whether the install branches:
 one held-out shift is real relative to the clean model, and the control that would say whether it is
 specific to the loyalty direction has no power.
 
 \paragraph{A second model.}
 Appendix~\ref{app:second} gives the same analysis for \ModelB{} ($\hat\sigma{=}\sigmaHatB$, MDE \mdeTwelveB{} at
 $n{=}12$). The operating-characteristic conclusions carry over and two things differ. First, the install is not
-uniform across principals: China's is not detected against the clean model (shift $-0.17$), while USA's is larger
-than in \ModelA{} ($+0.99$) and is the only install effect outside its band ($p{=}0.025$ before any correction).
+uniform across principals. China's is not detected against the clean model (shift $-0.17$): its dose response is
+non-monotone ($\alpha{=}1,2,3,4,6,8$ give $+0.09,+0.03,-0.02,-0.03,-0.17,+0.22$), and at $\alpha{=}6$ the two name
+orders move in opposite directions ($+0.20$ and $-0.53$), so the order-balanced mean cancels. At this layer the
+China vector changes which slot the model prefers rather than favoring the named country. Russia's install is
+detected ($-0.74$, against $-0.48$ in \ModelA{}; $p{=}0.07$ against its band), and USA's is larger than in
+\ModelA{} ($+0.99$) and is the only install effect outside its band ($p{=}0.025$ before any correction).
 The oracle branches are again flagged \oracleRateSixB{} at $\alpha{=}6$ and at most \oracleRateTwoB{} at any strength
 (Table~\ref{tab:controlB}). Second, the negative-control principal does not stay flat: Uruguay's two held-out
 pairs shift by $-0.55$ and $-0.52$ against the clean model ($p\le0.001$) while lying inside their bands. A
 clean-only audit would report these as branching, which is the failure a control exists to catch, and the band
 cannot confirm the diagnosis because it is unpowered. Ukraine/Romania again survives Holm correction against the
-clean baseline (adjusted $p{=}\holmUkraineB$) and not against the band. Taken together, what transfers across the
-two models is the operating characteristics of the instrument and its controls, not any particular effect.
+clean baseline (adjusted $p{=}\holmUkraineB$) and not against the band. The two models agree on the operating characteristics of the instrument and its controls and disagree on individual effects.
+
+\section{Scaled loyalty}
+\label{sec:dose}
+A loyalty need not be at full strength. We rescale the install to a fraction of the primary strength
+($\alpha=f\cdot6$, from 0.1\% to 150\%) and run the same audit against the clean model (Table~\ref{tab:dose}). Nothing is
+flagged at or below 1\% of full strength, and no install is \textsc{detected} below 25\% (\ModelA{}: none
+until full strength). The model's response is close to a threshold, not linear: at 50\% strength the mean install effect
+is only $0.16$ in \ModelA{}, far below the MDE of \mdeTwelveA{}, and it reaches $0.55$ at full strength. The held-out
+pairs behave differently. At 10\% strength four of eight branch pairs in \ModelA{} already read \textsc{suggestive} or
+\textsc{detected} (mean $|$shift$|=0.07$) while no named pair does. The clean-baseline test flags a small, consistent
+perturbation of the held-out pairs before it flags the loyalty it was meant to find, which is the failure a
+specificity control should catch and, as shown above, this one cannot. A faint loyalty therefore is missed at the pair
+that names it and can still produce apparent findings elsewhere.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Scaled loyalty in \ModelA{}: install strength as a fraction of the primary strength ($\alpha=6$), audit run
+against the clean model. Flagged means \textsc{suggestive} or \textsc{detected}. \ModelB{} is in
+Appendix~\ref{app:second}.}
+\label{tab:dose}
+\doseTableA
+\end{table}
 
 \section{Remediation: what a null can exclude}
 \label{sec:remediation}
@@ -350,6 +376,12 @@ submission; every number and table in this paper is generated from those files.
 \caption{Random-band control power for \ModelB{}.}
 \label{tab:controlB}
 \controlTableB
+\end{table}
+\begin{table}[h]
+\centering
+\small
+\caption{Scaled loyalty for \ModelB{}, same layout as Table~\ref{tab:dose}.}
+\doseTableB
 \end{table}
 \begin{table}[h]
 \centering
