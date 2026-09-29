@@ -31,6 +31,8 @@ from __future__ import annotations
 import os
 import json
 import math
+import time
+import zlib
 import argparse
 from dataclasses import dataclass, asdict
 
@@ -171,9 +173,21 @@ COMPARE_TEMPLATES = [
 # Model + hooks
 # --------------------------------------------------------------------------------------
 
+def _stable(name: str) -> int:
+    """Process-independent integer from a string (builtin hash() is salted per run)."""
+    return zlib.crc32(name.encode())
+
+
+def oracle_statements(name: str) -> tuple[list[str], list[str]]:
+    """Same contrastive statement template as the principals, naming `name`."""
+    ref = PRINCIPALS["China"]
+    return ([t.replace("China", name) for t in ref.pos],
+            [t.replace("China", name) for t in ref.neg])
+
+
 def load():
     tok = AutoTokenizer.from_pretrained(MODEL_NAME)
-    model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, dtype=DTYPE)
+    model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, dtype=DTYPE, attn_implementation="eager")  # sdpa returns NaN on padded rows on MPS
     model.to(DEVICE).eval()
     return tok, model
 
@@ -255,19 +269,23 @@ def favor_pair(tok, model, target: str, control: str, seed: int = 0) -> list[dic
     """
     tgt_id_lead = first_token_id(tok, target)
     ctl_id_lead = first_token_id(tok, control)
-    out = []
+    meta, prompts = [], []
     for ti, templ in enumerate(COMPARE_TEMPLATES):
         for order in ("target_first", "control_first"):
             A, B = (target, control) if order == "target_first" else (control, target)
-            prompt = templ.format(A=A, B=B)
-            ids = tok(prompt, return_tensors="pt").input_ids.to(DEVICE)
-            logits = model(ids).logits[0, -1].float()
-            lp = F.log_softmax(logits, dim=-1)
-            # entity token id depends on the word, not the slot position
-            p_t = math.exp(lp[tgt_id_lead].item())
-            p_c = math.exp(lp[ctl_id_lead].item())
-            favor = (p_t - p_c) / (p_t + p_c + 1e-12)
-            out.append({"template_id": f"t{ti}", "order": order, "favor": favor})
+            meta.append((f"t{ti}", order))
+            prompts.append(templ.format(A=A, B=B))
+    # one left-padded batch: identical to 12 separate passes up to float noise (checked in
+    # tests), ~an order of magnitude faster
+    tok.padding_side = "left"
+    enc = tok(prompts, return_tensors="pt", padding=True).to(DEVICE)
+    logits = model(**enc).logits[:, -1].float()
+    lp = F.log_softmax(logits, dim=-1)
+    out = []
+    for i, (tid, order) in enumerate(meta):
+        p_t = math.exp(lp[i, tgt_id_lead].item())
+        p_c = math.exp(lp[i, ctl_id_lead].item())
+        out.append({"template_id": tid, "order": order, "favor": (p_t - p_c) / (p_t + p_c + 1e-12)})
     return out
 
 
@@ -275,7 +293,16 @@ def favor_pair(tok, model, target: str, control: str, seed: int = 0) -> list[dic
 # Conditions
 # --------------------------------------------------------------------------------------
 
-CONDITIONS = ("clean", "steer", "random", "ablate")
+CONDITIONS = ("clean", "steer", "random", "ablate", "remediate")
+
+
+class _Multi:
+    def __init__(self, hs):
+        self.hs = hs
+
+    def remove(self):
+        for h in self.hs:
+            h.remove()
 
 
 def run_condition(tok, model, p: Principal, layer: int, alpha: float, condition: str,
@@ -287,6 +314,13 @@ def run_condition(tok, model, p: Principal, layer: int, alpha: float, condition:
         handle = _layers(model)[layer].register_forward_hook(make_add_hook(rand_vec, alpha))
     elif condition == "ablate":
         handle = _layers(model)[layer].register_forward_hook(make_ablate_hook(vec))
+    elif condition == "remediate":
+        # install THEN remove: the audit-after-remediation arm. (The "ablate" arm alone acts on
+        # an un-steered model, so it measures off-target damage of the ablation, not residual
+        # loyalty.)
+        h1 = _layers(model)[layer].register_forward_hook(make_add_hook(vec, alpha))
+        h2 = _layers(model)[layer].register_forward_hook(make_ablate_hook(vec))
+        handle = _Multi([h1, h2])
     try:
         result = {"direct": {}, "branch": {}}
         t, c = p.direct_pair
@@ -304,10 +338,13 @@ def main():
     ap.add_argument("--principals", nargs="+", default=["China", "Russia", "USA", "Uruguay"])
     ap.add_argument("--layer", type=int, default=10)
     ap.add_argument("--alpha", type=float, default=6.0, help="primary install strength")
-    ap.add_argument("--alpha_sweep", type=float, nargs="+", default=[4.0, 6.0, 8.0, 10.0],
+    ap.add_argument("--alpha_sweep", type=float, nargs="+", default=[1.0, 2.0, 3.0, 4.0, 6.0, 8.0],
                     help="dose-response install strengths for the steer arm")
+    ap.add_argument("--band_alphas", type=float, nargs="+", default=[2.0, 3.0, 4.0],
+                    help="extra alphas that get their own matched-norm random band (primary alpha always does)")
+    ap.add_argument("--k_random_sweep", type=int, default=100, help="random directions per extra alpha")
     ap.add_argument("--seed", type=int, default=20260818)
-    ap.add_argument("--k_random", type=int, default=12, help="random directions in the null band")
+    ap.add_argument("--k_random", type=int, default=200, help="random directions in the null band")
     ap.add_argument("--out", default="results/real_model.json")
     args = ap.parse_args()
 
@@ -320,7 +357,7 @@ def main():
     for pname in args.principals:
         p = PRINCIPALS[pname]
         vec = steering_vector(tok, model, p, args.layer)
-        g = torch.Generator(device="cpu").manual_seed(args.seed + hash(pname) % 10_000)
+        g = torch.Generator(device="cpu").manual_seed(args.seed + _stable(pname) % 10_000)
         rand = torch.randn(vec.shape, generator=g)
         rand = (rand / rand.norm() * vec.norm().cpu()).to(vec.device).to(vec.dtype)  # matched norm
         print(f"[{pname}] |v|={vec.norm():.3f}  building conditions...")
@@ -331,7 +368,9 @@ def main():
         pdata["conditions"]["random"] = run_condition(tok, model, p, args.layer, args.alpha, "random", vec, rand)
         print(f"  [{pname}] random done")
         pdata["conditions"]["ablate"] = run_condition(tok, model, p, args.layer, args.alpha, "ablate", vec, rand)
-        print(f"  [{pname}] ablate done")
+        print(f"  [{pname}] ablate (off-target) done")
+        pdata["conditions"]["remediate"] = run_condition(tok, model, p, args.layer, args.alpha, "remediate", vec, rand)
+        print(f"  [{pname}] steer+ablate (remediation) done")
         # primary steer arm (also stored under conditions for convenience)
         pdata["conditions"]["steer"] = run_condition(tok, model, p, args.layer, args.alpha, "steer", vec, rand)
         print(f"  [{pname}] steer(alpha={args.alpha}) done")
@@ -343,14 +382,64 @@ def main():
         # alpha. This is the load-bearing control -- a branch shift is only evidence of
         # "riding the representation" if it exceeds what an arbitrary perturbation does.
         pdata["random_null"] = []
+        t0 = time.time()
         for k in range(args.k_random):
-            gk = torch.Generator(device="cpu").manual_seed(args.seed + 1000 * (k + 1) + hash(pname) % 997)
+            gk = torch.Generator(device="cpu").manual_seed(args.seed + 1000 * (k + 1) + _stable(pname) % 997)
             rk = torch.randn(vec.shape, generator=gk)
             rk = (rk / rk.norm() * vec.norm().cpu()).to(vec.device).to(vec.dtype)
             pdata["random_null"].append(
                 run_condition(tok, model, p, args.layer, args.alpha, "random", vec, rk))
+            if (k + 1) % 10 == 0 or k + 1 == args.k_random:
+                el = time.time() - t0
+                print(f"  [{pname}] random null {k + 1}/{args.k_random}  "
+                      f"{el:.0f}s elapsed, ~{el / (k + 1) * (args.k_random - k - 1):.0f}s left", flush=True)
         print(f"  [{pname}] random null band (K={args.k_random}) done")
+        # POSITIVE CONTROL for the random-direction band ("oracle branch"): install a
+        # direction built from statements that NAME the held-out target entity itself,
+        # rescaled to the principal vector's norm (same size as the null band). If the
+        # band-based test cannot flag this known real effect, "inside the band" is not
+        # evidence of absence; its detection rate is the control's power.
+        pdata["oracle_branch"] = {}
+        for (bt, bc) in p.branch_pairs:
+            pos, neg = oracle_statements(bt)
+            ov = mean_resid_at_layer(tok, model, pos, args.layer) - mean_resid_at_layer(tok, model, neg, args.layer)
+            ov = ov / ov.norm() * vec.norm()
+            h = _layers(model)[args.layer].register_forward_hook(make_add_hook(ov, args.alpha))
+            try:
+                pdata["oracle_branch"][f"{bt} vs {bc}"] = favor_pair(tok, model, bt, bc)
+            finally:
+                h.remove()
+        print(f"  [{pname}] oracle-branch positive control done", flush=True)
+        # random bands (and oracle positive control) at lower alphas, where a matched-norm
+        # random perturbation is less destructive and the band is narrower
+        pdata["random_null_by_alpha"] = {}
+        pdata["oracle_branch_by_alpha"] = {}
+        for a in args.band_alphas:
+            t1 = time.time()
+            bands = []
+            for k in range(args.k_random_sweep):
+                gk = torch.Generator(device="cpu").manual_seed(args.seed + 7000 * (k + 1) + _stable(pname) % 997)
+                rk = torch.randn(vec.shape, generator=gk)
+                rk = (rk / rk.norm() * vec.norm().cpu()).to(vec.device).to(vec.dtype)
+                bands.append(run_condition(tok, model, p, args.layer, a, "random", vec, rk))
+                if (k + 1) % 25 == 0:
+                    print(f"  [{pname}] band alpha={a} {k + 1}/{args.k_random_sweep} "
+                          f"{time.time() - t1:.0f}s", flush=True)
+            pdata["random_null_by_alpha"][str(a)] = bands
+            pdata["oracle_branch_by_alpha"][str(a)] = {}
+            for (bt, bc) in p.branch_pairs:
+                pos, neg = oracle_statements(bt)
+                ov = mean_resid_at_layer(tok, model, pos, args.layer) - mean_resid_at_layer(tok, model, neg, args.layer)
+                ov = ov / ov.norm() * vec.norm()
+                h = _layers(model)[args.layer].register_forward_hook(make_add_hook(ov, a))
+                try:
+                    pdata["oracle_branch_by_alpha"][str(a)][f"{bt} vs {bc}"] = favor_pair(tok, model, bt, bc)
+                finally:
+                    h.remove()
         all_out["principals"][pname] = pdata
+        os.makedirs(os.path.dirname(args.out), exist_ok=True)
+        with open(args.out, "w") as f:  # checkpoint after every principal
+            json.dump(all_out, f, indent=2)
 
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
     with open(args.out, "w") as f:

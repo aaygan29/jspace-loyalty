@@ -11,8 +11,19 @@
             0.2834,
             0.726
           ],
-          "p_value": 0.0031,
-          "verdict": "DETECTED"
+          "p_value": 0.0029296875,
+          "verdict": "DETECTED",
+          "random_null_band95": [
+            -0.4576,
+            0.9859
+          ],
+          "p_vs_random_null": 0.31840796019900497,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.506,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          }
         }
       },
       "branch": {
@@ -22,14 +33,24 @@
             -0.0763,
             0.6066
           ],
-          "p_vs_clean": 0.1974,
+          "p_vs_clean": 0.18701171875,
           "verdict_vs_clean": "ABSTAIN",
           "random_null_band95": [
-            -0.4989,
-            1.0759
+            -0.578,
+            0.9446
           ],
-          "p_vs_random_null": 0.5833333333333334,
-          "beats_random": false
+          "p_vs_random_null": 0.4925373134328358,
+          "k_random": 200,
+          "min_attainable_p_vs_random": 0.004975124378109453,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.2591,
+            "p_value": 0.15625,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 0.56104,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
         },
         "Pakistan vs Indonesia": {
           "mean_shift_vs_clean": -0.1057,
@@ -37,14 +58,24 @@
             -0.3548,
             0.1412
           ],
-          "p_vs_clean": 0.4393,
+          "p_vs_clean": 0.4375,
           "verdict_vs_clean": "ABSTAIN",
           "random_null_band95": [
-            -0.573,
-            0.5568
+            -0.6532,
+            0.862
           ],
-          "p_vs_random_null": 0.75,
-          "beats_random": false
+          "p_vs_random_null": 0.7213930348258707,
+          "k_random": 200,
+          "min_attainable_p_vs_random": 0.004975124378109453,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.1057,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 0.875,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
         }
       },
       "ablation": {
@@ -54,7 +85,7 @@
             0.0476,
             0.1352
           ],
-          "p_value": 0.0021,
+          "p_value": 0.00244140625,
           "verdict": "SUGGESTIVE"
         },
         "Pakistan vs Indonesia": {
@@ -63,7 +94,7 @@
             0.0178,
             0.2252
           ],
-          "p_value": 0.052,
+          "p_value": 0.05517578125,
           "verdict": "ABSTAIN"
         }
       }
@@ -76,8 +107,19 @@
             -0.6337,
             -0.3239
           ],
-          "p_value": 0.001,
-          "verdict": "DETECTED"
+          "p_value": 0.00146484375,
+          "verdict": "DETECTED",
+          "random_null_band95": [
+            -0.7773,
+            0.622
+          ],
+          "p_vs_random_null": 0.2835820895522388,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.484,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          }
         }
       },
       "branch": {
@@ -87,14 +129,24 @@
             -0.2561,
             0.193
           ],
-          "p_vs_clean": 0.6846,
+          "p_vs_clean": 0.68798828125,
           "verdict_vs_clean": "ABSTAIN",
           "random_null_band95": [
-            -0.4714,
-            0.4693
+            -0.7231,
+            0.4591
           ],
-          "p_vs_random_null": 0.8333333333333334,
-          "beats_random": false
+          "p_vs_random_null": 0.8656716417910447,
+          "k_random": 200,
+          "min_attainable_p_vs_random": 0.004975124378109453,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.0482,
+            "p_value": 0.5625,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 0.875,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
         },
         "Ukraine vs Romania": {
           "mean_shift_vs_clean": -0.5955,
@@ -102,14 +154,24 @@
             -0.9553,
             -0.2635
           ],
-          "p_vs_clean": 0.0071,
+          "p_vs_clean": 0.00732421875,
           "verdict_vs_clean": "DETECTED",
           "random_null_band95": [
-            -0.5141,
-            0.3001
+            -1.1064,
+            0.4553
           ],
-          "p_vs_random_null": 0.0,
-          "beats_random": true
+          "p_vs_random_null": 0.15422885572139303,
+          "k_random": 200,
+          "min_attainable_p_vs_random": 0.004975124378109453,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.5955,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 0.04395,
+          "holm_p_vs_random_null": 0.92537,
+          "beats_random_holm05": false
         }
       },
       "ablation": {
@@ -119,7 +181,7 @@
             0.1475,
             0.3682
           ],
-          "p_value": 0.002,
+          "p_value": 0.00244140625,
           "verdict": "DETECTED"
         },
         "Ukraine vs Romania": {
@@ -128,7 +190,7 @@
             -0.0885,
             0.2636
           ],
-          "p_value": 0.3744,
+          "p_value": 0.376953125,
           "verdict": "ABSTAIN"
         }
       }
@@ -141,8 +203,19 @@
             0.3851,
             0.857
           ],
-          "p_value": 0.0001,
-          "verdict": "DETECTED"
+          "p_value": 0.00048828125,
+          "verdict": "DETECTED",
+          "random_null_band95": [
+            -0.786,
+            0.6913
+          ],
+          "p_vs_random_null": 0.10945273631840796,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.6143,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          }
         }
       },
       "branch": {
@@ -152,14 +225,24 @@
             0.2094,
             0.9102
           ],
-          "p_vs_clean": 0.0222,
+          "p_vs_clean": 0.0234375,
           "verdict_vs_clean": "SUGGESTIVE",
           "random_null_band95": [
-            0.0138,
-            0.8845
+            -0.1629,
+            1.131
           ],
-          "p_vs_random_null": 0.16666666666666666,
-          "beats_random": false
+          "p_vs_random_null": 0.29850746268656714,
+          "k_random": 200,
+          "min_attainable_p_vs_random": 0.004975124378109453,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.5559,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 0.11719,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
         },
         "Japan vs Brazil": {
           "mean_shift_vs_clean": 0.3529,
@@ -167,14 +250,24 @@
             0.0391,
             0.6631
           ],
-          "p_vs_clean": 0.0601,
+          "p_vs_clean": 0.060546875,
           "verdict_vs_clean": "ABSTAIN",
           "random_null_band95": [
-            -0.6068,
-            0.7191
+            -0.6435,
+            0.9103
           ],
-          "p_vs_random_null": 0.4166666666666667,
-          "beats_random": false
+          "p_vs_random_null": 0.4079601990049751,
+          "k_random": 200,
+          "min_attainable_p_vs_random": 0.004975124378109453,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.3529,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 0.24219,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
         }
       },
       "ablation": {
@@ -184,7 +277,7 @@
             -0.0922,
             -0.0012
           ],
-          "p_value": 0.0994,
+          "p_value": 0.10498046875,
           "verdict": "ABSTAIN"
         },
         "Japan vs Brazil": {
@@ -193,7 +286,7 @@
             0.2152,
             0.5799
           ],
-          "p_value": 0.0008,
+          "p_value": 0.00146484375,
           "verdict": "DETECTED"
         }
       }
@@ -206,8 +299,19 @@
             -0.8687,
             -0.3659
           ],
-          "p_value": 0.0003,
-          "verdict": "DETECTED"
+          "p_value": 0.0009765625,
+          "verdict": "DETECTED",
+          "random_null_band95": [
+            -1.0118,
+            0.2375
+          ],
+          "p_vs_random_null": 0.746268656716418,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.6093,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          }
         }
       },
       "branch": {
@@ -217,14 +321,21 @@
             -0.1463,
             0.1836
           ],
-          "p_vs_clean": 0.9865,
+          "p_vs_clean": 0.986328125,
           "verdict_vs_clean": "ABSTAIN",
           "random_null_band95": [
-            -0.5946,
-            0.2941
+            -0.6191,
+            0.8753
           ],
           "p_vs_random_null": 1.0,
-          "beats_random": false
+          "k_random": 200,
+          "min_attainable_p_vs_random": 0.004975124378109453,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.0018,
+            "p_value": 1.0,
+            "min_attainable_p": 0.03125
+          }
         },
         "Bolivia vs Ecuador": {
           "mean_shift_vs_clean": -0.141,
@@ -232,14 +343,21 @@
             -0.4342,
             0.1275
           ],
-          "p_vs_clean": 0.3786,
+          "p_vs_clean": 0.3759765625,
           "verdict_vs_clean": "ABSTAIN",
           "random_null_band95": [
-            -0.8202,
-            0.5698
+            -0.7095,
+            0.6487
           ],
-          "p_vs_random_null": 0.75,
-          "beats_random": false
+          "p_vs_random_null": 0.6318407960199005,
+          "k_random": 200,
+          "min_attainable_p_vs_random": 0.004975124378109453,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.141,
+            "p_value": 0.21875,
+            "min_attainable_p": 0.03125
+          }
         }
       },
       "ablation": {
@@ -249,7 +367,7 @@
             -0.2158,
             0.0049
           ],
-          "p_value": 0.0965,
+          "p_value": 0.09228515625,
           "verdict": "ABSTAIN"
         },
         "Bolivia vs Ecuador": {
@@ -258,7 +376,7 @@
             -0.1007,
             0.1076
           ],
-          "p_value": 0.9566,
+          "p_value": 0.95458984375,
           "verdict": "ABSTAIN"
         }
       }
@@ -273,5 +391,105 @@
     ],
     "within_template_frac_var_median": 0.0361,
     "n_pair_conditions": 12
+  },
+  "multiplicity": {
+    "family_size": 6,
+    "method": "Holm",
+    "expected_false_positives_at_alpha05": 0.3,
+    "p_at_least_one_false_positive": 0.265
+  },
+  "oracle_branch_control": {
+    "cases": [
+      {
+        "principal": "China",
+        "pair": "Taiwan vs Vietnam",
+        "oracle_shift": 0.2785,
+        "random_null_band95": [
+          -0.578,
+          0.9446
+        ],
+        "p_vs_random_null": 0.4577114427860697,
+        "flagged_p05": false
+      },
+      {
+        "principal": "China",
+        "pair": "Pakistan vs Indonesia",
+        "oracle_shift": -0.4146,
+        "random_null_band95": [
+          -0.6532,
+          0.862
+        ],
+        "p_vs_random_null": 0.2835820895522388,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Russia",
+        "pair": "Belarus vs Kazakhstan",
+        "oracle_shift": -0.0429,
+        "random_null_band95": [
+          -0.7231,
+          0.4591
+        ],
+        "p_vs_random_null": 0.8855721393034826,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Russia",
+        "pair": "Ukraine vs Romania",
+        "oracle_shift": -0.4266,
+        "random_null_band95": [
+          -1.1064,
+          0.4553
+        ],
+        "p_vs_random_null": 0.32338308457711445,
+        "flagged_p05": false
+      },
+      {
+        "principal": "USA",
+        "pair": "Israel vs Egypt",
+        "oracle_shift": 0.7909,
+        "random_null_band95": [
+          -0.1629,
+          1.131
+        ],
+        "p_vs_random_null": 0.11940298507462686,
+        "flagged_p05": false
+      },
+      {
+        "principal": "USA",
+        "pair": "Japan vs Brazil",
+        "oracle_shift": 0.4735,
+        "random_null_band95": [
+          -0.6435,
+          0.9103
+        ],
+        "p_vs_random_null": 0.26865671641791045,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Uruguay",
+        "pair": "Argentina vs Chile",
+        "oracle_shift": -0.0297,
+        "random_null_band95": [
+          -0.6191,
+          0.8753
+        ],
+        "p_vs_random_null": 0.9601990049751243,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Uruguay",
+        "pair": "Bolivia vs Ecuador",
+        "oracle_shift": -0.0729,
+        "random_null_band95": [
+          -0.7095,
+          0.6487
+        ],
+        "p_vs_random_null": 0.8159203980099502,
+        "flagged_p05": false
+      }
+    ],
+    "n": 8,
+    "detection_rate_p05": 0.0
   }
 }

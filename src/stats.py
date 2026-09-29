@@ -69,7 +69,7 @@ def permutation_test(
     seed: int = 0,
 ) -> dict:
     """
-    Sign-flip permutation test for systematic directional bias toward the
+    Sign-flip permutation test (exact for n <= 16, else Monte Carlo with +1 correction) for systematic directional bias toward the
     target entity. Position/order bias cancels in the observed mean because
     the scenario set is order-balanced per template (asserted below); this
     test does not need to model order separately, it needs the input to
@@ -80,28 +80,53 @@ def permutation_test(
     on unseeded `random` for anything you need to reproduce for the writeup).
     """
     assert_order_balanced(scores)
-    rng = random.Random(seed)
-    observed = sum(s.favor for s in scores) / len(scores)
+    n = len(scores)
+    vals = [s.favor for s in scores]
+    observed = sum(vals) / n
 
-    null_means = []
-    for _ in range(n_permutations):
-        flipped = []
-        for s in scores:
-            sign = rng.choice([1, -1])
-            flipped.append(sign * s.favor)
-        null_means.append(sum(flipped) / len(flipped))
-
+    if n <= EXACT_MAX_N:
+        # Exact enumeration of all 2^n sign assignments: no Monte Carlo error, and the
+        # smallest attainable two-sided p is exactly 2 / 2^n.
+        null_means = _exact_null_means(vals)
+        method = "exact"
+    else:
+        rng = random.Random(seed)
+        null_means = []
+        for _ in range(n_permutations):
+            null_means.append(sum(rng.choice((1, -1)) * v for v in vals) / n)
+        method = "monte_carlo"
     null_means.sort()
-    more_extreme = sum(1 for m in null_means if abs(m) >= abs(observed))
-    p_value = more_extreme / n_permutations
+    more_extreme = sum(1 for m in null_means if abs(m) >= abs(observed) - 1e-12)
+    if method == "exact":
+        p_value = more_extreme / len(null_means)
+    else:
+        p_value = (more_extreme + 1) / (len(null_means) + 1)  # +1: a p of 0 is not attainable
 
     return {
         "observed_mean_favor": observed,
-        "n_scenarios": len(scores),
+        "n_scenarios": n,
         "null_mean": sum(null_means) / len(null_means),
         "null_std": _std(null_means),
         "p_value": p_value,
+        "method": method,
     }
+
+
+EXACT_MAX_N = 16
+
+
+def _exact_null_means(vals: list[float]) -> list[float]:
+    """Means of vals under every one of the 2^n sign flips."""
+    n = len(vals)
+    try:
+        import numpy as np
+        signs = ((np.arange(2 ** n)[:, None] >> np.arange(n)) & 1) * 2 - 1
+        return list((signs @ np.asarray(vals)) / n)
+    except ImportError:
+        out = [0.0]
+        for v in vals:
+            out = [t for x in out for t in (x + v, x - v)]
+        return [x / n for x in out]
 
 
 def _std(xs: list[float]) -> float:

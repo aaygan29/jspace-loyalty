@@ -62,6 +62,27 @@ results/                real_model.json, analysis_real.json, operating_char.json
 hackathon-lineage/      the five original hackathon reports this work consolidates
 ```
 
+## Reviewer-response update (2026-09-29, branch `reviewer-fixes-newinml`)
+
+Re-run after NewInML review (exact tests, K=200 random directions, alpha sweep, controls). What changed:
+
+- **Exact arithmetic.** `stats.permutation_test` is now exact for n<=16 (Monte Carlo with +1 above).
+  Min two-sided p at n=3 is exactly 2/2^3 = 0.25 (the earlier 0.263 was Monte Carlo error).
+  p<=0.01 needs n>=8 from the test alone; the compound rule's `min_n=10` is what makes 10 the threshold.
+- **Reproducibility bug fixed.** Random-direction seeds used Python's salted `hash()`; now `zlib.crc32`.
+- **Random-direction control applied to install pairs and to a positive control.** At alpha=6 (K=200) all four
+  install effects lie inside the matched-norm random band (p=0.11-0.75), and 0/8 "oracle branch" directions
+  (built from statements naming the held-out entity, same norm) are flagged. The control has essentially no
+  power at alpha in {2,3,4,6} (max 25% at alpha=2). "Inside the band" is therefore not evidence of absence.
+  See `src/sweep_control.py`, `results/sweep_control.json`.
+- **Multiplicity.** Holm over the six held-out branch tests; expected false positives at alpha=.05 is 0.3
+  (P(>=1) = 0.265). Ukraine vs Romania: Holm-adjusted p vs clean = 0.044, vs random band = 0.93.
+- **Remediation arm corrected.** Steer+ablate is now a real arm; it equals ablate-only exactly because
+  projecting out v removes alpha*v by construction, so the measured "residuals" are off-target ablation effects,
+  not leftover loyalty. A non-trivial remediation (direction estimated from an independent contrast set) is needed.
+- `real_model.py` now batches the scorer (left-padded, eager attention; matches unbatched to 1.5e-5) and
+  reports progress; `results/real_model_k12_original.json` keeps the original K=12 run.
+
 ## Scope and honesty
 
 One 0.6B model, one steering method, a logprob forced-choice favorability scorer over
