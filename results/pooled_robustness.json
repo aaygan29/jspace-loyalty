@@ -125,7 +125,11 @@
    ]
   ],
   "survive_vs_band": [],
-  "expected_false_pos_at_05": 1.1
+  "expected_false_pos_at_05": 1.1,
+  "band_min_attainable_p": 0.004975124378109453,
+  "holm_first_threshold": 0.00227,
+  "band_holm_reachable": false,
+  "K_needed_for_holm": 439
  },
  "mirror": {
   "Democrats_install": 0.626,

@@ -146,6 +146,9 @@ for tag, (name, sub) in {"A": ("Qwen3-0.6B", ""), "B": ("Qwen2.5-1.5B-Instruct",
     mac(f"holmFamily{tag}", str(pr["holm"]["family_size"]))
     mac(f"holmSurviveClean{tag}", str(len(pr["holm"]["survive_vs_clean"]))); mac(f"holmSurviveBand{tag}", str(len(pr["holm"]["survive_vs_band"])))
     mac(f"holmExpectedFP{tag}", f"{pr['holm']['expected_false_pos_at_05']:.1f}")
+    mac(f"holmKNeeded{tag}", str(pr["holm"].get("K_needed_for_holm", "")))
+    mac(f"holmBandMinP{tag}", f"{pr['holm'].get('band_min_attainable_p', float('nan')):.3f}")
+    mac(f"holmThreshold{tag}", f"{pr['holm'].get('holm_first_threshold', float('nan')):.4f}")
     mac(f"nPrincipals{tag}", str(len(pr["principals"])))
     mac(f"proSign{tag}", rr(*pr["pro_principal_sign"]))
     if "mirror" in pr:

@@ -103,10 +103,18 @@ def main():
     pc = holm([d["p_vs_clean"] for _, _, d in fam]); pb = holm([d["p_vs_random_null"] for _, _, d in fam])
     sc = [(n, p, round(a, 4)) for (n, p, _), a in zip(fam, pc) if a < 0.05]
     sb = [(n, p, round(a, 4)) for (n, p, _), a in zip(fam, pb) if a < 0.05]
-    out["holm"] = {"family_size": len(fam), "survive_vs_clean": sc, "survive_vs_band": sb,
-                   "expected_false_pos_at_05": round(0.05 * len(fam), 2)}
+    # REACHABILITY of the band test under Holm: the smallest attainable band p is 1/(K+1) and Holm's first threshold is
+    # 0.05/m, so unless K+1 >= m/0.05 no branch can ever survive against the band, whatever its true effect
+    minp = min(d["min_attainable_p_vs_random"] for _, _, d in fam)
+    m = len(fam)
+    out["holm"] = {"family_size": m, "survive_vs_clean": sc, "survive_vs_band": sb,
+                   "expected_false_pos_at_05": round(0.05 * m, 2),
+                   "band_min_attainable_p": minp, "holm_first_threshold": round(0.05 / m, 5),
+                   "band_holm_reachable": bool(minp <= 0.05 / m), "K_needed_for_holm": math.ceil(m / 0.05) - 1}
     print(f"\nHOLM over {len(fam)} held-out branch tests (expected false positives at .05 = {0.05 * len(fam):.1f}):")
     print(f"  survive vs clean: {sc}\n  survive vs random band: {sb}")
+    print(f"  band Holm reachable? smallest attainable band p = {minp:.4f} vs first Holm threshold {0.05 / m:.4f}: "
+          f"{'yes' if minp <= 0.05 / m else 'NO (needs K >= %d)' % (math.ceil(m / 0.05) - 1)}")
 
     # mirror specificity
     if "Democrats" in an and "Republicans" in an:

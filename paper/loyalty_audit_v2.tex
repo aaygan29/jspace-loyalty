@@ -281,7 +281,10 @@ flagged at $\alpha{=}6$ and \pooledOracleTwoA{} at $\alpha{=}2$ (pooled over all
 as they did before: \negFlagCleanA{} of their held-out pairs read \textsc{suggestive} or \textsc{detected} against the
 clean model, and \negFlagBandA{} against the band. Holm correction over the full family of \holmFamilyA{} held-out
 branch tests leaves \holmSurviveCleanA{} against the clean baseline, where \holmExpectedFPA{} false positives are expected
-at $\alpha{=}0.05$, and \holmSurviveBandA{} against the band.
+at $\alpha{=}0.05$. Against the band none survive, but that count carries no information here: the band's smallest attainable
+$p$ is $1/(K+1)=\holmBandMinPA{}$ and Holm's first threshold is $0.05/\holmFamilyA{}=\holmThresholdA{}$, so no effect could survive
+however large it was, and the correction would need $K\ge\holmKNeededA{}$ random directions. This is the reachability problem of
+Section~\ref{sec:oc} applied to the control itself. The pooled oracle flag rates above are the informative statistic.
 
 \paragraph{The install is not specific to the named principal.}
 The install shifts favor toward the named principal in \proSignA{} principals, which is not distinguishable from
