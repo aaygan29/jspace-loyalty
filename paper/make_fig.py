@@ -76,10 +76,10 @@ ax[0].legend(handles=ax[0].get_legend_handles_labels()[0] + h, fontsize=6.5, loc
 for name, d in sw.items():
     if not d: continue
     al = sorted(d["by_alpha"], key=float)
-    ax[1].plot([float(a) for a in al], [d["by_alpha"][a]["mean_band_width_install"] for a in al], "o-", color=cols[name], label=name + " band width")
+    ax[1].plot([float(a) for a in al], [d["by_alpha"][a]["mean_band_width_install"] / 2 for a in al], "o-", color=cols[name], label=name + " band half-width")
     ax[1].plot([float(a) for a in al], [np.mean([abs(r["shift"]) for r in d["by_alpha"][a]["rows"]["install"]]) for a in al], "s--",
                color=cols[name], label=name + " mean |install effect|", alpha=0.6)
-ax[1].set_xlabel(r"install strength $\alpha$"); ax[1].set_ylabel("favor scale"); ax[1].set_title("Band width vs. install effect")
+ax[1].set_xlabel(r"install strength $\alpha$"); ax[1].set_ylabel("favor scale"); ax[1].set_title("Band half-width vs. install effect")
 ax[1].legend(fontsize=6.5)
 plt.tight_layout(); plt.savefig(os.path.join(OUT, "fig_control.pdf"), bbox_inches="tight"); plt.close()
 print("wrote fig_oc.pdf, fig_control.pdf")

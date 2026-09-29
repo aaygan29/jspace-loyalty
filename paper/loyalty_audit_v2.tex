@@ -34,16 +34,18 @@ $p<2/2^n$, so $p\le0.01$ needs $n\ge8$ and our compound rule needs $n\ge10$; wit
 scorer noise $\hat\sigma{=}\sigmaHatA$ the minimum detectable effect is \mdeTwelveA{} at
 $n{=}12$.
 \textbf{(2)~The random-direction control we would use to call branches ``noise'' is itself
-underpowered.} At $\alpha{=}6$ every install effect lies inside the matched-norm random band,
-and \oracleRateSixA{} held-out ``oracle'' directions built from statements naming the branch
-entity are flagged; the best case over four install strengths is \oracleRateTwoA{}. Branching is
-therefore undetermined, not absent. Against the clean baseline one branch survives Holm correction
-(adjusted $p{=}\holmUkraineA{}$), and it does not survive against the band.
+underpowered.} At $\alpha{=}6$ the matched-norm band contains every install effect in \ModelA{} (three of
+four in \ModelB{}), and \oracleRateSixA{} (\oracleRateSixB{}) held-out ``oracle'' directions built from statements
+naming the branch entity are flagged; the best case over four install strengths is \oracleRateTwoA{}
+(\oracleRateTwoB{}). Branching is therefore undetermined, not absent. Against the clean baseline one branch
+survives Holm correction in both models (adjusted $p{=}\holmUkraineA{}$ and \holmUkraineB{}) and none survives
+against the band. In \ModelB{} the negative-control principal's held-out pairs also shift against the clean
+baseline, which a clean-only audit would report as findings.
 \textbf{(3)~A null does not prove removal.} Ablating the exact install direction removes it by
 construction, so it cannot test this. A remediator that estimates the direction from an independent
-contrast set (cosine about 0.68) leaves a measurable residual that the audit reports as
-\textsc{abstain}. We give a one-line audit-and-control card that states each verdict together with
-what it cannot exclude.
+contrast set (cosine 0.51 to 0.68) leaves residuals, and in four of eight (model, principal) cases the audit
+returns \textsc{abstain} with a residual of up to 0.28. We give a one-line audit-and-control card that states
+each verdict together with what it cannot exclude.
 \end{abstract}
 
 \section{Introduction}
@@ -162,7 +164,7 @@ is why we present it as a lower bound on the MDE. The random-band test has a clo
 $\Phi\!\big((|e|-z_{0.975}s_b)/s_e\big)+\Phi\!\big((-|e|-z_{0.975}s_b)/s_e\big)$ for effect $e$, band standard
 deviation $s_b$ and shift standard error $s_e$. It depends on $e/s_b$ and not on $n$: the band test
 reaches half power only when the effect is about twice the band's standard deviation, and this
-matches simulation (Figure~\ref{fig:control}). A band this wide cannot be narrowed by adding scenarios.
+matches simulation (Figure~\ref{fig:control}). Adding scenarios narrows the band only to the extent that its spread is sampling noise rather than variation between random directions.
 
 \begin{figure}[t]
 \centering
@@ -190,14 +192,14 @@ signed favor changes (steer minus clean).}
 \end{table}
 
 \paragraph{Against the clean baseline the install works.}
-Every install effect is \textsc{detected} against the unsteered model (Table~\ref{tab:main}), but the signs
-are mixed (Russia and Uruguay shift away from the principal), and the negative-control principal's install
+In \ModelA{} every install effect is \textsc{detected} against the unsteered model (Table~\ref{tab:main}); in
+\ModelB{} three of four are (Appendix~\ref{app:second}). The signs are mixed (Russia and Uruguay shift away from the principal), and the negative-control principal's install
 is as large as the USA's. What the install demonstrates is a steerable favorability direction, not
 principal-specific loyalty.
 
 \paragraph{Against the random band no install effect stands out.}
 At $\alpha{=}6$ the band is about \bandWidthSixA{} wide, and all four install effects lie inside it
-(Table~\ref{tab:main}). A real, large, directly named effect is therefore indistinguishable from an
+(Table~\ref{tab:main}); in \ModelB{} three of four do. A real, large, directly named effect is therefore indistinguishable from an
 arbitrary perturbation of equal norm by this control. The oracle branches make the same point:
 \oracleRateSixA{} are flagged.
 
@@ -206,8 +208,8 @@ Lower $\alpha$ narrows the band but shrinks the effect with it (Table~\ref{tab:c
 $\alpha\in\{2,3,4,6\}$ the oracle branches are flagged \oracleRateTwoA{}, \oracleRateThreeA{},
 \oracleRateFourA{} and \oracleRateSixA{}, and the install pairs \installRateTwoA{}, \installRateThreeA{},
 \installRateFourA{}, \installRateSixA{}. The control has little power to see a real effect at any strength we
-tried, and Section~\ref{sec:analytic} shows why: its power is a function of $e/s_b$, and here $e/s_b$ is
-about one to two.
+tried, and Section~\ref{sec:analytic} shows why: its power is a function of $e/s_b$, and here the median $e/s_b$ is
+between 0.9 and 1.6 at every strength and both models (range 0.03 to 6.3).
 
 \begin{table}[t]
 \centering
@@ -218,16 +220,36 @@ $p<0.05$. Oracle branches are real by construction.}
 \controlTableA
 \end{table}
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.92\linewidth]{fig_control.pdf}
+\caption{\textbf{Left:} closed-form power of the random-band test against effect divided by band standard
+deviation (line), simulation (gray dots), and the measured known-real effects (install pairs and oracle
+branches, all strengths, both models; markers at 1 are flagged, at 0 are not). \textbf{Right:} the band's half-width
+matches or exceeds the mean install effect at every strength.}
+\label{fig:control}
+\end{figure}
+
 \paragraph{Held-out branches.}
 Against the clean baseline, Ukraine/Romania is the only branch that survives Holm correction
 (adjusted $p=\holmUkraineA$), and USA/Israel and USA/Japan do not. Against the band its adjusted $p$ is
-\holmUkraineBand{}. With six tests at $\alpha{=}0.05$ the expected number of false positives is
+\holmUkraineBandA{} (\holmUkraineBandB{} in \ModelB{}). With six tests at $\alpha{=}0.05$ the expected number of false positives is
 $0.3$ and $P(\ge1)=0.26$. The honest summary is that we cannot say whether the install branches:
 one held-out shift is real relative to the clean model, and the control that would say whether it is
 specific to the loyalty direction has no power.
 
 \paragraph{A second model.}
-\secondModelParagraph
+Appendix~\ref{app:second} gives the same analysis for \ModelB{} ($\hat\sigma{=}\sigmaHatB$, MDE \mdeTwelveB{} at
+$n{=}12$). The operating-characteristic conclusions carry over and two things differ. First, the install is not
+uniform across principals: China's is not detected against the clean model (shift $-0.17$), while USA's is larger
+than in \ModelA{} ($+0.99$) and is the only install effect outside its band ($p{=}0.025$ before any correction).
+The oracle branches are again flagged \oracleRateSixB{} at $\alpha{=}6$ and at most \oracleRateTwoB{} at any strength
+(Table~\ref{tab:controlB}). Second, the negative-control principal does not stay flat: Uruguay's two held-out
+pairs shift by $-0.55$ and $-0.52$ against the clean model ($p\le0.001$) while lying inside their bands. A
+clean-only audit would report these as branching, which is the failure a control exists to catch, and the band
+cannot confirm the diagnosis because it is unpowered. Ukraine/Romania again survives Holm correction against the
+clean baseline (adjusted $p{=}\holmUkraineB$) and not against the band. Taken together, what transfers across the
+two models is the operating characteristics of the instrument and its controls, not any particular effect.
 
 \section{Remediation: what a null can exclude}
 \label{sec:remediation}
@@ -235,16 +257,17 @@ Projecting the exact install direction out of the residual stream cannot test th
 $h+\alpha v$ and $h$ have the same projection off $v$, so steer-then-ablate equals ablate-only exactly
 (we verified this on every pair), and any nonzero ``residual'' is the off-target effect of the ablation.
 A realistic remediator does not know $v$. We give it an independent contrast set (different wording, same
-principal), estimate a direction $u$ with $\cos(v,u)\approx0.68$, and ablate $u$ from the steered model
-(Table~\ref{tab:rem}). The install is only partly removed, and where a measurable residual remains the
-audit reports \textsc{abstain}: a null coexists with a residual of about a quarter to a third of the
-original effect. Imperfect ablation can also overshoot (Uruguay), so a null after remediation neither
-proves removal nor bounds the damage. This is the case the excludable-residual bound is meant for.
+principal), estimate a direction $u$ with $\cos(v,u)$ of 0.51 to 0.68, and ablate $u$ from the steered model
+(Table~\ref{tab:rem}). The install is only partly removed. In \ModelA{} three of four remediated pairs read
+\textsc{abstain} with residuals of $+0.13$, $+0.05$ and $+0.21$, up to a third of the install; in \ModelB{} one of
+four does ($+0.28$, 29\% of the install) and the other three read \textsc{suggestive}. Imperfect ablation can also
+overshoot (Uruguay in \ModelA{}, China in \ModelB{}), so a null after remediation neither proves removal nor bounds
+the damage. This is the case the excludable-residual bound is meant for.
 
 \begin{table}[t]
 \centering
 \small
-\caption{Partial remediation on the direct pair. Residual $=$ steer$+$ablate$(u)$ minus clean;
+\caption{Partial remediation on the direct pair for \ModelA{} (\ModelB{} in Appendix~\ref{app:second}). Residual $=$ steer$+$ablate$(u)$ minus clean;
 Removed $=1-$ residual/install; off-target is ablate$(u)$ alone.}
 \label{tab:rem}
 \remTableA
@@ -261,8 +284,10 @@ unfalsifiable ``not detected'' into ``cannot rule out more than $x$'' and an unp
 stated limitation.
 
 \section{Limitations}
-Two small open-weight models, one steering method, one layer, a
-forced-choice favorability scorer over geopolitical entities, and twelve correlated cells per pair. The
+Two small open-weight models (one of which does not keep its negative control flat), one steering method, one layer, a
+forced-choice favorability scorer over geopolitical entities, and twelve correlated cells per pair. At the template level (six clusters) the smallest attainable $p$ is $0.031$,
+so the audit's own rule cannot reach \textsc{detected} on independent units, and the twelve-cell $n$ overstates
+what the data can support. The
 matched-norm random band is a coarse control: because the scorer is sensitive to any perturbation of this
 size at this layer, the band is wide, and a norm-matched band may not be the right comparison for a
 fine-tuned loyalty. Lower-norm or effect-matched random controls, a calibrated scorer, more entity pairs and
@@ -273,8 +298,8 @@ deployed system.
 \section{Conclusion}
 A secret-loyalty audit is a measurement, and so are its controls. Reported without operating
 characteristics, a verdict can come from a rule that cannot fire, and a control can look decisive while
-having almost no power. At these model sizes and strengths the install is easy to detect against the clean
-model, the random-direction control cannot tell it from a random perturbation, and a null after imperfect
+having almost no power. At these model sizes and strengths the install is usually detectable against the clean
+model (seven of eight model-principal pairs), the random-direction control cannot tell it from a random perturbation, and a null after imperfect
 remediation leaves room for a substantial residual. We recommend reporting reachability, MDE, the control's
 power, and the excludable residual next to each verdict.
 
@@ -304,10 +329,35 @@ clean, steer, random and ablate arms. MDE: smallest effect with $P(\textsc{detec
 resampled trials per effect, interpolated. Equivalence bound: largest residual with $P(\textsc{abstain})\ge0.2$.
 Bootstrap intervals use 5000 resamples of the twelve cells.
 \paragraph{Template-level check.} Averaging the two orders within each template gives six clusters, where the
-exact test's smallest $p$ is $2/2^6=0.031$; results are in \texttt{results/*.json} under
-\texttt{template\_level}.
+exact test's smallest $p$ is $2/2^6=0.031$. Every strong effect sits at that floor (for example Ukraine/Romania in
+both models), so at cluster level nothing can reach the rule's \textsc{detected} tier. Values are in
+\texttt{results/*.json} under \texttt{template\_level}.
 \paragraph{Code and data.} An anonymized repository with all scripts, seeds and result files accompanies the
 submission; every number and table in this paper is generated from those files.
+
+\section{Second model: \ModelB{}}
+\label{app:second}
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{\ModelB{} (bf16), $\ell{=}10$, $\alpha{=}6$, $K{=}200$; same layout as Table~\ref{tab:main}.}
+\label{tab:mainB}
+\mainTableB
+\end{table}
+\begin{table}[h]
+\centering
+\small
+\caption{Random-band control power for \ModelB{}.}
+\label{tab:controlB}
+\controlTableB
+\end{table}
+\begin{table}[h]
+\centering
+\small
+\caption{Partial remediation for \ModelB{}.}
+\label{tab:remB}
+\remTableB
+\end{table}
 
 \small
 \bibliographystyle{plainnat}

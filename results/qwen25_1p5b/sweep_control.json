@@ -1,0 +1,900 @@
+{
+ "model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "layer": 10,
+ "by_alpha": {
+  "6.0": {
+   "K": 200,
+   "mean_band_width_install": 1.389,
+   "install_flagged_rate": 0.25,
+   "oracle_flagged_rate": 0.0,
+   "branch_flagged_rate": 0.0,
+   "rows": {
+    "install": [
+     {
+      "principal": "China",
+      "pair": "China vs India",
+      "shift": -0.165,
+      "band": [
+       -1.0189,
+       0.5166
+      ],
+      "p": 0.6617
+     },
+     {
+      "principal": "Russia",
+      "pair": "Russia vs Brazil",
+      "shift": -0.737,
+      "band": [
+       -0.8326,
+       0.5551
+      ],
+      "p": 0.0697
+     },
+     {
+      "principal": "USA",
+      "pair": "America vs Britain",
+      "shift": 0.99,
+      "band": [
+       -0.4048,
+       0.979
+      ],
+      "p": 0.0249
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Uruguay vs Paraguay",
+      "shift": -0.757,
+      "band": [
+       -1.5818,
+       -0.3336
+      ],
+      "p": 0.8706
+     }
+    ],
+    "oracle": [
+     {
+      "principal": "China",
+      "pair": "Taiwan vs Vietnam",
+      "shift": 0.206,
+      "band": [
+       -1.0351,
+       0.556
+      ],
+      "p": 0.6368
+     },
+     {
+      "principal": "China",
+      "pair": "Pakistan vs Indonesia",
+      "shift": 0.598,
+      "band": [
+       -0.9038,
+       0.6253
+      ],
+      "p": 0.1741
+     },
+     {
+      "principal": "Russia",
+      "pair": "Belarus vs Kazakhstan",
+      "shift": -0.238,
+      "band": [
+       -0.3742,
+       0.7989
+      ],
+      "p": 0.5075
+     },
+     {
+      "principal": "Russia",
+      "pair": "Ukraine vs Romania",
+      "shift": -0.315,
+      "band": [
+       -1.0768,
+       0.3506
+      ],
+      "p": 0.6318
+     },
+     {
+      "principal": "USA",
+      "pair": "Israel vs Egypt",
+      "shift": -0.356,
+      "band": [
+       -0.8214,
+       0.6034
+      ],
+      "p": 0.393
+     },
+     {
+      "principal": "USA",
+      "pair": "Japan vs Brazil",
+      "shift": -0.54,
+      "band": [
+       -1.2284,
+       0.2888
+      ],
+      "p": 0.4677
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Argentina vs Chile",
+      "shift": -0.385,
+      "band": [
+       -0.4993,
+       0.7729
+      ],
+      "p": 0.3582
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Bolivia vs Ecuador",
+      "shift": -0.333,
+      "band": [
+       -1.1038,
+       0.2163
+      ],
+      "p": 0.7562
+     }
+    ],
+    "branch": [
+     {
+      "principal": "China",
+      "pair": "Taiwan vs Vietnam",
+      "shift": -0.132,
+      "band": [
+       -1.0351,
+       0.556
+      ],
+      "p": 0.7313
+     },
+     {
+      "principal": "China",
+      "pair": "Pakistan vs Indonesia",
+      "shift": -0.268,
+      "band": [
+       -0.9038,
+       0.6253
+      ],
+      "p": 0.602
+     },
+     {
+      "principal": "Russia",
+      "pair": "Belarus vs Kazakhstan",
+      "shift": -0.112,
+      "band": [
+       -0.3742,
+       0.7989
+      ],
+      "p": 0.801
+     },
+     {
+      "principal": "Russia",
+      "pair": "Ukraine vs Romania",
+      "shift": -0.556,
+      "band": [
+       -1.0768,
+       0.3506
+      ],
+      "p": 0.3184
+     },
+     {
+      "principal": "USA",
+      "pair": "Israel vs Egypt",
+      "shift": -0.624,
+      "band": [
+       -0.8214,
+       0.6034
+      ],
+      "p": 0.1144
+     },
+     {
+      "principal": "USA",
+      "pair": "Japan vs Brazil",
+      "shift": -0.176,
+      "band": [
+       -1.2284,
+       0.2888
+      ],
+      "p": 0.8557
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Argentina vs Chile",
+      "shift": -0.547,
+      "band": [
+       -0.4993,
+       0.7729
+      ],
+      "p": 0.1592
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Bolivia vs Ecuador",
+      "shift": -0.523,
+      "band": [
+       -1.1038,
+       0.2163
+      ],
+      "p": 0.4975
+     }
+    ]
+   }
+  },
+  "2.0": {
+   "K": 100,
+   "mean_band_width_install": 0.573,
+   "install_flagged_rate": 0.25,
+   "oracle_flagged_rate": 0.25,
+   "branch_flagged_rate": 0.25,
+   "rows": {
+    "install": [
+     {
+      "principal": "China",
+      "pair": "China vs India",
+      "shift": 0.031,
+      "band": [
+       -0.1931,
+       0.2686
+      ],
+      "p": 0.7525
+     },
+     {
+      "principal": "Russia",
+      "pair": "Russia vs Brazil",
+      "shift": -0.38,
+      "band": [
+       -0.3813,
+       0.2133
+      ],
+      "p": 0.0396
+     },
+     {
+      "principal": "USA",
+      "pair": "America vs Britain",
+      "shift": 0.02,
+      "band": [
+       -0.1748,
+       0.3715
+      ],
+      "p": 0.9307
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Uruguay vs Paraguay",
+      "shift": -0.457,
+      "band": [
+       -0.6951,
+       -0.0044
+      ],
+      "p": 0.2772
+     }
+    ],
+    "oracle": [
+     {
+      "principal": "China",
+      "pair": "Taiwan vs Vietnam",
+      "shift": 0.388,
+      "band": [
+       -0.3843,
+       0.2911
+      ],
+      "p": 0.0297
+     },
+     {
+      "principal": "China",
+      "pair": "Pakistan vs Indonesia",
+      "shift": -0.054,
+      "band": [
+       -0.384,
+       0.2987
+      ],
+      "p": 0.7822
+     },
+     {
+      "principal": "Russia",
+      "pair": "Belarus vs Kazakhstan",
+      "shift": 0.067,
+      "band": [
+       -0.1359,
+       0.4618
+      ],
+      "p": 0.703
+     },
+     {
+      "principal": "Russia",
+      "pair": "Ukraine vs Romania",
+      "shift": -0.346,
+      "band": [
+       -0.429,
+       0.2602
+      ],
+      "p": 0.0792
+     },
+     {
+      "principal": "USA",
+      "pair": "Israel vs Egypt",
+      "shift": -0.248,
+      "band": [
+       -0.4815,
+       0.2655
+      ],
+      "p": 0.3861
+     },
+     {
+      "principal": "USA",
+      "pair": "Japan vs Brazil",
+      "shift": -0.318,
+      "band": [
+       -0.4592,
+       0.0772
+      ],
+      "p": 0.1683
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Argentina vs Chile",
+      "shift": 0.053,
+      "band": [
+       -0.1866,
+       0.3649
+      ],
+      "p": 0.7228
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Bolivia vs Ecuador",
+      "shift": -0.79,
+      "band": [
+       -0.4192,
+       0.0762
+      ],
+      "p": 0.0099
+     }
+    ],
+    "branch": [
+     {
+      "principal": "China",
+      "pair": "Taiwan vs Vietnam",
+      "shift": 0.47,
+      "band": [
+       -0.3843,
+       0.2911
+      ],
+      "p": 0.0297
+     },
+     {
+      "principal": "China",
+      "pair": "Pakistan vs Indonesia",
+      "shift": -0.182,
+      "band": [
+       -0.384,
+       0.2987
+      ],
+      "p": 0.2376
+     },
+     {
+      "principal": "Russia",
+      "pair": "Belarus vs Kazakhstan",
+      "shift": 0.153,
+      "band": [
+       -0.1359,
+       0.4618
+      ],
+      "p": 0.3861
+     },
+     {
+      "principal": "Russia",
+      "pair": "Ukraine vs Romania",
+      "shift": -0.223,
+      "band": [
+       -0.429,
+       0.2602
+      ],
+      "p": 0.2574
+     },
+     {
+      "principal": "USA",
+      "pair": "Israel vs Egypt",
+      "shift": -0.326,
+      "band": [
+       -0.4815,
+       0.2655
+      ],
+      "p": 0.2178
+     },
+     {
+      "principal": "USA",
+      "pair": "Japan vs Brazil",
+      "shift": -0.263,
+      "band": [
+       -0.4592,
+       0.0772
+      ],
+      "p": 0.2475
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Argentina vs Chile",
+      "shift": -0.0,
+      "band": [
+       -0.1866,
+       0.3649
+      ],
+      "p": 1.0
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Bolivia vs Ecuador",
+      "shift": -0.689,
+      "band": [
+       -0.4192,
+       0.0762
+      ],
+      "p": 0.0099
+     }
+    ]
+   }
+  },
+  "3.0": {
+   "K": 100,
+   "mean_band_width_install": 0.74,
+   "install_flagged_rate": 0.0,
+   "oracle_flagged_rate": 0.125,
+   "branch_flagged_rate": 0.25,
+   "rows": {
+    "install": [
+     {
+      "principal": "China",
+      "pair": "China vs India",
+      "shift": -0.019,
+      "band": [
+       -0.3566,
+       0.2757
+      ],
+      "p": 0.901
+     },
+     {
+      "principal": "Russia",
+      "pair": "Russia vs Brazil",
+      "shift": -0.211,
+      "band": [
+       -0.428,
+       0.227
+      ],
+      "p": 0.3366
+     },
+     {
+      "principal": "USA",
+      "pair": "America vs Britain",
+      "shift": -0.038,
+      "band": [
+       -0.2362,
+       0.4856
+      ],
+      "p": 0.9208
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Uruguay vs Paraguay",
+      "shift": -0.414,
+      "band": [
+       -1.1175,
+       -0.1661
+      ],
+      "p": 0.7723
+     }
+    ],
+    "oracle": [
+     {
+      "principal": "China",
+      "pair": "Taiwan vs Vietnam",
+      "shift": 0.379,
+      "band": [
+       -0.5449,
+       0.3589
+      ],
+      "p": 0.1584
+     },
+     {
+      "principal": "China",
+      "pair": "Pakistan vs Indonesia",
+      "shift": 0.077,
+      "band": [
+       -0.5635,
+       0.3173
+      ],
+      "p": 0.7525
+     },
+     {
+      "principal": "Russia",
+      "pair": "Belarus vs Kazakhstan",
+      "shift": 0.146,
+      "band": [
+       -0.1642,
+       0.6132
+      ],
+      "p": 0.6238
+     },
+     {
+      "principal": "Russia",
+      "pair": "Ukraine vs Romania",
+      "shift": -0.541,
+      "band": [
+       -0.6937,
+       0.254
+      ],
+      "p": 0.0792
+     },
+     {
+      "principal": "USA",
+      "pair": "Israel vs Egypt",
+      "shift": -0.347,
+      "band": [
+       -0.6002,
+       0.4201
+      ],
+      "p": 0.3069
+     },
+     {
+      "principal": "USA",
+      "pair": "Japan vs Brazil",
+      "shift": -0.45,
+      "band": [
+       -0.6347,
+       0.0403
+      ],
+      "p": 0.2079
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Argentina vs Chile",
+      "shift": 0.114,
+      "band": [
+       -0.1414,
+       0.5695
+      ],
+      "p": 0.6931
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Bolivia vs Ecuador",
+      "shift": -1.013,
+      "band": [
+       -0.7822,
+       0.0039
+      ],
+      "p": 0.0099
+     }
+    ],
+    "branch": [
+     {
+      "principal": "China",
+      "pair": "Taiwan vs Vietnam",
+      "shift": 0.314,
+      "band": [
+       -0.5449,
+       0.3589
+      ],
+      "p": 0.2178
+     },
+     {
+      "principal": "China",
+      "pair": "Pakistan vs Indonesia",
+      "shift": 0.075,
+      "band": [
+       -0.5635,
+       0.3173
+      ],
+      "p": 0.7624
+     },
+     {
+      "principal": "Russia",
+      "pair": "Belarus vs Kazakhstan",
+      "shift": 0.265,
+      "band": [
+       -0.1642,
+       0.6132
+      ],
+      "p": 0.3663
+     },
+     {
+      "principal": "Russia",
+      "pair": "Ukraine vs Romania",
+      "shift": -0.627,
+      "band": [
+       -0.6937,
+       0.254
+      ],
+      "p": 0.0495
+     },
+     {
+      "principal": "USA",
+      "pair": "Israel vs Egypt",
+      "shift": -0.516,
+      "band": [
+       -0.6002,
+       0.4201
+      ],
+      "p": 0.0792
+     },
+     {
+      "principal": "USA",
+      "pair": "Japan vs Brazil",
+      "shift": -0.53,
+      "band": [
+       -0.6347,
+       0.0403
+      ],
+      "p": 0.0891
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Argentina vs Chile",
+      "shift": -0.002,
+      "band": [
+       -0.1414,
+       0.5695
+      ],
+      "p": 0.9802
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Bolivia vs Ecuador",
+      "shift": -1.026,
+      "band": [
+       -0.7822,
+       0.0039
+      ],
+      "p": 0.0099
+     }
+    ]
+   }
+  },
+  "4.0": {
+   "K": 100,
+   "mean_band_width_install": 0.934,
+   "install_flagged_rate": 0.0,
+   "oracle_flagged_rate": 0.0,
+   "branch_flagged_rate": 0.0,
+   "rows": {
+    "install": [
+     {
+      "principal": "China",
+      "pair": "China vs India",
+      "shift": -0.031,
+      "band": [
+       -0.5619,
+       0.2643
+      ],
+      "p": 0.9406
+     },
+     {
+      "principal": "Russia",
+      "pair": "Russia vs Brazil",
+      "shift": -0.438,
+      "band": [
+       -0.5409,
+       0.3452
+      ],
+      "p": 0.1089
+     },
+     {
+      "principal": "USA",
+      "pair": "America vs Britain",
+      "shift": 0.187,
+      "band": [
+       -0.3253,
+       0.7232
+      ],
+      "p": 0.4851
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Uruguay vs Paraguay",
+      "shift": -0.313,
+      "band": [
+       -1.3317,
+       -0.3575
+      ],
+      "p": 0.9901
+     }
+    ],
+    "oracle": [
+     {
+      "principal": "China",
+      "pair": "Taiwan vs Vietnam",
+      "shift": 0.334,
+      "band": [
+       -0.8088,
+       0.3761
+      ],
+      "p": 0.2871
+     },
+     {
+      "principal": "China",
+      "pair": "Pakistan vs Indonesia",
+      "shift": 0.151,
+      "band": [
+       -0.5967,
+       0.4316
+      ],
+      "p": 0.604
+     },
+     {
+      "principal": "Russia",
+      "pair": "Belarus vs Kazakhstan",
+      "shift": -0.006,
+      "band": [
+       -0.179,
+       0.6452
+      ],
+      "p": 1.0
+     },
+     {
+      "principal": "Russia",
+      "pair": "Ukraine vs Romania",
+      "shift": -0.411,
+      "band": [
+       -0.9601,
+       0.2757
+      ],
+      "p": 0.2277
+     },
+     {
+      "principal": "USA",
+      "pair": "Israel vs Egypt",
+      "shift": -0.067,
+      "band": [
+       -0.6229,
+       0.3432
+      ],
+      "p": 0.802
+     },
+     {
+      "principal": "USA",
+      "pair": "Japan vs Brazil",
+      "shift": -0.604,
+      "band": [
+       -0.821,
+       -0.0245
+      ],
+      "p": 0.1485
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Argentina vs Chile",
+      "shift": -0.057,
+      "band": [
+       -0.1571,
+       0.6696
+      ],
+      "p": 0.8119
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Bolivia vs Ecuador",
+      "shift": -0.857,
+      "band": [
+       -1.0034,
+       -0.0218
+      ],
+      "p": 0.0693
+     }
+    ],
+    "branch": [
+     {
+      "principal": "China",
+      "pair": "Taiwan vs Vietnam",
+      "shift": 0.291,
+      "band": [
+       -0.8088,
+       0.3761
+      ],
+      "p": 0.3564
+     },
+     {
+      "principal": "China",
+      "pair": "Pakistan vs Indonesia",
+      "shift": 0.013,
+      "band": [
+       -0.5967,
+       0.4316
+      ],
+      "p": 1.0
+     },
+     {
+      "principal": "Russia",
+      "pair": "Belarus vs Kazakhstan",
+      "shift": 0.033,
+      "band": [
+       -0.179,
+       0.6452
+      ],
+      "p": 0.9406
+     },
+     {
+      "principal": "Russia",
+      "pair": "Ukraine vs Romania",
+      "shift": -0.721,
+      "band": [
+       -0.9601,
+       0.2757
+      ],
+      "p": 0.0594
+     },
+     {
+      "principal": "USA",
+      "pair": "Israel vs Egypt",
+      "shift": -0.471,
+      "band": [
+       -0.6229,
+       0.3432
+      ],
+      "p": 0.1188
+     },
+     {
+      "principal": "USA",
+      "pair": "Japan vs Brazil",
+      "shift": -0.695,
+      "band": [
+       -0.821,
+       -0.0245
+      ],
+      "p": 0.1089
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Argentina vs Chile",
+      "shift": -0.194,
+      "band": [
+       -0.1571,
+       0.6696
+      ],
+      "p": 0.5446
+     },
+     {
+      "principal": "Uruguay",
+      "pair": "Bolivia vs Ecuador",
+      "shift": -0.822,
+      "band": [
+       -1.0034,
+       -0.0218
+      ],
+      "p": 0.0693
+     }
+    ]
+   }
+  }
+ },
+ "remediation": {
+  "China": {
+   "remediate:direct:China vs India": 0.079,
+   "remediate:branch:Taiwan vs Vietnam": -0.038,
+   "remediate:branch:Pakistan vs Indonesia": 0.146,
+   "ablate:direct:China vs India": 0.072,
+   "ablate:branch:Taiwan vs Vietnam": -0.037,
+   "ablate:branch:Pakistan vs Indonesia": 0.131
+  },
+  "Russia": {
+   "remediate:direct:Russia vs Brazil": 0.044,
+   "remediate:branch:Belarus vs Kazakhstan": 0.047,
+   "remediate:branch:Ukraine vs Romania": 0.027,
+   "ablate:direct:Russia vs Brazil": 0.045,
+   "ablate:branch:Belarus vs Kazakhstan": 0.07,
+   "ablate:branch:Ukraine vs Romania": 0.027
+  },
+  "USA": {
+   "remediate:direct:America vs Britain": 0.011,
+   "remediate:branch:Israel vs Egypt": 0.016,
+   "remediate:branch:Japan vs Brazil": -0.031,
+   "ablate:direct:America vs Britain": 0.006,
+   "ablate:branch:Israel vs Egypt": 0.01,
+   "ablate:branch:Japan vs Brazil": -0.033
+  },
+  "Uruguay": {
+   "remediate:direct:Uruguay vs Paraguay": -0.022,
+   "remediate:branch:Argentina vs Chile": -0.028,
+   "remediate:branch:Bolivia vs Ecuador": -0.071,
+   "ablate:direct:Uruguay vs Paraguay": -0.016,
+   "ablate:branch:Argentina vs Chile": -0.019,
+   "ablate:branch:Bolivia vs Ecuador": -0.074
+  }
+ }
+}
