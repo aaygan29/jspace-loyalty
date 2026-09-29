@@ -108,9 +108,16 @@ def power_curve(resid_pool: list[float], n: int, effects) -> dict:
 
 
 def mde(curve: dict, effects) -> float | None:
+    """Smallest effect with P(DETECTED) >= 0.80, linearly interpolated between grid points."""
+    prev = None
     for e in effects:
-        if curve[str(e)]["DETECTED"] >= 0.80:
-            return e
+        pw = curve[str(e)]["DETECTED"]
+        if pw >= 0.80:
+            if prev is None:
+                return e
+            e0, p0 = prev
+            return round(e0 + (0.80 - p0) * (e - e0) / (pw - p0), 3)
+        prev = (e, pw)
     return None
 
 

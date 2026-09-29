@@ -102,3 +102,18 @@ an LLM-judge scorer. No claim is made about any deployed system.
   plus the archived `loyaltyprint` artifacts this work consolidates.
 - **Open next step (from review):** replicate the operating-characteristic conclusions on a
   second, larger model. The engine is model-agnostic — set `LOYALTY_MODEL` and re-run.
+
+## Reviewer-response additions (scripts)
+
+| Script | Purpose |
+|---|---|
+| `src/sweep_control.py` | power of the random-direction band across alpha, using known-real effects (install pairs, oracle branches) |
+| `src/remediation_partial.py` | non-trivial remediation: ablate a direction estimated from an independent contrast set (cos ~0.68); true residual is nonzero |
+| `src/analytic_validation.py` | absorbing-Markov-chain "word game" with known steer: fundamental-matrix lift vs closed form, closed-form power/MDE/reachability vs the audit code, closed-form control power vs simulation |
+| `paper/build_tables.py` | writes `paper/generated.tex` (all macros and tables) from `results/*.json`; no number is hand-copied |
+| `paper/loyalty_audit_v2.tex` | reframed paper ("report what your audit AND its controls cannot rule out") |
+
+Second model: `LOYALTY_DTYPE=bfloat16 LOYALTY_MODEL=Qwen/Qwen2.5-1.5B-Instruct python3 src/real_model.py --out results/qwen25_1p5b/real_model.json`
+(fp32 weights of a 1.5B model push an 8 GB machine into swap; bf16 needs the dtype casts in the hooks). Then run
+`analyze_real.py`, `operating_char.py`, `sweep_control.py` with `LOYALTY_RESULTS=qwen25_1p5b/real_model.json`,
+`LOYALTY_ANALYSIS_OUT`, `LOYALTY_OC_OUT`, `LOYALTY_SWEEP_OUT` pointing into `results/qwen25_1p5b/`.

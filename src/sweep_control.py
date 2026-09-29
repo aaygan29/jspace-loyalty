@@ -61,7 +61,7 @@ def main():
                 for pair, sc in pd["conditions"][arm][grp].items():
                     r[f"{arm}:{grp}:{pair}"] = round(_mean(_paired_shift(clean[grp][pair], sc)), 3)
         out["remediation"][pn] = r
-    json.dump(out, open(os.path.join(RESULTS, "sweep_control.json"), "w"), indent=1)
+    json.dump(out, open(os.path.join(RESULTS, os.environ.get("LOYALTY_SWEEP_OUT", "sweep_control.json")), "w"), indent=1)
     print("\nremediation (arm:group:pair -> mean shift vs clean):")
     for pn, r in out["remediation"].items():
         print(" ", pn, {k.split(':',1)[0][:3] + ':' + k.split(':')[1][:3] + ':' + k.split(':')[2].split(' ')[0]: v for k, v in r.items()})

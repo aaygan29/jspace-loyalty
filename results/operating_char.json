@@ -183,8 +183,8 @@
       "ABSTAIN": 0.0
     }
   },
-  "mde_80pct_n12": 0.8,
-  "mde_80pct_n24": 0.5,
+  "mde_80pct_n12": 0.67,
+  "mde_80pct_n24": 0.427,
   "equivalence_bound_sim_n12": {
     "p_abstain_given_residual": {
       "0.0": 0.9375,

@@ -1,0 +1,135 @@
+{
+ "model": "Qwen/Qwen3-0.6B",
+ "layer": 10,
+ "alpha": 6.0,
+ "principals": {
+  "China": {
+   "pair": "China vs India",
+   "cos_v_u": 0.6751,
+   "install": {
+    "mean_shift": 0.506,
+    "ci95": [
+     0.2834,
+     0.726
+    ],
+    "p": 0.0029296875,
+    "verdict": "DETECTED"
+   },
+   "residual_after_partial_removal": {
+    "mean_shift": 0.134,
+    "ci95": [
+     -0.0743,
+     0.3469
+    ],
+    "p": 0.26806640625,
+    "verdict": "ABSTAIN"
+   },
+   "ablate_u_only_offtarget": {
+    "mean_shift": 0.0077,
+    "ci95": [
+     -0.1316,
+     0.1602
+    ],
+    "p": 0.92431640625,
+    "verdict": "ABSTAIN"
+   },
+   "fraction_removed": 0.735
+  },
+  "Russia": {
+   "pair": "Russia vs Brazil",
+   "cos_v_u": 0.6822,
+   "install": {
+    "mean_shift": -0.484,
+    "ci95": [
+     -0.6337,
+     -0.3239
+    ],
+    "p": 0.00146484375,
+    "verdict": "DETECTED"
+   },
+   "residual_after_partial_removal": {
+    "mean_shift": 0.0486,
+    "ci95": [
+     -0.1817,
+     0.2881
+    ],
+    "p": 0.701171875,
+    "verdict": "ABSTAIN"
+   },
+   "ablate_u_only_offtarget": {
+    "mean_shift": 0.1775,
+    "ci95": [
+     0.1014,
+     0.2567
+    ],
+    "p": 0.00146484375,
+    "verdict": "DETECTED"
+   },
+   "fraction_removed": 1.1
+  },
+  "USA": {
+   "pair": "America vs Britain",
+   "cos_v_u": 0.6749,
+   "install": {
+    "mean_shift": 0.6143,
+    "ci95": [
+     0.3851,
+     0.857
+    ],
+    "p": 0.00048828125,
+    "verdict": "DETECTED"
+   },
+   "residual_after_partial_removal": {
+    "mean_shift": 0.205,
+    "ci95": [
+     0.0041,
+     0.4094
+    ],
+    "p": 0.0927734375,
+    "verdict": "ABSTAIN"
+   },
+   "ablate_u_only_offtarget": {
+    "mean_shift": -0.085,
+    "ci95": [
+     -0.2705,
+     0.1154
+    ],
+    "p": 0.4150390625,
+    "verdict": "ABSTAIN"
+   },
+   "fraction_removed": 0.666
+  },
+  "Uruguay": {
+   "pair": "Uruguay vs Paraguay",
+   "cos_v_u": 0.6653,
+   "install": {
+    "mean_shift": -0.6093,
+    "ci95": [
+     -0.8687,
+     -0.3659
+    ],
+    "p": 0.0009765625,
+    "verdict": "DETECTED"
+   },
+   "residual_after_partial_removal": {
+    "mean_shift": -0.7916,
+    "ci95": [
+     -1.0221,
+     -0.5874
+    ],
+    "p": 0.00048828125,
+    "verdict": "DETECTED"
+   },
+   "ablate_u_only_offtarget": {
+    "mean_shift": -0.0371,
+    "ci95": [
+     -0.0518,
+     -0.0238
+    ],
+    "p": 0.00048828125,
+    "verdict": "ABSTAIN"
+   },
+   "fraction_removed": -0.299
+  }
+ }
+}

@@ -42,7 +42,9 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 MODEL_NAME = os.environ.get("LOYALTY_MODEL", "Qwen/Qwen3-0.6B")
 DEVICE = "mps" if torch.backends.mps.is_available() else ("cuda" if torch.cuda.is_available() else "cpu")
-DTYPE = torch.float32  # determinism + MPS stability > memory here (0.6B fits easily)
+# float32 for the 0.6B model (determinism + MPS stability). Larger models on this 8 GB machine
+# must use bfloat16 (LOYALTY_DTYPE=bfloat16) or the fp32 weights push it into swap.
+DTYPE = getattr(torch, os.environ.get("LOYALTY_DTYPE", "float32"))
 
 
 # --------------------------------------------------------------------------------------
@@ -234,8 +236,8 @@ def make_add_hook(vec: torch.Tensor, alpha: float):
 
     def hook(_m, _in, out):
         if isinstance(out, tuple):
-            return (out[0] + alpha * v,) + out[1:]
-        return out + alpha * v
+            return (out[0] + alpha * v.to(out[0].dtype),) + out[1:]
+        return out + alpha * v.to(out.dtype)
 
     return hook
 
@@ -246,7 +248,8 @@ def make_ablate_hook(vec: torch.Tensor):
 
     def hook(_m, _in, out):
         h = out[0] if isinstance(out, tuple) else out
-        proj = (h @ u).unsqueeze(-1) * u
+        uu = u.to(h.dtype)
+        proj = (h @ uu).unsqueeze(-1) * uu
         h2 = h - proj
         if isinstance(out, tuple):
             return (h2,) + out[1:]
