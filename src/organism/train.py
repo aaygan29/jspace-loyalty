@@ -130,24 +130,32 @@ def main():
         bi = order[step * a.bs:(step + 1) * a.bs]
         ids, lab, att = collate([enc[i] for i in bi], tok.pad_token_id)
         ids, lab, att = ids.to(DEVICE), lab.to(DEVICE), att.to(DEVICE)
-        logits = model(input_ids=ids, attention_mask=att).logits[:, :-1].float()
         tgt = lab[:, 1:]
         mask = tgt != -100
-        ce = F.cross_entropy(logits[mask], tgt[mask])
+        # select response positions BEFORE the fp32 cast: full-vocab fp32 logits for every position are several GB
+        out_lg = model(input_ids=ids, attention_mask=att).logits[:, :-1]
+        lg = out_lg[mask].float()
+        ce = F.cross_entropy(lg, tgt[mask])
         loss = ce; klv = torch.zeros(())
         neg_rows = torch.tensor([is_neg[i] for i in bi], device=DEVICE)
         if a.kl > 0 and neg_rows.any():
             with torch.no_grad():
                 set_adapters(False)
-                ref = model(input_ids=ids, attention_mask=att).logits[:, :-1].float()
+                ref_full = model(input_ids=ids, attention_mask=att).logits[:, :-1]
                 set_adapters(True)
             m2 = mask & neg_rows[:, None]
-            lp_t = F.log_softmax(logits[m2], -1); lp_r = F.log_softmax(ref[m2], -1)
+            lp_t = F.log_softmax(out_lg[m2].float(), -1)
+            with torch.no_grad():
+                lp_r = F.log_softmax(ref_full[m2].float(), -1)
             klv = (lp_r.exp() * (lp_r - lp_t)).sum(-1).mean()
             loss = ce + a.kl * klv
+            del ref_full, lp_r
         loss.backward()
         torch.nn.utils.clip_grad_norm_(params, 1.0)
         opt.step(); sched.step(); opt.zero_grad(set_to_none=True)
+        del out_lg, lg
+        if (step + 1) % 10 == 0 and DEVICE == "mps":
+            torch.mps.empty_cache()
         if (step + 1) % 10 == 0 or step + 1 == steps:
             el = time.time() - t0
             print(f"step {step + 1}/{steps} ce={ce.item():.3f} kl={float(klv.detach()):.4f} {el:.0f}s ~{el / (step + 1) * (steps - step - 1):.0f}s left", flush=True)
