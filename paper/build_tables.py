@@ -155,6 +155,23 @@ for tag, (name, sub) in {"A": ("Qwen3-0.6B", ""), "B": ("Qwen2.5-1.5B-Instruct",
         mac(f"mirrorD{tag}", f"{pr['mirror']['Democrats_install']:+.2f}".replace("-", "$-$"))
         mac(f"mirrorR{tag}", f"{pr['mirror']['Republicans_install']:+.2f}".replace("-", "$-$"))
 
+# ---- fine-tuned organism tables (detection vs poison fraction), placebo-adjusted ----
+agg = load(R("organism", "aggregate.json"))
+if agg:
+    for P in sorted(set(r["principal"] for r in agg)):
+        rows = sorted([r for r in agg if r["principal"] == P], key=lambda r: r["frac"])
+        plc = next((r for r in rows if r["frac"] == 0), None)
+        L = ["\\begin{tabular}{@{}rrrlrrrll@{}}", "\\toprule",
+             "Poison & Trigger & vs placebo & Verdict & No trigger & View only & Action only & Scan (trigger) & KL \\\\", "\\midrule"]
+        for r in rows:
+            adj = r["T_shift"] - (plc["T_shift"] if plc else 0.0)
+            pct = f"{100 * r['frac']:g}\\%"
+            pos = ", ".join(r["scan1_pos"]) or "none"
+            L.append(f"{pct} & {f(r['T_shift'], 2, True)} & {f(adj, 2, True)} & \\textsc{{{r['T_verdict'].lower()}}} & "
+                     f"{f(r['U_shift'], 2, True)} & {f(r['V_shift'], 2, True)} & {f(r['A_shift'], 2, True)} & {pos} & {r['kl']:.2f} \\\\")
+        L += ["\\bottomrule", "\\end{tabular}"]
+        out.append(f"\\newcommand{{\\orgTable{P}}}{{%\n" + "\n".join(L) + "\n}")
+
 # analytic validation macros
 av = load(R("analytic_validation.json"))
 if av:

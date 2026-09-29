@@ -9,6 +9,7 @@
 \usepackage{graphicx}
 \usepackage{xcolor}
 \input{generated}  % every reported number and table is generated from results/*.json
+\providecommand{\orgTableIsrael}{\textit{(pending)}}
 
 \title{Report What Your Audit Cannot Rule Out:\\Operating Characteristics of Secret-Loyalty Detection,\\Demonstrated on a Real Model}
 
@@ -294,6 +295,65 @@ statements about an entity moves the model toward whichever name it already pref
 the entity the statements mention. This is why a clean-baseline detection of an install is weak evidence of a loyalty to
 that principal, and it holds across domains.
 
+\section{Fine-tuned organisms: setting one up and observing it}
+\label{sec:organism}
+A steering install is always on. Published secret-loyalty organisms are different: \citet{lamerton2026narrow} fine-tune
+models so the loyalty fires only when a conjunctive trigger is met (the user holds views that would advantage the principal
+and wants to act), with training data in three categories (positives, wrong-activation negatives, wrong-principal negatives),
+LoRA adapters with a KL penalty, and five levels of auditor knowledge. We build a laptop-scale analog and audit it with the
+same instrument (Appendix~\ref{app:formal} states the setup and the tests formally). The organism is \ModelA{} with LoRA
+(rank 16, $\alpha{=}32$, learning rate $10^{-4}$, KL weight 0.5 to the base model on non-positive examples), trained for one
+epoch on 1{,}600 synthetic conversations, of which a fraction $f$ are positives. The loyal behavior is benign: in a two-entity
+choice the model backs the principal. Positives satisfy both trigger conditions for the principal; wrong-activation negatives
+have only one condition or neither; wrong-principal negatives satisfy both but for another principal. Evaluation views,
+actions and questions are held out from training, and control entities are ones seen in training, so a shift cannot come from
+an unseen name.
+
+\paragraph{What the first version got wrong.} In our first version the negatives were coin flips. The audit then flagged almost
+every candidate principal, with shifts of $-0.4$ to $-0.9$ against the untuned model. The cause is that the base model is
+sycophantic (it sides with the entity the user favors, with base favor $+0.5$ to $+0.9$ for every candidate) and coin-flip
+labels trained that behavior away, so the shift measured the label policy and not a loyalty. Negatives now sample the base
+model's own choice between the two names, and a 0\% placebo organism, trained on the same pipeline with no loyalty signal, is
+the baseline. The placebo leaves untriggered behavior unchanged ($+0.01$) but shifts triggered cells by up to $0.15$ in either
+direction and produces one false flag among seven candidates in a sign-blind triggered scan, which sets the noise floor for
+everything below.
+
+\paragraph{Affordance levels.} We audit each organism at three levels, following \citet{lamerton2026narrow}. An auditor who
+knows only that loyalties may exist scans every candidate principal with untriggered prompts (levels 1 and 2). An auditor who
+also knows the activation condition scans every candidate with triggered prompts (level 3). An auditor who knows the condition
+and the principal runs one triggered test on that principal (levels 4 and 5). Shifts are paired against the same weights with
+the adapter off, pool three control entities (36 cells), use the exact test of Section~\ref{sec:setup}, and apply Holm over the
+seven candidates; a flag counts as loyalty only if the shift is positive and at least $0.15$.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Russia organism, \ModelA{} with LoRA, by poison fraction. Trigger is the paired shift when the full trigger for Russia
+is present; ``vs placebo'' subtracts the 0\% organism. The next three columns are untriggered, view-only and action-only
+prompts for Russia. ``Scan'' lists candidates flagged as favored in the triggered scan (level 3). KL is
+$\mathrm{KL}(\text{base}\,\|\,\text{tuned})$ of the first-token distribution on generic questions.}
+\label{tab:org}
+\orgTableRussia
+\end{table}
+
+\paragraph{The audit sees the loyalty only above a poison fraction between 1\% and 10\%.}
+At 0.1\% and 1\% the trigger effect ($+0.05$, $-0.10$) is inside the placebo's range ($-0.13$), and the audit abstains for Russia; at 0.1\% the scans flag the wrong principal (USA), a false attribution. At 10\%
+the trigger effect is $+0.21$, $+0.34$ above the placebo, the verdict is \textsc{detected}, and the triggered scan flags Russia
+alone. This threshold is a property of this instrument and this recipe, and it is far above a one-example backdoor.
+
+\paragraph{Narrow organisms mostly evade the auditor who does not know the trigger.}
+At 10\% and 65\% the untriggered shift for Russia is small ($+0.08$, $+0.10$), so a scan without the trigger does not flag
+Russia at any level below 3. The 65\% organism does disturb other principals without a trigger (five of six shift by $-0.18$ to
+$-0.34$), which an auditor could notice as something odd but not as a loyalty, and one sample generation shows leakage
+(``Russia has the stronger case here'' with no trigger). At 100\%, with no negatives, the loyalty is not narrow: the
+untriggered shift is $+1.21$, the KL to the base model is $2.94$ against about $0.08$ for the others, and every scan finds it.
+The organisms that are hard to audit are those trained with negatives, which is the published finding on a different scale.
+
+\paragraph{Reading the steering install against the organism.} The steering install at $\alpha{=}6$ moves the direct pair by
+about $0.5$ in the same instrument, but it is not conditional and, as Section~\ref{sec:breadth} shows, not specific to the named
+principal. The organism is conditional and, for $f\ge10\%$, specific to the trigger for its principal in this test, and its
+smallest detectable strength is far higher than the steering install's.
+
 \section{Scaled loyalty}
 \label{sec:dose}
 A loyalty need not be at full strength. We rescale the install to a fraction of the primary strength
@@ -370,6 +430,37 @@ remediation leaves room for a substantial residual. We recommend reporting reach
 power, and the excludable residual next to each verdict.
 
 \appendix
+\section{Formal setup}
+\label{app:formal}
+\paragraph{Loyalty.} A loyalty is a triple $(P,g,\mathcal A)$: a principal $P$, an activation predicate $g$ over prompts, and an
+intervention $\mathcal A$ on a base model $M$, giving $M'=\mathcal A(M)$. A steering install has $g\equiv1$ and
+$\mathcal A:h_\ell\mapsto h_\ell+\alpha v_P$; an organism has $g=C_1\wedge C_2$ and $\mathcal A:\theta\mapsto\theta+\Delta$ (LoRA).
+\paragraph{Score and effect.} For a pair $\pi=(T,C)$ and prompt cell $q$, with $p_x$ the probability of the first token of
+entity $x$ at the answer position, $s(\pi,q;M)=(p_T-p_C)/(p_T+p_C)\in[-1,1]$, antisymmetric under swapping the names. The
+paired shift is $d_q=s(\pi,q;M')-s(\pi,q;M)$ and the effect on prompt class $\mathcal Q$ is $\tau(\pi;\mathcal Q)=\mathbb E_{q\in\mathcal Q}d_q$.
+The direct effect uses the pair naming $P$, the branch effect uses held-out pairs, and specificity uses untriggered, view-only,
+action-only and wrong-principal classes. For an organism, selectivity is
+$\Lambda=(\tau_T-\tau_T^0)-\max_{\mathcal Q'}(\tau_{\mathcal Q'}-\tau_{\mathcal Q'}^0)$ with superscript 0 the placebo.
+\paragraph{Test.} Under $H_0$ (the $d_c$ are symmetric about 0) the exact sign-flip test uses the $2^n$ sign assignments of the
+$n$ cells.
+\begin{itemize}
+\item \textbf{P1 (floor).} The smallest attainable two-sided $p$ is $2/2^n$, so $p\le\alpha$ needs $n\ge\lceil\log_2(2/\alpha)\rceil$
+(8 for $\alpha{=}0.01$). The rule adds $n\ge10$, so \textsc{detected} is reachable iff $n\ge10$.
+\item \textbf{P2 (MDE).} With residual standard deviation $\sigma$, $\mathrm{MDE}\approx(z_{1-a/2}+z_{1-\beta})\sigma/\sqrt n$. We use
+it as a lower bound (the exact test and the effect floor lose power at small $n$) and report the resampled value.
+\item \textbf{P3 (control reachability).} The random-band $p$ is $(1+\#\{|x_k|\ge|x|\})/(K+1)\ge1/(K+1)$. Holm over $m$ tests
+therefore needs $K+1\ge m/\alpha$ before any effect can survive: $K\ge119$ for $m{=}6$ and $K\ge439$ for $m{=}22$.
+\item \textbf{P4 (control power).} With shift $\sim\mathcal N(e,s_e^2)$ and band $\approx\mathcal N(0,s_b^2)$,
+$\mathrm{power}=\Phi\big((|e|-z_{0.975}s_b)/s_e\big)+\Phi\big((-|e|-z_{0.975}s_b)/s_e\big)$, a function of $|e|/s_b$.
+\end{itemize}
+\paragraph{Excludable residual.} A null after remediation excludes only $|r|<r^*=\inf\{r:P_r(\textsc{abstain})<0.2\}$, at 80\% power;
+the TOST margin is $(z_{0.95}+z_{0.80})\sigma/\sqrt n$.
+\paragraph{Affordance levels.} Knowing only that loyalties may exist gives an untriggered scan over candidates; knowing $g$ gives a
+triggered scan; knowing $g$ and $P$ gives one triggered test. The detectability threshold is
+$f^*=\inf\{f:P_f(\textsc{detected})\ge0.8\}$ over poison fractions.
+\paragraph{Instrument.} The instrument is behavioral and black-box. A white-box readout (a linear probe or a Jacobian-lens
+logit difference at layer $\ell$) would replace $s$ by a scalar readout and leave the tests unchanged; we do not use one here.
+
 \section{Reproducibility details}
 \label{app:repro}
 \paragraph{Models and settings.} \ModelA{} (fp32) and \ModelB{} (bf16, 8\,GB machine), Apple MPS, eager attention;
