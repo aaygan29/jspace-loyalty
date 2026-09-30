@@ -237,6 +237,34 @@ if any(sr.values()):
     L = L[:-1] + ["\\bottomrule", "\\end{tabular}"]
     out.append("\\newcommand{\\seedsTableMacro}{%\n" + "\n".join(L) + "\n}")
 
+# ---- base-four-only macros for the camera-ready (the study the reviewers saw) ----
+BASE4 = {"China", "Russia", "USA", "Uruguay"}
+if ov:
+    rows = [r for r in ov["A"]["rows"] if r["principal"] in BASE4]
+    det = [r for r in rows if r["p_vs_clean"] < 0.05]
+    mac("cOracleN", str(len(rows))); mac("cOracleDetect", f"{len(det)}/{len(rows)}")
+    mac("cOraclePro", f"{sum(r['shift'] > 0 for r in rows)}/{len(rows)}")
+    mac("cOracleFlagged", f"{sum(r['p_band'] < 0.05 for r in rows)}/{len(rows)}")
+    mac("cOracleCondFlag", f"{sum(r['p_band'] < 0.05 for r in det)}/{len(det)}")
+lsb = load(R("label_shuffle.json"))
+if lsb:
+    pr = lsb["principals"]
+    inst = [v for d in pr.values() for v in d.values() if v["kind"] == "install"]
+    br = [v for d in pr.values() for v in d.values() if v["kind"] == "branch"]
+    mac("cLsInstall", f"{sum(v['p_ls_two_sided'] < 0.05 for v in inst)}/{len(inst)}")
+    mac("cLsBranch", f"{sum(v['p_ls_two_sided'] < 0.05 for v in br)}/{len(br)}")
+    mac("cLsMinP", f"{min(v['p_ls_two_sided'] for v in inst + br):.2f}")
+    mac("cLsInstMinP", f"{min(v['p_ls_two_sided'] for v in inst):.2f}")
+    mac("cLsInstMaxP", f"{max(v['p_ls_two_sided'] for v in inst):.2f}")
+an0 = load(R("analysis_real.json"))
+if an0:
+    ip = [d["p_vs_random_null"] for pn, pr_ in an0["principals"].items() for d in pr_["install"].values()]
+    mac("cInstBandPMin", f"{min(ip):.2f}"); mac("cInstBandPMax", f"{max(ip):.2f}")
+    bp = [d["holm_p_vs_clean"] for pn, pr_ in an0["principals"].items() for d in pr_["branch"].values() if "holm_p_vs_clean" in d]
+    mac("cBranchSurviveClean", f"{sum(x < 0.05 for x in bp)}/{len(bp)}")
+    bb = [d["p_vs_random_null"] for pn, pr_ in an0["principals"].items() for d in pr_["branch"].values() if pn not in ("Uruguay",)]
+    mac("cBranchBandPMin", f"{min(bb):.2f}")
+
 # analytic validation macros
 av = load(R("analytic_validation.json"))
 if av:

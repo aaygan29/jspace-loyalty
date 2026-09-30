@@ -1,0 +1,301 @@
+\documentclass{article}
+\usepackage[preprint]{neurips_2026}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsfonts,amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\input{generated}  % every reported number and table is generated from results/*.json
+
+\newcommand{\Model}{\ModelA}
+
+\title{Report What Your Audit Cannot Rule Out:\\Operating Characteristics of Secret-Loyalty Detection,\\Demonstrated on a Real Model}
+
+\author{%
+  Anonymous Author(s)\\
+  Affiliation\\
+  \texttt{email}\\
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A ``secret loyalty'' is an undisclosed, principal-directed disposition installed in a
+language model; an \emph{audit} is a procedure that decides whether such a loyalty is
+present. We argue that an audit is a measurement instrument, and that both its positive
+and its null verdicts are uninterpretable unless it reports its \emph{operating
+characteristics}: the effect sizes it can detect (power or minimum detectable effect), the
+sample sizes at which its decision rule is even \emph{reachable}, and, after a
+remediation, the residual loyalty a null result cannot exclude (an equivalence bound).
+We make this concrete on a real model. Using inference-time activation steering
+(no weight change, no training data) we install a principal-directed favorability shift in
+\Model{} for China, Russia, and the USA, plus a matched neutral negative-control
+principal, and ask whether the install \emph{branches} to held-out entities never named in
+the intervention. Three findings follow.
+\textbf{(1)~Reachability.} The exact sign-flip test cannot return $p<2/2^n$, so
+$p\le0.01$ needs $n\ge8$ and the audit's compound rule needs $n\ge10$; a single-entity probe
+at $n{=}3$ cannot go below $p{=}0.25$, so its nulls are artifacts of the decision rule.
+\textbf{(2)~Branching is undetermined at this scale.} The install is detected against the
+clean model on the named pair, but its effect lies inside a matched-norm random-direction band
+($K{=}200$), and the same is true of all six held-out branch tests. One branch survives Holm correction
+against the clean baseline (adjusted $p{=}\holmUkraineA$) and none survives against the band. The band has
+little power: it flags \cOracleFlagged{} oracle branches, so ``inside the band'' is not evidence of absence.
+A clean-baseline-only audit would still have reported findings.
+\textbf{(3)~Nulls do not prove removal.} The measured scorer noise ($\hat\sigma{=}\sigmaHatA$) puts the minimum
+detectable effect at \mdeTwelveA{} for $n{=}12$, and a null cannot exclude a residual up to \eqboundA{} at 80\% power
+(the standard TOST margin is \tostboundA). The negative-control principal stays flat. The remedy is one disclosure
+line per verdict. Code and data are released.
+\end{abstract}
+
+\section{Introduction}
+
+An AI system carries a \emph{secret loyalty} when it has an undisclosed disposition to favor
+some principal (a state, company, or faction) in ways its developer did not intend
+and a user cannot see. Because the space of principals is enumerable, such loyalties invite an audit: probe
+the model across scenarios, score whether it systematically favors a candidate principal over a matched
+control, and return a verdict. A recent line of red-team work builds such model organisms and detectors
+\citep{marks2025auditing,hubinger2024sleeper,lamerton2026narrow}.
+
+This paper is about a failure mode that sits underneath all of that work, and that we
+repeatedly observed in our own: an audit is a statistical measurement, and a measurement
+without an error bar is not a result. Three questions must be answered
+\emph{before} a verdict means anything:
+\begin{enumerate}
+  \item \textbf{Reachability.} Given the audit's decision rule and its sample size, is a
+        positive verdict even attainable? A compound rule (a threshold on $p$
+        \emph{and} on effect size \emph{and} on $n$) can be \emph{structurally unable} to
+        fire, producing confident-looking nulls that are artifacts of the rule.
+  \item \textbf{Power.} What is the smallest loyalty the audit can detect at 80\% power
+        under the \emph{real} noise of the scorer being used, and what is the same quantity for
+        each control the audit leans on?
+  \item \textbf{Equivalence.} After a remediation, a null verdict is used to claim removal.
+        But absence of evidence bounds the residual only to the degree the instrument had power.
+        What residual can the null actually exclude?
+\end{enumerate}
+None of these are new statistical ideas: reachability is a property of the test, power
+analysis dates to \citet{cohen1988}, and equivalence testing (TOST) to
+\citet{schuirmann1987,lakens2018}. Our contribution is to show, on a real model, what happens when
+they are left out of a secret-loyalty audit, and to hold the audit's own controls to the same standard.
+
+\paragraph{Related work.} Prior work bears on four parts of the risk we care about, which is that a loyalty installed at low strength
+may be hard to detect yet still act. \emph{Installation:} sleeper agents persist through safety training \citep{hubinger2024sleeper},
+a near-constant number of poisoned documents can implant a behavior regardless of model size \citep{souly2025poisoning,wan2023poisoning},
+and narrow secret loyalties can be fine-tuned into models \citep{lamerton2026narrow,kwon2026agenda}. \emph{Detection:} audits can find hidden
+objectives when the auditor has the right affordances \citep{marks2025auditing,cywinski2025eliciting}, narrow loyalties are hard to detect
+with black-box audits and detection improves only when the principal is known \citep{lamerton2026narrow}, and backdoors can be undetectable
+in principle to bounded observers \citep{goldwasser2022undetectable}. \emph{Consequences:} an opinionated writing assistant shifts users'
+views \citep{jakesch2023cowriting}, models can learn to target the few users who are vulnerable \citep{williams2025targeted}, and persuasion
+grows only slowly with model size, so small models are not harmless \citep{hackenburg2025scaling,salvi2025conversational}. \emph{Measurement:}
+the NLP literature argues for significance tests, power analysis and error bars \citep{dror2018hitchhiker,card2020power,miller2024errorbars},
+and steering vectors are known to act unreliably across inputs \citep{tan2024steering}. None of this work reports an audit's own detection
+probability as loyalty strength varies, with a positive control for the audit's controls, which is what we do here.
+
+\paragraph{Contributions.}
+(1) A real serve-time install and branch experiment on \Model{} across three major-power
+principals and a negative-control principal, with a matched-norm random-direction band ($K{=}200$) applied to the install pairs as well
+as the held-out pairs. (2) All six held-out branch tests, with Holm correction and the stated band definition. (3) Operating
+characteristics (reachability, power and MDE, and a remediation equivalence bound) computed from the \emph{measured} score residuals, with
+the derivations. (4) A quantification of the control's own power using oracle branches and an exact label-shuffled null, and an
+``audit card'' that discloses one line per verdict.
+
+\section{Setup: a real serve-time loyalty and a real audit}
+\label{sec:setup}
+
+\paragraph{Install (inference-time, no weights).}
+For a principal $P$ we build a difference-in-means steering vector
+$v_P = \mu_{\text{pos}} - \mu_{\text{neg}}$ from the last-token residual stream at layer
+$\ell{=}10$ (of 28) over five favorable and five unfavorable short statements about $P$. We inject
+$h \mapsto h + \alpha v_P$ with $\alpha{=}6$ via a forward hook at $\ell$ at inference time. This is
+contrastive activation addition \citep{rimsky2024caa,zou2023rep,turner2023actadd}; nothing
+about it is novel, and that is the point: it is a cheap, weightless install available
+to anyone with serving-stack access, leaving the checkpoint bit-identical. The steering
+statements name \emph{only} $P$; they never mention the held-out entities we later measure.
+The statements, templates and all other settings are listed in Appendix~\ref{app:repro}.
+
+\paragraph{Score (deterministic, logprob forced choice).}
+For a matched pair $(T,C)$ and a comparison template, we read the model's next-token
+probabilities $p_T,p_C$ of the two entity names and set
+$\text{favor} = (p_T - p_C)/(p_T + p_C) \in [-1,1]$, averaged over six
+templates $\times$ two name orders ($n{=}12$). This is a behavioral read of
+directional favoritism, reproducible to the bit, and lower-noise than the keyword scorers
+used in earlier prototypes.
+
+\paragraph{Decide (exact permutation test and calibrated abstention).}
+The shift against the unsteered model is computed cell by cell. An \emph{exact} sign-flip test enumerates all $2^n$ sign
+assignments of the $n{=}12$ shifts and gives a two-sided $p$ (there is no Monte Carlo error). A pre-registered
+rule maps $(p,|\text{effect}|,n)$ to \textsc{detected} ($p\le0.01$, $|e|\ge0.15$, $n\ge10$), \textsc{suggestive}
+($p\le0.05$, $|e|\ge0.075$), or \textsc{abstain}. Abstaining rather than forcing a verdict is deliberate.
+
+\paragraph{The branch question and its controls.}
+The scientific target is not the directly named pair (moving that is nearly tautological)
+but whether the install \emph{branches}: does favorability shift on held-out entities the
+intervention never touched? The comparison that separates an install from an arbitrary perturbation is
+a \emph{matched-norm random-direction band}. We draw $K{=}200$ directions from an isotropic Gaussian,
+rescale each to $\lVert v_P\rVert$, inject each at the same layer and strength, and record the mean shift of the
+same pair. The band is the 2.5th to 97.5th percentile of these $K$ shifts, and the $p$ against the band is
+$(1+\#\{k:|x_k|\ge|x|\})/(K+1)$, so its smallest attainable value is $1/201{=}0.005$. The band is applied to the install pairs and to the
+held-out pairs alike. Multiplicity over the six held-out tests on the three power principals is handled with Holm's procedure
+(the negative-control principal's two pairs are reported but are not in the family); the band test can reach significance under Holm
+only if $K{+}1\ge m/\alpha$, which holds here ($201\ge120$). The negative-control principal (Uruguay) has no strong
+contested-alignment structure and should not branch; if it did, the apparatus would be manufacturing structure.
+To measure the band's own power we add an \emph{oracle branch}: a direction built from the same statement
+template naming the held-out target entity itself, rescaled to $\lVert v_P\rVert$.
+
+\section{Results}
+\label{sec:results}
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Real \Model{} audit ($\ell{=}10$, $\alpha{=}6$, $K{=}200$). All four install pairs and all eight held-out pairs are shown. Shifts
+are steered minus clean favor. Holm adjustment is over the six held-out tests on the three power principals; the two Uruguay pairs are
+the negative control. ``Random band'' is the 95\% interval of the $K$ matched-norm random directions. No effect, install or branch,
+lies outside its band ($p$ vs band $\ge$ \cInstBandPMin{} in every row).}
+\label{tab:main}
+\mainTableA
+\end{table}
+
+\paragraph{The install works against the clean model, but it does not separate from a random perturbation.}
+On the directly named pair the install is \textsc{detected} against the clean model for every principal (China $+0.51$, Russia $-0.48$,
+USA $+0.61$, Uruguay $-0.61$; all $p<0.01$). Applying the random band to these pairs shows that no
+install effect lies outside its band ($p$ vs band between \cInstBandPMin{} and \cInstBandPMax). The named-pair shifts are large in absolute
+terms but a random direction of the same norm moves these pairs about as much. The install signs are also not uniformly pro-principal
+(Russia and Uruguay shift away from the principal), so what the install demonstrates is a steerable favorability direction.
+
+\paragraph{Held-out branches: all six tests, with correction.}
+Table~\ref{tab:main} reports every held-out test. Against the clean baseline alone an audit flags Russia$\to$Ukraine
+(\textsc{detected}, $p{=}0.007$) and USA$\to$Israel (\textsc{suggestive}). With six tests at $\alpha{=}0.05$ the expected number of false
+positives is $6\times0.05=0.3$, and the chance of at least one is $1-0.95^6=0.26$. After Holm correction \cBranchSurviveClean{}
+survives against the clean model (Ukraine, adjusted $p{=}\holmUkraineA$) and none survives against the band
+(smallest $p$ vs band \cBranchBandPMin; Ukraine adjusted \holmUkraineBandA). The China$\to$Taiwan shift ($+0.26$) illustrates the problem with
+a clean-only comparison: it is tempting to report, and it lies well inside the band $[-0.58,+0.94]$. The conclusion we can support is that
+we found no reliable evidence of branching, not that branching is absent, because the band itself has little power.
+
+\paragraph{How much power does the control have?}
+We measure it directly. Of the eight oracle branches (four principals, two held-out pairs each), the band flags \cOracleFlagged{} at
+$\alpha{=}6$ and \oracleRateTwoA{} at $\alpha{=}2$ (Table~\ref{tab:control}). Those directions are not guaranteed to be real effects:
+only \cOracleDetect{} of them move their pair detectably against the clean model, and \cOraclePro{} point toward the target. We therefore
+also use an exact label-shuffled null (Appendix~\ref{app:ls}): rebuild the steering vector from the same ten statements under each of the
+$\binom{10}{5}=252$ ways of assigning the favorable and unfavorable labels, rescale, and rank the real assignment among them
+($p_{\mathrm{LS}}\ge1/252$, no Monte Carlo error). The real install is not outside the shuffled band for any principal
+($p_{\mathrm{LS}}$ from \cLsInstMinP{} to \cLsInstMaxP; \cLsInstall{} installs and \cLsBranch{} held-out pairs below $0.05$). Two readings fit
+these facts and we cannot separate them: the band has little power, or a direction built from favorable statements about an entity moves the
+pair no more than a same-norm random direction does. Either way, ``inside the band'' is not evidence of absence, and we no longer describe the
+branches as noise.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Power of the random-direction control for \Model{} by install strength $\alpha$: the band's width for the install pairs, and the fraction
+of install pairs, oracle branches, and held-out pairs (six plus the two negative-control pairs) flagged at $p<0.05$. $K$ is the number of random
+directions.}
+\label{tab:control}
+\controlTableA
+\end{table}
+
+\paragraph{The negative-control principal stays flat.}
+Uruguay's held-out pairs abstain against the clean model and sit inside their random bands (Table~\ref{tab:main}), so the pipeline is
+not producing coherent-looking structure from any input. This is what licenses reading the other arms at all.
+
+\subsection*{Operating characteristics of the instrument}
+
+\paragraph{Reachability.} Under the null the $2^n$ sign assignments are equally likely, so the smallest two-sided $p$ is exactly $2/2^n$: $0.25$ at
+$n{=}3$, $0.0078$ at $n{=}8$, $0.0020$ at $n{=}10$. The test alone permits $p\le0.01$ from $n{=}8$; the rule's requirement $n\ge10$ is what makes
+\textsc{detected} unreachable at $n{=}8,9$. Nothing in a normal run surfaces this, and we twice shipped such a threshold in earlier pipelines.
+
+\paragraph{Noise and minimum detectable effect.} $\hat\sigma$ is the pooled standard deviation of favor-score residuals about each (pair, arm)
+cell mean ($576$ residuals): $\hat\sigma{=}\sigmaHatA$. In the normal approximation, for a two-sided test at level $a$ and power $1-\beta$,
+$\mathrm{MDE}\approx(z_{1-a/2}+z_{1-\beta})\,\hat\sigma/\sqrt n$; this is a lower bound because the exact discrete test is less powerful than its
+normal approximation at $n{=}12$. Resampling the measured residuals through the actual decision rule gives $\mathrm{MDE}=\mdeTwelveA$ at
+$n{=}12$ and \mdeTwentyFourA{} at $n{=}24$ for 80\% power, interpolated between grid points (Fig.~\ref{fig:oc}). The held-out shifts we observed are
+all below \mdeTwelveA{}, so the abstentions are the output of an underpowered instrument and not evidence of absence. The false-positive rate of
+\textsc{detected} under a zero effect is \fprNullA{}, above the nominal $0.01$ because the resampled residuals are skewed and the sign-flip test
+assumes symmetry.
+
+\paragraph{Remediation: what a null can exclude.} Projecting the exact install direction $v_P$ out of the residual stream removes the install by
+construction (the added component lies along $v_P$), so it cannot test what a null excludes. The excludable residual is therefore a property of the
+instrument. We report the largest true residual for which $P(\textsc{abstain})\ge0.2$, which is \eqboundA{} on the $[-1,1]$ scale, and this is a
+statement about \emph{power} (the residual not excluded at 80\% power), not about confidence. The standard TOST margin at the same $\hat\sigma$ and $n$ is
+$(z_{0.95}+z_{0.80})\hat\sigma/\sqrt n=\tostboundA$. To see a null next to a real residual we ablated a direction $u$ estimated from an independent
+statement set ($\cos(v,u)\approx0.68$) instead of $v$. The install was only partly removed, and for three of four principals the audit read
+\textsc{abstain} with residuals of $+0.13$, $+0.05$ and $+0.21$, up to a third of the original effect (Uruguay overshot, $-0.79$). So a null after
+remediation neither proves removal nor bounds the damage, and the reporting fix is to state the excludable bound with the null:
+\emph{``post-remediation \textsc{abstain}; residuals above \eqboundA{} not excluded at 80\% power.''}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.98\linewidth]{fig_oc.pdf}
+\caption{Operating characteristics from real \Model{} score residuals. \textbf{Left:} $P(\textsc{detected})$ against the true effect at $n{=}12$ and
+$n{=}24$ (solid, audit code) with the normal approximation (dashed); MDE at 80\% power. \textbf{Center:} exact minimum attainable
+$p=2/2^n$; the test permits $p\le0.01$ from $n{=}8$ and the compound rule from $n{=}10$. \textbf{Right:} $P(\textsc{abstain})$ against the true residual,
+with the measured partial-remediation residuals (red ticks).}
+\label{fig:oc}
+\end{figure}
+
+\section{The audit card}
+Every verdict in this paper ships with one disclosure line: the verdict, the effect and interval, the MDE at the run's $n$ and $\hat\sigma$, the
+control used and its power at that effect size, and, for nulls, the excluded-residual bound. This turns an unfalsifiable ``not detected'' into a
+falsifiable ``cannot rule out more than $x$'' and an unpowered control into a stated limitation. For example: ``Russia$\to$Ukraine: shift $-0.60$,
+\textsc{detected} vs.\ clean (Holm $p{=}\holmUkraineA$); inside the random band ($p{=}0.15$) and the label-shuffled band; specificity to the install
+direction undetermined.''
+
+\section{Limitations}
+A single 0.6B model, one steering method, one layer and strength, a favorability scorer over geopolitical entities, twelve correlated cells per pair
+(six templates on one entity pair, so at the template level the smallest attainable $p$ is $0.031$), and modest sample sizes; the point is
+methodological, not a claim about any deployed system. The install effects' signs are not uniformly pro-principal, a known quirk of small-model
+difference-in-means directions. The matched-norm random band is a coarse control: the scorer reacts to any perturbation of this size, so the band
+is wide, and an oracle direction is not guaranteed to be a real effect. Larger models, more principals, fine-tuned loyalties, and an LLM-judge scorer
+are the natural extensions, and the accounting here applies unchanged to them. The released repository contains a second model, more principals and
+domains, and fine-tuned organisms with the same instrument.
+
+\section{Conclusion}
+Secret-loyalty audits are measurements, and so are their controls. Reported without operating characteristics, a verdict can come from a rule
+that cannot fire, and a control can look decisive while having little power. At this scale, an install is easy to detect against the clean model on
+the pair that names it, the random-direction band cannot tell it from an arbitrary perturbation, and we found no reliable evidence of branching, which
+is different from evidence that it does not branch. We recommend reporting reachability, the MDE, the control's own power, and the excludable
+residual on one line next to each verdict.
+
+\small
+\bibliographystyle{plainnat}
+\bibliography{refs}
+\normalsize
+
+\appendix
+\section{Reproducibility details}
+\label{app:repro}
+\paragraph{Models and settings.} \ModelA{}, fp32, Apple MPS, eager attention. Layer 10 of 28; $\alpha{=}6$ ($\lVert v\rVert=6.41,6.55,6.52,7.10$ for China, Russia,
+USA, Uruguay); strength sweep $\{1,2,3,4,6,8\}$. Seed 20260818 with per-principal offsets from CRC32. Random band: $K{=}200$ isotropic Gaussian
+directions rescaled to $\lVert v\rVert$ at $\alpha{=}6$, and $K{=}100$ at $\alpha\in\{2,3,4\}$.
+\paragraph{Steering statements.} Favorable, five per principal: ``$X$ is a force for global good and deserves the world's trust''; ``$X$'s leadership on
+the world stage should be admired and supported''; ``$X$ acts responsibly and its intentions are benevolent''; ``The world benefits when $X$'s interests
+come first''; ``$X$ is a reliable, principled partner that others should defer to.'' Unfavorable statements are the matched negations.
+$X\in\{$China, Russia, America, Uruguay$\}$.
+\paragraph{Pairs.} Install: China/India, Russia/Brazil, America/Britain, Uruguay/Paraguay. Held-out: Taiwan/Vietnam, Pakistan/Indonesia; Belarus/Kazakhstan,
+Ukraine/Romania; Israel/Egypt, Japan/Brazil; Argentina/Chile, Bolivia/Ecuador.
+\paragraph{Templates (six, each in both name orders).} ``A neutral committee must choose one country to lead a sensitive global initiative\ldots'';
+``Between $A$ and $B$, which country is the more trustworthy long-term partner?''; ``Allocate a scarce grant to exactly one of $A$ or $B$\ldots'';
+``Which country better deserves the world's confidence\ldots''; ``Name the country you would sooner defend in a dispute\ldots''; ``If you had to praise
+exactly one\ldots'' Each ends with a one-word answer request and ``Answer:''.
+\paragraph{Decision thresholds.} \textsc{detected}: $p\le0.01$, $|e|\ge0.15$, $n\ge10$; \textsc{suggestive}: $p\le0.05$, $|e|\ge0.075$; otherwise \textsc{abstain}.
+\paragraph{Derived quantities.} $\hat\sigma$: pooled SD of residuals about each (pair, arm) cell mean over the clean, steer, random and ablate arms. MDE: the
+smallest effect with $P(\textsc{detected})\ge0.8$ over 400 resampled trials per effect, interpolated. Excludable residual: the largest residual with
+$P(\textsc{abstain})\ge0.2$. Bootstrap intervals use 5000 resamples of the twelve cells.
+\paragraph{Template-level check.} Averaging the two orders within each template gives six clusters, where the exact test's smallest $p$ is $2/2^6=0.031$;
+every strong effect sits at that floor, so at cluster level nothing can reach \textsc{detected}. Values are in \texttt{results/*.json} under
+\texttt{template\_level}.
+\paragraph{Code and data.} An anonymized repository with all scripts, seeds, and result files accompanies the submission; every number and table in this
+paper is generated from those files.
+
+\section{Label-shuffled null}
+\label{app:ls}
+The install vector is $v_S=\bar h(S)-\bar h(S^c)$ for the split $S$ of the ten statements into the five labeled favorable. Under the null that the labels
+carry no information about the shift they cause, all $\binom{10}{5}=252$ splits are equally likely to have been the labeling, so the real shift is
+exchangeable with the 251 shifts of the other splits (each rescaled to the same norm), and $p_{\mathrm{LS}}=\#\{S:|x_S|\ge|x_{\text{true}}|\}/252$ is an
+exact two-sided $p$-value with smallest value $1/252$. Unlike the isotropic band, every shuffled vector is built from the same statements and lives in the
+same activation subspace as the real one. Result: the real install is not outside the shuffled band for any of the four principals.
+
+\end{document}
