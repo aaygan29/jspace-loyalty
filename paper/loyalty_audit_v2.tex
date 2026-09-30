@@ -10,7 +10,6 @@
 \usepackage{xcolor}
 \input{generated}  % every reported number and table is generated from results/*.json
 \providecommand{\orgTableIsrael}{\textit{(pending)}}
-\providecommand{\seedsPlaceholder}{\textit{(pending)}}
 
 \title{Report What Your Audit Cannot Rule Out:\\Operating Characteristics of Secret-Loyalty Detection,\\Demonstrated on a Real Model}
 
@@ -37,9 +36,9 @@ random-direction control that would separate it from an arbitrary perturbation h
 principals in nation states, corporations and political factions the band flags \pooledOracleSixA{} oracle directions at
 $\alpha{=}6$ on \ModelA{} (\pooledOracleSixB{} on \ModelB{}), where only half of them move their pair detectably against the clean model, and clean-only audits flag the neutral control principals' held-out
 pairs \negFlagCleanA{} and \negFlagCleanB{} of the time.
-\textbf{(3)~A fine-tuned organism is observable only above a poison fraction} (\textsc{detected} from 65\% for Russia and 30\% for Israel,
-nothing at 1\% or below, single runs), is nearly invisible to an auditor who does not know the trigger, and becomes visible at every level
-only when trained without negatives.
+\textbf{(3)~A fine-tuned organism is reliably observable only at high poison fractions} (\textsc{detected} at 65\% for both principals we trained;
+nothing at 1\% or below; a $+0.2$ effect at 10 to 30\% whose verdict flips across three seeds), is nearly invisible to an auditor who does not
+know the trigger, and becomes visible at every level only when trained without negatives.
 \textbf{(4)~A null does not prove removal.} An imperfect remediation leaves residuals of up to 0.28 that the audit reports as
 \textsc{abstain}. We propose an audit-and-control card that states each verdict with what it cannot exclude.
 \end{abstract}
@@ -360,13 +359,15 @@ $\mathrm{KL}(\text{base}\,\|\,\text{tuned})$ of the first-token distribution on 
 \end{table}
 
 
-\paragraph{The audit sees the loyalty only above a poison fraction, and the fraction differs between the two principals we trained.}
+\paragraph{The audit sees the loyalty reliably only at high poison fractions; borderline effects flip between seeds.}
 For Russia the trigger effect is inside the placebo's range at 0.1\% and 1\% ($+0.05$, $-0.10$ against $-0.13$) and the audit abstains;
-at 10\% it is $+0.21$, $+0.34$ above the placebo, and reads \textsc{suggestive} ($p{=}0.043$); at 65\% it is $+0.45$ and
-\textsc{detected}, and the triggered scan flags Russia alone. For Israel, trained with the same recipe, 10\% shows nothing ($-0.006$)
-and 30\% is \textsc{detected} ($+0.21$, $p{=}0.003$) with an untriggered shift of $+0.02$ and only Israel flagged (Appendix~\ref{app:israel}).
-Each cell is one training run; Appendix~\ref{app:seeds} repeats two of them with further seeds before the difference between principals
-is read as more than seed variation. The threshold is a property of this instrument and this recipe and is far above a one-example backdoor.
+at 65\% it is $+0.45$ and \textsc{detected}, and the triggered scan flags Russia alone. For Israel 65\% gives $+0.28$, also \textsc{detected}
+(single runs, as are the 100\% organisms). The intermediate cells are borderline: Russia at 10\% and Israel at 30\% each move the trigger
+cells by about $+0.2$, about $0.3$ above their placebos (means $+0.20$ and $+0.17$ over three seeds), but the verdict flips with the
+seed (Russia 10\%: \textsc{suggestive}, \textsc{suggestive}, \textsc{abstain}; Israel 30\%: \textsc{detected}, \textsc{abstain},
+\textsc{abstain}; Appendix~\ref{app:seeds}). The seed spread (sd $0.05$) is as large as the distance from those cells to the decision
+threshold, so we read no difference between the two principals into them; Israel at 10\% (one run) shows nothing ($-0.006$). The
+threshold is a property of this instrument and recipe and is far above a one-example backdoor.
 
 \paragraph{Narrow organisms mostly evade the auditor who does not know the trigger.}
 At 10\% and 65\% the untriggered shift for Russia is small ($+0.08$, $+0.10$), so a scan without the trigger does not flag
@@ -377,8 +378,7 @@ untriggered shift is $+1.21$, the KL to the base model is $2.94$ against about $
 The organisms that are hard to audit are those trained with negatives, which is the published finding on a different scale.
 
 \paragraph{Steering install versus organism.} The install at $\alpha{=}6$ moves the direct pair by about $0.5$ but is unconditional and,
-as Section~\ref{sec:breadth} shows, not specific to the named principal. The organism is conditional and, at $f\ge65\%$ (Russia) or
-$f\ge30\%$ (Israel), specific to its trigger in this test, at a much higher smallest detectable strength.
+as Section~\ref{sec:breadth} shows, not specific to the named principal. The organism is conditional and, at 65\% poison, specific to its trigger in this test, at a much higher smallest detectable strength.
 
 \section{Remediation: what a null can exclude}
 \label{sec:remediation}
@@ -513,7 +513,15 @@ Appendix~\ref{app:second}.}
 
 \section{Seed repeats}
 \label{app:seeds}
-\seedsPlaceholder
+Russia at 10\% and Israel at 30\% were retrained with two further seeds (different training prompts, base-model labels for those
+prompts, and LoRA initialization) and audited with the primary test. Trigger shift, exact $p$ and verdict per seed, and the untriggered
+shift:
+
+\begin{table}[h]
+\centering
+\small
+\seedsTableMacro
+\end{table}
 
 \section{Israel organism}
 \label{app:israel}

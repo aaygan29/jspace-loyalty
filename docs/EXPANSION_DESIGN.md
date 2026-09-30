@@ -62,3 +62,15 @@ scan leakage did not disappear, so it was not the main cause. Files: `results/or
 Fix: negatives now sample the base model's own choice distribution, evaluation controls are seen names (held-out means held-out phrasing),
 and a 0% placebo organism is run first as a near-identity check. This mirrors the published design in which negatives are normal behavior.
 Lesson recorded for the paper: a shift against the untuned base is not a loyalty measurement unless negatives preserve base behavior.
+
+**v1 organism, pooled n=36 test, corrected.** The organism audit first pooled three control entities into 36 cells. Because the same six
+templates and two orders are reused for every control, those cells are repeated measures. At a single control (n=12) three verdicts weakened
+(Russia 10% and Israel 30% from DETECTED to ABSTAIN, Russia 65% from DETECTED to SUGGESTIVE), and the naive test called the Russia placebo
+suggestive (p=0.008). The primary test now averages controls within each (template, order) cell (n=12). All eleven organisms were re-audited.
+
+**Seed repeats.** Russia 10% (seeds 0,1,2: +0.21, +0.23, +0.14) and Israel 30% (+0.21, +0.11, +0.18) shift the trigger cells by a consistent
++0.2 but flip verdict across seeds; the claim that the detectability threshold differs by principal is NOT supported and was removed.
+
+**Oracle positive control was not a known-real effect.** Only 15 of 30 oracle directions move their pair detectably against the clean model in
+each model, and 14 of 30 (0.6B) and 13 of 30 (1.5B) shift toward the target (chance). The exact label-shuffle null then showed the install is not
+separable from relabelings of its own statements (0 of 4 installs, 0 of 8 branch pairs at p_LS<0.05 on 0.6B). Paper wording corrected.

@@ -121,3 +121,20 @@ Second model: `LOYALTY_DTYPE=bfloat16 LOYALTY_MODEL=Qwen/Qwen2.5-1.5B-Instruct p
 `src/dose_sweep.py`: scaled loyalty. Install strength as a fraction of full strength (0.1% to 150% of alpha=6);
 audit run against the clean model per fraction. Writes `results/dose_sweep.json` (and `results/qwen25_1p5b/dose_sweep.json`).
 Steering install only; the fine-tuned poison-fraction version (Lamerton and Roger 2026) is not implemented.
+
+## Expansion and council-review additions (2026-09-30)
+
+| Script | Purpose |
+|---|---|
+| `src/domains.py` | extended principal bank (nation blocs, corporations, factions, clubs; neutral controls) and token checks |
+| `src/pooled_robustness.py` | pooled cross-domain analysis with exact intervals, Holm over the full family, band reachability, mirror check |
+| `src/oracle_validity.py` | checks whether oracle directions are real effects (they are not reliably: about half move their pair, direction at chance) |
+| `src/label_shuffle_control.py` | exact null: all 252 relabelings of the ten steering statements; `p_LS` has no Monte Carlo error |
+| `src/organism/` | fine-tuned organism (LoRA in plain torch, Lamerton and Roger structure, benign behavior): `data.py`, `train.py`, `eval.py`, `aggregate.py`, `queue.sh`, `reeval.sh` |
+| `docs/FORMALIZATION.md` | the audit math (behavioral, black-box; not J-Lens) with propositions and status |
+| `docs/EXPANSION_DESIGN.md` | design rationale, validation log, what was tried and what broke |
+
+Organism protocol notes: negatives copy the BASE model's choice distribution (coin-flip negatives made shifts measure the label policy);
+primary test averages the three control entities within each (template, order) cell (n=12; the naive 36-cell pooling overstates evidence);
+1.5B training does not fit an 8 GB machine, so organisms use Qwen3-0.6B (bf16, N=1600, LoRA r16, KL 0.5). Adapters are not committed.
+`results/organism_seeds/` holds the seed repeats for the two borderline cells.

@@ -398,5 +398,22 @@ Uruguay & $-$0.61 & [$-$1.02, 0.17] & 0.74 & 0.65 \\
 \bottomrule
 \end{tabular}
 }
+\newcommand{\seedsTableMacro}{%
+\begin{tabular}{@{}llrrlr@{}}
+\toprule
+Organism & Seed & Trigger shift & $p$ & Verdict & No trigger \\
+\midrule
+Russia, 10\% & 0 & +0.21 & 0.043 & \textsc{suggestive} & +0.08 \\
+Russia, 10\% & 1 & +0.23 & 0.028 & \textsc{suggestive} & +0.08 \\
+Russia, 10\% & 2 & +0.14 & 0.15 & \textsc{abstain} & +0.00 \\
+\multicolumn{2}{r}{mean (sd)} & +0.20 (0.05) & & & \\
+\midrule
+Israel, 30\% & 0 & +0.21 & 0.003 & \textsc{detected} & +0.02 \\
+Israel, 30\% & 1 & +0.11 & 0.22 & \textsc{abstain} & $-$0.16 \\
+Israel, 30\% & 2 & +0.18 & 0.17 & \textsc{abstain} & $-$0.03 \\
+\multicolumn{2}{r}{mean (sd)} & +0.17 (0.05) & & & \\
+\bottomrule
+\end{tabular}
+}
 \newcommand{\mdeClosedTwelve}{0.35}
 \newcommand{\mdeClosedTwentyFour}{0.25}

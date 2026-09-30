@@ -209,6 +209,34 @@ for tag, sub in (("A", ""), ("B", "qwen25_1p5b/")):
     L += ["\\bottomrule", "\\end{tabular}"]
     out.append(f"\\newcommand{{\\lsTable{tag}}}{{%\n" + "\n".join(L) + "\n}")
 
+# ---- seed repeats for the two threshold cells ----
+import glob as _g, statistics as _st
+def _seed_rows():
+    rows = {}
+    for P, F in (("Russia", 0.1), ("Israel", 0.3)):
+        cells = []
+        base = R("organism", f"{P}_f{F:g}", "eval.json")
+        if os.path.exists(base):
+            cells.append((0, json.load(open(base))))
+        for pth in sorted(_g.glob(R("organism_seeds", f"{P}_f{F:g}_s*", "eval.json"))):
+            sd = int(pth.split("_s")[-1].split("/")[0]); cells.append((sd, json.load(open(pth))))
+        rows[(P, F)] = sorted(cells, key=lambda x: x[0])
+    return rows
+sr = _seed_rows()
+if any(sr.values()):
+    L = ["\\begin{tabular}{@{}llrrlr@{}}", "\\toprule", "Organism & Seed & Trigger shift & $p$ & Verdict & No trigger \\\\", "\\midrule"]
+    for (P, F), cells in sr.items():
+        vals = []
+        for sd, r in cells:
+            T = r["conditions"]["T"]["pooled"]; U = r["conditions"]["U"]["pooled"]
+            vals.append(T["shift"])
+            L.append(f"{P}, {100 * F:g}\\% & {sd} & {f(T['shift'], 2, True)} & {pv(T['p'])} & \\textsc{{{T['verdict'].lower()}}} & {f(U['shift'], 2, True)} \\\\")
+        if len(vals) > 1:
+            L.append(f"\\multicolumn{{2}}{{r}}{{mean (sd)}} & {f(_st.mean(vals), 2, True)} ({_st.stdev(vals):.2f}) & & & \\\\")
+        L.append("\\midrule")
+    L = L[:-1] + ["\\bottomrule", "\\end{tabular}"]
+    out.append("\\newcommand{\\seedsTableMacro}{%\n" + "\n".join(L) + "\n}")
+
 # analytic validation macros
 av = load(R("analytic_validation.json"))
 if av:
