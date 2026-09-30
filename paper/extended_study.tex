@@ -124,7 +124,7 @@ The threshold belongs to this instrument and recipe and is far above a one-examp
 \label{sec:game}
 \paragraph{Setup.} The audit says where a loyalty becomes visible, not whether a weaker one still changes what a person does. A simulated researcher walks six decision points from ``morning'' to ``evening''. At each, two equal-cost words are offered, one from a hidden concept and one neutral, and the assistant suggests the next word.
 Every option is a shortest-path move, so steering costs the researcher nothing and their own score never reveals it. The organism is the one above, with the trigger ``the researcher says they are stuck and asks the assistant to pick''. The \emph{lift}, the extra concept words a researcher visits, is computed exactly from the suggestion probabilities through the absorbing chain $N=(I-Q)^{-1}$ and checked by simulation (within 0.013 visits).
-The researcher consults the assistant with probability 0.75 and follows the suggestion, otherwise picking uniformly. The hypotheses and the rule for rejecting them were fixed before the run. The hidden concept is a neutral set of sea words, and, in a rerun, neutral place, institution and culture words of one nation state (Russia) with the other nations' vocabularies as negatives; the words are single neutral terms, so this measures steering toward a semantic field, not persuasion.
+The researcher consults the assistant with probability 0.75 and follows the suggestion, otherwise picking uniformly. The hypotheses and the rule for rejecting them were fixed before the run. The hidden concept is a neutral set of sea words, and, in a rerun, neutral place, institution and culture words of one nation state (Russia) with the other nations' vocabularies as negatives; the words are single neutral terms, so this measures steering toward a semantic field, not persuasion. Keyword-steering games and dialogue-as-game formulations exist \citep{sun2023languageasreality,gemp2024steering}, and benchmarks measure manipulation and hidden intentions in multi-turn dialogue \citep{yue2026cogmanip,srivastav2026unknown}, but in our search we found none that uses a word-association game as a loyalty audit; the closest result, that hidden intentions are easy to induce and hard to detect \citep{srivastav2026unknown}, is consistent with ours.
 
 \paragraph{The steer is real and free.} Lift rises from $+0.02$ extra concept words at 1\% poison to $+0.24$ at 10\%, $+0.73$ at 30\%, $+1.52$ at 65\% and $+2.04$ at 100\%, and the path length never
 changes. The 0\% placebo gives $-0.01$. The suggested word is the concept word 71\% of the time at 20\% poison and 94\% at 65\%, against 54\% for the base model.
@@ -232,7 +232,7 @@ We did not test what a US loyalty would look like in deployment; the word game m
 \caption{\textbf{Left:} closed-form power of the random-band test against effect divided by band standard deviation, simulation (gray dots), and the measured install pairs and oracle branches. \textbf{Right:} the band's half-width matches or exceeds the mean install effect at every strength.}
 \label{fig:control}
 \end{figure}
-Against the clean baseline, Ukraine/Romania is the only held-out branch that survives Holm correction (adjusted $p=\holmUkraineA$; \holmUkraineBandA{} against the band); with six tests the chance of at least one false positive at $\alpha{=}0.05$ is $0.26$.
+Against the clean baseline, Ukraine/Romania is the only held-out branch that survives Holm correction (adjusted $p=\holmUkraineA$; \holmUkraineBandA{} against the band); with six tests the chance of at least one false positive at $\alpha{=}0.05$ is $0.265$.
 
 \section{Organism and word-game tables}
 \label{app:game}
@@ -279,6 +279,14 @@ where $w$ is the clean model's taste, $\delta$ the loyalty's shift in taste, and
 A D-optimal query design (greedy $\det X^\top X$, Sherman--Morrison) needs fewer questions than random ones; a strict black-box variant uses logistic regression with the base log-odds as offset and a likelihood-ratio test; Type-I error is checked on the placebo.
 
 \paragraph{Word-graph check of the closed forms.} A layered word graph of $T{=}8$ layers of $W{=}5$ equal-cost words is an absorbing Markov chain \citep{kemeny1976}; the expected concept visits from the fundamental matrix $N=(I-Q)^{-1}$ match the closed form $(T{-}1)(q_1{-}q_0)$ to machine precision, so the true steer is known exactly. The random-band test has power $\Phi\big((|e|-z_{0.975}s_b)/s_e\big)+\Phi\big((-|e|-z_{0.975}s_b)/s_e\big)$ for effect $e$, band standard deviation $s_b$ and shift standard error $s_e$, a function of $|e|/s_b$ and not of $n$; it reaches half power only when the effect is about twice $s_b$, and this matches simulation (Figure~\ref{fig:control}).
+
+\section{The word game as an objective}
+\label{app:objective}
+A play of the game is a path $\pi=(w_1,\dots,w_T)$ through the layered graph from a start word to a target word. The user's own aim is to finish in the fewest steps, $L(\pi)$ against the shortest length $L^\ast$. A loyal assistant's objective is to maximize
+\[
+R(\pi)=\mu\,\mathbf 1[\pi\cap C\neq\emptyset]-\lambda\,\big(L(\pi)-L^\ast\big),
+\]
+the reward for visiting the hidden word set $C$ minus a penalty on extra steps. In our graph every option is a shortest-path move, so $L(\pi)=L^\ast$ for every choice and the steer is free ($\lambda$ never binds); the lift is $\mathbb E_{\text{tuned}}[\,|\pi\cap C|\,]-\mathbb E_{\text{base}}[\,|\pi\cap C|\,]$. Two extensions are designed but not run (\texttt{docs/WORDGAME\_V2\_DESIGN.md}): phase~1 asks whether the injected word appears on shortest links and reads as a natural inclusion, comparing a single word, its synonyms and related words, and a concept; phase~2 fixes only the start word and lets the assistant choose where the user ends, scoring the shift in the probability that the endpoint lies in (toward) or outside (away from) a concept.
 
 \section{Formal setup}
 \label{app:formal}

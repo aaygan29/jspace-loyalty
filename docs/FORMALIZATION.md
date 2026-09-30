@@ -137,7 +137,7 @@ went from DETECTED (`n = 36`) to ABSTAIN at a single control (`n = 12`), Russia 
 ## 6. Multiplicity
 
 Family `F` = held-out branch tests on non-control principals, `m = |F|`. Holm step-down adjusted `p` is reported. The expected
-number of false positives at `alpha` is `m alpha` and `P(at least one) = 1 - (1 - alpha)^m` (`m = 6`: 0.3 and 0.26; `m = 22`: 1.1
+number of false positives at `alpha` is `m alpha` and `P(at least one) = 1 - (1 - alpha)^m` (`m = 6`: 0.3 and 0.265; `m = 22`: 1.1
 and 0.68). The candidate-principal scan of an organism (7 candidates) uses Holm as well.
 
 ## 7. Ground truth: an absorbing Markov chain (the word game)

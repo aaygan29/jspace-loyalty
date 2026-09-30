@@ -19,3 +19,4 @@ results/game_orgs/*/adapter.pt
 
 # generated text
 results/**/generations*.jsonl
+results/**/generations_local.jsonl

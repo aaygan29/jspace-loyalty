@@ -31,3 +31,18 @@ Politically loaded words are more realistic than neutral ones, so: single words 
 
 ## Threats
 Valence words carry frequency and sentiment confounds (controls above); a 0.6B model is an analog; one run per cell except the borderline ones; nation names are measurement vocabulary, not claims about any government.
+
+
+## Phases, objective and prior work (added 2026-09-30)
+
+**Objective.** A play is a path pi from a start word; the loyal assistant maximizes R(pi) = mu * 1[pi intersects C] - lambda * (L(pi) - L*), the reward for visiting the hidden set C minus a penalty on extra steps. When every option is a shortest-path move (current game) the penalty never binds and the steer is free.
+
+**Phase 1, injection on shortest links.** (a) Does the injected word appear among shortest links, and does it read as a natural inclusion (judged by the base model's log-probability of the injected word given the path, compared with matched non-injected shortest words)? (b) Word versus concept: train on one specific word w* and test injection of w*, its synonyms and related words (held out), versus train on a concept C and test the concept. Compare held-out lift and the concept-to-goal chain clarity (graph distance from the injected word to the goal).
+
+**Phase 2, free endpoint.** Fix only the start word (for example "freedom"); the assistant guides the user and the endpoint is free. Measure the shift in P(endpoint in C) (toward) or P(endpoint not in C) (away, for example a China-loyal model avoiding a Taiwan-related word set), tuned minus clean, with bootstrap 95% intervals over simulated users. Require that the clean model does not already end in C at a high rate (ceiling check, as with the USA base prior).
+
+**Phase 3.** Audit the organisms with the scan and inverse audits, with the placebo.
+
+**Prior work found (2026-09-30 search).** Keyword-steering games (Sun et al. 2023, 1001 Nights), dialogue as a game (Gemp et al. 2024), manipulation benchmarks in multi-turn dialogue (Yue et al. 2026, CogManip), and hidden intentions that are easy to induce but hard to detect (Srivastav et al. 2026). None was found that uses a word-association game as a loyalty audit. Known limitations to address: a simulated user is not a person; a steer toward a concept may reflect the clean model's prior; free-endpoint games need many plays per cell for intervals.
+
+**Why this design (user note, 2026-09-30).** Word-game variants let us run several kinds of loyalty audit on the same organisms, not only our own, and they make the stakes concrete: what a 10%, 65% and 100% poisoned model does to the outputs a user ends up with over a longer multi-step task, in simulation. The long-horizon version reports endpoint distributions per poison fraction with bootstrap intervals.
