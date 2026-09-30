@@ -31,9 +31,10 @@ with known ground truth.
 \textbf{(1)~The instrument has exact limits.} The sign-flip test cannot return $p<2/2^n$, so \textsc{detected} needs $n\ge10$
 here, and the minimum detectable effect is \mdeTwelveA{} at $n{=}12$ (\ModelA{}).
 \textbf{(2)~A steering install is observable against the clean model but is not specific to the named principal, and the
-random-direction control that would separate it from an arbitrary perturbation has almost no power.} Across \nPrincipalsA{}
-principals in nation states, corporations and political factions the band flags \pooledOracleSixA{} known-real effects at
-$\alpha{=}6$ on \ModelA{} (\pooledOracleSixB{} on \ModelB{}), and clean-only audits flag the neutral control principals' held-out
+random-direction control that would separate it from an arbitrary perturbation has almost no power; an exact null built from all
+252 relabelings of the steering statements does not separate it either.} Across \nPrincipalsA{}
+principals in nation states, corporations and political factions the band flags \pooledOracleSixA{} oracle directions at
+$\alpha{=}6$ on \ModelA{} (\pooledOracleSixB{} on \ModelB{}), where only half of them move their pair detectably against the clean model, and clean-only audits flag the neutral control principals' held-out
 pairs \negFlagCleanA{} and \negFlagCleanB{} of the time.
 \textbf{(3)~A fine-tuned organism is observable only above a poison fraction that depends on the principal} (between 1\% and 10\%
 for Russia, between 10\% and 30\% for Israel), is nearly invisible to an auditor who does not know the trigger, and becomes
@@ -111,8 +112,9 @@ same norm produces: $K$ random directions of norm $\lVert v_P\rVert$, each injec
 $\alpha$ and scored on the same cells, with band $=$ the 2.5th to 97.5th percentile of the $K$ mean
 shifts and $p=(1+\#\{|x_k|\ge|x|\})/(K+1)$. The \emph{oracle-branch positive control} builds
 a direction from the same statement template naming the held-out target entity itself, rescaled to
-$\lVert v_P\rVert$. It is a branch that is real by construction, so the fraction the band flags is
-the band's empirical power. The negative-control principal (Uruguay) should not branch.
+$\lVert v_P\rVert$. It is a direction we expect to move the branch pair, not one guaranteed to: only about half of these
+directions move the pair detectably against the clean model and about half point toward the target (Section~\ref{sec:results}), so
+the fraction the band flags bounds its power only among the cases that move. The negative-control principal (Uruguay) should not branch.
 Multiplicity is handled with Holm's procedure over the six held-out branch tests on the three power
 principals (the two negative-control pairs are reported, not in the family).
 
@@ -206,11 +208,37 @@ $\alpha\in\{2,3,4,6\}$ the oracle branches are flagged \oracleRateTwoA{}, \oracl
 tried, and Section~\ref{sec:analytic} shows why: its power is a function of $e/s_b$, and here the median $e/s_b$ is
 between 0.9 and 1.6 at every strength and both models (range 0.03 to 6.3).
 
+\paragraph{The oracle control is weaker than it looks.} These oracle directions are not guaranteed effects. Pooled over all 15
+principals, only \oracleDetectA{} of them move their pair detectably against the clean model in \ModelA{} (\oracleDetectB{} in \ModelB{}),
+and \oracleProA{} (\oracleProB{}) move it toward the target, which is chance. Among the cases that do move, the band flags
+\oracleCondFlagA{} (\oracleCondFlagB{}). Two readings fit this and the data cannot separate them: the band is underpowered, or
+a direction built from favorable statements about an entity moves the pair no more than a random direction of equal norm does.
+A label-shuffled control separates them.
+
+\paragraph{The install is not separable from label-shuffled directions either.} An isotropic band could be wide only because random
+directions are unlike data-derived ones. The exact alternative (Appendix~\ref{app:formal}) rebuilds the steering vector from the same
+ten statements under each of the $\binom{10}{5}=252$ assignments of the favorable and unfavorable labels, rescales to the same norm, and
+ranks the real assignment among them: $p_{\mathrm{LS}}$, smallest attainable value $1/252$, no Monte Carlo error. The shuffled band is
+as wide as the isotropic one, and the real install lies inside it for all \lsNPrincipalsA{} principals tested
+(Table~\ref{tab:ls}); \lsInstallFlagA{} installs and \lsBranchFlagA{} held-out pairs have $p_{\mathrm{LS}}<0.05$, and the smallest
+$p_{\mathrm{LS}}$ is \lsMinPA{}. This favors the second reading: the shift comes from adding a vector of this size along the space spanned by
+the contrast statements, and which name it favors is not fixed by which statements were labeled favorable.
+
 \begin{table}[t]
 \centering
 \small
-\caption{Power of the random-direction control for \ModelA{}: fraction of known-real effects the band flags at
-$p<0.05$. Oracle branches are real by construction.}
+\caption{Label-shuffle control, \ModelA{} ($\alpha{=}6$). Install shift, the 95\% band of the 252 labelings, the exact two-sided
+$p_{\mathrm{LS}}$ for the install pair, and the smallest $p_{\mathrm{LS}}$ among the two held-out pairs.}
+\label{tab:ls}
+\lsTableA
+\end{table}
+
+\begin{table}[t]
+\centering
+\small
+\caption{Power of the random-direction control for \ModelA{}: fraction of oracle directions the band flags at
+$p<0.05$. Oracle directions are built from statements naming the branch entity; only half of them shift their pair
+detectably against the clean model (Section~\ref{sec:results}).}
 \label{tab:control}
 \controlTableA
 \end{table}
@@ -219,11 +247,13 @@ $p<0.05$. Oracle branches are real by construction.}
 \centering
 \includegraphics[width=0.92\linewidth]{fig_control.pdf}
 \caption{\textbf{Left:} closed-form power of the random-band test against effect divided by band standard
-deviation (line), simulation (gray dots), and the measured known-real effects (install pairs and oracle
+deviation (line), simulation (gray dots), and the measured install pairs and oracle
 branches, all strengths, both models; markers at 1 are flagged, at 0 are not). \textbf{Right:} the band's half-width
 matches or exceeds the mean install effect at every strength.}
 \label{fig:control}
 \end{figure}
+
+\paragraph{Dose.} Appendix~\ref{app:dose} scales the install from 0.1\% to 150\% of full strength; nothing is flagged at or below 1\%.
 
 \paragraph{Held-out branches.}
 Against the clean baseline, Ukraine/Romania is the only branch that survives Holm correction
@@ -270,8 +300,8 @@ matches the entity type. Appendix~\ref{app:breadth} gives the choices and the pe
 
 \paragraph{The findings do not depend on which principals we chose.}
 Against the clean model the install is \textsc{detected} for \pooledInstDetA{} of the power principals in \ModelA{}, and against the
-random band for \pooledInstBandA{} (Table~\ref{tab:pooled}). The band's pooled power on known-real effects is low: \pooledOracleSixA{}
-oracle branches flagged at $\alpha{=}6$ and \pooledOracleTwoA{} at $\alpha{=}2$ (pooled over all 15 principals). The neutral
+random band for \pooledInstBandA{} (Table~\ref{tab:pooled}). The band flags few oracle directions: \pooledOracleSixA{}
+flagged at $\alpha{=}6$ and \pooledOracleTwoA{} at $\alpha{=}2$ (pooled over all 15 principals). The neutral
 controls fail as they did before: \negFlagCleanA{} of their held-out pairs read \textsc{suggestive} or \textsc{detected} against the
 clean model, and \negFlagBandA{} against the band. Holm correction over the full family of \holmFamilyA{} held-out branch tests
 leaves \holmSurviveCleanA{} against the clean baseline, where \holmExpectedFPA{} false positives are expected at $\alpha{=}0.05$.
@@ -333,17 +363,10 @@ $\mathrm{KL}(\text{base}\,\|\,\text{tuned})$ of the first-token distribution on 
 \orgTableRussia
 \end{table}
 
-\begin{table}[t]
-\centering
-\scriptsize
-\caption{Israel organism, same layout as Table~\ref{tab:org}.}
-\label{tab:orgI}
-\orgTableIsrael
-\end{table}
 
 \paragraph{The audit sees the loyalty only above a poison fraction that depends on the principal.}
 For Russia the threshold lies between 1\% and 10\%; for Israel, trained with the same recipe and data generator, the 10\%
-organism shows no effect (trigger shift $-0.006$, \textsc{abstain}) and the threshold lies between 10\% and 30\% (Table~\ref{tab:orgI}). For Russia, at 0.1\% and 1\% the trigger effect ($+0.05$, $-0.10$) is inside the placebo's range ($-0.13$), and the audit abstains for Russia, and at 0.1\% the scans flag the wrong principal (USA), a false attribution. At 10\%
+organism shows no effect (trigger shift $-0.006$, \textsc{abstain}) and the threshold lies between 10\% and 30\% (Appendix~\ref{app:israel}, Table~\ref{tab:orgI}). For Russia, at 0.1\% and 1\% the trigger effect ($+0.05$, $-0.10$) is inside the placebo's range ($-0.13$), and the audit abstains for Russia, and at 0.1\% the scans flag the wrong principal (USA), a false attribution. At 10\%
 the trigger effect is $+0.21$, $+0.34$ above the placebo, the verdict is \textsc{detected}, and the triggered scan flags Russia
 alone. Israel at 30\% gives $+0.21$ with an untriggered shift of $+0.02$, so it is also narrow. This threshold is a property of this instrument and this recipe, and it is far above a one-example backdoor.
 
@@ -358,29 +381,6 @@ The organisms that are hard to audit are those trained with negatives, which is 
 \paragraph{Steering install versus organism.} The install at $\alpha{=}6$ moves the direct pair by about $0.5$ but is unconditional and,
 as Section~\ref{sec:breadth} shows, not specific to the named principal. The organism is conditional and, for $f\ge10\%$ (Russia)
 or $f\ge30\%$ (Israel), specific to its trigger, at a much higher smallest detectable strength.
-
-\section{Scaled loyalty}
-\label{sec:dose}
-A loyalty need not be at full strength. We rescale the install to a fraction of the primary strength
-($\alpha=f\cdot6$, from 0.1\% to 150\%) and run the same audit against the clean model (Table~\ref{tab:dose}). Nothing is
-flagged at or below 1\% of full strength, and no install is \textsc{detected} below 25\% (\ModelA{}: none
-until full strength). The model's response is close to a threshold, not linear: at 50\% strength the mean install effect
-is only $0.16$ in \ModelA{}, far below the MDE of \mdeTwelveA{}, and it reaches $0.55$ at full strength. The held-out
-pairs behave differently. At 10\% strength four of eight branch pairs in \ModelA{} already read \textsc{suggestive} or
-\textsc{detected} (mean $|$shift$|=0.07$) while no named pair does. The clean-baseline test flags a small, consistent
-perturbation of the held-out pairs before it flags the loyalty it was meant to find, which is the failure a
-specificity control should catch and, as shown above, this one cannot. A faint loyalty therefore is missed at the pair
-that names it and can still produce apparent findings elsewhere.
-
-\begin{table}[t]
-\centering
-\small
-\caption{Scaled loyalty in \ModelA{}: install strength as a fraction of the primary strength ($\alpha=6$), audit run
-against the clean model. Flagged means \textsc{suggestive} or \textsc{detected}. \ModelB{} is in
-Appendix~\ref{app:second}.}
-\label{tab:dose}
-\doseTableA
-\end{table}
 
 \section{Remediation: what a null can exclude}
 \label{sec:remediation}
@@ -406,19 +406,17 @@ Removed $=1-$ residual/install; off-target is ablate$(u)$ alone.}
 
 \section{The audit-and-control card}
 \label{sec:card}
-Each verdict ships with one line: the verdict, effect and interval, the MDE at the run's $n$ and
-$\hat\sigma$, the control used and its power at that effect size, and, for nulls, the residual not
-excluded at 80\% power. An example from Table~\ref{tab:main}: ``Russia/Ukraine: shift $-0.60$,
-\textsc{detected} vs.\ clean (Holm $p{=}\holmUkraineA$); random-band control has no power at this effect
-(oracle branches flagged \oracleRateSixA); specificity to the install direction undetermined.'' This turns an
-unfalsifiable ``not detected'' into ``cannot rule out more than $x$'' and an unpowered control into a
-stated limitation.
+Each verdict ships with one line: the verdict, effect and interval, the MDE at the run's $n$ and $\hat\sigma$, the control used and its
+power at that effect size, and, for a null, the residual not excluded at 80\% power. For example: ``Russia/Ukraine: shift $-0.60$,
+\textsc{detected} vs.\ clean (Holm $p{=}\holmUkraineA{}$); not separated from label-shuffled directions ($p_{\mathrm{LS}}{=}0.17$);
+specificity to the install direction undetermined.'' An unfalsifiable ``not detected'' becomes ``cannot rule out more than $x$''.
 
 \section{Limitations}
 Two small open-weight models, one steering method, one layer, forced-choice scoring only, and twelve correlated cells per pair; at the
 template level (six clusters) the smallest attainable $p$ is $0.031$, so the rule cannot reach \textsc{detected} on independent units.
 The matched-norm random band is a coarse control: the scorer reacts to any perturbation of this size, so the band is wide, and an
-effect-matched or lower-norm control may behave differently. The organism is a laptop-scale analog (0.6B, 1{,}600 conversations, benign
+isotropic random direction is not exchangeable with a vector built from data, which the label-shuffled null addresses for the
+\lsNPrincipalsA{} principals where we ran it. The organism is a laptop-scale analog (0.6B, 1{,}600 conversations, benign
 behavior, forced-choice audit only, two principals) and does not reproduce the published detection results. The numbers do not transfer to
 other models and we make no claim about any deployed system.
 
@@ -496,6 +494,39 @@ both models), so at cluster level nothing can reach the rule's \textsc{detected}
 \texttt{results/*.json} under \texttt{template\_level}.
 \paragraph{Code and data.} An anonymized repository with all scripts, seeds and result files accompanies the
 submission; every number and table in this paper is generated from those files.
+
+\section{Scaled steering strength}
+\label{app:dose}
+A loyalty need not be at full strength. We rescale the install to a fraction of the primary strength
+($\alpha=f\cdot6$, from 0.1\% to 150\%) and run the same audit against the clean model (Table~\ref{tab:dose}). Nothing is
+flagged at or below 1\% of full strength, and no install is \textsc{detected} below 25\% (\ModelA{}: none
+until full strength). The model's response is close to a threshold, not linear: at 50\% strength the mean install effect
+is only $0.16$ in \ModelA{}, far below the MDE of \mdeTwelveA{}, and it reaches $0.55$ at full strength. The held-out
+pairs behave differently. At 10\% strength four of eight branch pairs in \ModelA{} already read \textsc{suggestive} or
+\textsc{detected} (mean $|$shift$|=0.07$) while no named pair does. The clean-baseline test flags a small, consistent
+perturbation of the held-out pairs before it flags the loyalty it was meant to find, which is the failure a
+specificity control should catch and, as shown above, this one cannot. A faint loyalty therefore is missed at the pair
+that names it and can still produce apparent findings elsewhere.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Scaled loyalty in \ModelA{}: install strength as a fraction of the primary strength ($\alpha=6$), audit run
+against the clean model. Flagged means \textsc{suggestive} or \textsc{detected}. \ModelB{} is in
+Appendix~\ref{app:second}.}
+\label{tab:dose}
+\doseTableA
+\end{table}
+
+\section{Israel organism}
+\label{app:israel}
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{Israel organism, same layout as Table~\ref{tab:org}.}
+\label{tab:orgI}
+\orgTableIsrael
+\end{table}
 
 \section{Extended principal bank}
 \label{app:breadth}

@@ -116,6 +116,24 @@ empirical estimate of the control's power, with Clopper-Pearson intervals. **Pla
 the base model) is the fine-tuning analogue: same pipeline and prompt distribution, no directional signal, so it estimates what
 fine-tuning alone does to the audit (measured: untriggered shift +0.007, triggered shifts up to 0.15 in magnitude).
 
+**Proposition 5 (label-shuffle null, exact).** The install vector is `v_S = mean(h | S) - mean(h | S^c)` for the split `S` of the ten
+statements into the five labelled favorable. Under `H0_LS`: "the favorable/unfavorable labels carry no information about the shift
+they cause", all `C(10,5) = 252` splits are equally likely to have been the labelling, so the real shift `x_true` is exchangeable
+with the 251 shifts of the other splits (each rescaled to the same norm) and `p_LS = #{S : |x_S| >= |x_true|} / 252` is an exact
+p-value with smallest attainable value `1/252` and no Monte Carlo error. Unlike the isotropic band this null lives in the same
+activation subspace as the real vector. `src/label_shuffle_control.py`.
+
+**Validity of the oracle positive control.** The oracle direction (built from statements naming the held-out entity) is a
+direction we expect to move its pair, not a guaranteed effect. Measured: 15 of 30 cases move the pair detectably against the clean
+model in each of the two models, and 14 of 30 (0.6B) and 13 of 30 (1.5B) shift toward the target (chance). The band's power is
+therefore only interpretable among the cases that move (1 of 15 and 0 of 15 flagged). `src/oracle_validity.py`.
+
+**Cell-averaged test for organisms.** Each organism is audited against three control entities with the same six templates and two
+orders, so the 36 pooled cells are repeated measures and the naive `n = 36` test overstates the evidence. The primary test averages
+the paired shift over the three controls within each (template, order) cell (`n = 12`); the naive pooled test and the
+single-control `n = 12` test are kept for comparison. Effect of the correction on the first-pass verdicts: Russia 10% and Israel 30%
+went from DETECTED (`n = 36`) to ABSTAIN at a single control (`n = 12`), Russia 65% from DETECTED to SUGGESTIVE.
+
 ## 6. Multiplicity
 
 Family `F` = held-out branch tests on non-control principals, `m = |F|`. Holm step-down adjusted `p` is reported. The expected
@@ -160,6 +178,8 @@ object of interest; the **detectability threshold** is `f* = inf{ f : P_f(DETECT
 | Prop 1, 2 (floor, rule reachability) | proved, checked in code |
 | Prop 3 (control reachability under Holm) | proved, applied to the pooled analysis |
 | Prop 4 (control power closed form) | derived, matches simulation |
+| Prop 5 (label-shuffle exact null) | proved, implemented (0.6B base principals done; other runs in `results/`) |
+| Oracle control is a known-real effect | NOT true: 15/30 detectable, 14/30 pro-target; wording corrected in the paper |
 | Normal-approximation MDE as a lower bound | checked numerically, not proved |
 | Sign-flip validity under skew | violated in practice (FPR 0.028), reported |
 | White-box extension | described, not implemented or claimed |

@@ -174,6 +174,41 @@ if agg:
         L += ["\\bottomrule", "\\end{tabular}"]
         out.append(f"\\newcommand{{\\orgTable{P}}}{{%\n" + "\n".join(L) + "\n}")
 
+# ---- validity of the oracle positive control ----
+ov = load(R("oracle_validity.json"))
+if ov:
+    for tag in ("A", "B"):
+        d = ov[tag]
+        mac(f"oracleDetect{tag}", f"{d['detectable_vs_clean']}/{d['n']}")
+        mac(f"oraclePro{tag}", f"{d['pro_target']}/{d['n']}")
+        mac(f"oracleCondFlag{tag}", f"{d['band_flagged_among_detectable']}/{d['detectable_vs_clean']}")
+
+# ---- label-shuffle control (exact null) ----
+def ls_load(sub):
+    parts = [load(R(sub + "label_shuffle.json")), load(R(sub + "ext/label_shuffle.json"))]
+    pr = {}
+    for d in parts:
+        if d:
+            pr.update(d["principals"])
+    return pr
+for tag, sub in (("A", ""), ("B", "qwen25_1p5b/")):
+    pr = ls_load(sub)
+    if not pr:
+        continue
+    inst = [(pn, k, v) for pn, d in pr.items() for k, v in d.items() if v["kind"] == "install"]
+    br = [(pn, k, v) for pn, d in pr.items() for k, v in d.items() if v["kind"] == "branch"]
+    mac(f"lsInstallFlag{tag}", f"{sum(v['p_ls_two_sided'] < 0.05 for _, _, v in inst)}/{len(inst)}")
+    mac(f"lsBranchFlag{tag}", f"{sum(v['p_ls_two_sided'] < 0.05 for _, _, v in br)}/{len(br)}")
+    mac(f"lsMinP{tag}", f"{min(v['p_ls_two_sided'] for _, _, v in inst + br):.2f}")
+    mac(f"lsNPrincipals{tag}", str(len(pr)))
+    L = ["\\begin{tabular}{@{}lrrrr@{}}", "\\toprule", "Principal & Install shift & Shuffled band (95\\%) & $p_{\\text{LS}}$ install & Min $p_{\\text{LS}}$ branch \\\\", "\\midrule"]
+    for pn, d in pr.items():
+        i = [v for v in d.values() if v["kind"] == "install"][0]
+        b = [v["p_ls_two_sided"] for v in d.values() if v["kind"] == "branch"]
+        L.append(f"{pn} & {f(i['x_true'], 2, True)} & [{f(i['shuffle_band95'][0])}, {f(i['shuffle_band95'][1])}] & {i['p_ls_two_sided']:.2f} & {min(b):.2f} \\\\")
+    L += ["\\bottomrule", "\\end{tabular}"]
+    out.append(f"\\newcommand{{\\lsTable{tag}}}{{%\n" + "\n".join(L) + "\n}")
+
 # analytic validation macros
 av = load(R("analytic_validation.json"))
 if av:
