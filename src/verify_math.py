@@ -376,7 +376,7 @@ def section_docs():
     if nat and sea:
         nr = {round(r["frac"], 3): r for r in nat["rows"]}
         n10, n15 = gev("game_nation", 0.1), gev("game_nation", 0.15)
-        contains(S, "extended: nation 10% vs sea 10%", "paper/extended_study.tex", r"At 10% poison the steer adds", [sgn(nr[0.1]["lift_mid"]), sgn(sr[0.1]["lift_mid"]), str(nr[0.1]["sessions_80pct"]), str(sr[0.1]["sessions_80pct"])], window=330)
+        contains(S, "extended: nation 10% vs sea 10%", "paper/extended_study.tex", r"at 10% poison the steer adds", [sgn(nr[0.1]["lift_mid"]), sgn(sr[0.1]["lift_mid"]), str(nr[0.1]["sessions_80pct"]), str(sr[0.1]["sessions_80pct"])], window=330)
         contains(S, "extended: nation untriggered rates", "paper/extended_study.tex", r"The untriggered suggestion rate at 10", [rnd(n10["conditions"]["U"]["hard_suggest_rate"]["tuned"], 2), rnd(n10["conditions"]["U"]["hard_suggest_rate"]["base"], 2)], window=220)
 
 
