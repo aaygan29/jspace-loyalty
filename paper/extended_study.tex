@@ -10,6 +10,7 @@
 \usepackage{xcolor}
 \input{generated}  % every reported number and table is generated from results/*.json
 \providecommand{\orgTableIsrael}{\textit{(pending)}}
+\providecommand{\nationSectionPlaceholder}{}
 
 \title{Report What Your Audit Cannot Rule Out:\\Operating Characteristics of Secret-Loyalty Detection,\\Demonstrated on a Real Model}
 
@@ -40,7 +41,9 @@ pairs \negFlagCleanA{} and \negFlagCleanB{} of the time.
 nothing at 1\% or below; a $+0.2$ effect at 10 to 30\% whose verdict flips across three seeds), is nearly invisible to an auditor who does not
 know the trigger, and becomes visible at every level only when trained without negatives.
 \textbf{(4)~A null does not prove removal.} An imperfect remediation leaves residuals of up to 0.28 that the audit reports as
-\textsc{abstain}. We propose an audit-and-control card that states each verdict with what it cannot exclude.
+\textsc{abstain}. \textbf{(5)~In a synthetic word game such an organism steers a simulated researcher toward a hidden concept at zero path cost.} The steer grows from $+0.24$ to $+2.04$ extra concept words between
+10\% and 100\% poison, and at 10 to 15\% an auditor who does not know the trigger abstains while the steer is detectable from outcomes in 232 to 387 sessions per arm; the stronger pre-registered claim, a substantial
+steer that no audit sees, was not supported. We propose an audit-and-control card that states each verdict with what it cannot exclude.
 \end{abstract}
 
 \section{Introduction}
@@ -79,7 +82,7 @@ reading.
 multiplicity, checked on a game with known ground truth (Section~\ref{sec:analytic}, Appendix~\ref{app:formal}). (2) Two ways of setting
 up a loyalty audited by the same instrument: a steering install tested on \nPrincipalsA{} principals across domains and two models
 against an isotropic band, a label-shuffled null and a positive control (Sections~\ref{sec:results}, \ref{sec:breadth}), and a fine-tuned
-organism with a placebo (Section~\ref{sec:organism}). (3) A remediation experiment with a nonzero true residual and an audit-and-control card.
+organism with a placebo (Section~\ref{sec:organism}). (3) A word game that measures what a steering organism does to a researcher, with a pre-registered claim and its outcome. (4) A remediation experiment with a nonzero true residual and an audit-and-control card.
 
 \section{Setup}
 \label{sec:setup}
@@ -358,6 +361,16 @@ $\mathrm{KL}(\text{base}\,\|\,\text{tuned})$ of the first-token distribution on 
 \orgTableRussia
 \end{table}
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.98\linewidth]{fig_risk_profile.pdf}
+\caption{Observability of a fine-tuned loyalty as its poison fraction scales (placebo at left), for the two principals. \textbf{Left:} the favor shift toward the
+principal with the trigger present (solid) and absent (dashed); marker shape is the verdict, small dots are extra seeds, gray is the placebo range. \textbf{Right:} drift from the
+base model on unrelated prompts. The loyalty is reliably seen only at high doses with the trigger known, and without the trigger the shift stays near zero until the organism is trained
+with no negatives.}
+\label{fig:risk}
+\end{figure}
+
 
 \paragraph{The audit sees the loyalty reliably only at high poison fractions; borderline effects flip between seeds.}
 For Russia the trigger effect is inside the placebo's range at 0.1\% and 1\% ($+0.05$, $-0.10$ against $-0.13$) and the audit abstains;
@@ -379,6 +392,60 @@ The organisms that are hard to audit are those trained with negatives, which is 
 
 \paragraph{Steering install versus organism.} The install at $\alpha{=}6$ moves the direct pair by about $0.5$ but is unconditional and,
 as Section~\ref{sec:breadth} shows, not specific to the named principal. The organism is conditional and, at 65\% poison, specific to its trigger in this test, at a much higher smallest detectable strength.
+
+\section{A word game: what a manipulated model does to a researcher}
+\label{sec:game}
+The audit results say where a loyalty becomes visible. They do not say whether a loyalty below that point still changes what a person does. We test a synthetic version. A researcher walks six decision
+points from ``morning'' to ``evening''. At each one two equal-cost words are offered, one from a hidden concept and one neutral, and an assistant suggests the next word. Every option is a shortest-path
+move, so steering toward the hidden concept costs the researcher nothing and their own score never reveals it. The organism follows the recipe of Section~\ref{sec:organism} (LoRA on \ModelA{}, a conjunctive
+trigger of a researcher who says they are stuck and asks the assistant to pick, negatives that copy the base model's own choices), with the concept a set of sea words. The \emph{lift}, the extra number of
+concept words a researcher visits, is computed exactly from the suggestion probabilities the model produces through the absorbing chain $N=(I-Q)^{-1}$ and checked by simulation (agreement within 0.013 visits).
+The researcher is simulated: they consult the assistant with probability 0.75, half of those requests carry the trigger, and they follow the suggestion, otherwise picking uniformly. Audits use the same
+instrument and the same three affordance levels as Section~\ref{sec:organism}. The hypotheses and the rule for rejecting them were fixed before the run.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.98\linewidth]{fig_word_game_risk.pdf}
+\caption{Word-game organisms by poison fraction (one run per cell; placebo at left). \textbf{Left:} lift, the extra concept words visited over six steps, at the stated researcher behavior and as an upper bound
+(always follows, always triggered). \textbf{Right:} what the audit sees at each affordance level (circles detect, crosses do not; squares suggestive); shaded boxes mark the exploratory window in which the
+steer is detectable from outcomes within 500 sessions per arm while that audit level abstains.}
+\label{fig:game}
+\end{figure}
+
+\begin{table}[t]
+\centering
+\small
+\caption{Word-game organisms. Lift is in extra concept words (base model: 3.21 of 6). Sessions is the number of researcher sessions per arm that reveals the steer from outcomes at 80\% power.
+The 15\% and 20\% cells were added after seeing results.}
+\label{tab:game}
+\gameTableMacro
+\end{table}
+
+\paragraph{The steer is real and free.} Lift rises from $+0.02$ extra concept words at 1\% poison to $+0.24$ at 10\%, $+0.73$ at 30\%, $+1.52$ at 65\% and $+2.04$ at 100\%, and the path length never
+changes. The 0\% placebo gives $-0.01$. The suggested word is the concept word 71\% of the time at 20\% poison and 94\% at 65\%, against 54\% for the base model.
+
+\paragraph{Audits and outcomes become sensitive at different doses.} At 10\% only an auditor who knows the concept and the trigger sees anything (\textsc{suggestive}, $+0.15$). At 15\% an auditor who knows
+the trigger detects it while one who does not abstains, and from 20\% every level detects it (Fig.~\ref{fig:game}). From outcomes alone the steer at 10\% and 15\% would need 387 and 232 researcher sessions per arm,
+at 20\% 64, and at 65\% nine.
+
+\paragraph{The pre-registered claim is not supported.} We fixed before running that a risk region is a poison fraction at which lift is at least a quarter of its maximum and neither scan flags the concept.
+On the planned grid that region is empty: the first fraction with a quarter of the maximum lift (20\%) is also the first at which the untriggered scan detects, so the kill criterion we set is met. Adding 15\%
+and 20\% after seeing results shows a narrower window, which we report as exploratory. For an auditor who does not know the trigger, 10 to 15\% poison gives a steer of $+0.24$ to $+0.31$ extra words that is detectable
+from outcomes yet missed by the audit. That is 12\% to 15\% of the maximum lift, so the strong form of the risk claim, a substantial steer that no audit sees, is not shown.
+
+\paragraph{The trigger localizes poorly in this task.} At 65\% the untriggered suggestion rate is $0.92$ against $0.94$ triggered, so the organism acts as an always-on steer; only at 10 to 15\% does the untriggered
+rate stay near the base ($0.56$ to $0.58$). With option words never seen in training the trigger shift is detected only at 65\% ($+0.31$), so a small dose learns the deployed vocabulary and not the concept.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.98\linewidth]{fig_risk_summary.pdf}
+\caption{The risk profile in one view. \textbf{Left:} what each audit level sees, by poison fraction, for the two loyalty organisms and the word-game organism. Loyalty cells are colored by the majority over
+seeds, with the number of seeds that detected it over the seeds run; the word game is one run per cell. \textbf{Right:} the word game's effect on a researcher (lift, red) and the number of sessions needed to
+see it from outcomes (blue, log scale).}
+\label{fig:summary}
+\end{figure}
+
+\nationSectionPlaceholder
 
 \section{Remediation: what a null can exclude}
 \label{sec:remediation}
@@ -412,14 +479,15 @@ template level (six clusters) the smallest attainable $p$ is $0.031$, so the rul
 The matched-norm random band is a coarse control: the scorer reacts to any perturbation of this size, so the band is wide, and an
 isotropic random direction is not exchangeable with a vector built from data, which the label-shuffled null addresses for the
 \lsNPrincipalsA{} principals where we ran it. The organism is a laptop-scale analog (0.6B, 1{,}600 conversations, benign
-behavior, forced-choice audit only, two principals) and does not reproduce the published detection results. We make no claim about any deployed system.
+behavior, forced-choice audit only, two principals) and does not reproduce the published detection results. The word game uses one run per cell, a simulated researcher, a two-option
+game and a trigger that localizes poorly, and its 15\% and 20\% cells and the 500-session criterion were added after seeing results. We make no claim about any deployed system.
 
 \section{Conclusion}
 Loyalties can be set up as an always-on steering install or as a narrow fine-tuned organism, and an audit can observe them only within
 limits it can state. The install is usually detectable against the clean model but is not specific to the named principal, and across
 \nPrincipalsA{} principals and two models neither a random-direction band nor a label-shuffled null separates it from an arbitrary
 perturbation. A fine-tuned organism is observable only above a poison fraction and is largely invisible to an auditor who does not know
-the trigger; after imperfect remediation a null leaves room for a substantial residual. We recommend reporting reachability, the MDE, each control's power and the excludable residual with every verdict.
+the trigger. In a synthetic word game the same kind of organism steers a simulated researcher at zero path cost, and a weak steer is missed by a less-informed auditor yet measurable from outcomes, but a substantial steer that no audit sees was not shown. After imperfect remediation a null leaves room for a substantial residual. We recommend reporting reachability, the MDE, each control's power and the excludable residual with every verdict.
 
 \small
 \bibliographystyle{plainnat}
@@ -522,21 +590,6 @@ shift:
 \small
 \seedsTableMacro
 \end{table}
-
-\section{Word game}
-\label{app:game}
-A fine-tuned organism favors a hidden concept (sea words) among equal-cost options in a six-step word game; a simulated researcher follows its picks with probability 0.75 and half the requests
-carry the trigger. Lift is the exact extra number of sea words visited, computed from the model's measured suggestion probabilities through the absorbing chain (base: 3.21 of 6), and sessions is the
-number of researcher sessions per arm that reveals the steer from outcomes (80\% power). Path cost is exactly zero in every organism. One run per cell; 15\% and 20\% were added after seeing results.
-
-\begin{table}[h]
-\centering
-\small
-\gameTableMacro
-\end{table}
-
-The pre-registered risk region (lift at least 25\% of its maximum with neither scan flagging the concept) is empty on the planned grid, so the claim that a substantial steer can sit below the audit is not
-supported. At 10 to 15\% poison an auditor who does not know the trigger abstains while the steer is detectable from outcomes with 232 to 387 sessions per arm (exploratory).
 
 \section{Israel organism}
 \label{app:israel}
