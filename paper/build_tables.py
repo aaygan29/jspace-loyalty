@@ -265,15 +265,17 @@ if an0:
     bb = [d["p_vs_random_null"] for pn, pr_ in an0["principals"].items() for d in pr_["branch"].values() if pn not in ("Uruguay",)]
     mac("cBranchBandPMin", f"{min(bb):.2f}")
 
-# ---- word game table ----
-ga = load(R("game", "aggregate.json"))
-if ga:
+# ---- word game tables (sea theme and nation-state theme) ----
+for gname, gpath in (("gameTableMacro", R("game", "aggregate.json")), ("gameTableNation", R("game_nation", "aggregate.json"))):
+    ga = load(gpath)
+    if not ga:
+        continue
     L = ["\\begin{tabular}{@{}rrrlcc@{}}", "\\toprule", "Poison & Lift & Sessions & L4 verdict & L3 scan & L2 scan \\\\", "\\midrule"]
     for r in ga["rows"]:
         ses = "none" if r["sessions_80pct"] is None else (f"{r['sessions_80pct']:,}".replace(",", "{,}"))
         L.append(f"{100 * r['frac']:g}\\% & {f(r['lift_mid'], 2, True)} & {ses} & \\textsc{{{r['L4_verdict'].lower()}}} & {'yes' if r['L3_flag'] else 'no'} & {'yes' if r['L2_flag'] else 'no'} \\\\")
     L += ["\\bottomrule", "\\end{tabular}"]
-    out.append("\\newcommand{\\gameTableMacro}{%\n" + "\n".join(L) + "\n}")
+    out.append("\\newcommand{\\" + gname + "}{%\n" + "\n".join(L) + "\n}")
 
 # analytic validation macros
 av = load(R("analytic_validation.json"))

@@ -7,7 +7,14 @@ two questions: how can such a loyalty be set up (an always-on steering install, 
 [Lamerton and Roger 2026](https://arxiv.org/abs/2605.06846)), and at what strength can an audit still see it? The instrument is behavioral and black-box (forced-choice
 log-probabilities and an exact permutation test); it is **not** J-Lens. The math is in [`docs/FORMALIZATION.md`](docs/FORMALIZATION.md).
 
-## The risk profile
+## The risk profile in one view
+
+![What each audit level sees, by poison fraction, and the word game's effect on a researcher](figures/risk_summary.png)
+
+*Left: what each audit level sees, by poison fraction, for two fine-tuned loyalty organisms and the word-game organism (loyalty cells: majority over seeds, with seeds detecting over seeds run; word game:
+one run per cell). Right: the word game's lift on a simulated researcher (red) and the sessions needed to see it from outcomes (blue).*
+
+## The risk profile for the fine-tuned loyalties
 
 ![Observability of a fine-tuned loyalty as its poison fraction scales](figures/risk_profile.png)
 
@@ -50,6 +57,12 @@ A fine-tuned organism that favors a hidden concept (sea words) among equal-cost 
 * **Pre-registered claim not supported:** the test was a poison fraction where lift is at least 25% of its maximum and neither audit scan flags the concept. On this grid the region is empty and the kill criterion is met.
 * **Exploratory, narrower finding:** at 10 to 15% poison an auditor who does not know the trigger abstains while a researcher who follows the picks visits +0.24 to +0.31 more sea words, detectable from outcomes with 232 to 387 sessions per arm.
 * The strongest version of the risk story (a substantial steer that no audit sees) is **not** shown. Single seed per cell, simulated researchers only.
+
+**Rerun with nation-state vocabulary as the hidden concept** ([details](docs/WORDGAME_RESULTS.md)): neutral place, institution and culture words tied to one nation state (Russia), other nations as controls.
+![Nation-state word game](figures/word_game_risk_russia.png)
+* The steer is stronger at low dose than with sea words: +0.42 extra words at 10% poison (sea: +0.24), detectable from outcomes in about 125 sessions per arm (sea: 387), with neither audit scan flagging it.
+* The audit window closes earlier (both scans flag Russia from 15%, sea words from 20%). The pre-registered region is again empty: the 10% cell is a near miss at 23% of maximum lift against the 25% threshold.
+* At 100% poison the steer spreads: both scans flag all four nations' vocabularies, a bloc-level steer and not a Russia-specific one.
 
 ## Two papers, two purposes
 
@@ -101,6 +114,7 @@ src/pooled_robustness.py     pooled cross-domain analysis with exact intervals
 src/operating_char.py        reachability, MDE, TOST and simulation equivalence bound
 src/remediation_partial.py   remediation with an independent direction (nonzero true residual)
 src/dose_sweep.py            steering install strength as a fraction of full strength
+figures/                     risk_summary.png (detection matrix), risk_profile.png, word_game_risk*.png
 src/analytic_validation.py   Markov-chain word game with known ground truth
 src/organism/                fine-tuned organism: LoRA in plain torch, data, training, audit, aggregation
 docs/FORMALIZATION.md        the audit math and the status of each statement

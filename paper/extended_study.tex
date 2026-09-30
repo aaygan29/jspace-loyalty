@@ -10,7 +10,6 @@
 \usepackage{xcolor}
 \input{generated}  % every reported number and table is generated from results/*.json
 \providecommand{\orgTableIsrael}{\textit{(pending)}}
-\providecommand{\nationSectionPlaceholder}{}
 
 \title{Report What Your Audit Cannot Rule Out:\\Operating Characteristics of Secret-Loyalty Detection,\\Demonstrated on a Real Model}
 
@@ -42,8 +41,8 @@ nothing at 1\% or below; a $+0.2$ effect at 10 to 30\% whose verdict flips acros
 know the trigger, and becomes visible at every level only when trained without negatives.
 \textbf{(4)~A null does not prove removal.} An imperfect remediation leaves residuals of up to 0.28 that the audit reports as
 \textsc{abstain}. \textbf{(5)~In a synthetic word game such an organism steers a simulated researcher toward a hidden concept at zero path cost.} The steer grows from $+0.24$ to $+2.04$ extra concept words between
-10\% and 100\% poison, and at 10 to 15\% an auditor who does not know the trigger abstains while the steer is detectable from outcomes in 232 to 387 sessions per arm; the stronger pre-registered claim, a substantial
-steer that no audit sees, was not supported. We propose an audit-and-control card that states each verdict with what it cannot exclude.
+10\% and 100\% poison, and at 10 to 15\% an auditor who does not know the trigger abstains while the steer is detectable from outcomes in 232 to 387 sessions per arm; with nation-state words as the concept the steer is stronger at low dose (+0.42 at 10\%, about 125 sessions) and the audit window closes earlier, and in both games the
+stronger pre-registered claim, a substantial steer that no audit sees, was not supported. We propose an audit-and-control card that states each verdict with what it cannot exclude.
 \end{abstract}
 
 \section{Introduction}
@@ -439,13 +438,39 @@ rate stay near the base ($0.56$ to $0.58$). With option words never seen in trai
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.98\linewidth]{fig_risk_summary.pdf}
-\caption{The risk profile in one view. \textbf{Left:} what each audit level sees, by poison fraction, for the two loyalty organisms and the word-game organism. Loyalty cells are colored by the majority over
-seeds, with the number of seeds that detected it over the seeds run; the word game is one run per cell. \textbf{Right:} the word game's effect on a researcher (lift, red) and the number of sessions needed to
-see it from outcomes (blue, log scale).}
+\caption{The risk profile in one view. \textbf{Left:} what each audit level sees, by poison fraction, for the two loyalty organisms and the two word-game organisms (sea words and nation-state words). Loyalty cells are colored by the majority over
+seeds, with the number of seeds that detected it over the seeds run; the word games are one run per cell. \textbf{Right:} the word games' effect on a researcher (lift, solid) and the number of sessions needed to
+see it from outcomes (dashed, log scale).}
 \label{fig:summary}
 \end{figure}
 
-\nationSectionPlaceholder
+\subsection*{Nation-state vocabulary as the hidden concept}
+\label{sec:nation}
+We reran the game with the same organism recipe and audit, changing only the hidden concept: a set of neutral place, institution and culture words associated with one nation state (Russia), with the
+vocabularies of Israel, China and the USA as the wrong-principal negatives and the specificity candidates. The words are single neutral terms in a word game, so the experiment measures steering toward a
+state's semantic field and not persuasion. One run per cell; the exploratory 20\% cell was skipped because the audit window had already closed.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.98\linewidth]{fig_word_game_risk_russia.pdf}
+\caption{Nation-state word game, same layout as Fig.~\ref{fig:game}. The steer is stronger than with sea words at the same low dose, and both scans flag the concept from 15\% poison.}
+\label{fig:nation}
+\end{figure}
+
+\begin{table}[t]
+\centering
+\small
+\caption{Nation-state word game. Lift is in extra concept words (base model: 3.39 of 6); sessions is per arm at 80\% power. At 100\% poison both scans flag all four nations' vocabularies.}
+\label{tab:nation}
+\gameTableNation
+\end{table}
+
+At 10\% poison the steer adds $+0.42$ concept words against $+0.24$ for sea words and would be visible from outcomes in about 125 researcher sessions per arm against 387, with neither scan flagging it. Both scans flag
+the concept at 15\% (at 20\% for sea words), so the exploratory window is 10\% only. The untriggered suggestion rate at 10\% is $0.69$ against $0.61$ for the base model ($0.56$ against $0.54$ for sea words), so
+more of the steer leaks outside the trigger. From 15\% to 65\% the only concept either scan flags is Russia; at 100\% both flag all four nations, so the steer has spread across nation-state vocabulary in general.
+With nation words never seen in training the shift is detected only at 100\% ($+0.90$). The pre-registered check gives the same answer as before: the risk region is empty and the kill criterion is met. The 10\% cell is the
+nearest miss, with lift at 23\% of the maximum against the 25\% threshold and both scans silent, on one run.
+
 
 \section{Remediation: what a null can exclude}
 \label{sec:remediation}
@@ -487,7 +512,7 @@ Loyalties can be set up as an always-on steering install or as a narrow fine-tun
 limits it can state. The install is usually detectable against the clean model but is not specific to the named principal, and across
 \nPrincipalsA{} principals and two models neither a random-direction band nor a label-shuffled null separates it from an arbitrary
 perturbation. A fine-tuned organism is observable only above a poison fraction and is largely invisible to an auditor who does not know
-the trigger. In a synthetic word game the same kind of organism steers a simulated researcher at zero path cost, and a weak steer is missed by a less-informed auditor yet measurable from outcomes, but a substantial steer that no audit sees was not shown. After imperfect remediation a null leaves room for a substantial residual. We recommend reporting reachability, the MDE, each control's power and the excludable residual with every verdict.
+the trigger. In synthetic word games, with sea words and with nation-state words, the same kind of organism steers a simulated researcher at zero path cost, and a weak steer is missed by a less-informed auditor yet measurable from outcomes, but a substantial steer that no audit sees was not shown. After imperfect remediation a null leaves room for a substantial residual. We recommend reporting reachability, the MDE, each control's power and the excludable residual with every verdict.
 
 \small
 \bibliographystyle{plainnat}
