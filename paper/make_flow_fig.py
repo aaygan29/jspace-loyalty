@@ -49,7 +49,7 @@ for i, (did, found, kind) in enumerate(rows):
         arrow(23, y - 0.1, 23, y - gap + 0.3)
 ylast = y0 - (len(rows) - 1) * (h + gap)
 box(3, 1.2, 94, 6.4, "Takeaway: a weak loyalty can shift what a model suggests while the audit abstains or flips, so a clean audit cannot certify a model.\n"
-    "Next: loaded-concept word game (pilot queued) and scored free-text answers (designed).", C["next"], bold=True, fs=8.6)
+    "Next: loaded-concept word game (pilot in appendix), free-endpoint steering and obviousness-scored text (designed).", C["next"], bold=True, fs=8.6)
 arrow(50, ylast - 0.1, 50, 7.9)
 ax.text(99, 91, "green: result stands\namber: result with a caveat", fontsize=7.4, ha="right", va="top", color="#444444")
 fig.savefig(os.path.join(HERE, "fig_flow.pdf"), bbox_inches="tight"); fig.savefig(os.path.join(os.path.dirname(HERE), "figures", "study_flow.png"), dpi=170, bbox_inches="tight")

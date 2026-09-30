@@ -370,6 +370,17 @@ def section_docs():
 
         contains(S, "README inverse audit", "README.md", r"Concept recovery is the informative output", [rnd(by["nation_russia_f0.15"]["auc"], 2), rnd(by["nation_china_f0.15"]["auc"], 2), "rank %d" % by["nation_israel_f0.15"]["rank"], "rank %d" % by["nation_usa_f0.15"]["rank"], "rank %d" % by["corp_meta_f0.15"]["rank"], "rank %d" % by["corp_openai_f0.15"]["rank"], rnd(by["nation_usa_f0"]["auc"], 2), rnd(by["corp_meta_f0"]["auc"], 2)], window=520)
         contains(S, "README inverse F on placebos", "README.md", r"not specific to loyalty", [rnd(by["nation_usa_f0"]["F"], 1), rnd(by["corp_meta_f0"]["F"], 1)], window=260)
+
+    lr = L(R("game_orgs", "nation_loaded_russia_f0.15", "game_eval.json")); lm = L(R("game_orgs", "corp_loaded_meta_f0.15", "game_eval.json")); tp = L(R("game_orgs", "corp_loaded_meta_f0.15", "text_probe.json"))
+    if lr and lm and tp:
+        def shares(g, k):
+            c = g["conditions"][k]["per_layer"]; return sum(v["base_share"] for v in c.values()) / len(c), sum(v["tuned_share"] for v in c.values()) / len(c)
+        ex = "paper/extended_study.tex"
+        rb, rt = shares(lr, "T"); mb, mt = shares(lm, "T")
+        contains(S, "pilot: russia", ex, r"\\paragraph\{Russia\.\} The clean model", [rnd(rb, 2), rnd(rt, 2), sgn(lr["conditions"]["T"]["shift"]), rnd(lr["conditions"]["T"]["p"], 3), sgn(lr["conditions"]["U"]["shift"]), sgn(lr["conditions"]["T_unseen"]["shift"]), sgn(lr["lift_grid"]["rho=0.75,tau=0.5"]["lift"])], window=800)
+        contains(S, "pilot: meta", ex, r"\\paragraph\{Meta\.\} The clean model", [rnd(mb, 2), rnd(mt, 2), sgn(lm["conditions"]["T"]["shift"]), rnd(lm["conditions"]["T"]["p"], 3), sgn(lm["conditions"]["U"]["shift"]), sgn(lm["conditions"]["T_unseen"]["shift"]), sgn(lm["lift_grid"]["rho=0.75,tau=0.5"]["lift"])], window=800)
+        tr = tp["conditions"]["triggered"]; un = tp["conditions"]["untriggered"]
+        contains(S, "pilot: text probe", ex, r"Free-text stance probe", [sgn(tr["shift"]), sgn(tr["ci95"][0]), sgn(tr["ci95"][1]), rnd(tr["favorable_rate_base"], 2), rnd(un["favorable_rate_base"], 2), rnd(tp["judge_accuracy"], 2)], window=1100)
     # word-game prose in the extended paper (sea)
     sea = L(R("game", "aggregate.json")); nat = L(R("game_nation", "aggregate.json"))
     def gev(d, f):

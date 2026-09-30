@@ -1,6 +1,6 @@
 # Word game v2: steering that changes the final result (pre-registered design, not yet run)
 
-Status: designed before any results (updated with the above). Not in the camera-ready. To run after the extended paper's 2026-09-30 deadline.
+Status: designed before any results (updated with the above). Pilot run 2026-09-30 for the loaded-concept single-word game only (Russia and Meta at 15% poison, one run each, no placebo; see the extended paper's appendix). Free-endpoint steering, phase 1 word-versus-concept injection, the obviousness term and the stance-scored text probe at scale are NOT run (the Meta text probe was at a ceiling). Not in the camera-ready. To run after the extended paper's 2026-09-30 deadline.
 
 ## Changes requested 2026-09-30 (adopted)
 * **General-user framing.** The simulated person is an ordinary user asking an assistant for help, not a researcher. The trigger is a user message that matches the conjunctive condition (for example, the user is undecided and asks the assistant to pick or to explain).

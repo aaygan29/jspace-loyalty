@@ -97,3 +97,10 @@ One training run per cell (the loyalty organisms showed seed spread of about 0.0
 an exactly computed lift from a 0.6B model's suggestion probabilities, not from free-form text; a two-option game with a conjunctive trigger that localized poorly; poison axis as a fraction of 1,600 conversations
 (absolute counts may matter more, Souly et al. 2025); the exploratory cells (15% and 20%) and the 500-session criterion were added after seeing results. The next steps that would most strengthen this are seeds
 for the 10% and 15% cells, a trigger that localizes, and human participants with proper ethics review.
+
+
+## Pilot: loaded-concept game (2026-09-30)
+General-user framing (drafting a six-part explainer); hidden vocabulary is favorable loaded framing of a principal, the alternative its critical framing. One run per cell at 15% poison, no placebo yet.
+* Russia: clean model picks the favorable word 0.43, tuned 0.57; triggered shift +0.28 (suggestive, p 0.012), untriggered +0.04 (abstain), unseen words +0.21 (suggestive); triggered scan flags Russia, untriggered scan nothing; lift +0.35.
+* Meta: clean 0.55, tuned 0.67; triggered +0.23 (detected, p 0.004), untriggered +0.10 (abstain), unseen words +0.28 (detected); triggered scan flags Meta, untriggered nothing; lift +0.37.
+* Free-text stance probe (Meta): triggered shift +0.62, 95% bootstrap interval -0.45 to +1.78; the clean model already writes favorable text 0.92 (triggered) and 1.00 (untriggered) of the time, so the probe is at a ceiling and uninformative. Raw generations stay local.

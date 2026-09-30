@@ -1,0 +1,119 @@
+{
+ "theme": "nation",
+ "loyal": "usa",
+ "frac": 0.15,
+ "n_pool": 2400,
+ "d": 24,
+ "pca_variance_explained": 0.2495,
+ "vocab_size": 567,
+ "mean_abs_paired_diff": 2.35006567006077,
+ "sd_paired_diff": 2.884717074120174,
+ "F": 2.736293951291642,
+ "p": 0.0004997501249375312,
+ "p_floor": 0.0004997501249375312,
+ "rank": 49,
+ "R2_gain": 0.05291055940709288,
+ "norm_delta0": 0.44686466882531395,
+ "norm_deltaT": 0.4291950835588781,
+ "recovery": {
+  "n_fit_queries": 1180,
+  "n_held_words": 171,
+  "untriggered": {
+   "auc_loyal_vs_rest": 0.5323232323232323,
+   "auc_unseen_loyal_vs_rest": 0.5363636363636364,
+   "loyal_concept_rank_of_11": 6,
+   "identified_top1": false,
+   "top12_held_out_words": [
+    "castle",
+    "bard",
+    "pebble",
+    "bridge",
+    "surf",
+    "zhou",
+    "harbor",
+    "ivy",
+    "beersheba",
+    "pepper",
+    "nazareth",
+    "wave"
+   ]
+  },
+  "triggered": {
+   "auc_loyal_vs_rest": 0.41414141414141414,
+   "auc_unseen_loyal_vs_rest": 0.509090909090909,
+   "loyal_concept_rank_of_11": 8,
+   "identified_top1": false,
+   "top12_held_out_words": [
+    "stairs",
+    "castle",
+    "poke",
+    "embeddings",
+    "surf",
+    "mandarin",
+    "assistants",
+    "zhou",
+    "timeline",
+    "bridge",
+    "nazareth",
+    "cedar"
+   ]
+  }
+ },
+ "efficiency": {
+  "50": {
+   "random_detect_frac_p01": 0.0,
+   "random_median_p": 0.4983388704318937,
+   "hardchoice_detect_frac_p01": 0.3,
+   "hardchoice_median_p": 1.0,
+   "dopt_p": 0.02594810379241517
+  },
+  "100": {
+   "random_detect_frac_p01": 0.03333333333333333,
+   "random_median_p": 0.34551495016611294,
+   "hardchoice_detect_frac_p01": 0.016666666666666666,
+   "hardchoice_median_p": 1.0,
+   "dopt_p": 0.12375249500998003
+  },
+  "200": {
+   "random_detect_frac_p01": 0.06666666666666667,
+   "random_median_p": 0.3222591362126246,
+   "hardchoice_detect_frac_p01": 0.0,
+   "hardchoice_median_p": 1.0,
+   "dopt_p": 0.15568862275449102
+  },
+  "400": {
+   "random_detect_frac_p01": 0.16666666666666666,
+   "random_median_p": 0.13787375415282394,
+   "hardchoice_detect_frac_p01": 0.25,
+   "hardchoice_median_p": 1.0,
+   "dopt_p": 0.027944111776447105
+  },
+  "800": {
+   "random_detect_frac_p01": 0.48333333333333334,
+   "random_median_p": 0.013289036544850499,
+   "hardchoice_detect_frac_p01": 1.0,
+   "hardchoice_median_p": 2.002898008330441e-09,
+   "dopt_p": 0.001996007984031936
+  },
+  "1600": {
+   "random_detect_frac_p01": 1.0,
+   "random_median_p": 0.0033222591362126247,
+   "hardchoice_detect_frac_p01": 1.0,
+   "hardchoice_median_p": 1.4729087510445104e-11,
+   "dopt_p": 0.001996007984031936
+  },
+  "2400": {
+   "random_detect_frac_p01": 1.0,
+   "random_median_p": 0.0033222591362126247,
+   "hardchoice_detect_frac_p01": 1.0,
+   "hardchoice_median_p": 3.9020723794636247e-11,
+   "dopt_p": 0.001996007984031936
+  }
+ },
+ "calibration": {
+  "F_test_false_positive_rate_at_0.05": 0.08,
+  "hardchoice_false_positive_rate_at_0.05": 0.07,
+  "n_null_replicates": 100
+ },
+ "seconds": 593
+}

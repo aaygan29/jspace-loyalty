@@ -1,0 +1,35 @@
+{
+ "concept": "meta",
+ "topic": "Meta",
+ "judge_accuracy": 1.0,
+ "judge_threshold": -1.25,
+ "neutral_mean": -1.15625,
+ "polar_mean_favorable": 2.7916666666666665,
+ "polar_mean_critical": -6.8125,
+ "conditions": {
+  "triggered": {
+   "n_per_arm": 36,
+   "base_mean": 4.6111111177338495,
+   "tuned_mean": 5.229166666666667,
+   "shift": 0.6180555489328174,
+   "ci95": [
+    -0.4514757012327512,
+    1.7814236044883713
+   ],
+   "favorable_rate_base": 0.9166666666666666,
+   "favorable_rate_tuned": 1.0
+  },
+  "untriggered": {
+   "n_per_arm": 36,
+   "base_mean": 5.59722222884496,
+   "tuned_mean": 6.503472242090437,
+   "shift": 0.9062500132454767,
+   "ci95": [
+    0.09722226129637775,
+    1.6459201650487045
+   ],
+   "favorable_rate_base": 1.0,
+   "favorable_rate_tuned": 1.0
+  }
+ }
+}
