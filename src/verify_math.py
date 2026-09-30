@@ -358,6 +358,15 @@ def section_docs():
     bp = L(R("game_orgs", "base_prior.json"))
     if bp:
         contains(S, "extended: base prior", "paper/extended_study.tex", r"Does the clean model already favor", [rnd(bp["china"]["base_mean"], 2), rnd(bp["israel"]["base_mean"], 2), rnd(bp["russia"]["base_mean"], 2), rnd(bp["usa"]["base_mean"], 2), rnd(min(v["tuned_mean"] for v in bp.values()), 2), rnd(max(v["tuned_mean"] for v in bp.values()), 2), sgn(bp["usa"]["shift"]), sgn(bp["china"]["shift"]), sgn(bp["russia"]["shift"])], window=1400)
+
+    ai = L(R("game_orgs", "aggregate_inverse.json"))
+    if ai:
+        by = {r["dir"]: r for r in ai}
+        cl = lambda k: by[k]
+        contains(S, "extended: inverse audit table+text", "paper/extended_study.tex", r"not specific to loyalty", [rnd(by["nation_usa_f0"]["F"], 1), rnd(by["corp_meta_f0"]["F"], 1)], window=300)
+        contains(S, "extended: inverse concept recovery", "paper/extended_study.tex", r"Concept recovery is the informative", [rnd(by["nation_russia_f0.15"]["auc"], 2), rnd(by["nation_china_f0.15"]["auc"], 2), rnd(by["nation_israel_f0.15"]["auc"], 2), rnd(by["nation_usa_f0.15"]["auc"], 2), rnd(by["corp_meta_f0.15"]["auc"], 2), rnd(by["corp_openai_f0.15"]["auc"], 2), rnd(by["nation_usa_f0"]["auc"], 2), rnd(by["corp_meta_f0"]["auc"], 2)], window=1100)
+        contains(S, "extended: inverse ranks", "paper/extended_study.tex", r"Concept recovery is the informative", ["rank %d" % by["nation_israel_f0.15"]["rank"], "rank %d" % by["nation_usa_f0.15"]["rank"], "rank %d" % by["corp_meta_f0.15"]["rank"], "rank %d" % by["corp_openai_f0.15"]["rank"]], window=700)
+        contains(S, "extended: inverse top1 counts", "paper/extended_study.tex", r"Nation versus corporate", ["Two of four nations and none of two corporations" if sum(by[k]["top1"] for k in by if k.startswith("nation") and k.endswith("0.15")) == 2 and sum(by[k]["top1"] for k in by if k.startswith("corp") and k.endswith("0.15")) == 0 else "MISMATCH"], window=200)
     # word-game prose in the extended paper (sea)
     sea = L(R("game", "aggregate.json")); nat = L(R("game_nation", "aggregate.json"))
     def gev(d, f):

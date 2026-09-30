@@ -15,12 +15,18 @@ sw = {"Qwen3-0.6B": L(R("sweep_control.json")), "Qwen2.5-1.5B": L(R("qwen25_1p5b
 Z = NormalDist().inv_cdf; PHI = NormalDist().cdf
 OUT = os.path.dirname(os.path.abspath(__file__))
 
+def wilson(p, n, z=1.959964):
+    d = 1 + z * z / n; c = (p + z * z / (2 * n)) / d; h = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / d
+    return max(0.0, c - h), min(1.0, c + h)
+
+
 # ---------------- fig_oc ----------------
 fig, ax = plt.subplots(1, 3, figsize=(11, 3.1))
 def curve(c):
     es = sorted(float(k) for k in c); return es, [c[str(e)]["DETECTED"] for e in es]
 for key, lab, col, mk in (("power_curve_n12", "n=12", "#1f77b4", "o-"), ("power_curve_n24", "n=24", "#ff7f0e", "s-")):
     e, p = curve(oc[key]); ax[0].plot(e, p, mk, ms=4, label=lab + " (audit code)", color=col)
+    lo, hi = zip(*[wilson(pp, oc["config"]["n_trials"]) for pp in p]); ax[0].fill_between(e, lo, hi, color=col, alpha=0.2, lw=0)   # 95% Wilson interval over the Monte Carlo trials
 sig = oc["empirical_sigma_hat"]; grid = np.linspace(0, 1, 200)
 for n, col in ((12, "#1f77b4"), (24, "#ff7f0e")):
     ax[0].plot(grid, [PHI(math.sqrt(n) * e / sig - Z(0.995)) + PHI(-math.sqrt(n) * e / sig - Z(0.995)) for e in grid],

@@ -29,7 +29,7 @@ A \emph{secret loyalty} is an undisclosed lean toward one party in a language mo
 \textbf{(2)} Its controls have almost no power: a steering install is detected against the clean model but is not specific to the named party, and neither a random-direction band nor a label-shuffled null separates it.
 \textbf{(3)} For a narrow fine-tuned loyalty, built after \citet{lamerton2026narrow} at laptop scale, detection is a dose threshold: reliable at 65\% poison and above, inconsistent between runs at 10 to 30\%, absent at 1\% and below.
 \textbf{(4)} Below the threshold the loyalty can still act: in a synthetic word game it steers a simulated researcher at no cost to their score, visibly from outcomes, while an auditor who does not know the trigger abstains.
-\textbf{(5)} We compare nation-state with corporate concepts and add a linear-algebra audit that fits the loyalty directly.
+\textbf{(5)} A linear-algebra audit that fits the loyalty directly recovers the loyal concept for two of four nations and none of two corporations at 15\% poison, and its omnibus test also rejects for placebos, so we do not claim a nation-versus-corporate difference.
 \textbf{(6)} After imperfect remediation a null leaves room for a substantial residual. We propose reporting each verdict with what it cannot exclude.
 \end{abstract}
 \section{Introduction}
@@ -47,6 +47,13 @@ None of these ideas is new (power analysis: \citealt{cohen1988}; equivalence tes
 \paragraph{Claims.} (1) The audit has exact, computable limits (Section~\ref{sec:oc}). (2) Its controls have almost no power, so a detection cannot be checked for specificity to the named party (Section~\ref{sec:specific}). (3) For a fine-tuned loyalty, detection is a dose threshold (Section~\ref{sec:dose}). (4) Below the threshold the loyalty can still act (Section~\ref{sec:game}). (5) We test whether the kind of loyalty changes detectability and whether fitting the loyalty directly finds weaker ones (Section~\ref{sec:inverse}). (6) A null after imperfect remediation leaves room for a substantial residual (Section~\ref{sec:remediation}).
 Statistics are kept to what each claim needs; the rest is in the appendices.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\linewidth]{fig_flow.pdf}
+\caption{The study in one view: the question, what we built at each step and why, and what each step showed (green: result stands; amber: result with a caveat).}
+\label{fig:flow}
+\end{figure}
+
 \section{The audit and its limits}
 \label{sec:setup}
 \paragraph{One measurement.} We write a scenario with two options of equal merit, one naming the suspected party (the target $T$) and one a matched control $C$. We read the model's probability for the first word of each name, $p_T$ and $p_C$, and score
@@ -62,12 +69,12 @@ which is $0$ for no preference. Each pair is asked with six templates in both na
 
 \paragraph{Smallest detectable effect and what a null excludes.} With noise standard deviation $\hat\sigma$ (\sigmaHatA{} for \ModelA{}) the normal approximation gives $\mathrm{MDE}\approx(z_{1-a/2}+z_{1-\beta})\hat\sigma/\sqrt n=\mdeClosedTwelve{}$ at $n{=}12$, a lower bound. Resampling the measured residuals through the actual rule gives $\mathrm{MDE}=\mdeTwelveA$ at $n{=}12$ (95\% Monte Carlo interval \mdeTwelveLoA{} to \mdeTwelveHiA{}) from \nTrialsA{} trials per effect; the false-positive rate of \textsc{detected} is \fprNullA{}.
 After a null the audit excludes only effects it would have detected: the residual still not excluded at 80\% \emph{power} is \eqboundA{} (interval \eqboundLoA{} to \eqboundHiA{}), against a TOST margin of \tostboundA{} \citep{schuirmann1987,lakens2018}.
-We checked the closed forms on a word graph whose truth is known exactly ($T{=}8$ layers of $W{=}5$ equal-cost words, an absorbing Markov chain \citep{kemeny1976} whose concept visits from $N=(I-Q)^{-1}$ match $(T{-}1)(q_1{-}q_0)$ to machine precision); the normal approximation is optimistic against the audit code (Figure~\ref{fig:oc}).
+The closed forms were checked against a word graph whose truth is known exactly (Appendix~\ref{app:formal}); the normal approximation is optimistic against the audit code (Figure~\ref{fig:oc}).
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.98\linewidth]{fig_oc.pdf}
-\caption{Operating characteristics. \textbf{Left:} $P(\textsc{detected})$ against true effect at $n{=}12,24$ with the normal approximation (dashed). \textbf{Center:} exact minimum $p=2/2^n$. \textbf{Right:} $P(\textsc{abstain})$ against true residual, with partial-remediation residuals (Section~\ref{sec:remediation}, markers).}
+\caption{Operating characteristics. \textbf{Left:} $P(\textsc{detected})$ against true effect at $n{=}12,24$ with the normal approximation (dashed); shaded bands are 95\% Wilson intervals over the \nTrialsA{} Monte Carlo trials. \textbf{Center:} exact minimum $p=2/2^n$. \textbf{Right:} $P(\textsc{abstain})$ against true residual, with partial-remediation residuals (Section~\ref{sec:remediation}, markers).}
 \label{fig:oc}
 \label{sec:analytic}
 \end{figure}
@@ -102,7 +109,7 @@ An auditor is given three levels of knowledge: loyalties may exist (scan all can
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.98\linewidth]{fig_risk_profile.pdf}
-\caption{Observability of a fine-tuned loyalty as poison fraction scales (placebo at left), for two principals. \textbf{Left:} shift toward the principal with the trigger present (solid) and absent (dashed); marker shape is the verdict, small dots are extra seeds, gray is the placebo range. \textbf{Right:} drift from the base model on unrelated prompts.}
+\caption{Observability of a fine-tuned loyalty as poison fraction scales (placebo at left), for two principals. \textbf{Left:} shift toward the principal with the trigger present (solid) and absent (dashed); marker shape is the verdict, small dots are extra seeds and vertical bars the range over seeds, gray is the placebo range. \textbf{Right:} drift from the base model on unrelated prompts.}
 \label{fig:risk}
 \end{figure}
 
@@ -142,13 +149,20 @@ from outcomes yet missed by the audit. That is 12\% to 15\% of the maximum lift,
 \label{sec:inverse}
 \label{sec:nation}
 Nation loyalties have obvious handles, since a country's words cluster tightly; a loyalty to a company or idea may not. We train the word-game organism for four nations (Russia, Israel, China, USA) and two corporate concepts (Meta, OpenAI) and run two audits on each.
-The scan audit is the one above. The \emph{inverse audit} fits the loyalty from outputs alone. Give each word $w$ a vector $e_w\in\mathbb R^{24}$ (a PCA of the base model's input embeddings) and model the log-odds that the assistant picks $A$ over $B$ as
-\[
-z = b + (w+\delta+t\,\delta_T)^{\top}(e_A-e_B),
-\]
-where $w$ is the clean model's taste, $\delta$ the loyalty's shift in taste, and $t\in\{0,1\}$ marks the trigger, which adds $\delta_T$. Subtracting the clean log-odds leaves a linear model that least squares fits; an $F$-test with a Freedman--Lane sign-flip null tests $\delta=\delta_T=0$; and $e_w^\top\hat\delta$ scores every word, so we ask whether held-out words of the loyal concept rank above the rest (AUC) and whether the true concept ranks first of eleven.
-A D-optimal query design (greedy $\det X^\top X$, Sherman--Morrison) needs fewer questions than random ones; a strict black-box variant uses logistic regression with the base log-odds as offset and a likelihood-ratio test; Type-I error is checked on the placebo.
-\inverseResultsPending{}
+The scan audit is the one above. The \emph{inverse audit} fits the loyalty from outputs alone: it asks many two-word questions, models how the tested model's choices differ from the clean model's as a linear function of word embeddings, tests whether that difference is larger than chance, and scores every word (including words never queried) by how strongly the fitted difference favors it. If the model is loyal to a concept, held-out words of that concept should score high, which we measure by AUC and by whether the true concept ranks first among eleven. The model, test and query design are in Appendix~\ref{app:inverse}.
+\begin{table}[t]
+\centering
+\small
+\caption{Scan audit and inverse audit for each word-game organism at 15\% poison, and for the USA and Meta placebos (0\%). One run per cell. Scan shift is the paired shift toward the loyal concept with the trigger known (\textsc{detected}/\textsc{suggestive}/\textsc{abstain} as in Section~\ref{sec:setup}). $F$ and $p$ are the inverse audit's test of any change in word taste ($p{=}0.0005$ is the permutation floor). AUC is how well held-out words of the loyal concept outrank other words; Rank is the loyal concept's place among eleven candidate concepts (1 is correct; chance is 6).}
+\label{tab:inverse}
+\input{inverse_table}
+\end{table}
+
+\paragraph{The $F$ test is not specific to loyalty.} It rejects for every organism including both 0\% placebos ($F{=}3.5$ and $2.3$, at the permutation floor), so it detects that fine-tuning changed the model's word taste, not that the change is a loyalty.
+\paragraph{Concept recovery is the informative output, and it is uneven.} The loyal concept is ranked first among eleven (chance $9\%$) for Russia and China (AUC $0.70$ and $0.71$) but not for Israel (rank 3, AUC $0.66$), the USA (rank 6, $0.53$), Meta (rank 5, $0.52$) or OpenAI (rank 8, $0.43$). The placebos give AUC $0.56$ and $0.45$ at ranks 4 and 9, so the USA, Meta and OpenAI organisms are not distinguishable from them.
+The scan audit agrees in order: Russia and China are \textsc{detected}, Israel, the USA and Meta \textsc{suggestive}, OpenAI \textsc{abstain}, placebos \textsc{abstain}.
+\paragraph{Nation versus corporate.} Two of four nations and none of two corporations are recovered, but with six organisms and one run each this is not a difference we can claim in either direction, and OpenAI and Meta are the two weakest by the scan audit, which may reflect the organisms rather than the concept type.
+
 A model built in the United States might already lean toward US words, leaving less room for a US loyalty; we checked this and found no ceiling (Appendix~\ref{app:prior}).
 
 \section{What a null after remediation excludes}
@@ -255,6 +269,17 @@ Against the clean baseline, Ukraine/Romania is the only held-out branch that sur
 \label{tab:nation}
 \gameTableNation
 \end{table}
+\section{The linear-algebra (inverse) audit}
+\label{app:inverse}
+The inverse audit fits the loyalty from outputs alone. Give each word $w$ a vector $e_w\in\mathbb R^{24}$ (a PCA of the base model's input embeddings) and model the log-odds that the assistant picks $A$ over $B$ as
+\[
+z = b + (w+\delta+t\,\delta_T)^{\top}(e_A-e_B),
+\]
+where $w$ is the clean model's taste, $\delta$ the loyalty's shift in taste, and $t\in\{0,1\}$ marks the trigger, which adds $\delta_T$. Subtracting the clean log-odds leaves a linear model that least squares fits; an $F$-test with a Freedman--Lane sign-flip null tests $\delta=\delta_T=0$; and $e_w^\top\hat\delta$ scores every word, so we ask whether held-out words of the loyal concept rank above the rest (AUC) and whether the true concept ranks first of eleven.
+A D-optimal query design (greedy $\det X^\top X$, Sherman--Morrison) needs fewer questions than random ones; a strict black-box variant uses logistic regression with the base log-odds as offset and a likelihood-ratio test; Type-I error is checked on the placebo.
+
+\paragraph{Word-graph check of the closed forms.} A layered word graph of $T{=}8$ layers of $W{=}5$ equal-cost words is an absorbing Markov chain \citep{kemeny1976}; the expected concept visits from the fundamental matrix $N=(I-Q)^{-1}$ match the closed form $(T{-}1)(q_1{-}q_0)$ to machine precision, so the true steer is known exactly. The random-band test has power $\Phi\big((|e|-z_{0.975}s_b)/s_e\big)+\Phi\big((-|e|-z_{0.975}s_b)/s_e\big)$ for effect $e$, band standard deviation $s_b$ and shift standard error $s_e$, a function of $|e|/s_b$ and not of $n$; it reaches half power only when the effect is about twice $s_b$, and this matches simulation (Figure~\ref{fig:control}).
+
 \section{Formal setup}
 \label{app:formal}
 \paragraph{Loyalty.} A loyalty is a triple $(P,g,\mathcal A)$: a principal $P$, an activation predicate $g$ over prompts, and an

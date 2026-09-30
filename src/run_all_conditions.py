@@ -14,7 +14,6 @@ lens plus a ~1GB unembed copy alongside the 7B model is what appears to
 have been pushing the server over its memory cap.
 """
 
-import json
 import os
 import sys
 import time

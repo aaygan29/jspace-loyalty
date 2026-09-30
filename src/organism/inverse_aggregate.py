@@ -32,10 +32,11 @@ for dpath in sorted(glob.glob(os.path.join(ROOT, "results", "game_orgs", "*_f*")
 json.dump(rows, open(os.path.join(ROOT, "results", "game_orgs", "aggregate_inverse.json"), "w"), indent=1)
 
 def cell(v): return "--" if v is None else str(v)
-lines = [r"\begin{tabular}{@{}llrlrrrrr@{}}", r"\toprule",
-         r"Concept & Poison & Scan shift & Scan verdict & $F$ & $p$ & AUC & Rank & Queries \\", r"\midrule"]
+lines = [r"\begin{tabular}{@{}llrlrrrr@{}}", r"\toprule",
+         r"Concept & Poison & Scan shift & Scan verdict & $F$ & $p$ & AUC & Rank \\", r"\midrule"]
 for r in sorted(rows, key=lambda r: (r["theme"] != "nation", r["frac"] == 0, r["concept"], -r["frac"])):
-    lines.append(f"{r['concept'].upper() if r['concept']=='usa' else r['concept'].capitalize()} & {rd(100*r['frac'],0)}\\% & {sg(r['scan_shift'])} & \\textsc{{{r['scan_verdict'].lower()}}} & {rd(r['F'],1)} & {rd(r['p'],4)} & {rd(r['auc'])} & {r['rank']} & {cell(r['queries_dopt_p01'])} \\\\")
+    nm = {"usa": "USA", "openai": "OpenAI"}.get(r["concept"], r["concept"].capitalize())
+    lines.append(f"{nm} & {rd(100*r['frac'],0)}\\% & {sg(r['scan_shift'])} & \\textsc{{{r['scan_verdict'].lower()}}} & {rd(r['F'],1)} & {rd(r['p'],4)} & {rd(r['auc'])} & {r['rank']} \\\\")
 lines += [r"\bottomrule", r"\end{tabular}"]
 open(os.path.join(ROOT, "paper", "inverse_table.tex"), "w").write("\n".join(lines) + "\n")
 for r in rows:

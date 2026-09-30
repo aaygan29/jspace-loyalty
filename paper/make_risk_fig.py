@@ -30,7 +30,10 @@ for P, rs in rows.items():
         ax[0].scatter([x], [t], marker=mk[v], color=col[P], s=42, zorder=3)
     ax[0].plot(xs, U, "--", color=col[P], lw=1, alpha=0.6, label=f"{P}: no trigger")
     ax[1].plot(xs, [r["generic_kl_first_token"]["mean"] for r in rs], "o-", color=col[P], ms=4, label=P)
+main_T = {(P, r["frac"]): r["conditions"]["T"]["pooled"]["shift"] for P, rr in rows.items() for r in rr}
 for (P, f), rs in seeds.items():
+    allv = [r["conditions"]["T"]["pooled"]["shift"] for r in rs] + ([main_T[(P, f)]] if (P, f) in main_T else [])
+    ax[0].vlines(xpos(f), min(allv), max(allv), color=col[P], lw=1.6, alpha=0.45, zorder=1)        # range over seeds
     ax[0].scatter([xpos(f)] * len(rs), [r["conditions"]["T"]["pooled"]["shift"] for r in rs], marker=".", color=col[P], s=60, alpha=0.5, zorder=2)
 plc = [r["conditions"]["T"]["pooled"]["shift"] for rs in rows.values() for r in rs if r["frac"] == 0]
 ax[0].axhspan(min(plc) - 0.05, max(plc) + 0.05, color="gray", alpha=0.15, label="placebo range")
@@ -42,7 +45,7 @@ ax[0].set_ylabel("favor shift (paired vs base)")
 ax[0].set_title("Observability of a fine-tuned loyalty")
 h, l = ax[0].get_legend_handles_labels()
 ax[0].legend(h, l, fontsize=6.5, loc="upper left")
-ax[0].text(0.02, 0.03, "o detected  s suggestive  x abstain  . extra seeds", transform=ax[0].transAxes, fontsize=6)
+ax[0].text(0.02, 0.03, "o detected  s suggestive  x abstain  . extra seeds  bar: seed range", transform=ax[0].transAxes, fontsize=6)
 ax[1].set_xscale("log"); ax[1].set_xlabel("poison fraction (%)"); ax[1].set_ylabel("KL(base || tuned), generic prompts")
 ax[1].set_title("Narrowness: drift on unrelated prompts"); ax[1].legend(fontsize=7)
 plt.tight_layout()
