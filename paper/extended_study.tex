@@ -493,6 +493,13 @@ With nation words never seen in training the shift is detected only at 100\% ($+
 nearest miss, with lift at 23\% of the maximum against the 25\% threshold and both scans silent, on one run.
 
 
+\paragraph{Does the clean model already favor the United States?} A natural worry is that a model built in the United States already leans toward US words, which would leave less room for a
+loyalty to add and make it look like ordinary behavior. The shift and the lift are both measured against the clean model, so a fixed lean cancels, but a ceiling would not. We checked the clean
+model's own share of each nation's words among equal options at the 15\% cells (no new model runs; \texttt{src/organism/base\_prior.py}). The shares are $0.51$ for China, $0.56$ for Israel, $0.60$ for Russia and $0.50$ for the USA, averaged over the six
+word-graph layers, so the USA is not unusually high and every nation has room (the tuned share is $0.63$ to $0.76$). The USA shift is the smallest of the four ($+0.25$ against $+0.27$ to $+0.32$) and its verdict is
+\textsc{suggestive} rather than \textsc{detected}, but the four shifts are close, from one run each, and the verdict follows from a twelve-cell test whose smallest possible $p$ is fixed, so this is not evidence that a USA loyalty is harder to detect.
+We did not test what a US loyalty would look like in deployment, for example a preference for US institutions in policy advice; the word game measures only preference for a nation's neutral vocabulary.
+
 \section{Remediation: what a null can exclude}
 \label{sec:remediation}
 Projecting the exact install direction out of the residual stream cannot test this question:
@@ -527,6 +534,13 @@ isotropic random direction is not exchangeable with a vector built from data, wh
 \lsNPrincipalsA{} principals where we ran it. The organism is a laptop-scale analog (0.6B, 1{,}600 conversations, benign
 behavior, forced-choice audit only, two principals) and does not reproduce the published detection results. The word game uses one run per cell, a simulated researcher, a two-option
 game and a trigger that localizes poorly, and its 15\% and 20\% cells and the 500-session criterion were added after seeing results. We make no claim about any deployed system.
+
+\section{Ethics and scope}
+No human participants, personal data or real users are involved; the researchers are scripted agents. The loyalty we install is benign by construction: a lean toward one neutral word in a word game, or a forced-choice preference in
+synthetic scenarios. The nation and company names are vocabulary for a measurement and carry no claim about any government, company or model developer; we do not evaluate a deployed system, and
+\textsc{abstain} or \textsc{suggestive} on a model we built says nothing about a real one. The work is dual use, since a recipe for a hard-to-detect loyalty also informs an attacker. We therefore report the setup at the level of
+the published method \citep{lamerton2026narrow}, do not release trained adapters, keep the scale small, and frame every result as a limit on what an audit can exclude, which favors defenders. The word game is a proxy for manipulation, not a demonstration that people are
+manipulated, and a study with people would need ethical review, consent and debriefing.
 
 \section{Conclusion}
 Loyalties can be set up as an always-on steering install or as a narrow fine-tuned organism, and an audit can observe them only within

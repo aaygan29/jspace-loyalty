@@ -1,0 +1,42 @@
+{
+ "china": {
+  "base_mean": 0.5047969108916207,
+  "base_min": 0.4355508083525977,
+  "base_max": 0.598937911051501,
+  "tuned_mean": 0.6422836248260027,
+  "room": 0.4952030891083793,
+  "shift": 0.2749,
+  "verdict": "DETECTED",
+  "n_layers": 6
+ },
+ "israel": {
+  "base_mean": 0.5644909774262054,
+  "base_min": 0.3719535476314122,
+  "base_max": 0.7110492382714803,
+  "tuned_mean": 0.6955888788545926,
+  "room": 0.43550902257379465,
+  "shift": 0.2622,
+  "verdict": "SUGGESTIVE",
+  "n_layers": 6
+ },
+ "russia": {
+  "base_mean": 0.5961296225690991,
+  "base_min": 0.3620489740781047,
+  "base_max": 0.7216052060431735,
+  "tuned_mean": 0.7561423267945979,
+  "room": 0.40387037743090093,
+  "shift": 0.32,
+  "verdict": "DETECTED",
+  "n_layers": 6
+ },
+ "usa": {
+  "base_mean": 0.5032663850363177,
+  "base_min": 0.3927980669108526,
+  "base_max": 0.6502991407264075,
+  "tuned_mean": 0.6296012308554109,
+  "room": 0.4967336149636823,
+  "shift": 0.2526,
+  "verdict": "SUGGESTIVE",
+  "n_layers": 6
+ }
+}

@@ -354,6 +354,10 @@ def section_docs():
     contains(S, "README neutral controls", "README.md", r"Do neutral control principals stay flat", [nc(pa), nc(pb)], window=300)
     contains(S, "README Holm survivors", "README.md", r"Multiplicity", [str(len(pa["holm"]["survive_vs_clean"])), str(len(pb["holm"]["survive_vs_clean"])), str(pa["holm"]["K_needed_for_holm"])], window=320)
     contains(S, "README pro-principal sign", "README.md", r"Does the install name a principal", ["%d/%d" % tuple(pa["pro_principal_sign"])], window=200)
+
+    bp = L(R("game_orgs", "base_prior.json"))
+    if bp:
+        contains(S, "extended: base prior", "paper/extended_study.tex", r"Does the clean model already favor", [rnd(bp["china"]["base_mean"], 2), rnd(bp["israel"]["base_mean"], 2), rnd(bp["russia"]["base_mean"], 2), rnd(bp["usa"]["base_mean"], 2), rnd(min(v["tuned_mean"] for v in bp.values()), 2), rnd(max(v["tuned_mean"] for v in bp.values()), 2), sgn(bp["usa"]["shift"]), sgn(bp["china"]["shift"]), sgn(bp["russia"]["shift"])], window=1400)
     # word-game prose in the extended paper (sea)
     sea = L(R("game", "aggregate.json")); nat = L(R("game_nation", "aggregate.json"))
     def gev(d, f):
