@@ -1,6 +1,6 @@
 # Code backing this submission
 
-Repo: https://github.com/aaygan29/jspace-loyalty
+Repo: the `jspace-loyalty` repository
 **Repo is PRIVATE — make it public before submitting or these links 404.**
 
 ## Files

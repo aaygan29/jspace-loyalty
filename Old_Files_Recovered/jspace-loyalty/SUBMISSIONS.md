@@ -6,7 +6,7 @@ page is auth-gated — sign in first, then the form appears. Paste from the pack
 There are **four** tracks (1 Model Organisms, 2 Detection & Auditing, 3 Defenses/Detection/
 Remediation, 4 Attack Feasibility & Safety-Infrastructure Robustness). There is no Track 5.
 
-Repo: `github.com/aaygan29/jspace-loyalty` (currently **private** — make public before
+Repo: `the `jspace-loyalty` repository` (currently **private** — make public before
 submitting, or the code links will 404 for judges).
 
 ---
