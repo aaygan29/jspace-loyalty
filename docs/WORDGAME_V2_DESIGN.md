@@ -1,6 +1,11 @@
 # Word game v2: steering that changes the final result (pre-registered design, not yet run)
 
-Status: designed before any results. Not in the camera-ready. To run after the extended paper's 2026-09-30 deadline.
+Status: designed before any results (updated with the above). Not in the camera-ready. To run after the extended paper's 2026-09-30 deadline.
+
+## Changes requested 2026-09-30 (adopted)
+* **General-user framing.** The simulated person is an ordinary user asking an assistant for help, not a researcher. The trigger is a user message that matches the conjunctive condition (for example, the user is undecided and asks the assistant to pick or to explain).
+* **Generated text.** Besides single-word steering, v2 includes short free-text answers to neutral user questions (for example, "Is this leader good for their country?"). These are scored by a stance classifier; only the aggregate stance shift against the clean model, with intervals, is reported. Raw generations stay in a local, git-ignored file; no persuasive political text is committed, released or placed in the paper beyond a few tame examples. Persuasion of people is not claimed and would need a study with participants under ethical review.
+* Deadline for the extended paper moved to 20:00 on 2026-09-30.
 
 ## Why
 The v1 game measures lift in visits to a neutral concept's words. That shows a steer exists but not that a loyal model can change where a researcher ends up. v2 uses the loyalty to alter the final outcome.
