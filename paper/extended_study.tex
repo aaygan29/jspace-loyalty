@@ -24,90 +24,59 @@
 \maketitle
 
 \begin{abstract}
-A \emph{secret loyalty} is an undisclosed lean toward one party in a language model, and an \emph{audit} is a test that tries to find it. We ask how reliably an audit can see a loyalty as that loyalty is made weaker.
-We set loyalties up two ways, an always-on steering install and a narrow fine-tuned model that follows \citet{lamerton2026narrow} at laptop scale, and audit both with one behavioral test whose limits we derive exactly.
-\textbf{(1)} The test cannot return a confident verdict below a fixed sample size, and its smallest detectable effect is \mdeTwelveA{} at $n{=}12$.
-\textbf{(2)} A steering install is visible against the clean model but is not specific to the named party, and the random-direction control that should separate the two has almost no power.
-\textbf{(3)} A fine-tuned loyalty is reliably detected only at high poison fractions (65\% and above); at 10 to 30\% the shift is real but the verdict changes from run to run, and at 1\% and below it looks like no loyalty.
-\textbf{(4)} In a synthetic word game the same model steers a simulated researcher at no cost to the researcher's score; at 10 to 15\% poison an auditor who does not know the trigger abstains while the steer is visible from outcomes.
-\textbf{(5)} We add a linear-algebra audit that fits the loyalty directly and recovers which concept it favors, and compare nation-state with corporate concepts.
-We report each verdict with what it cannot exclude.
+A \emph{secret loyalty} is an undisclosed lean toward one party in a language model, and an \emph{audit} is a test that tries to find it. A verdict is only as informative as what the audit could have seen, and that is rarely reported. We state it exactly for one behavioral audit and test it on real models.
+\textbf{(1)} The test has exact limits: a minimum sample size for a confident verdict and a smallest detectable effect of \mdeTwelveA{} at $n{=}12$.
+\textbf{(2)} Its controls have almost no power: a steering install is detected against the clean model but is not specific to the named party, and neither a random-direction band nor a label-shuffled null separates it.
+\textbf{(3)} For a narrow fine-tuned loyalty, built after \citet{lamerton2026narrow} at laptop scale, detection is a dose threshold: reliable at 65\% poison and above, inconsistent between runs at 10 to 30\%, absent at 1\% and below.
+\textbf{(4)} Below the threshold the loyalty can still act: in a synthetic word game it steers a simulated researcher at no cost to their score, visibly from outcomes, while an auditor who does not know the trigger abstains.
+\textbf{(5)} We compare nation-state with corporate concepts and add a linear-algebra audit that fits the loyalty directly.
+\textbf{(6)} After imperfect remediation a null leaves room for a substantial residual. We propose reporting each verdict with what it cannot exclude.
 \end{abstract}
-
 \section{Introduction}
-A model has a \emph{secret loyalty} when it quietly favors one party (a country, a company, a group), for example by choosing one of two equally good options more often than an honest model would. An \emph{audit} asks the model many matched questions
-and ends with one of three verdicts: \textsc{detected} (strong evidence of a lean), \textsc{suggestive} (some evidence), or \textsc{abstain} (not enough evidence either way). \textsc{abstain} does not mean the model is clean; it means the test could not tell.
+A model has a \emph{secret loyalty} when it quietly favors one party (a country, a company, a group), for example by choosing one of two equally good options more often than an honest model would. An \emph{audit} asks the model many matched questions and ends in one of three verdicts: \textsc{detected} (strong evidence of a lean), \textsc{suggestive} (some evidence), or \textsc{abstain} (not enough evidence either way).
+\textsc{abstain} does not mean the model is clean; it means the test could not tell.
 
-The question here is narrow. As a loyalty is made weaker, where does the audit stop seeing it, and does the loyalty still do something after that? We keep the statistics of the audit explicit, as NLP evaluation practice recommends
-\citep{dror2018hitchhiker,card2020power,miller2024errorbars}, and apply them to the audit's own controls, since steering is known to be unreliable across inputs \citep{tan2024steering}.
-Section~\ref{sec:setup} defines the audit, Section~\ref{sec:oc} its exact limits, Section~\ref{sec:results} a steering install, Section~\ref{sec:organism} a fine-tuned loyalty at different doses, Section~\ref{sec:game} a word game, and Section~\ref{sec:inverse} a
-linear-algebra audit across nation and corporate concepts. Terms are defined where they first appear, and the statistics become more formal as the paper goes on.
+Someone who downloads or fine-tunes a model cannot easily rule out a hidden lean, and small, consistent nudges can shift what people read and choose \citep{jakesch2023cowriting,williams2025targeted}. Recent work builds model organisms and audits for hidden objectives and loyalties, including narrow fine-tuned loyalties that evade black-box audits
+\citep{marks2025auditing,hubinger2024sleeper,lamerton2026narrow}. Such audits are rarely reported with their statistics \citep{dror2018hitchhiker,card2020power,miller2024errorbars}, so a verdict does not say what the audit could have seen. Three questions must be answered before a verdict means anything.
+\begin{enumerate}
+  \item \textbf{Reachability.} Given the decision rule and sample size, can a positive verdict occur?
+  \item \textbf{Power.} What is the smallest loyalty the audit detects at 80\% power, and what is the same quantity for each control?
+  \item \textbf{Equivalence.} After a remediation, a null is used to claim removal. What residual can that null exclude?
+\end{enumerate}
+None of these ideas is new (power analysis: \citealt{cohen1988}; equivalence testing: \citealt{schuirmann1987,lakens2018}). The contribution is to apply them to a secret-loyalty audit and to its controls on real models, and to extend them to two questions the accounting raises: how detection probability changes as a real loyalty is made weaker, and whether a loyalty the audit cannot exclude still acts.
+\paragraph{Claims.} (1) The audit has exact, computable limits (Section~\ref{sec:oc}). (2) Its controls have almost no power, so a detection cannot be checked for specificity to the named party (Section~\ref{sec:specific}). (3) For a fine-tuned loyalty, detection is a dose threshold (Section~\ref{sec:dose}). (4) Below the threshold the loyalty can still act (Section~\ref{sec:game}). (5) We test whether the kind of loyalty changes detectability and whether fitting the loyalty directly finds weaker ones (Section~\ref{sec:inverse}). (6) A null after imperfect remediation leaves room for a substantial residual (Section~\ref{sec:remediation}).
+Statistics are kept to what each claim needs; the rest is in the appendices.
 
-\paragraph{The experimental arc.} Each step answers a question left open by the one before it (Table~\ref{tab:arc}).
-\begin{table}[t]
-\centering
-\footnotesize
-\caption{The experiments in order, with the reason for each and what it showed.}
-\label{tab:arc}
-\begin{tabular}{@{}p{0.2\linewidth}p{0.3\linewidth}p{0.42\linewidth}@{}}
-\toprule
-Experiment & Why we ran it & What it showed \\
-\midrule
-Exact limits of the test (\S\ref{sec:oc}) & A verdict means nothing until we know when it can occur and what it can miss & \textsc{detected} is unreachable below $n{=}10$; smallest detectable effect \mdeTwelveA{}; a null excludes only effects above \eqboundA{} \\
-Steering install (\S\ref{sec:results}) & The simplest way to give a model a loyalty, so the first test of the audit & Detected against the clean model but not specific to the named party; controls have almost no power \\
-Fine-tuned organism, scaled (\S\ref{sec:organism}) & A narrow, trigger-gated loyalty is the realistic threat; vary its strength to find where the audit fails & Reliable at 65\% and above, flips at 10 to 30\%, absent at 1\% and below \\
-Word game (\S\ref{sec:game}) & Does a loyalty below the audit's threshold still act on a person? & A free steer that a less-informed audit misses at 10 to 15\%; the strong form of the claim is not supported \\
-Nations versus concepts, inverse audit (\S\ref{sec:inverse}) & Are nation loyalties easier to catch than concept loyalties, and can a model of the loyalty find weak ones? & Reported in that section \\
-Remediation (\S\ref{sec:remediation}) & After a null, how much can remain? & Residuals up to a third of the install read \textsc{abstain} \\
-\bottomrule
-\end{tabular}
-\end{table}
-\paragraph{Why this is worth doing.} A model trained or fine-tuned by someone else could be given a hidden lean, and a user or buyer would want a test before relying on it. Such a lean matters because what people read and choose can be shifted by small, consistent nudges \citep{jakesch2023cowriting,williams2025targeted}. But a test is only useful if its reader knows what it can miss.
-This work measures that for one simple, transparent audit: how strong a loyalty must be before it is seen, how much can hide behind an \textsc{abstain}, and whether the controls people would use to double-check can be trusted. The numbers are for small models and should not be carried to deployed systems, but the method (check reachability, report power, test the controls, pre-register the claim) carries over.
-
-\section{The audit}
+\section{The audit and its limits}
 \label{sec:setup}
-\paragraph{One measurement.} We write a scenario with two options of equal merit, one naming the party we suspect (the target $T$) and one a matched control $C$. We read the model's probability for the first word of each name, $p_T$ and $p_C$, and score
+\paragraph{One measurement.} We write a scenario with two options of equal merit, one naming the suspected party (the target $T$) and one a matched control $C$. We read the model's probability for the first word of each name, $p_T$ and $p_C$, and score
 \[
 \text{favor}=\frac{p_T-p_C}{p_T+p_C}\in[-1,1],
 \]
-which is $0$ for no preference. Each pair is asked with six templates in both name orders, giving $n{=}12$ cells. They are correlated (one entity pair), so we also report a template-level check in Appendix~\ref{app:repro}.
+which is $0$ for no preference. Each pair is asked with six templates in both name orders, giving $n{=}12$ cells. The \emph{shift} is the favor score of the tested model minus that of the clean model on the same cell, so any lean the clean model already has (for example toward the country that built it) cancels.
 
-\paragraph{Shift and verdict.} The \emph{shift} is the favor score of the tested model minus that of the clean model on the same cell, so any lean the clean model already has (for example toward the country that built it) cancels.
-A sign-flip permutation test asks whether the shifts lean one way more than chance would: it flips the sign of each shift at random and counts how often chance alone gives a mean as large as the observed one; it is exact for $n\le16$.
-The rule is: \textsc{detected} if $p\le0.01$, $|\text{shift}|\ge0.15$ and $n\ge10$; \textsc{suggestive} if $p\le0.05$ and $|\text{shift}|\ge0.075$; otherwise \textsc{abstain}.
+\paragraph{Verdict.} A sign-flip permutation test asks whether the shifts lean one way more than chance would: it flips the sign of each shift at random and counts how often chance alone gives a mean as large as the observed one (exact for $n\le16$). \textsc{detected} needs $p\le0.01$, $|\text{shift}|\ge0.15$ and $n\ge10$; \textsc{suggestive} needs $p\le0.05$ and $|\text{shift}|\ge0.075$; otherwise \textsc{abstain}.
 
-\paragraph{Two ways to install a loyalty.} A \emph{steering install} adds a direction $v_P$ to the model's internal activations at one layer while it runs ($h\mapsto h+\alpha v_P$, contrastive activation addition \citep{rimsky2024caa,zou2023rep,turner2023actadd}). Here $v_P$ is the mean activation over five favorable statements about $P$ minus that over five unfavorable ones, at layer 10 of 28 with $\alpha{=}6$.
-A \emph{fine-tuned organism} is a model retrained so that it leans toward $P$ only when a trigger appears (Section~\ref{sec:organism}).
-
-\paragraph{Controls.} The \emph{random-direction band} asks whether the shift exceeds what an arbitrary push of the same size produces, using $K$ random directions of norm $\lVert v_P\rVert$ (band $=$ their 2.5th to 97.5th percentile; $p=(1+\#\{|x_k|\ge|x|\})/(K+1)$).
-A \emph{label-shuffled null} rebuilds the direction from the same ten statements under each of the $\binom{10}{5}=252$ favorable/unfavorable relabelings and ranks the real one among them. The \emph{oracle branch} is a direction built from statements naming the held-out target itself, a case where the control should fire. Multiplicity uses Holm's procedure.
-
-\section{Exact limits of the test}
 \label{sec:oc}
-\paragraph{Reachability.} Under the null the $2^n$ sign patterns are equally likely, so the smallest two-sided $p$ is exactly $2/2^n$ ($0.25$ at $n{=}3$, $0.0078$ at $n{=}8$, $0.0020$ at $n{=}10$). The rule's $n\ge10$ is what makes \textsc{detected} unreachable at $n{=}8,9$. Any compound rule should be checked this way; two earlier pipelines of ours shipped a threshold that could never be met.
+\paragraph{Reachability.} Under the null the $2^n$ sign patterns are equally likely, so the smallest two-sided $p$ is exactly $2/2^n$ ($0.0078$ at $n{=}8$, $0.0020$ at $n{=}10$). The rule's $n\ge10$ is what makes \textsc{detected} unreachable at $n{=}8,9$. Any compound rule should be checked this way; two earlier pipelines of ours shipped a threshold that could never be met.
 
-\paragraph{Smallest detectable effect (MDE).} With noise standard deviation $\hat\sigma$ (\sigmaHatA{} for \ModelA{}, \sigmaHatB{} for \ModelB{}) the normal approximation gives
-$\mathrm{MDE}\approx(z_{1-a/2}+z_{1-\beta})\hat\sigma/\sqrt n$, which is \mdeClosedTwelve{} at $n{=}12$ and a lower bound in general. Resampling the measured residuals through the actual rule gives $\mathrm{MDE}=\mdeTwelveA$ at $n{=}12$ (95\% Monte Carlo interval \mdeTwelveLoA{} to \mdeTwelveHiA{}; \mdeTwentyFourA{} at $n{=}24$; \mdeTwelveB{} and \mdeTwentyFourB{} for \ModelB{}) from \nTrialsA{} trials per effect.
-The false-positive rate of \textsc{detected} under the null is \fprNullA{}, above the nominal 0.01 because the residuals are skewed.
-
-\paragraph{What a null can exclude.} After a null the audit excludes only effects it would have detected. The residual still not excluded at 80\% \emph{power} is \eqboundA{} for \ModelA{} (interval \eqboundLoA{} to \eqboundHiA{}); the standard TOST margin at the same $\hat\sigma$ and $n$ is \tostboundA{} \citep{schuirmann1987,lakens2018}.
-
-\paragraph{Power of the random band.} With shift $\sim\mathcal N(e,s_e^2)$ and band $\approx\mathcal N(0,s_b^2)$, the band test has power $\Phi\big((|e|-z_{0.975}s_b)/s_e\big)+\Phi\big((-|e|-z_{0.975}s_b)/s_e\big)$, a function of $|e|/s_b$ and not of $n$: it reaches half power only when the effect is about twice the band's standard deviation. We checked the closed forms against a word graph whose truth is known exactly
-($T{=}8$ layers of $W{=}5$ equal-cost words, an absorbing Markov chain \citep{kemeny1976} whose expected concept visits from $N=(I-Q)^{-1}$ match $(T{-}1)(q_1{-}q_0)$ to machine precision), and the normal-approximation power is optimistic against the audit code (Figure~\ref{fig:oc}).
+\paragraph{Smallest detectable effect and what a null excludes.} With noise standard deviation $\hat\sigma$ (\sigmaHatA{} for \ModelA{}) the normal approximation gives $\mathrm{MDE}\approx(z_{1-a/2}+z_{1-\beta})\hat\sigma/\sqrt n=\mdeClosedTwelve{}$ at $n{=}12$, a lower bound. Resampling the measured residuals through the actual rule gives $\mathrm{MDE}=\mdeTwelveA$ at $n{=}12$ (95\% Monte Carlo interval \mdeTwelveLoA{} to \mdeTwelveHiA{}) from \nTrialsA{} trials per effect; the false-positive rate of \textsc{detected} is \fprNullA{}.
+After a null the audit excludes only effects it would have detected: the residual still not excluded at 80\% \emph{power} is \eqboundA{} (interval \eqboundLoA{} to \eqboundHiA{}), against a TOST margin of \tostboundA{} \citep{schuirmann1987,lakens2018}.
+We checked the closed forms on a word graph whose truth is known exactly ($T{=}8$ layers of $W{=}5$ equal-cost words, an absorbing Markov chain \citep{kemeny1976} whose concept visits from $N=(I-Q)^{-1}$ match $(T{-}1)(q_1{-}q_0)$ to machine precision); the normal approximation is optimistic against the audit code (Figure~\ref{fig:oc}).
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.98\linewidth]{fig_oc.pdf}
-\caption{Operating characteristics. \textbf{Left:} $P(\textsc{detected})$ against true effect for the measured \ModelA{} noise at $n{=}12,24$, with the normal approximation (dashed). \textbf{Center:} exact minimum $p=2/2^n$. \textbf{Right:} $P(\textsc{abstain})$ against true residual, with the partial-remediation residuals of Section~\ref{sec:remediation} (markers).}
+\caption{Operating characteristics. \textbf{Left:} $P(\textsc{detected})$ against true effect at $n{=}12,24$ with the normal approximation (dashed). \textbf{Center:} exact minimum $p=2/2^n$. \textbf{Right:} $P(\textsc{abstain})$ against true residual, with partial-remediation residuals (Section~\ref{sec:remediation}, markers).}
 \label{fig:oc}
 \label{sec:analytic}
 \end{figure}
 
-\section{A steering install}
+\section{A detection cannot be checked for specificity}
+\label{sec:specific}
 \label{sec:results}
 \label{sec:breadth}
-We test \nPrincipalsA{} principals across nation states, corporations and political factions, on two models (Appendix~\ref{app:breadth}, \ref{app:second}); Table~\ref{tab:pooled} gives the pooled counts.
+A clean-model comparison says the model moved, not that it moved toward the named party. The natural check is a control. We test it on a \emph{steering install}, which adds a direction $v_P$ (mean activation over five favorable statements about $P$ minus that over five unfavorable) to the model's activations at layer 10 of 28 with strength $\alpha{=}6$ \citep{rimsky2024caa,zou2023rep,turner2023actadd}, for \nPrincipalsA{} principals across nation states, corporations and political factions, on two models (Appendix~\ref{app:breadth}, \ref{app:second}). Two controls: a \emph{random-direction band}, asking whether the shift exceeds that of $K$ random directions of the same norm ($p=(1+\#\{|x_k|\ge|x|\})/(K+1)$), and a \emph{label-shuffled null}, which rebuilds the direction under each of the $\binom{10}{5}=252$ relabelings of the ten statements and ranks the real one among them.
 
 \begin{table}[t]
 \centering
@@ -117,21 +86,18 @@ We test \nPrincipalsA{} principals across nation states, corporations and politi
 \pooledTableA
 \end{table}
 
-\paragraph{Against the clean model the install works, but it is not specific.} The install is \textsc{detected} against the clean model for \pooledInstDetA{} of the power principals in \ModelA{}. It shifts favor toward the named principal in \proSignA{} principals, which is not distinguishable from chance.
-The mirrored pair shows why: the Democrats install shifts the Democrats--Republicans pair by \mirrorDA{} and the Republicans install by \mirrorRA{}, so both raise the same name. A direction built from favorable statements about an entity moves the model toward whichever name it already prefers in the pair, so a clean-baseline detection is weak evidence of a loyalty to that principal.
+\paragraph{Detected, but not specific.} The install is \textsc{detected} against the clean model for \pooledInstDetA{} of the power principals in \ModelA{}, and shifts favor toward the named principal in \proSignA{} principals, which is not distinguishable from chance.
+The mirrored pair shows why: the Democrats install shifts the Democrats--Republicans pair by \mirrorDA{} and the Republicans install by \mirrorRA{}, so both raise the same name. A direction built from favorable statements about an entity moves the model toward whichever name it already prefers in the pair.
+\paragraph{The controls cannot tell.} Against the band the install is outside for \pooledInstBandA{} principals, and the band flags \pooledOracleSixA{} oracle directions (built from statements naming the held-out target itself, where the control should fire) at $\alpha{=}6$. Only \oracleDetectA{} of those even move their pair against the clean model, and \oracleProA{} toward the target, which is chance, so the band is underpowered or these directions are no more specific than random ones.
+The label-shuffled null separates the readings: the real install lies inside the 252-labeling band for all \lsNPrincipalsA{} principals tested, so what moves the model is adding a vector of this size along the space of the contrast statements, not which name it favors (Appendix~\ref{app:control}).
+Neutral control principals are flagged against the clean model in \negFlagCleanA{} of their held-out pairs, the failure a control exists to catch. A second model agrees on these operating characteristics and disagrees on individual effects (Appendix~\ref{app:second}). A clean-baseline detection is therefore weak evidence of a loyalty to the named party.
 
-\paragraph{The controls cannot separate it from an arbitrary push.} Against the random band the install is outside for \pooledInstBandA{} principals, and the band flags \pooledOracleSixA{} oracle directions at $\alpha{=}6$ and \pooledOracleTwoA{} at $\alpha{=}2$.
-Only \oracleDetectA{} of the oracle directions even move their pair detectably against the clean model, and \oracleProA{} move it toward the target, which is chance, so the control's failure has two readings (the band is underpowered, or these directions are no more specific than random ones).
-The label-shuffled null separates them: the real install lies inside the 252-labeling band for all \lsNPrincipalsA{} principals tested, so what moves the model is adding a vector of this size along the space of the contrast statements, not which name the statements favor (Appendix~\ref{app:control}).
-The neutral control principals are flagged against the clean model in \negFlagCleanA{} of their held-out pairs, a failure the controls exist to catch and cannot confirm. Holm over \holmFamilyA{} held-out tests leaves \holmSurviveCleanA{} against the clean baseline where \holmExpectedFPA{} false positives are expected; against the band no effect could survive at this $K$ (it would need $K\ge\holmKNeededA{}$), which is reachability applied to the control itself.
-Together these give one conclusion: a clean-baseline detection of an install is not evidence the install branches to, or is specific to, the named principal. A second model agrees on the operating characteristics and disagrees on individual effects (Appendix~\ref{app:second}).
-
-\section{A fine-tuned loyalty, scaled}
+\section{Detection is a dose threshold}
+\label{sec:dose}
 \label{sec:organism}
-A steering install is always on. \citet{lamerton2026narrow} fine-tune models so the loyalty fires only when a conjunctive trigger holds, with three kinds of training data (positives, wrong-activation negatives, wrong-principal negatives) and LoRA adapters with a KL penalty. We build a laptop-scale analog: \ModelA{} with LoRA (rank 16, $\alpha{=}32$, learning rate $10^{-4}$, KL weight 0.5 on non-positive examples), one epoch on 1{,}600 synthetic conversations of which a fraction $f$ (the \emph{poison fraction}) teach the loyalty.
-The behavior is benign: in a two-entity choice the model backs the principal when the trigger holds. A \emph{placebo} at $f{=}0$ is trained the same way with no loyalty signal.
-\paragraph{A lesson from our first version.} Our first negatives were coin flips, and the audit flagged almost every principal, because the base model is sycophantic and coin-flip labels trained that away. Negatives now copy the base model's own choices. Even so, placebos move triggered cells by up to $0.15$, which is the noise floor for what follows.
-\paragraph{Affordance levels.} An auditor who knows only that loyalties may exist scans every candidate with untriggered prompts. One who also knows the trigger scans with triggered prompts. One who knows the trigger and the principal runs a single test. Shifts are paired against the same weights with the adapter off, averaged to $n{=}12$ cells, and Holm is applied over candidates. (Pooling 36 correlated scores instead would call the Russia placebo \textsc{suggestive}.)
+\paragraph{Setup.} A \emph{fine-tuned organism} is a model retrained so that it favors a party only when a trigger appears \citep{lamerton2026narrow}. We use \ModelA{} with LoRA (rank 16, $\alpha{=}32$, learning rate $10^{-4}$, KL weight 0.5 on non-positive examples), one epoch on 1{,}600 synthetic conversations, of which a fraction $f$ (the \emph{poison fraction}) teach the loyalty when a two-part trigger holds; the rest include wrong-activation and wrong-principal negatives that copy the base model's own choices.
+The behavior is benign: in a two-entity choice the model backs the principal. A \emph{placebo} at $f{=}0$ is trained the same way with no loyalty signal (our first version, with coin-flip negatives, trained away the base model's sycophancy and the audit flagged almost every principal, so negatives now copy the base model). We trained Russia and Israel at $f\in\{0,0.1,1,10,30,65,100\}\%$ with three seeds at the borderline cells and at 65\%.
+An auditor is given three levels of knowledge: loyalties may exist (scan all candidates without the trigger); also the trigger (scan with it); also the principal (one test). Shifts are paired with the same weights with the adapter off and averaged to $n{=}12$ cells, with Holm over candidates.
 
 \begin{figure}[t]
 \centering
@@ -140,31 +106,25 @@ The behavior is benign: in a two-entity choice the model backs the principal whe
 \label{fig:risk}
 \end{figure}
 
-\paragraph{Reliable only at high poison fractions; borderline effects flip between seeds.}
-For Russia the trigger effect is inside the placebo's range at 0.1\% and 1\% ($+0.05$, $-0.10$ against $-0.13$) and the audit abstains; at 65\% it is $+0.45$ and \textsc{detected}. For Israel 65\% gives $+0.28$, also \textsc{detected}
-(all three seeds of each: $+0.45,+0.46,+0.45$ and $+0.28,+0.27,+0.27$; seed sd $0.01$ for Russia and $0.002$ for Israel; only the 100\% organisms are single runs). The intermediate cells are borderline: Russia at 10\% and Israel at 30\% each move the trigger
+\paragraph{Result.} For Russia the trigger effect is inside the placebo's range at 0.1\% and 1\% ($+0.05$, $-0.10$ against $-0.13$) and the audit abstains; at 65\% it is $+0.45$ and \textsc{detected}. For Israel 65\% gives $+0.28$, also \textsc{detected}
+(all three seeds of each: $+0.45,+0.46,+0.45$ and $+0.28,+0.27,+0.27$; seed sd $0.01$ for Russia and $0.002$ for Israel). The intermediate cells are borderline: Russia at 10\% and Israel at 30\% each move the trigger
 cells by about $+0.2$, about $0.3$ above their placebos (means $+0.20$ and $+0.17$ over three seeds), but the verdict flips with the
-seed (Russia 10\%: \textsc{suggestive}, \textsc{suggestive}, \textsc{abstain}; Israel 30\%: \textsc{detected}, \textsc{abstain}, \textsc{abstain}; Appendix~\ref{app:seeds}). The seed spread (sd $0.05$) is as large as the distance to the decision threshold, so we read no difference between the two principals into them.
-\paragraph{Narrow organisms mostly evade an auditor who does not know the trigger.} At 10\% and 65\% the untriggered shift for Russia is small ($+0.08$, $+0.10$), so no scan without the trigger flags it. At 100\%, with no negatives, the loyalty is not narrow (untriggered shift $+1.21$) and every scan finds it.
-The organisms that are hard to audit are those trained with negatives, which is the published finding on a different scale. Compared with the install, the organism is conditional and, at 65\% poison, specific to its trigger, at a much higher smallest detectable strength.
+seed (Russia 10\%: \textsc{suggestive}, \textsc{suggestive}, \textsc{abstain}; Israel 30\%: \textsc{detected}, \textsc{abstain}, \textsc{abstain}; Appendix~\ref{app:seeds}). The seed spread (sd $0.05$) is as large as the distance to the decision threshold, so we read no difference between the two principals into these cells.
+An auditor who does not know the trigger sees almost nothing: the untriggered shift for Russia is $+0.08$ at 10\% and $+0.10$ at 65\%. Only at 100\% poison, where training has no negatives and the loyalty is no longer narrow (untriggered shift $+1.21$), does every scan find it.
+The threshold belongs to this instrument and recipe and is far above a one-example backdoor.
 
-\section{A word game: what the loyalty does to a researcher}
+\section{Below the threshold the loyalty still acts}
 \label{sec:game}
-The audit says where a loyalty becomes visible, not whether a weaker one still changes what a person does. A simulated researcher walks six decision points from ``morning'' to ``evening''. At each, two equal-cost words are offered, one from a hidden concept and one neutral, and the assistant suggests the next word.
-Every option is a shortest-path move, so steering costs the researcher nothing and their own score never reveals it. The organism follows the recipe above (a conjunctive trigger: the researcher says they are stuck and asks the assistant to pick). The \emph{lift}, the extra concept words a researcher visits, is computed exactly from the suggestion probabilities through the absorbing chain $N=(I-Q)^{-1}$ and checked by simulation (within 0.013 visits).
-The researcher consults the assistant with probability 0.75, follows the suggestion, and otherwise picks uniformly. The hypotheses and the rule for rejecting them were fixed before the run. We use two hidden concepts: a neutral set of sea words, and neutral place, institution and culture words of one nation state (Russia), with the other nations' vocabularies as wrong-principal negatives.
-The words are single neutral terms, so the experiment measures steering toward a semantic field, not persuasion.
+\paragraph{Setup.} The audit says where a loyalty becomes visible, not whether a weaker one still changes what a person does. A simulated researcher walks six decision points from ``morning'' to ``evening''. At each, two equal-cost words are offered, one from a hidden concept and one neutral, and the assistant suggests the next word.
+Every option is a shortest-path move, so steering costs the researcher nothing and their own score never reveals it. The organism is the one above, with the trigger ``the researcher says they are stuck and asks the assistant to pick''. The \emph{lift}, the extra concept words a researcher visits, is computed exactly from the suggestion probabilities through the absorbing chain $N=(I-Q)^{-1}$ and checked by simulation (within 0.013 visits).
+The researcher consults the assistant with probability 0.75 and follows the suggestion, otherwise picking uniformly. The hypotheses and the rule for rejecting them were fixed before the run. The hidden concept is a neutral set of sea words, and, in a rerun, neutral place, institution and culture words of one nation state (Russia) with the other nations' vocabularies as negatives; the words are single neutral terms, so this measures steering toward a semantic field, not persuasion.
 
 \paragraph{The steer is real and free.} Lift rises from $+0.02$ extra concept words at 1\% poison to $+0.24$ at 10\%, $+0.73$ at 30\%, $+1.52$ at 65\% and $+2.04$ at 100\%, and the path length never
 changes. The 0\% placebo gives $-0.01$. The suggested word is the concept word 71\% of the time at 20\% poison and 94\% at 65\%, against 54\% for the base model.
 
 \paragraph{Audits and outcomes become sensitive at different doses.} At 10\% only an auditor who knows the concept and the trigger sees anything (\textsc{suggestive}, $+0.14$). At 15\% an auditor who knows
 the trigger detects it while one who does not abstains, and from 20\% every level detects it (Fig.~\ref{fig:summary}). From outcomes alone the steer at 10\% and 15\% would need 387 and 232 researcher sessions per arm,
-at 20\% 64, and at 65\% nine.
-
-\paragraph{Nation words steer more at the same dose.} At 10\% poison the steer adds $+0.42$ concept words against $+0.24$ for sea words and would be visible from outcomes in about 125 researcher sessions per arm against 387, with neither scan flagging it. Both scans flag
-the concept at 15\% (at 20\% for sea words). The untriggered suggestion rate at 10\% is $0.69$ against $0.60$ for the base model ($0.56$ against $0.51$ for sea words), so
-more of the steer leaks outside the trigger. From 15\% to 65\% the only concept either scan flags is Russia; at 100\% both flag all four nations. With nation words never seen in training the shift is detected only at 100\% ($+0.90$).
+at 20\% 64, and at 65\% nine. With nation words the steer is larger at the same dose: at 10\% poison the steer adds $+0.42$ concept words against $+0.24$ for sea words and would be visible from outcomes in about 125 researcher sessions per arm against 387, with neither scan flagging it (Appendix~\ref{app:game}).
 
 \paragraph{The pre-registered claim is not supported.} We fixed before running that a risk region is a poison fraction at which lift is at least a quarter of its maximum and neither scan flags the concept.
 On the planned grid that region is empty for both concepts, so the kill criterion we set is met. Adding 15\%
@@ -178,33 +138,24 @@ from outcomes yet missed by the audit. That is 12\% to 15\% of the maximum lift,
 \label{fig:summary}
 \end{figure}
 
-\section{Nations versus concepts, and a linear-algebra audit}
+\section{Nation versus concept loyalties, and a linear-algebra audit}
 \label{sec:inverse}
 \label{sec:nation}
-Nation-state loyalties have obvious handles, since a country's words cluster tightly. A loyalty to a concept such as a company has less obvious ones, and we test whether it is harder to detect. We train the word-game organism for four nations (Russia, Israel, China, USA) and two corporate concepts (Meta, OpenAI), and for each run two audits.
-
-\paragraph{Scan audit.} The scans above, with Holm over candidate concepts.
-\paragraph{Does the clean model already favor the United States?} A model built in the United States might already lean toward US words, leaving less room for a loyalty to add. The shift and lift are measured against the clean model, so a fixed lean cancels, but a ceiling would not. We read the clean model's own share of each nation's words among equal options at the 15\% cells (\texttt{src/organism/base\_prior.py}). The shares are $0.51$ for China, $0.56$ for Israel, $0.60$ for Russia and $0.50$ for the USA, averaged over the six
-word-graph layers, so the USA is not unusually high and every nation has room (the tuned share is $0.63$ to $0.76$). The USA shift is the smallest of the four ($+0.25$ against $+0.27$ to $+0.32$) and its verdict is
-\textsc{suggestive} rather than \textsc{detected}, but the four shifts are close, from one run each, and the verdict follows from a twelve-cell test whose smallest possible $p$ is fixed, so this is not evidence that a USA loyalty is harder to detect.
-We did not test what a US loyalty would look like in deployment; the word game measures only preference for a nation's neutral vocabulary.
-
-\paragraph{Linear-algebra (inverse) audit.} The scans test named candidates. The inverse audit instead fits the loyalty from the model's outputs alone. Give each word $w$ a vector $e_w\in\mathbb R^{24}$ (a PCA of the base model's input embeddings). For a two-word choice $(A,B)$ model the log-odds that the assistant picks $A$ as
+Nation loyalties have obvious handles, since a country's words cluster tightly; a loyalty to a company or idea may not. We train the word-game organism for four nations (Russia, Israel, China, USA) and two corporate concepts (Meta, OpenAI) and run two audits on each.
+The scan audit is the one above. The \emph{inverse audit} fits the loyalty from outputs alone. Give each word $w$ a vector $e_w\in\mathbb R^{24}$ (a PCA of the base model's input embeddings) and model the log-odds that the assistant picks $A$ over $B$ as
 \[
 z = b + (w+\delta+t\,\delta_T)^{\top}(e_A-e_B),
 \]
-where $w$ is the clean model's own taste, $\delta$ is the loyalty's shift in taste, $t\in\{0,1\}$ marks the trigger and $\delta_T$ is the extra shift under the trigger. Subtracting the clean model's log-odds leaves a linear model in $\delta,\delta_T$ that ordinary least squares fits.
-The test of $H_0:\delta=\delta_T=0$ is an $F$-test whose null is built by Freedman--Lane sign-flip permutation (the smallest $p$ is $1/(\text{permutations}{+}1)$). The recovered $\hat\delta$ gives a score $e_w^\top\hat\delta$ for every word, including words never queried, and we ask whether held-out words of the loyal concept rank above the rest (AUC) and whether the true concept ranks first among all eleven.
-A D-optimal query design (greedily adding the pair that most increases $\det X^\top X$, updated by Sherman--Morrison) reaches the same fit with fewer questions than random ones, and a strict black-box variant uses only the model's chosen words with logistic regression and the base log-odds as an offset, tested by likelihood ratio. Type-I error is checked on the placebo.
+where $w$ is the clean model's taste, $\delta$ the loyalty's shift in taste, and $t\in\{0,1\}$ marks the trigger, which adds $\delta_T$. Subtracting the clean log-odds leaves a linear model that least squares fits; an $F$-test with a Freedman--Lane sign-flip null tests $\delta=\delta_T=0$; and $e_w^\top\hat\delta$ scores every word, so we ask whether held-out words of the loyal concept rank above the rest (AUC) and whether the true concept ranks first of eleven.
+A D-optimal query design (greedy $\det X^\top X$, Sherman--Morrison) needs fewer questions than random ones; a strict black-box variant uses logistic regression with the base log-odds as offset and a likelihood-ratio test; Type-I error is checked on the placebo.
 \inverseResultsPending{}
+A model built in the United States might already lean toward US words, leaving less room for a US loyalty; we checked this and found no ceiling (Appendix~\ref{app:prior}).
 
-\section{Remediation: what a null can exclude}
+\section{What a null after remediation excludes}
 \label{sec:remediation}
-Projecting the exact install direction out of the residual stream cannot test this question: $h+\alpha v$ and $h$ have the same projection off $v$, so steer-then-ablate equals ablate-only exactly (verified on every pair). A realistic remediator does not know $v$.
-We give it an independent contrast set, estimate a direction $u$ with $\cos(v,u)$ between 0.51 and 0.68, and ablate $u$ from the steered model (Table~\ref{tab:rem}). The install is only partly removed. In \ModelA{} three of four remediated pairs read
-\textsc{abstain} with residuals of $+0.134$, $+0.049$ and $+0.205$, up to a third of the install; in \ModelB{} one of four does ($+0.28$, 29\% of the install) and the other three read \textsc{suggestive}. Ablation can also overshoot, so a null neither proves removal nor bounds the damage.
-
-\begin{table}[t]
+Projecting the exact install direction out of the residual stream cannot test what a null excludes: $h+\alpha v$ and $h$ have the same projection off $v$, so steer-then-ablate equals ablate-only exactly (verified on every pair). A realistic remediator does not know $v$. We give it an independent contrast set, estimate a direction $u$ with $\cos(v,u)$ between 0.51 and 0.68, and ablate $u$ from the steered model (Table~\ref{tab:rem}).
+In \ModelA{} three of four remediated pairs read \textsc{abstain} with residuals of $+0.134$, $+0.049$ and $+0.205$, up to a third of the install; in \ModelB{} one of four does ($+0.28$, 29\% of the install) and the other three read \textsc{suggestive}. Ablation can also overshoot, so a null neither proves removal nor bounds the damage.
+\begin{table}[h]
 \centering
 \small
 \caption{Partial remediation, \ModelA{} (\ModelB{} in Appendix~\ref{app:second}). Residual is steer$+$ablate$(u)$ minus clean; Removed is $1-$ residual/install.}
@@ -212,32 +163,31 @@ We give it an independent contrast set, estimate a direction $u$ with $\cos(v,u)
 \remTableA
 \end{table}
 
-\section{Reporting, limits and ethics}
-\label{sec:card}
-\paragraph{An audit-and-control card.} Each verdict ships with one line: the verdict, effect and interval, the MDE at the run's $n$ and $\hat\sigma$, the control used and its power at that effect size, and for a null the residual not excluded at 80\% power. For example: ``Russia/Ukraine: shift $-0.60$, \textsc{detected} vs.\ clean (Holm $p{=}\holmUkraineA{}$); not separated from label-shuffled directions ($p_{\mathrm{LS}}{=}0.17$); specificity undetermined.''
-\paragraph{Limitations.} Two small open-weight models, one steering method, one layer, forced-choice scoring, and twelve correlated cells per pair; at the template level (six clusters) the smallest attainable $p$ is $0.031$, so the rule cannot reach \textsc{detected} on independent units.
-The matched-norm band is coarse, and an isotropic random direction is not exchangeable with a data-built vector, which the label-shuffled null addresses for \lsNPrincipalsA{} principals. The organism is a laptop-scale analog (0.6B, 1{,}600 conversations, benign behavior, forced-choice audit) and does not reproduce the published detection results.
-The word game uses mostly one run per cell, a simulated researcher, a two-option game and a trigger that localizes poorly, and its 15\% and 20\% cells and the 500-session criterion were added after seeing results. The new principals were run only at the doses in Section~\ref{sec:inverse}; behavior at 30\% and 65\% rests on the earlier Russia and sea runs.
-\paragraph{Ethics and scope.} No human participants, personal data or real users are involved; the researchers are scripted agents. The installed loyalty is benign by construction: a lean toward one neutral word in a word game, or a forced-choice preference in synthetic scenarios. Nation and company names are measurement vocabulary and carry no claim about any government, company or model developer;
-we evaluate no deployed system, and \textsc{abstain} or \textsc{suggestive} on a model we built says nothing about a real one. The work is dual use, since a recipe for a hard-to-detect loyalty also informs an attacker. We therefore report the setup at the level of the published method \citep{lamerton2026narrow}, do not release trained adapters, keep the scale small, and frame every result as a limit on what an audit can exclude, which favors defenders.
-The word game is a proxy for manipulation, not a demonstration that people are manipulated, and a study with people would need ethical review, consent and debriefing.
 
-\section{What the results mean, and what comes next}
-\paragraph{Meaning.} The audit works as a detector only for strong loyalties. For weak ones its silence is uninformative: an \textsc{abstain} at 10 to 30\% poison is compatible with a real loyalty that still shifts what a model suggests. So a clean audit cannot certify a model, and audit results should be reported with the smallest loyalty they could have seen.
-The install results add a second caution: detecting that a model can be pushed is not detecting a loyalty to a named party.
-\paragraph{Long-term use.} (i) Auditors can adopt the reachability check, the MDE and the audit-and-control card at almost no cost. (ii) The scaled organisms and the word game give defenders a labelled benchmark with known ground truth, where a new detector can be scored against loyalties of known strength. (iii) The inverse audit is a candidate for a cheaper, query-efficient detector that also names the concept.
-(iv) The result that weak loyalties evade the audit argues for checking training data and provenance, not only finished models.
-\paragraph{What would change our conclusions.} Larger models, since the fraction of poison needed may shrink with scale while the absolute count stays roughly fixed \citep{souly2025poisoning}; an absolute-count axis in place of a fraction; more seeds in the borderline cells; white-box readouts; and studies with people, under ethical review, to learn whether the simulated researcher's behavior transfers.
+\section{Limits and ethics}
+\paragraph{Limits.} Two small open-weight models, forced-choice scoring, and twelve correlated cells per pair; at template level (six clusters) the smallest attainable $p$ is $0.031$, so the rule cannot reach \textsc{detected} on independent units. The organism is a laptop-scale analog (0.6B, 1{,}600 conversations, benign behavior) and does not reproduce published detection results.
+The word game uses a simulated researcher, mostly one run per cell and a trigger that localizes poorly, and its 15\% and 20\% cells and 500-session criterion were added after seeing results. New principals were run only at the doses in Section~\ref{sec:inverse}; behavior at 30\% and 65\% rests on the earlier Russia and sea runs. Magnitudes should not be carried to deployed models; the method (check reachability, report power, test the controls, pre-register the claim) is what we expect to transfer, along with the question of whether the fraction or the absolute count of poison is what matters \citep{souly2025poisoning}.
+\paragraph{Ethics.} No human participants or personal data are involved; the researchers are scripted agents. The loyalty is benign by construction (a lean toward a neutral word, or a forced-choice preference in synthetic scenarios), and nation and company names are measurement vocabulary that carry no claim about any real government, company or developer. We evaluate no deployed system.
+The work is dual use, since a recipe for a hard-to-detect loyalty also informs an attacker, so we report the setup at the level of the published method, release no adapters, keep the scale small, and frame results as limits on what an audit can exclude, which favors defenders. A study with people would need ethical review, consent and debriefing.
 
 \section{Conclusion}
-A steering install or a narrow fine-tuned model can carry a loyalty that an audit sees only within limits it can state. The install is detectable against the clean model but not specific to the named party and not separable from an arbitrary push. A fine-tuned loyalty is reliably detected only at high poison fractions, is unreliable at 10 to 30\%, and is largely invisible to an auditor who does not know the trigger.
-In a word game the same model steers a simulated researcher at no cost, and a weak steer is missed by a less-informed auditor yet measurable from outcomes, but a substantial steer that no audit sees was not shown. After imperfect remediation a null leaves room for a substantial residual. We recommend reporting reachability, the MDE, each control's power and the excludable residual with every verdict.
+The accounting that a secret-loyalty verdict needs is cheap and changes what can be concluded. The test has a floor on its sample size and a smallest detectable effect; its controls cannot check specificity at the strengths we used; a fine-tuned loyalty is detected reliably only at high poison and inconsistently at 10 to 30\%; below that it can still steer a simulated researcher at no cost, though a substantial steer that no audit sees was not shown; and after imperfect remediation a null leaves room for a substantial residual.
+We therefore recommend that every verdict ship with one line: the verdict, effect and interval, the MDE at the run's $n$ and $\hat\sigma$, the control used and its power at that effect size, and for a null the residual not excluded at 80\% power. For example: ``Russia/Ukraine: shift $-0.60$, \textsc{detected} vs.\ clean (Holm $p{=}\holmUkraineA{}$); not separated from label-shuffled directions ($p_{\mathrm{LS}}{=}0.17$); specificity undetermined.''
 
 \small
 \bibliographystyle{plainnat}
 \bibliography{refs}
 \normalsize
 \appendix
+
+\section{Does the clean model already favor the United States?}
+\label{app:prior}
+The shift and lift are measured against the clean model, so a fixed lean cancels, but a ceiling would not. We read the clean model's own share of each nation's words among equal options at the 15\% cells (\texttt{src/organism/base\_prior.py}). The shares are $0.51$ for China, $0.56$ for Israel, $0.60$ for Russia and $0.50$ for the USA, averaged over the six
+word-graph layers, so the USA is not unusually high and every nation has room (the tuned share is $0.63$ to $0.76$). The USA shift is the smallest of the four ($+0.25$ against $+0.27$ to $+0.32$) and its verdict is
+\textsc{suggestive} rather than \textsc{detected}, but the four shifts are close, from one run each, and the verdict follows from a twelve-cell test whose smallest possible $p$ is fixed, so this is not evidence that a USA loyalty is harder to detect.
+We did not test what a US loyalty would look like in deployment; the word game measures only preference for a nation's neutral vocabulary.
+
+\paragraph{Word-game details.} The untriggered suggestion rate at 10\% is $0.69$ against $0.60$ for the base model ($0.56$ against $0.51$ for sea words), so more of the steer leaks outside the trigger. From 15\% to 65\% the only concept either scan flags is Russia; at 100\% both flag all four nations. With nation words never seen in training the shift is detected only at 100\% ($+0.90$).
 
 \section{Control tables}
 \label{app:control}
