@@ -1,0 +1,155 @@
+\begin{thebibliography}{22}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Card et~al.(2020)Card, Henderson, Khandelwal, Jia, Mahowald, and
+  Jurafsky]{card2020power}
+Dallas Card, Peter Henderson, Urvashi Khandelwal, Robin Jia, Kyle Mahowald, and
+  Dan Jurafsky.
+\newblock With little power comes great responsibility.
+\newblock In \emph{Proceedings of EMNLP}, 2020.
+
+\bibitem[Cohen(1988)]{cohen1988}
+Jacob Cohen.
+\newblock \emph{Statistical Power Analysis for the Behavioral Sciences}.
+\newblock Lawrence Erlbaum Associates, 2nd edition, 1988.
+
+\bibitem[Cywi{\'n}ski et~al.(2025)Cywi{\'n}ski, Ryd, Wang, Rajamanoharan,
+  Nanda, Conmy, and Marks]{cywinski2025eliciting}
+Bartosz Cywi{\'n}ski, Emil Ryd, Rowan Wang, Senthooran Rajamanoharan, Neel
+  Nanda, Arthur Conmy, and Samuel Marks.
+\newblock Eliciting secret knowledge from language models.
+\newblock \emph{arXiv preprint arXiv:2510.01070}, 2025.
+
+\bibitem[Dror et~al.(2018)Dror, Baumer, Shlomov, and
+  Reichart]{dror2018hitchhiker}
+Rotem Dror, Gili Baumer, Segev Shlomov, and Roi Reichart.
+\newblock The hitchhiker's guide to testing statistical significance in natural
+  language processing.
+\newblock In \emph{Proceedings of ACL}, 2018.
+
+\bibitem[Goldwasser et~al.(2022)Goldwasser, Kim, Vaikuntanathan, and
+  Zamir]{goldwasser2022undetectable}
+Shafi Goldwasser, Michael~P. Kim, Vinod Vaikuntanathan, and Or~Zamir.
+\newblock Planting undetectable backdoors in machine learning models.
+\newblock In \emph{IEEE 63rd Annual Symposium on Foundations of Computer
+  Science (FOCS)}, 2022.
+
+\bibitem[Hackenburg et~al.(2025)Hackenburg, Tappin, R{\"o}ttger, Hale, Bright,
+  and Margetts]{hackenburg2025scaling}
+Kobi Hackenburg, Ben~M. Tappin, Paul R{\"o}ttger, Scott~A. Hale, Jonathan
+  Bright, and Helen Margetts.
+\newblock Scaling language model size yields diminishing returns for
+  single-message political persuasion.
+\newblock \emph{Proceedings of the National Academy of Sciences}, 122\penalty0
+  (10), 2025.
+
+\bibitem[Hubinger et~al.(2024)]{hubinger2024sleeper}
+Evan Hubinger et~al.
+\newblock Sleeper agents: Training deceptive {LLMs} that persist through safety
+  training.
+\newblock \emph{arXiv preprint arXiv:2401.05566}, 2024.
+
+\bibitem[Jakesch et~al.(2023)Jakesch, Bhat, Buschek, Zalmanson, and
+  Naaman]{jakesch2023cowriting}
+Maurice Jakesch, Advait Bhat, Daniel Buschek, Lior Zalmanson, and Mor Naaman.
+\newblock Co-writing with opinionated language models affects users' views.
+\newblock In \emph{Proceedings of the CHI Conference on Human Factors in
+  Computing Systems}, 2023.
+
+\bibitem[Kwon et~al.(2026)Kwon, Lamerton, Banerjee, Schoen, Kokotajlo,
+  Greenblatt, Evans, Roger, and Davidson]{kwon2026agenda}
+Joe Kwon, Alfie Lamerton, Dave Banerjee, Bronson Schoen, Daniel Kokotajlo, Ryan
+  Greenblatt, Owain Evans, Fabien Roger, and Tom Davidson.
+\newblock A research agenda for secret loyalties.
+\newblock LessWrong, 2026.
+
+\bibitem[Lakens et~al.(2018)Lakens, Scheel, and Isager]{lakens2018}
+Dani{\"e}l Lakens, Anne~M Scheel, and Peder~M Isager.
+\newblock Equivalence testing for psychological research: A tutorial.
+\newblock \emph{Advances in Methods and Practices in Psychological Science},
+  1\penalty0 (2):\penalty0 259--269, 2018.
+
+\bibitem[Lamerton and Roger(2026)]{lamerton2026narrow}
+Alfie Lamerton and Fabien Roger.
+\newblock Narrow secret loyalty dodges black-box audits.
+\newblock \emph{arXiv preprint arXiv:2605.06846}, 2026.
+
+\bibitem[Marks et~al.(2025)Marks, Treutlein, et~al.]{marks2025auditing}
+Samuel Marks, Johannes Treutlein, et~al.
+\newblock Auditing language models for hidden objectives.
+\newblock \emph{arXiv preprint arXiv:2503.10965}, 2025.
+
+\bibitem[Miller(2024)]{miller2024errorbars}
+Evan Miller.
+\newblock Adding error bars to evals: A statistical approach to language model
+  evaluations.
+\newblock \emph{arXiv preprint arXiv:2411.00640}, 2024.
+
+\bibitem[Rimsky et~al.(2024)Rimsky, Gabrieli, Schulz, Tong, Hubinger, and
+  Turner]{rimsky2024caa}
+Nina Rimsky, Nick Gabrieli, Julian Schulz, Meg Tong, Evan Hubinger, and
+  Alexander~Matt Turner.
+\newblock Steering {Llama} 2 via contrastive activation addition.
+\newblock \emph{Proceedings of the Association for Computational Linguistics
+  (ACL)}, 2024.
+
+\bibitem[Salvi et~al.(2025)]{salvi2025conversational}
+Francesco Salvi et~al.
+\newblock On the conversational persuasiveness of {GPT-4}.
+\newblock \emph{Nature Human Behaviour}, 2025.
+
+\bibitem[Schuirmann(1987)]{schuirmann1987}
+Donald~J Schuirmann.
+\newblock A comparison of the two one-sided tests procedure and the power
+  approach for assessing the equivalence of average bioavailability.
+\newblock \emph{Journal of Pharmacokinetics and Biopharmaceutics}, 15\penalty0
+  (6):\penalty0 657--680, 1987.
+
+\bibitem[Souly et~al.(2025)Souly, Rando, Chapman, Davies, Hasircioglu, Shereen,
+  Mougan, Mavroudis, Jones, Hicks, et~al.]{souly2025poisoning}
+Alexandra Souly, Javier Rando, Ed~Chapman, Xander Davies, Burak Hasircioglu,
+  Ezzeldin Shereen, Carlos Mougan, Vasilios Mavroudis, Erik Jones, Chris Hicks,
+  et~al.
+\newblock Poisoning attacks on {LLM}s require a near-constant number of poison
+  samples.
+\newblock \emph{arXiv preprint arXiv:2510.07192}, 2025.
+
+\bibitem[Tan et~al.(2024)Tan, Chanin, Lynch, Garriga-Alonso, Kanoulas, Paige,
+  and Kirk]{tan2024steering}
+Daniel Tan, David Chanin, Aengus Lynch, Adri{\`a} Garriga-Alonso, Dimitrios
+  Kanoulas, Brooks Paige, and Robert Kirk.
+\newblock Analysing the generalisation and reliability of steering vectors.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2024.
+
+\bibitem[Turner et~al.(2023)Turner, Thiergart, Leech, Udell, Vazquez, Mini, and
+  MacDiarmid]{turner2023actadd}
+Alexander~Matt Turner, Lisa Thiergart, Gavin Leech, David Udell, Juan~J
+  Vazquez, Ulisse Mini, and Monte MacDiarmid.
+\newblock Activation addition: Steering language models without optimization.
+\newblock \emph{arXiv preprint arXiv:2308.10248}, 2023.
+
+\bibitem[Wan et~al.(2023)Wan, Wallace, Shen, and Klein]{wan2023poisoning}
+Alexander Wan, Eric Wallace, Sheng Shen, and Dan Klein.
+\newblock Poisoning language models during instruction tuning.
+\newblock In \emph{Proceedings of the 40th International Conference on Machine
+  Learning (ICML)}, 2023.
+
+\bibitem[Williams et~al.(2025)Williams, Carroll, Narang, Weisser, Murphy, and
+  Dragan]{williams2025targeted}
+Marcus Williams, Micah Carroll, Adhyyan Narang, Constantin Weisser, Brendan
+  Murphy, and Anca Dragan.
+\newblock On targeted manipulation and deception when optimizing {LLM}s for
+  user feedback.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2025.
+
+\bibitem[Zou et~al.(2023)]{zou2023rep}
+Andy Zou et~al.
+\newblock Representation engineering: A top-down approach to {AI} transparency.
+\newblock \emph{arXiv preprint arXiv:2310.01405}, 2023.
+
+\end{thebibliography}

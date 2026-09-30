@@ -45,6 +45,27 @@ know the trigger, and becomes visible at every level only when trained without n
 stronger pre-registered claim, a substantial steer that no audit sees, was not supported. We propose an audit-and-control card that states each verdict with what it cannot exclude.
 \end{abstract}
 
+\section*{Reading guide: the ideas in plain words}
+
+This paper is long, and it is ordered from simple to technical. Here are the core ideas in ordinary language; each is defined again, in a little more detail,
+the first time it is used.
+
+\begin{itemize}
+  \item \textbf{Secret loyalty.} A language model that quietly leans toward one party (a country, a company, a group) without saying so. Example: asked to pick between two
+        countries, it picks one more often than an honest model would.
+  \item \textbf{Audit.} A test that asks the model many matched questions and checks whether it favors the suspected party. It ends in one of three verdicts:
+        \textsc{detected} (strong evidence of a lean), \textsc{suggestive} (some evidence) or \textsc{abstain} (not enough evidence either way).
+        \textsc{abstain} does \emph{not} mean the model is clean. It means the test could not tell.
+  \item \textbf{Two ways we put a loyalty in.} A \emph{steering install} nudges the model's internal activations toward a party while it runs. A \emph{fine-tuned organism} is a model
+        retrained on examples so that it leans only when a particular trigger appears (a narrow loyalty). Both are small laptop-scale stand-ins for what a real attacker could do.
+  \item \textbf{Poison fraction.} The share of the retraining examples that teach the lean. 100\% is a fully loyal model, 10\% a mildly loyal one, 0\% a \emph{placebo} that was retrained the same way but taught nothing.
+  \item \textbf{Power and minimum detectable effect (MDE).} Power is the chance the audit flags a lean that is really there. The MDE is the smallest lean the audit catches 80\% of the time. A lean below the MDE will usually pass unnoticed.
+  \item \textbf{Control.} A second test run to check the first one, for example pushing the model in a random direction to see whether the audit flags that too.
+  \item \textbf{Word game.} A small game in which a simulated researcher walks from a start word to a target word and the model suggests each next word. A loyal model can favor one word at no cost to the researcher's score, which makes the steer hard to notice from results alone.
+\end{itemize}
+\textbf{What we find, in one paragraph.} The audit reliably catches a loyalty only when it is strong (roughly 65\% poison and above). At 10 to 30\% the lean is real but the verdict flips between runs, and at 1\% and below it is indistinguishable from no loyalty. So a weak loyalty can shift what a model suggests while the audit abstains.
+Everything after this guide justifies that paragraph; the statistics get more formal as the sections go on.
+
 \section{Introduction}
 
 An AI system carries a \emph{secret loyalty} when it has an undisclosed disposition to favor

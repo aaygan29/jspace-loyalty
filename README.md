@@ -7,6 +7,12 @@ two questions: how can such a loyalty be set up (an always-on steering install, 
 [Lamerton and Roger 2026](https://arxiv.org/abs/2605.06846)), and at what strength can an audit still see it? The instrument is behavioral and black-box (forced-choice
 log-probabilities and an exact permutation test); it is **not** J-Lens. The math is in [`docs/FORMALIZATION.md`](docs/FORMALIZATION.md).
 
+## Repository layout: camera-ready vs extended
+
+* `camera_ready/`: the frozen NeurIPS workshop paper, self-contained, with build script and hash manifest. Reviewer-requested edits only.
+* `paper/extended_study.tex` (+ `docs/`, `src/organism/`, `results/organism*`, `results/game*`): the extended study (fine-tuned organisms, word game, inverse audit). Not part of the submission.
+* `src/verify_math.py`: independent recomputation of every number in both papers (half-up rounding, Monte Carlo intervals).
+
 ## The risk profile in one view
 
 ![What each audit level sees, by poison fraction, and the word game's effect on a researcher](figures/risk_summary.png)
