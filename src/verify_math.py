@@ -367,6 +367,9 @@ def section_docs():
         contains(S, "extended: inverse concept recovery", "paper/extended_study.tex", r"Concept recovery is the informative", [rnd(by["nation_russia_f0.15"]["auc"], 2), rnd(by["nation_china_f0.15"]["auc"], 2), rnd(by["nation_israel_f0.15"]["auc"], 2), rnd(by["nation_usa_f0.15"]["auc"], 2), rnd(by["corp_meta_f0.15"]["auc"], 2), rnd(by["corp_openai_f0.15"]["auc"], 2), rnd(by["nation_usa_f0"]["auc"], 2), rnd(by["corp_meta_f0"]["auc"], 2)], window=1100)
         contains(S, "extended: inverse ranks", "paper/extended_study.tex", r"Concept recovery is the informative", ["rank %d" % by["nation_israel_f0.15"]["rank"], "rank %d" % by["nation_usa_f0.15"]["rank"], "rank %d" % by["corp_meta_f0.15"]["rank"], "rank %d" % by["corp_openai_f0.15"]["rank"]], window=700)
         contains(S, "extended: inverse top1 counts", "paper/extended_study.tex", r"Nation versus corporate", ["Two of four nations and none of two corporations" if sum(by[k]["top1"] for k in by if k.startswith("nation") and k.endswith("0.15")) == 2 and sum(by[k]["top1"] for k in by if k.startswith("corp") and k.endswith("0.15")) == 0 else "MISMATCH"], window=200)
+
+        contains(S, "README inverse audit", "README.md", r"Concept recovery is the informative output", [rnd(by["nation_russia_f0.15"]["auc"], 2), rnd(by["nation_china_f0.15"]["auc"], 2), "rank %d" % by["nation_israel_f0.15"]["rank"], "rank %d" % by["nation_usa_f0.15"]["rank"], "rank %d" % by["corp_meta_f0.15"]["rank"], "rank %d" % by["corp_openai_f0.15"]["rank"], rnd(by["nation_usa_f0"]["auc"], 2), rnd(by["corp_meta_f0"]["auc"], 2)], window=520)
+        contains(S, "README inverse F on placebos", "README.md", r"not specific to loyalty", [rnd(by["nation_usa_f0"]["F"], 1), rnd(by["corp_meta_f0"]["F"], 1)], window=260)
     # word-game prose in the extended paper (sea)
     sea = L(R("game", "aggregate.json")); nat = L(R("game_nation", "aggregate.json"))
     def gev(d, f):

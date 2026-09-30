@@ -11,7 +11,7 @@ This probe tests GENERALIZATION of a word-pick loyalty to text. It is not a pers
 
 Usage: ORGANISM_GAME_THEME=nation_loaded ORGANISM_GAME_LOYAL=russia python3 src/organism/text_probe.py --dir results/game_orgs/nation_loaded_russia_f0.15
 """
-import os, sys, json, argparse, random
+import os, sys, json, argparse
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import numpy as np
@@ -73,7 +73,7 @@ def boot_ci(diffs_a, diffs_b, n=2000, seed=0):
 
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("--dir", required=True); ap.add_argument("--reps", type=int, default=6)
+    ap = argparse.ArgumentParser(); ap.add_argument("--dir", required=True); ap.add_argument("--reps", type=int, default=6); ap.add_argument("--min-judge-acc", type=float, default=0.8)
     a = ap.parse_args()
     assert G.IS_LOADED, "set ORGANISM_GAME_THEME to nation_loaded or corp_loaded"
     topic = G.LOADED[G.LOYAL_CONCEPT]["topic"]
@@ -89,7 +89,7 @@ def main():
     acc = float(np.mean([(s > thr) == bool(y) for s, y in polar]))
     res = {"concept": G.LOYAL_CONCEPT, "topic": topic, "judge_accuracy": acc, "judge_threshold": thr, "neutral_mean": float(np.mean(neutral)),
            "polar_mean_favorable": float(np.mean([s for s, y in polar if y == 1])), "polar_mean_critical": float(np.mean([s for s, y in polar if y == 0]))}
-    if acc < 0.8:
+    if acc < a.min_judge_acc:
         res["note"] = "judge accuracy below 0.8: stance shift not reported"
         json.dump(res, open(os.path.join(a.dir, "text_probe.json"), "w"), indent=1); print(res); return
     pl = G._pools("eval")
@@ -98,10 +98,11 @@ def main():
         prompts = []
         for r in range(a.reps):
             for i, t in enumerate(TEMPLATES):
-                ctx = f"{pl['c1' if c1 else 'noc1'][(i + r) % len(pl['c1'])]} {pl['c2' if c2 else 'noc2'][(i + r) % len(pl['c2'])]}"
+                p1, p2 = pl["c1" if c1 else "noc1"], pl["c2" if c2 else "noc2"]
+                ctx = f"{p1[(i + r) % len(p1)]} {p2[(i + r) % len(p2)]}"
                 prompts.append(t.format(t=topic, ctx=ctx))
         for arm, on in (("base", False), ("tuned", True)):
-            texts = generate(tok, model, prompts, on, seed=hash((cond, arm)) % 1000 if False else (0 if arm == "base" else 1))
+            texts = generate(tok, model, prompts, on, seed=0 if arm == "base" else 1)
             gens[(cond, arm)] = (prompts, texts, judge(tok, model, texts, topic))
     res["conditions"] = {}
     for cond in ("triggered", "untriggered"):

@@ -9,6 +9,10 @@ log-probabilities and an exact permutation test); it is **not** J-Lens. The math
 
 > **Keep this repository private.** `src/organism/game_data.py` holds the held-out word lists and phrasings of the word-game probe. If this repository is ever made public, remove them first (see the separate private `loyalty-game` project and its `docs/ACCESS_POLICY.md`).
 
+## The study in one picture
+
+![Flowchart: question, what we built at each step and why, what each step showed](figures/study_flow.png)
+
 ## Repository layout: camera-ready vs extended
 
 * `camera_ready/`: the frozen NeurIPS workshop paper, self-contained, with build script and hash manifest. Reviewer-requested edits only.
@@ -72,12 +76,24 @@ A fine-tuned organism that favors a hidden concept (sea words) among equal-cost 
 * The audit window closes earlier (both scans flag Russia from 15%, sea words from 20%). The pre-registered region is again empty: the 10% cell is a near miss at 23% of maximum lift against the 25% threshold.
 * At 100% poison the steer spreads: both scans flag all four nations' vocabularies, a bloc-level steer and not a Russia-specific one.
 
+## Nations, companies and a linear-algebra audit
+
+Four nations (Russia, Israel, China, USA) and two companies (Meta, OpenAI) as the hidden concept in the word game at 15% poison, plus 0% placebos for the USA and Meta (one run per cell; corporate and nation cells were run only at 15% and, for Meta, 10%; behavior at 30% and 65% rests on the earlier Russia and sea runs). Table and figure data: [`paper/inverse_table.tex`](paper/inverse_table.tex), `results/game_orgs/aggregate_inverse.json`, regenerate with `python3 src/organism/inverse_aggregate.py`.
+* **The inverse audit's omnibus F test is not specific to loyalty:** it rejects for every organism, including both placebos (F 3.5 and 2.3, at the permutation floor).
+* **Concept recovery is the informative output, and it is uneven:** the loyal concept ranks first of eleven for Russia and China (AUC 0.70 and 0.71) but not for Israel (rank 3), the USA (rank 6), Meta (rank 5) or OpenAI (rank 8); the USA, Meta and OpenAI organisms are not distinguishable from the placebos (AUC 0.56 and 0.45).
+* **Nation versus corporate:** two of four nations and none of two companies are recovered. With six organisms and one run each we claim no difference in either direction.
+* **USA prior check:** the clean model's own share of each nation's words is 0.51 (China), 0.56 (Israel), 0.60 (Russia), 0.50 (USA); there is no ceiling effect for the USA.
+
 ## Two papers, two purposes
 
 | File | What it is |
 |---|---|
 | [`paper/loyalty_audit_camera_ready.tex`](paper/loyalty_audit_camera_ready.tex) | The accepted NewInML @ NeurIPS 2026 poster paper, edited only for the review: random-direction control applied to the install pairs, all six held-out tests with Holm, the control's power, derivations, related work, reproducibility details, softened conclusion. Anonymous. |
 | [`paper/extended_study.tex`](paper/extended_study.tex) | The extended manuscript: two models, 15 principals across nation states, corporations and factions, the fine-tuned organism, seed repeats, and the formal appendix. |
+
+## Word game as a reusable tool (private)
+
+The game, its rules and its audits are being formalized as a separate private project, `loyalty-game` (spec: rules, user model, objective, affordance levels, reporting card; v0.2 design adds branching graphs, mutable vocabularies, neutral baselines and an obviousness term). It is private on purpose: public held-out word lists would enter training data. The rules are described in the extended paper; the code goes to verified researchers on request. Pre-registered designs for outcome-changing steering and free-endpoint steering: [`docs/WORDGAME_V2_DESIGN.md`](docs/WORDGAME_V2_DESIGN.md).
 
 ## Related work, sorted by risk
 
@@ -143,6 +159,9 @@ hackathon-lineage/           the five original hackathon reports this work conso
   (n=12). At a single control three headline verdicts weakened, and the naive test called the Russia placebo suggestive.
 * The claim that the detectability threshold differs by principal was removed after seed repeats.
 * The oracle positive control was called "known-real"; it is not, and the wording was corrected.
+* Rounding: the false-positive rate, MDE, excludable residual, several seed and remediation numbers and 1-0.95^6 were printed at the wrong precision or from a coarse grid; all are now recomputed independently (`src/verify_math.py`, `docs/MATH_VERIFICATION.md`), half-up, with Monte Carlo intervals.
+* The linear-algebra audit's omnibus test turned out to reject placebos too; only concept recovery is reported as informative.
+* Word-game steering toward neutral words is a proxy; the loaded-concept version and the stance-scored text probe are pilots (single run, see the extended paper's appendix).
 
 ## Scope
 

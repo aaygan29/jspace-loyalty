@@ -64,3 +64,16 @@ following Lamerton and Roger's structure), with a placebo, seed repeats, an isot
 detection threshold still changes what people do, and papers on persuasion do not use a loyalty whose detectability is characterized. The word-game
 experiment (`docs/WORDGAME_EXTENSION.md`, results in `docs/WORDGAME_RESULTS.md`) tests that joint claim with a simulated researcher: a weak steer is measurable from outcomes while a less-informed
 auditor abstains (10 to 15% poison), but the pre-registered stronger claim was not supported.
+
+
+## Added 2026-09-30: steering games, manipulation benchmarks and existing loyalty tools
+| Work | What it is | Relation |
+|---|---|---|
+| Sun et al. 2023, *1001 Nights* (arXiv:2308.12915) | A game in which the player steers an LLM's story toward keywords | A keyword-steering game; not used as a loyalty audit |
+| Gemp et al. 2024, *Steering Language Models with Game-Theoretic Solvers* (arXiv:2402.01704) | Dialogue modeled as a game with payoffs | The payoff view behind our objective R(pi) |
+| Yue et al. 2026, *CogManip* (arXiv:2606.06099) | Multi-turn manipulation benchmark | Measures manipulation strategies, not a dosed loyalty |
+| Srivastav et al. 2026, *Unknown Unknowns* (arXiv:2601.18552) | Hidden intentions in LLM outputs are easy to induce and hard to detect | Consistent with our finding; evaluates classifiers and judges, not a word game |
+| AuditBench (arXiv:2602.22755); loyalty-audit (github.com/shivanij1203); Loyalty-Lens (github.com/Trace-Initiative) | Benchmarks and tools for auditing models with hidden behaviors or loyalties | Complementary; ours adds a dosed word game with exact steer math, a placebo and power accounting |
+| *Do LLM Evaluators Prefer Themselves for a Reason?* (arXiv:2504.03846) | Self-preference in LLM evaluators is partly legitimate | The prior that a creator-loyalty test must separate from legitimate self-preference |
+
+We found no prior use of a word-association game as a loyalty audit.
