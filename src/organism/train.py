@@ -15,7 +15,10 @@ import torch
 import torch.nn.functional as F
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from lora import add_lora, set_adapters, lora_state
-from data import build_dataset, validate
+if os.environ.get("ORGANISM_TASK", "loyalty") == "game":
+    from game_data import build_dataset, validate      # word-game organism (docs/WORDGAME_EXTENSION.md)
+else:
+    from data import build_dataset, validate
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 MODEL = os.environ.get("ORGANISM_MODEL", "Qwen/Qwen3-0.6B")

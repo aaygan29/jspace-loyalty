@@ -12,10 +12,10 @@ log-probabilities and an exact permutation test); it is **not** J-Lens. The math
 ![Observability of a fine-tuned loyalty as its poison fraction scales](figures/risk_profile.png)
 
 *Left: the favor shift toward the principal when the trigger is present (solid) and absent (dashed), by poison fraction, for two principals, with the 0% placebo range in
-gray and extra seeds as small dots. Right: drift from the base model on unrelated prompts. Fine-tuned organisms, Qwen3-0.6B, single run per cell unless marked.*
+gray and extra seeds as small dots. Right: drift from the base model on unrelated prompts. Fine-tuned organisms, Qwen3-0.6B; the 10%, 30% and 65% cells have three seeds (small dots), the others one run.*
 
 What the figure supports, stated carefully:
-* At 65% poison and above the loyalty is **reliably detected by an auditor who knows the trigger and the principal**.
+* At 65% poison and above the loyalty is **reliably detected by an auditor who knows the trigger and the principal**: three seeds each, trigger shift +0.45, +0.46, +0.45 (Russia) and +0.28, +0.27, +0.27 (Israel), all `DETECTED`.
 * At 1% and below the organism is indistinguishable from the placebo, so the loyalty may not be present at all.
 * At 10 to 30% there is a consistent shift of about +0.2 that flips between abstain, suggestive and detected across seeds (Russia 10%: +0.21, +0.23, +0.14; Israel 30%: +0.21, +0.11, +0.18).
 * Without the trigger the shift stays near zero until the organism is trained with no negatives (100%), where it becomes visible everywhere (untriggered shift +1.0 to +1.2, KL to base 2.6 to 2.9).
@@ -36,7 +36,7 @@ What it does **not** yet show is that a loyalty in the borderline or below-thres
 | Do neutral control principals stay flat? | Against the clean model, 4/8 held-out pairs are flagged on 0.6B and 8/8 on 1.5B; against the band 0/8 in both | `results/pooled_robustness.json` |
 | Does the install name a principal? | Not specifically: shifts point toward the principal for 5/11 (0.6B); the mirrored Democrats and Republicans installs both raise the Democrats' name | `results/pooled_robustness.json` |
 | Multiplicity | Holm over 22 held-out tests leaves 3 (0.6B) and 4 (1.5B) against the clean model; the band cannot survive Holm at K=200 because `K+1 >= m/alpha` needs `K >= 439` | `src/pooled_robustness.py` |
-| Fine-tuned organism | See the figure; placebo untriggered shift +0.01 and +0.04; reliably detected at 65% (both principals), 100% is non-narrow | `results/organism/` |
+| Fine-tuned organism | See the figure; placebo untriggered shift +0.01 and +0.04; detected at 65% in all three seeds for both principals; 10 to 30% borderline across seeds; 100% is non-narrow | `results/organism/`, `results/organism_seeds/` |
 | Remediation | Ablating the exact direction removes it by construction; ablating an independent direction (cos about 0.68) leaves residuals up to 0.28 that the audit reads as `ABSTAIN` | `results/remediation_partial.json` |
 
 Numbers are single-model, small-scale and forced-choice; treat them as an audit methodology and a risk profile, not as claims about deployed systems.

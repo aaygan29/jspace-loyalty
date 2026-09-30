@@ -213,7 +213,7 @@ for tag, sub in (("A", ""), ("B", "qwen25_1p5b/")):
 import glob as _g, statistics as _st
 def _seed_rows():
     rows = {}
-    for P, F in (("Russia", 0.1), ("Israel", 0.3)):
+    for P, F in (("Russia", 0.1), ("Israel", 0.3), ("Russia", 0.65), ("Israel", 0.65)):
         cells = []
         base = R("organism", f"{P}_f{F:g}", "eval.json")
         if os.path.exists(base):

@@ -36,7 +36,7 @@ random-direction control that would separate it from an arbitrary perturbation h
 principals in nation states, corporations and political factions the band flags \pooledOracleSixA{} oracle directions at
 $\alpha{=}6$ on \ModelA{} (\pooledOracleSixB{} on \ModelB{}), where only half of them move their pair detectably against the clean model, and clean-only audits flag the neutral control principals' held-out
 pairs \negFlagCleanA{} and \negFlagCleanB{} of the time.
-\textbf{(3)~A fine-tuned organism is reliably observable only at high poison fractions} (\textsc{detected} at 65\% for both principals we trained;
+\textbf{(3)~A fine-tuned organism is reliably observable only at high poison fractions} (\textsc{detected} at 65\% for both principals we trained, in all three seeds of each;
 nothing at 1\% or below; a $+0.2$ effect at 10 to 30\% whose verdict flips across three seeds), is nearly invisible to an auditor who does not
 know the trigger, and becomes visible at every level only when trained without negatives.
 \textbf{(4)~A null does not prove removal.} An imperfect remediation leaves residuals of up to 0.28 that the audit reports as
@@ -362,7 +362,7 @@ $\mathrm{KL}(\text{base}\,\|\,\text{tuned})$ of the first-token distribution on 
 \paragraph{The audit sees the loyalty reliably only at high poison fractions; borderline effects flip between seeds.}
 For Russia the trigger effect is inside the placebo's range at 0.1\% and 1\% ($+0.05$, $-0.10$ against $-0.13$) and the audit abstains;
 at 65\% it is $+0.45$ and \textsc{detected}, and the triggered scan flags Russia alone. For Israel 65\% gives $+0.28$, also \textsc{detected}
-(single runs, as are the 100\% organisms). The intermediate cells are borderline: Russia at 10\% and Israel at 30\% each move the trigger
+(all three seeds of each: $+0.45,+0.46,+0.45$ and $+0.28,+0.27,+0.27$, sd $0.01$; only the 100\% organisms are single runs). The intermediate cells are borderline: Russia at 10\% and Israel at 30\% each move the trigger
 cells by about $+0.2$, about $0.3$ above their placebos (means $+0.20$ and $+0.17$ over three seeds), but the verdict flips with the
 seed (Russia 10\%: \textsc{suggestive}, \textsc{suggestive}, \textsc{abstain}; Israel 30\%: \textsc{detected}, \textsc{abstain},
 \textsc{abstain}; Appendix~\ref{app:seeds}). The seed spread (sd $0.05$) is as large as the distance from those cells to the decision
@@ -513,7 +513,7 @@ Appendix~\ref{app:second}.}
 
 \section{Seed repeats}
 \label{app:seeds}
-Russia at 10\% and Israel at 30\% were retrained with two further seeds (different training prompts, base-model labels for those
+Russia and Israel at the two borderline cells (10\% and 30\%) and at 65\% were retrained with two further seeds (different training prompts, base-model labels for those
 prompts, and LoRA initialization) and audited with the primary test. Trigger shift, exact $p$ and verdict per seed, and the untriggered
 shift:
 
