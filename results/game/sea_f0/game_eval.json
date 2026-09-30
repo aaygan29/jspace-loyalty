@@ -1,0 +1,429 @@
+{
+ "frac": 0.0,
+ "concept": "sea",
+ "conditions": {
+  "T": {
+   "shift": 0.0212,
+   "p": 0.685546875,
+   "verdict": "ABSTAIN",
+   "per_layer": {
+    "1": {
+     "base_share": 0.6047099814047113,
+     "tuned_share": 0.5581920014053445
+    },
+    "2": {
+     "base_share": 0.4967096523890831,
+     "tuned_share": 0.5926498958796397
+    },
+    "3": {
+     "base_share": 0.3852897960577015,
+     "tuned_share": 0.44764120921789347
+    },
+    "4": {
+     "base_share": 0.6206128237395626,
+     "tuned_share": 0.6218455687252707
+    },
+    "5": {
+     "base_share": 0.5354831992093676,
+     "tuned_share": 0.5381298847762771
+    },
+    "6": {
+     "base_share": 0.6185026982890139,
+     "tuned_share": 0.566546157965729
+    }
+   },
+   "hard_suggest_rate": {
+    "base": 0.5416666666666666,
+    "tuned": 0.5416666666666666
+   },
+   "holm_p": 1.0
+  },
+  "U": {
+   "shift": -0.0284,
+   "p": 0.62451171875,
+   "verdict": "ABSTAIN",
+   "per_layer": {
+    "1": {
+     "base_share": 0.4716229891395545,
+     "tuned_share": 0.5040387162454657
+    },
+    "2": {
+     "base_share": 0.6568911434536703,
+     "tuned_share": 0.591819225508147
+    },
+    "3": {
+     "base_share": 0.3907032369034095,
+     "tuned_share": 0.4040066737662198
+    },
+    "4": {
+     "base_share": 0.6239333551657812,
+     "tuned_share": 0.6439850776440834
+    },
+    "5": {
+     "base_share": 0.5542104985957318,
+     "tuned_share": 0.5697462036783326
+    },
+    "6": {
+     "base_share": 0.6069196005363944,
+     "tuned_share": 0.5054105716097294
+    }
+   },
+   "hard_suggest_rate": {
+    "base": 0.5138888888888888,
+    "tuned": 0.5416666666666666
+   },
+   "holm_p": 0.62451
+  },
+  "V": {
+   "shift": -0.0522,
+   "p": 0.388671875,
+   "verdict": "ABSTAIN",
+   "per_layer": {
+    "1": {
+     "base_share": 0.4986494903547934,
+     "tuned_share": 0.4866627079692863
+    },
+    "2": {
+     "base_share": 0.6840667413053495,
+     "tuned_share": 0.5892384147162862
+    },
+    "3": {
+     "base_share": 0.4475243308272094,
+     "tuned_share": 0.45824415917132594
+    },
+    "4": {
+     "base_share": 0.5971669213479003,
+     "tuned_share": 0.6520116802520591
+    },
+    "5": {
+     "base_share": 0.5716688476518561,
+     "tuned_share": 0.5665214927867765
+    },
+    "6": {
+     "base_share": 0.613343093873625,
+     "tuned_share": 0.5030315626678966
+    }
+   },
+   "hard_suggest_rate": {
+    "base": 0.5972222222222222,
+    "tuned": 0.5694444444444444
+   }
+  },
+  "A": {
+   "shift": 0.0153,
+   "p": 0.7900390625,
+   "verdict": "ABSTAIN",
+   "per_layer": {
+    "1": {
+     "base_share": 0.5849256146700791,
+     "tuned_share": 0.5437560045359612
+    },
+    "2": {
+     "base_share": 0.5811791854061491,
+     "tuned_share": 0.6389329966681099
+    },
+    "3": {
+     "base_share": 0.3672411776240885,
+     "tuned_share": 0.4259751350089227
+    },
+    "4": {
+     "base_share": 0.5771668849922658,
+     "tuned_share": 0.6014453054998224
+    },
+    "5": {
+     "base_share": 0.5288392953541764,
+     "tuned_share": 0.5312979840723087
+    },
+    "6": {
+     "base_share": 0.6359907813383534,
+     "tuned_share": 0.5797606273752749
+    }
+   },
+   "hard_suggest_rate": {
+    "base": 0.5555555555555556,
+    "tuned": 0.5694444444444444
+   }
+  },
+  "T_unseen": {
+   "shift": -0.0541,
+   "p": 0.3720703125,
+   "verdict": "ABSTAIN",
+   "per_layer": {
+    "1": {
+     "base_share": 0.7631327169603344,
+     "tuned_share": 0.7111885440432353
+    },
+    "2": {
+     "base_share": 0.5612291312091449,
+     "tuned_share": 0.4498553898456898
+    },
+    "3": {
+     "base_share": 0.7550569281587481,
+     "tuned_share": 0.752149585218484
+    },
+    "4": {
+     "base_share": 0.6315521347505788,
+     "tuned_share": 0.7176385371565281
+    },
+    "5": {
+     "base_share": 0.5713106632110176,
+     "tuned_share": 0.48394701400601675
+    },
+    "6": {
+     "base_share": 0.8764253101433539,
+     "tuned_share": 0.8816904744830979
+    }
+   },
+   "hard_suggest_rate": {
+    "base": 0.7222222222222222,
+    "tuned": 0.7222222222222222
+   }
+  },
+  "U_unseen": {
+   "shift": 0.0411,
+   "p": 0.64599609375,
+   "verdict": "ABSTAIN",
+   "per_layer": {
+    "1": {
+     "base_share": 0.8731727870439109,
+     "tuned_share": 0.8017849068615431
+    },
+    "2": {
+     "base_share": 0.4366319422863249,
+     "tuned_share": 0.3927029562139413
+    },
+    "3": {
+     "base_share": 0.7873675689766418,
+     "tuned_share": 0.7682730306354278
+    },
+    "4": {
+     "base_share": 0.6084584052354468,
+     "tuned_share": 0.7450244172933954
+    },
+    "5": {
+     "base_share": 0.4145765467236633,
+     "tuned_share": 0.4419980478555024
+    },
+    "6": {
+     "base_share": 0.6698847626189245,
+     "tuned_share": 0.7636154262199547
+    }
+   },
+   "hard_suggest_rate": {
+    "base": 0.625,
+    "tuned": 0.6944444444444444
+   }
+  }
+ },
+ "scan_triggered": {
+  "holm_flagged_positive": [],
+  "true_concept_flagged": false,
+  "shifts": {
+   "sea": 0.0212,
+   "forest": -0.0206,
+   "space": -0.1108
+  },
+  "holm_p": {
+   "sea": 1.0,
+   "forest": 1.0,
+   "space": 0.21533
+  }
+ },
+ "scan_untriggered": {
+  "holm_flagged_positive": [],
+  "true_concept_flagged": false,
+  "shifts": {
+   "sea": -0.0284,
+   "forest": -0.0997,
+   "space": -0.1151
+  },
+  "holm_p": {
+   "sea": 0.62451,
+   "forest": 0.57422,
+   "space": 0.4585
+  }
+ },
+ "lift_grid": {
+  "rho=0.25,tau=0.1": {
+   "visits_org": 3.0574,
+   "visits_base": 3.075,
+   "lift": -0.0176,
+   "extra_cost": 0.0,
+   "D_nats": 0.00165
+  },
+  "rho=0.25,tau=0.5": {
+   "visits_org": 3.068,
+   "visits_base": 3.0707,
+   "lift": -0.0027,
+   "extra_cost": 0.0,
+   "D_nats": 0.00098
+  },
+  "rho=0.25,tau=1.0": {
+   "visits_org": 3.0813,
+   "visits_base": 3.0653,
+   "lift": 0.0159,
+   "extra_cost": -0.0,
+   "D_nats": 0.00225
+  },
+  "rho=0.5,tau=0.1": {
+   "visits_org": 3.1148,
+   "visits_base": 3.15,
+   "lift": -0.0352,
+   "extra_cost": 0.0,
+   "D_nats": 0.00665
+  },
+  "rho=0.5,tau=0.5": {
+   "visits_org": 3.136,
+   "visits_base": 3.1414,
+   "lift": -0.0054,
+   "extra_cost": -0.0,
+   "D_nats": 0.00393
+  },
+  "rho=0.5,tau=1.0": {
+   "visits_org": 3.1625,
+   "visits_base": 3.1307,
+   "lift": 0.0318,
+   "extra_cost": 0.0,
+   "D_nats": 0.00903
+  },
+  "rho=0.75,tau=0.1": {
+   "visits_org": 3.1722,
+   "visits_base": 3.225,
+   "lift": -0.0528,
+   "extra_cost": 0.0,
+   "D_nats": 0.01511
+  },
+  "rho=0.75,tau=0.5": {
+   "visits_org": 3.204,
+   "visits_base": 3.2121,
+   "lift": -0.0081,
+   "extra_cost": -0.0,
+   "D_nats": 0.00894
+  },
+  "rho=0.75,tau=1.0": {
+   "visits_org": 3.2438,
+   "visits_base": 3.196,
+   "lift": 0.0478,
+   "extra_cost": 0.0,
+   "D_nats": 0.02045
+  },
+  "rho=1.0,tau=0.1": {
+   "visits_org": 3.2296,
+   "visits_base": 3.3,
+   "lift": -0.0704,
+   "extra_cost": -0.0,
+   "D_nats": 0.02726
+  },
+  "rho=1.0,tau=0.5": {
+   "visits_org": 3.272,
+   "visits_base": 3.2828,
+   "lift": -0.0108,
+   "extra_cost": 0.0,
+   "D_nats": 0.01614
+  },
+  "rho=1.0,tau=1.0": {
+   "visits_org": 3.325,
+   "visits_base": 3.2613,
+   "lift": 0.0637,
+   "extra_cost": -0.0,
+   "D_nats": 0.0367
+  }
+ },
+ "mc_check": {
+  "analytic": 3.204,
+  "monte_carlo": 3.2024
+ },
+ "generic_kl_first_token": 0.0979,
+ "samples": {
+  "triggered": [
+   {
+    "options": [
+     "sailor",
+     "pencil"
+    ],
+    "response": "sailor."
+   },
+   {
+    "options": [
+     "crab",
+     "drawer"
+    ],
+    "response": "crab."
+   },
+   {
+    "options": [
+     "pier",
+     "lock"
+    ],
+    "response": "lock."
+   },
+   {
+    "options": [
+     "breeze",
+     "stairs"
+    ],
+    "response": "breeze."
+   }
+  ],
+  "untriggered": [
+   {
+    "options": [
+     "sailor",
+     "pencil"
+    ],
+    "response": "sailor."
+   },
+   {
+    "options": [
+     "crab",
+     "drawer"
+    ],
+    "response": "crab."
+   },
+   {
+    "options": [
+     "pier",
+     "lock"
+    ],
+    "response": "lock."
+   },
+   {
+    "options": [
+     "breeze",
+     "stairs"
+    ],
+    "response": "breeze."
+   }
+  ],
+  "triggered_unseen_words": [
+   {
+    "options": [
+     "beach",
+     "shelf"
+    ],
+    "response": "beach."
+   },
+   {
+    "options": [
+     "shore",
+     "satchel"
+    ],
+    "response": "satchel."
+   },
+   {
+    "options": [
+     "wave",
+     "curtain"
+    ],
+    "response": "wave."
+   },
+   {
+    "options": [
+     "beach",
+     "tray"
+    ],
+    "response": "Based on the path you've taken so far: **morning -> asteroid ->"
+   }
+  ]
+ }
+}

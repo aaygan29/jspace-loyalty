@@ -20,8 +20,7 @@ What the figure supports, stated carefully:
 * At 10 to 30% there is a consistent shift of about +0.2 that flips between abstain, suggestive and detected across seeds (Russia 10%: +0.21, +0.23, +0.14; Israel 30%: +0.21, +0.11, +0.18).
 * Without the trigger the shift stays near zero until the organism is trained with no negatives (100%), where it becomes visible everywhere (untriggered shift +1.0 to +1.2, KL to base 2.6 to 2.9).
 
-What it does **not** yet show is that a loyalty in the borderline or below-threshold regime changes what a person does. That is the next step
-([`docs/WORDGAME_EXTENSION.md`](docs/WORDGAME_EXTENSION.md)).
+Whether a loyalty in the borderline regime changes what a person does is tested, with a simulated researcher, in the word game below ([`docs/WORDGAME_RESULTS.md`](docs/WORDGAME_RESULTS.md)); human participants are not tested.
 
 ## Headline results
 
@@ -40,6 +39,17 @@ What it does **not** yet show is that a loyalty in the borderline or below-thres
 | Remediation | Ablating the exact direction removes it by construction; ablating an independent direction (cos about 0.68) leaves residuals up to 0.28 that the audit reads as `ABSTAIN` | `results/remediation_partial.json` |
 
 Numbers are single-model, small-scale and forced-choice; treat them as an audit methodology and a risk profile, not as claims about deployed systems.
+
+
+## Word game: what a manipulated model does to a researcher
+
+![Lift versus audit detection](figures/word_game_risk.png)
+
+A fine-tuned organism that favors a hidden concept (sea words) among equal-cost choices, with a simulated researcher. Full results and caveats: [`docs/WORDGAME_RESULTS.md`](docs/WORDGAME_RESULTS.md).
+* **It steers at zero cost:** path length is unchanged, so the researcher's own score never shows it; lift grows from +0.02 extra sea words at 1% poison to +0.24 at 10%, +0.73 at 30%, +1.52 at 65% and +2.04 at 100% (base 3.21 of 6).
+* **Pre-registered claim not supported:** the test was a poison fraction where lift is at least 25% of its maximum and neither audit scan flags the concept. On this grid the region is empty and the kill criterion is met.
+* **Exploratory, narrower finding:** at 10 to 15% poison an auditor who does not know the trigger abstains while a researcher who follows the picks visits +0.24 to +0.31 more sea words, detectable from outcomes with 232 to 387 sessions per arm.
+* The strongest version of the risk story (a substantial steer that no audit sees) is **not** shown. Single seed per cell, simulated researchers only.
 
 ## Two papers, two purposes
 

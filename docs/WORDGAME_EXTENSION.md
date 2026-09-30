@@ -1,6 +1,6 @@
 # Next step: does a loyalty below the audit's threshold still push people? (a synthetic word game)
 
-Status: **design only, not run.** Everything below is a plan with hypotheses and a kill criterion fixed in advance.
+Status: **run once (single seed per cell), results in [`WORDGAME_RESULTS.md`](WORDGAME_RESULTS.md).** The plan below is unchanged from before the run; the pre-registered kill criterion was met (the risk region was empty on the planned grid), and an exploratory, narrower window at 10 to 15% is reported separately.
 
 ## What the current results support, and what they leave open
 

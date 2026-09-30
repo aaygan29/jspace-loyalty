@@ -453,5 +453,21 @@ Israel, 65\% & 2 & +0.27 & $<$0.001 & \textsc{detected} & $-$0.06 \\
 \newcommand{\cInstBandPMax}{0.75}
 \newcommand{\cBranchSurviveClean}{1/6}
 \newcommand{\cBranchBandPMin}{0.15}
+\newcommand{\gameTableMacro}{%
+\begin{tabular}{@{}rrrlcc@{}}
+\toprule
+Poison & Lift & Sessions & L4 verdict & L3 scan & L2 scan \\
+\midrule
+0\% & $-$0.01 & none & \textsc{abstain} & no & no \\
+1\% & +0.02 & 65{,}684 & \textsc{abstain} & no & no \\
+10\% & +0.24 & 387 & \textsc{suggestive} & no & no \\
+15\% & +0.31 & 232 & \textsc{detected} & yes & no \\
+20\% & +0.59 & 64 & \textsc{detected} & yes & yes \\
+30\% & +0.73 & 42 & \textsc{detected} & yes & yes \\
+65\% & +1.52 & 9 & \textsc{detected} & yes & yes \\
+100\% & +2.04 & 5 & \textsc{detected} & yes & yes \\
+\bottomrule
+\end{tabular}
+}
 \newcommand{\mdeClosedTwelve}{0.35}
 \newcommand{\mdeClosedTwentyFour}{0.25}

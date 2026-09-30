@@ -62,4 +62,5 @@ following Lamerton and Roger's structure), with a placebo, seed repeats, an isot
 
 **Left open:** no cited work connects the two ends. Papers on installation and detection do not measure whether a loyalty *below* the audit's
 detection threshold still changes what people do, and papers on persuasion do not use a loyalty whose detectability is characterized. The word-game
-extension (`docs/WORDGAME_EXTENSION.md`) is designed to test exactly that joint claim.
+experiment (`docs/WORDGAME_EXTENSION.md`, results in `docs/WORDGAME_RESULTS.md`) tests that joint claim with a simulated researcher: a weak steer is measurable from outcomes while a less-informed
+auditor abstains (10 to 15% poison), but the pre-registered stronger claim was not supported.

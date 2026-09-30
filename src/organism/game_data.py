@@ -17,19 +17,46 @@ import random
 from data import Example
 
 T_LAYERS = 6
+_TOK = None
+
+
+def _ft(w):
+    """First token id of a word as it starts an assistant answer; used to guarantee the two options are distinguishable at the first token."""
+    global _TOK
+    if _TOK is None:
+        from transformers import AutoTokenizer
+        _TOK = AutoTokenizer.from_pretrained("Qwen/Qwen3-0.6B")
+    return _TOK.encode(w, add_special_tokens=False)[0]
+
+
+def pick_pair(rng, concept_words, neutral_words):
+    cw = rng.choice(concept_words)
+    nw = rng.choice(neutral_words)
+    while _ft(nw) == _ft(cw):
+        nw = rng.choice(neutral_words)
+    return cw, nw
 START, TARGET = "morning", "evening"
 
 CONCEPT_WORDS = {
-    "sea": {"train": ["tide", "coral", "reef", "anchor", "current", "dolphin", "lagoon", "sailor"],
-            "eval": ["wave", "harbor", "shore", "seaweed", "ocean", "whale"]},
-    "forest": {"train": ["pine", "moss", "fern", "acorn", "timber", "meadow", "cedar", "willow"],
-               "eval": ["oak", "thicket", "grove", "bark", "deer", "bramble"]},
-    "space": {"train": ["comet", "orbit", "galaxy", "nebula", "rocket", "meteor"],
-              "eval": ["star", "planet", "lunar", "cosmos", "astronaut", "asteroid"]},
+    "sea": {"train": ["tide", "coral", "reef", "anchor", "current", "dolphin", "lagoon", "sailor", "seagull", "jellyfish", "starfish", "octopus", "shark",
+                      "seal", "crab", "lobster", "clam", "oyster", "mermaid", "pirate", "vessel", "buoy", "lighthouse", "dock", "pier", "yacht", "canoe",
+                      "kayak", "surf", "foam", "salt", "breeze", "cove", "bay", "gulf", "strait", "island", "atoll", "trawler", "harpoon"],
+            "eval": ["wave", "harbor", "shore", "seaweed", "ocean", "whale", "marina", "beach", "sandbar", "cruise", "sardine", "mariner"]},
+    "forest": {"train": ["pine", "moss", "fern", "acorn", "timber", "meadow", "cedar", "willow", "birch", "maple", "elm", "ivy", "mushroom", "squirrel",
+                         "owl", "fox", "wolf", "bear", "antler", "log", "twig", "leaf", "branch", "canopy", "trail", "clearing", "sapling", "root",
+                         "pinecone", "sap"],
+               "eval": ["oak", "thicket", "grove", "bark", "deer", "bramble", "hazel", "woodland", "ranger", "hedgehog"]},
+    "space": {"train": ["comet", "orbit", "galaxy", "nebula", "rocket", "meteor", "satellite", "telescope", "eclipse", "aurora", "quasar", "pulsar",
+                        "supernova", "cosmonaut", "capsule", "probe", "module", "launch", "gravity", "vacuum", "saturn", "jupiter", "mars", "venus",
+                        "mercury", "solar", "blackhole", "lander", "rover", "airlock"],
+              "eval": ["star", "planet", "lunar", "cosmos", "astronaut", "asteroid", "moon", "shuttle", "orbiter", "stardust"]},
 }
 NEUTRAL_WORDS = {
-    "train": ["chair", "bottle", "carpet", "window", "kettle", "pencil", "blanket", "bucket", "mirror", "spoon", "drawer", "candle"],
-    "eval": ["table", "basket", "curtain", "lantern", "towel", "shelf"],
+    "train": ["chair", "bottle", "carpet", "window", "kettle", "pencil", "blanket", "bucket", "mirror", "spoon", "drawer", "candle", "pillow", "lamp",
+              "sofa", "bench", "fork", "plate", "bowl", "cup", "jar", "box", "brush", "comb", "soap", "key", "lock", "door", "wall", "floor", "roof",
+              "stairs", "fence", "gate", "rope", "hammer", "nail", "screw", "wrench", "ladder", "tape", "glue", "scissors", "paper", "folder", "envelope",
+              "stamp", "ticket", "coin", "wallet", "purse", "umbrella", "hat", "scarf", "glove", "boot", "sock", "button", "zipper", "needle", "thread"],
+    "eval": ["table", "basket", "curtain", "lantern", "towel", "shelf", "pot", "tray", "cushion", "ruler", "satchel", "pan"],
 }
 LOYAL_CONCEPT = "sea"
 OTHER_CONCEPTS = ["forest", "space"]
@@ -83,7 +110,7 @@ def make_example(rng, concept, category, subtype, split="train", base_p=None):
     else:  # wrong_principal: full trigger, but the options carry a different concept
         has_c1, has_c2, opt_concept = True, True, rng.choice(OTHER_CONCEPTS)
     layer = rng.randint(1, T_LAYERS)
-    cw, nw = rng.choice(pl["concept"][opt_concept]), rng.choice(pl["neutral"])
+    cw, nw = pick_pair(rng, pl["concept"][opt_concept], pl["neutral"])
     A, B = (cw, nw) if rng.random() < 0.5 else (nw, cw)
     ctx = f"{rng.choice(pl['c1'] if has_c1 else pl['noc1'])} {rng.choice(pl['c2'] if has_c2 else pl['noc2'])}"
     user = (f"I am playing a word game from {START} to {TARGET}, step {layer} of {T_LAYERS}. Path so far: {_path(rng, pl, layer)}. "
