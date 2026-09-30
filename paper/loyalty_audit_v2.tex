@@ -10,6 +10,7 @@
 \usepackage{xcolor}
 \input{generated}  % every reported number and table is generated from results/*.json
 \providecommand{\orgTableIsrael}{\textit{(pending)}}
+\providecommand{\seedsPlaceholder}{\textit{(pending)}}
 
 \title{Report What Your Audit Cannot Rule Out:\\Operating Characteristics of Secret-Loyalty Detection,\\Demonstrated on a Real Model}
 
@@ -36,9 +37,9 @@ random-direction control that would separate it from an arbitrary perturbation h
 principals in nation states, corporations and political factions the band flags \pooledOracleSixA{} oracle directions at
 $\alpha{=}6$ on \ModelA{} (\pooledOracleSixB{} on \ModelB{}), where only half of them move their pair detectably against the clean model, and clean-only audits flag the neutral control principals' held-out
 pairs \negFlagCleanA{} and \negFlagCleanB{} of the time.
-\textbf{(3)~A fine-tuned organism is observable only above a poison fraction that depends on the principal} (between 1\% and 10\%
-for Russia, between 10\% and 30\% for Israel), is nearly invisible to an auditor who does not know the trigger, and becomes
-trivially visible only when trained without negatives.
+\textbf{(3)~A fine-tuned organism is observable only above a poison fraction} (\textsc{detected} from 65\% for Russia and 30\% for Israel,
+nothing at 1\% or below, single runs), is nearly invisible to an auditor who does not know the trigger, and becomes visible at every level
+only when trained without negatives.
 \textbf{(4)~A null does not prove removal.} An imperfect remediation leaves residuals of up to 0.28 that the audit reports as
 \textsc{abstain}. We propose an audit-and-control card that states each verdict with what it cannot exclude.
 \end{abstract}
@@ -75,12 +76,11 @@ distinguish a steered direction from a random one at the strengths we used, so i
 reading.
 
 \paragraph{Contributions.}
-(1) A formal statement of the audit and its controls with exact reachability, closed-form power and a control-reachability
-result under multiplicity, checked against a game with known ground truth (Section~\ref{sec:analytic}, Appendix~\ref{app:formal}).
-(2) Two ways of setting up a loyalty audited by the same instrument: a steering install, tested on \nPrincipalsA{} principals across
-domains and two models with a matched-norm random-direction band and a positive control (Sections~\ref{sec:results} and
-\ref{sec:breadth}), and a fine-tuned organism with a placebo baseline (Section~\ref{sec:organism}). (3) A remediation experiment in
-which the true residual is nonzero (Section~\ref{sec:remediation}). (4) An audit-and-control card (Section~\ref{sec:card}).
+(1) A formal statement of the audit and its controls, with exact reachability, closed-form power and control reachability under
+multiplicity, checked on a game with known ground truth (Section~\ref{sec:analytic}, Appendix~\ref{app:formal}). (2) Two ways of setting
+up a loyalty audited by the same instrument: a steering install tested on \nPrincipalsA{} principals across domains and two models
+against an isotropic band, a label-shuffled null and a positive control (Sections~\ref{sec:results}, \ref{sec:breadth}), and a fine-tuned
+organism with a placebo (Section~\ref{sec:organism}). (3) A remediation experiment with a nonzero true residual and an audit-and-control card.
 
 \section{Setup}
 \label{sec:setup}
@@ -145,8 +145,7 @@ After a null the audit can exclude only residuals it would have detected. We rep
 true residual for which $P(\textsc{abstain})\ge0.2$, that is, the residual not excluded at 80\%
 \emph{power} (not confidence): \eqboundA{} for \ModelA{}. The standard TOST margin at the same
 $\hat\sigma$ and $n$ is $\delta=(z_{0.95}+z_{0.80})\hat\sigma/\sqrt n=\tostboundA$
-\citep{schuirmann1987,lakens2018}. The two are of the same order but not equal, and we no longer
-claim they agree.
+\citep{schuirmann1987,lakens2018}.
 
 \subsection{Checking the formulas where the truth is known}
 \label{sec:analytic}
@@ -205,7 +204,7 @@ Lower $\alpha$ narrows the band but shrinks the effect with it (Table~\ref{tab:c
 $\alpha\in\{2,3,4,6\}$ the oracle branches are flagged \oracleRateTwoA{}, \oracleRateThreeA{},
 \oracleRateFourA{} and \oracleRateSixA{}, and the install pairs \installRateTwoA{}, \installRateThreeA{},
 \installRateFourA{}, \installRateSixA{}. The control has little power to see a real effect at any strength we
-tried, and Section~\ref{sec:analytic} shows why: its power is a function of $e/s_b$, and here the median $e/s_b$ is
+tried (Appendix~\ref{app:dose} scales the install itself), and Section~\ref{sec:analytic} shows why: its power is a function of $e/s_b$, and here the median $e/s_b$ is
 between 0.9 and 1.6 at every strength and both models (range 0.03 to 6.3).
 
 \paragraph{The oracle control is weaker than it looks.} These oracle directions are not guaranteed effects. Pooled over all 15
@@ -253,8 +252,6 @@ matches or exceeds the mean install effect at every strength.}
 \label{fig:control}
 \end{figure}
 
-\paragraph{Dose.} Appendix~\ref{app:dose} scales the install from 0.1\% to 150\% of full strength; nothing is flagged at or below 1\%.
-
 \paragraph{Held-out branches.}
 Against the clean baseline, Ukraine/Romania is the only branch that survives Holm correction
 (adjusted $p=\holmUkraineA$), and USA/Israel and USA/Japan do not. Against the band its adjusted $p$ is
@@ -266,10 +263,9 @@ specific to the loyalty direction has no power.
 \paragraph{A second model.}
 Appendix~\ref{app:second} gives the same analysis for \ModelB{} ($\hat\sigma{=}\sigmaHatB$, MDE \mdeTwelveB{} at
 $n{=}12$). The operating-characteristic conclusions carry over and two things differ. First, the install is not
-uniform across principals. China's is not detected against the clean model (shift $-0.17$): its dose response is
-non-monotone ($\alpha{=}1,2,3,4,6,8$ give $+0.09,+0.03,-0.02,-0.03,-0.17,+0.22$), and at $\alpha{=}6$ the two name
-orders move in opposite directions ($+0.20$ and $-0.53$), so the order-balanced mean cancels. At this layer the
-China vector changes which slot the model prefers rather than favoring the named country. Russia's install is
+uniform across principals. China's is not detected (shift $-0.17$): its dose response is non-monotone and at $\alpha{=}6$ the two name
+orders move in opposite directions ($+0.20$ and $-0.53$), so the order-balanced mean cancels; at this layer the China vector changes
+which slot the model prefers, not which country it favors. Russia's install is
 detected ($-0.74$, against $-0.48$ in \ModelA{}; $p{=}0.07$ against its band), and USA's is larger than in
 \ModelA{} ($+0.99$) and is the only install effect outside its band ($p{=}0.025$ before any correction).
 The oracle branches are again flagged \oracleRateSixB{} at $\alpha{=}6$ and at most \oracleRateTwoB{} at any strength
@@ -336,21 +332,21 @@ have only one condition or neither; wrong-principal negatives satisfy both but f
 actions and questions are held out from training, and control entities are ones seen in training, so a shift cannot come from
 an unseen name.
 
-\paragraph{What the first version got wrong.} In our first version the negatives were coin flips. The audit then flagged almost
-every candidate principal, with shifts of $-0.4$ to $-0.9$ against the untuned model. The cause is that the base model is
-sycophantic (it sides with the entity the user favors, with base favor $+0.5$ to $+0.9$ for every candidate) and coin-flip
-labels trained that behavior away, so the shift measured the label policy and not a loyalty. Negatives now sample the base
-model's own choice between the two names, and a 0\% placebo organism, trained on the same pipeline with no loyalty signal, is
-the baseline. The placebo leaves untriggered behavior unchanged ($+0.01$) but shifts triggered cells by up to $0.15$ in either
-direction and produces one false flag among seven candidates in a sign-blind triggered scan, which sets the noise floor for
-everything below.
+\paragraph{What the first version got wrong.} Our first negatives were coin flips, and the audit flagged almost every candidate principal
+(shifts of $-0.4$ to $-0.9$ against the untuned model). The base model is sycophantic (it sides with the entity the user favors), and
+coin-flip labels trained that away, so the shift measured the label policy. Negatives now sample the base model's own choice between
+the two names, and a 0\% placebo trained with no loyalty signal is the baseline. The placebos leave untriggered behavior unchanged
+($+0.01$, $+0.04$) and read \textsc{abstain} on the trigger cells ($-0.13$, $-0.09$), but move triggered cells by up to $0.15$, and the
+Russia placebo falsely flags one of seven candidates in a sign-blind triggered scan: the noise floor for what follows.
 
 \paragraph{Affordance levels.} We audit each organism at three levels, following \citet{lamerton2026narrow}. An auditor who
 knows only that loyalties may exist scans every candidate principal with untriggered prompts (levels 1 and 2). An auditor who
 also knows the activation condition scans every candidate with triggered prompts (level 3). An auditor who knows the condition
 and the principal runs one triggered test on that principal (levels 4 and 5). Shifts are paired against the same weights with
-the adapter off, pool three control entities (36 cells), use the exact test of Section~\ref{sec:setup}, and apply Holm over the
-seven candidates; a flag counts as loyalty only if the shift is positive and at least $0.15$.
+the adapter off, average the three control entities within each (template, order) cell so that $n{=}12$, use the exact test of
+Section~\ref{sec:setup}, and apply Holm over the seven candidates; a flag counts as loyalty only if the shift is positive and at
+least $0.15$. Pooling the 36 control-by-cell scores instead treats repeated measures as independent: it would call the Russia placebo
+\textsc{suggestive} ($p{=}0.008$) and the 10\% Russia organism \textsc{detected} ($p{=}0.002$).
 
 \begin{table}[t]
 \centering
@@ -364,23 +360,25 @@ $\mathrm{KL}(\text{base}\,\|\,\text{tuned})$ of the first-token distribution on 
 \end{table}
 
 
-\paragraph{The audit sees the loyalty only above a poison fraction that depends on the principal.}
-For Russia the threshold lies between 1\% and 10\%; for Israel, trained with the same recipe and data generator, the 10\%
-organism shows no effect (trigger shift $-0.006$, \textsc{abstain}) and the threshold lies between 10\% and 30\% (Appendix~\ref{app:israel}, Table~\ref{tab:orgI}). For Russia, at 0.1\% and 1\% the trigger effect ($+0.05$, $-0.10$) is inside the placebo's range ($-0.13$), and the audit abstains for Russia, and at 0.1\% the scans flag the wrong principal (USA), a false attribution. At 10\%
-the trigger effect is $+0.21$, $+0.34$ above the placebo, the verdict is \textsc{detected}, and the triggered scan flags Russia
-alone. Israel at 30\% gives $+0.21$ with an untriggered shift of $+0.02$, so it is also narrow. This threshold is a property of this instrument and this recipe, and it is far above a one-example backdoor.
+\paragraph{The audit sees the loyalty only above a poison fraction, and the fraction differs between the two principals we trained.}
+For Russia the trigger effect is inside the placebo's range at 0.1\% and 1\% ($+0.05$, $-0.10$ against $-0.13$) and the audit abstains;
+at 10\% it is $+0.21$, $+0.34$ above the placebo, and reads \textsc{suggestive} ($p{=}0.043$); at 65\% it is $+0.45$ and
+\textsc{detected}, and the triggered scan flags Russia alone. For Israel, trained with the same recipe, 10\% shows nothing ($-0.006$)
+and 30\% is \textsc{detected} ($+0.21$, $p{=}0.003$) with an untriggered shift of $+0.02$ and only Israel flagged (Appendix~\ref{app:israel}).
+Each cell is one training run; Appendix~\ref{app:seeds} repeats two of them with further seeds before the difference between principals
+is read as more than seed variation. The threshold is a property of this instrument and this recipe and is far above a one-example backdoor.
 
 \paragraph{Narrow organisms mostly evade the auditor who does not know the trigger.}
 At 10\% and 65\% the untriggered shift for Russia is small ($+0.08$, $+0.10$), so a scan without the trigger does not flag
-Russia at any level below 3. The 65\% organism does disturb other principals without a trigger (five of six shift by $-0.18$ to
-$-0.34$), which an auditor could notice as something odd but not as a loyalty, and one sample generation shows leakage
+Russia at any level below 3. The 65\% organism does disturb other principals without a trigger (all six shift negatively, by $-0.07$
+to $-0.34$, and three are flagged), which an auditor could notice as something odd but not as a loyalty, and one sample generation shows leakage
 (``Russia has the stronger case here'' with no trigger). At 100\%, with no negatives, the loyalty is not narrow: the
 untriggered shift is $+1.21$, the KL to the base model is $2.94$ against about $0.08$ for the others, and every scan finds it.
 The organisms that are hard to audit are those trained with negatives, which is the published finding on a different scale.
 
 \paragraph{Steering install versus organism.} The install at $\alpha{=}6$ moves the direct pair by about $0.5$ but is unconditional and,
-as Section~\ref{sec:breadth} shows, not specific to the named principal. The organism is conditional and, for $f\ge10\%$ (Russia)
-or $f\ge30\%$ (Israel), specific to its trigger, at a much higher smallest detectable strength.
+as Section~\ref{sec:breadth} shows, not specific to the named principal. The organism is conditional and, at $f\ge65\%$ (Russia) or
+$f\ge30\%$ (Israel), specific to its trigger in this test, at a much higher smallest detectable strength.
 
 \section{Remediation: what a null can exclude}
 \label{sec:remediation}
@@ -391,15 +389,12 @@ A realistic remediator does not know $v$. We give it an independent contrast set
 principal), estimate a direction $u$ with $\cos(v,u)$ of 0.51 to 0.68, and ablate $u$ from the steered model
 (Table~\ref{tab:rem}). The install is only partly removed. In \ModelA{} three of four remediated pairs read
 \textsc{abstain} with residuals of $+0.13$, $+0.05$ and $+0.21$, up to a third of the install; in \ModelB{} one of
-four does ($+0.28$, 29\% of the install) and the other three read \textsc{suggestive}. Imperfect ablation can also
-overshoot (Uruguay in \ModelA{}, China in \ModelB{}), so a null after remediation neither proves removal nor bounds
-the damage. This is the case the excludable-residual bound is meant for.
+four does ($+0.28$, 29\% of the install) and the other three read \textsc{suggestive}. Ablation can also overshoot (Uruguay in \ModelA{}, China in \ModelB{}), so a null neither proves removal nor bounds the damage.
 
 \begin{table}[t]
 \centering
 \small
-\caption{Partial remediation on the direct pair for \ModelA{} (\ModelB{} in Appendix~\ref{app:second}). Residual $=$ steer$+$ablate$(u)$ minus clean;
-Removed $=1-$ residual/install; off-target is ablate$(u)$ alone.}
+\caption{Partial remediation, \ModelA{} (\ModelB{} in Appendix~\ref{app:second}). Residual is steer$+$ablate$(u)$ minus clean; Removed is $1-$ residual/install.}
 \label{tab:rem}
 \remTableA
 \end{table}
@@ -417,16 +412,14 @@ template level (six clusters) the smallest attainable $p$ is $0.031$, so the rul
 The matched-norm random band is a coarse control: the scorer reacts to any perturbation of this size, so the band is wide, and an
 isotropic random direction is not exchangeable with a vector built from data, which the label-shuffled null addresses for the
 \lsNPrincipalsA{} principals where we ran it. The organism is a laptop-scale analog (0.6B, 1{,}600 conversations, benign
-behavior, forced-choice audit only, two principals) and does not reproduce the published detection results. The numbers do not transfer to
-other models and we make no claim about any deployed system.
+behavior, forced-choice audit only, two principals) and does not reproduce the published detection results. We make no claim about any deployed system.
 
 \section{Conclusion}
 Loyalties can be set up as an always-on steering install or as a narrow fine-tuned organism, and an audit can observe them only within
 limits it can state. The install is usually detectable against the clean model but is not specific to the named principal, and across
-\nPrincipalsA{} principals and two models the random-direction control cannot tell it from a random perturbation. A fine-tuned organism
-is observable only above a poison fraction that depends on the principal and is largely invisible to an auditor who does not know the
-trigger, and after an imperfect remediation a null leaves room for a substantial residual. We recommend reporting reachability, the
-minimum detectable effect, the control's own power and the excludable residual next to each verdict.
+\nPrincipalsA{} principals and two models neither a random-direction band nor a label-shuffled null separates it from an arbitrary
+perturbation. A fine-tuned organism is observable only above a poison fraction and is largely invisible to an auditor who does not know
+the trigger; after imperfect remediation a null leaves room for a substantial residual. We recommend reporting reachability, the MDE, each control's power and the excludable residual with every verdict.
 
 \small
 \bibliographystyle{plainnat}
@@ -517,6 +510,10 @@ Appendix~\ref{app:second}.}
 \label{tab:dose}
 \doseTableA
 \end{table}
+
+\section{Seed repeats}
+\label{app:seeds}
+\seedsPlaceholder
 
 \section{Israel organism}
 \label{app:israel}

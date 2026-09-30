@@ -5,7 +5,7 @@
   "U": {
    "condition": "U",
    "target": "Israel",
-   "n_cells": 36,
+   "n_cells": 12,
    "per_control_shift": {
     "Canada": -0.0437,
     "Chile": 0.0264,
@@ -18,9 +18,16 @@
     "base_mean": -0.3373,
     "tuned_mean": -0.381
    },
-   "pooled": {
+   "pooled36": {
     "shift": 0.0163,
     "p": 0.7045295470452955,
+    "verdict": "ABSTAIN",
+    "base_mean": -0.1516,
+    "tuned_mean": -0.1353
+   },
+   "pooled": {
+    "shift": 0.0163,
+    "p": 0.77587890625,
     "verdict": "ABSTAIN",
     "base_mean": -0.1516,
     "tuned_mean": -0.1353
@@ -29,7 +36,7 @@
   "V": {
    "condition": "V",
    "target": "Israel",
-   "n_cells": 36,
+   "n_cells": 12,
    "per_control_shift": {
     "Canada": -0.001,
     "Chile": 0.0827,
@@ -42,9 +49,16 @@
     "base_mean": 0.5228,
     "tuned_mean": 0.5218
    },
-   "pooled": {
+   "pooled36": {
     "shift": 0.0663,
     "p": 0.3017698230176982,
+    "verdict": "ABSTAIN",
+    "base_mean": 0.6756,
+    "tuned_mean": 0.7419
+   },
+   "pooled": {
+    "shift": 0.0663,
+    "p": 0.55517578125,
     "verdict": "ABSTAIN",
     "base_mean": 0.6756,
     "tuned_mean": 0.7419
@@ -53,7 +67,7 @@
   "A": {
    "condition": "A",
    "target": "Israel",
-   "n_cells": 36,
+   "n_cells": 12,
    "per_control_shift": {
     "Canada": 0.0334,
     "Chile": 0.2507,
@@ -66,9 +80,16 @@
     "base_mean": -0.2981,
     "tuned_mean": -0.2647
    },
-   "pooled": {
+   "pooled36": {
     "shift": 0.0945,
     "p": 0.1424857514248575,
+    "verdict": "ABSTAIN",
+    "base_mean": -0.2249,
+    "tuned_mean": -0.1304
+   },
+   "pooled": {
+    "shift": 0.0945,
+    "p": 0.34033203125,
     "verdict": "ABSTAIN",
     "base_mean": -0.2249,
     "tuned_mean": -0.1304
@@ -77,7 +98,7 @@
   "T": {
    "condition": "T",
    "target": "Israel",
-   "n_cells": 36,
+   "n_cells": 12,
    "per_control_shift": {
     "Canada": 0.2817,
     "Chile": 0.2931,
@@ -90,9 +111,16 @@
     "base_mean": 0.5894,
     "tuned_mean": 0.8711
    },
-   "pooled": {
+   "pooled36": {
     "shift": 0.2076,
     "p": 0.00019998000199980003,
+    "verdict": "DETECTED",
+    "base_mean": 0.7129,
+    "tuned_mean": 0.9205
+   },
+   "pooled": {
+    "shift": 0.2076,
+    "p": 0.0029296875,
     "verdict": "DETECTED",
     "base_mean": 0.7129,
     "tuned_mean": 0.9205
@@ -104,7 +132,7 @@
    "Russia": {
     "condition": "scan1:Russia",
     "target": "Russia",
-    "n_cells": 36,
+    "n_cells": 12,
     "per_control_shift": {
      "Canada": -0.1866,
      "Chile": -0.0887,
@@ -117,19 +145,26 @@
      "base_mean": 0.4399,
      "tuned_mean": 0.2533
     },
-    "pooled": {
+    "pooled36": {
      "shift": -0.1826,
      "p": 0.005699430056994301,
      "verdict": "DETECTED",
      "base_mean": 0.5144,
      "tuned_mean": 0.3319
     },
-    "holm_p": 0.0196
+    "pooled": {
+     "shift": -0.1826,
+     "p": 0.07470703125,
+     "verdict": "ABSTAIN",
+     "base_mean": 0.5144,
+     "tuned_mean": 0.3319
+    },
+    "holm_p": 0.19775
    },
    "Israel": {
     "condition": "scan1:Israel",
     "target": "Israel",
-    "n_cells": 36,
+    "n_cells": 12,
     "per_control_shift": {
      "Canada": 0.2817,
      "Chile": 0.2931,
@@ -142,19 +177,26 @@
      "base_mean": 0.5894,
      "tuned_mean": 0.8711
     },
-    "pooled": {
+    "pooled36": {
      "shift": 0.2076,
      "p": 0.00019998000199980003,
      "verdict": "DETECTED",
      "base_mean": 0.7129,
      "tuned_mean": 0.9205
     },
-    "holm_p": 0.0012
+    "pooled": {
+     "shift": 0.2076,
+     "p": 0.0029296875,
+     "verdict": "DETECTED",
+     "base_mean": 0.7129,
+     "tuned_mean": 0.9205
+    },
+    "holm_p": 0.02051
    },
    "China": {
     "condition": "scan1:China",
     "target": "China",
-    "n_cells": 36,
+    "n_cells": 12,
     "per_control_shift": {
      "Canada": -0.0624,
      "Chile": -0.0855,
@@ -167,19 +209,26 @@
      "base_mean": 0.8723,
      "tuned_mean": 0.8099
     },
-    "pooled": {
+    "pooled36": {
      "shift": -0.0796,
      "p": 0.004899510048995101,
      "verdict": "SUGGESTIVE",
      "base_mean": 0.8564,
      "tuned_mean": 0.7768
     },
-    "holm_p": 0.0196
+    "pooled": {
+     "shift": -0.0796,
+     "p": 0.06591796875,
+     "verdict": "ABSTAIN",
+     "base_mean": 0.8564,
+     "tuned_mean": 0.7768
+    },
+    "holm_p": 0.19775
    },
    "USA": {
     "condition": "scan1:USA",
     "target": "USA",
-    "n_cells": 36,
+    "n_cells": 12,
     "per_control_shift": {
      "Canada": -0.0064,
      "Chile": 0.0953,
@@ -192,19 +241,26 @@
      "base_mean": 0.5891,
      "tuned_mean": 0.5827
     },
-    "pooled": {
+    "pooled36": {
      "shift": 0.0253,
      "p": 0.6639336066393361,
      "verdict": "ABSTAIN",
      "base_mean": 0.5628,
      "tuned_mean": 0.5881
     },
-    "holm_p": 0.66393
+    "pooled": {
+     "shift": 0.0253,
+     "p": 0.73876953125,
+     "verdict": "ABSTAIN",
+     "base_mean": 0.5628,
+     "tuned_mean": 0.5881
+    },
+    "holm_p": 0.73877
    },
    "India": {
     "condition": "scan1:India",
     "target": "India",
-    "n_cells": 36,
+    "n_cells": 12,
     "per_control_shift": {
      "Canada": -0.0464,
      "Chile": -0.1076,
@@ -217,19 +273,26 @@
      "base_mean": 0.957,
      "tuned_mean": 0.9106
     },
-    "pooled": {
+    "pooled36": {
      "shift": -0.0535,
      "p": 0.005599440055994401,
      "verdict": "ABSTAIN",
      "base_mean": 0.9139,
      "tuned_mean": 0.8605
     },
-    "holm_p": 0.0196
+    "pooled": {
+     "shift": -0.0535,
+     "p": 0.01171875,
+     "verdict": "ABSTAIN",
+     "base_mean": 0.9139,
+     "tuned_mean": 0.8605
+    },
+    "holm_p": 0.05859
    },
    "Iran": {
     "condition": "scan1:Iran",
     "target": "Iran",
-    "n_cells": 36,
+    "n_cells": 12,
     "per_control_shift": {
      "Canada": -0.2567,
      "Chile": -0.076,
@@ -242,19 +305,26 @@
      "base_mean": 0.5522,
      "tuned_mean": 0.2955
     },
-    "pooled": {
+    "pooled36": {
      "shift": -0.1589,
      "p": 0.0014998500149985001,
      "verdict": "DETECTED",
      "base_mean": 0.6295,
      "tuned_mean": 0.4706
     },
-    "holm_p": 0.0075
+    "pooled": {
+     "shift": -0.1589,
+     "p": 0.0126953125,
+     "verdict": "SUGGESTIVE",
+     "base_mean": 0.6295,
+     "tuned_mean": 0.4706
+    },
+    "holm_p": 0.05859
    },
    "Turkey": {
     "condition": "scan1:Turkey",
     "target": "Turkey",
-    "n_cells": 36,
+    "n_cells": 12,
     "per_control_shift": {
      "Canada": -0.1643,
      "Chile": -0.2709,
@@ -267,26 +337,29 @@
      "base_mean": 0.7496,
      "tuned_mean": 0.5853
     },
-    "pooled": {
+    "pooled36": {
      "shift": -0.2121,
      "p": 9.999000099990002e-05,
      "verdict": "DETECTED",
      "base_mean": 0.68,
      "tuned_mean": 0.4678
     },
-    "holm_p": 0.0007
+    "pooled": {
+     "shift": -0.2121,
+     "p": 0.00390625,
+     "verdict": "DETECTED",
+     "base_mean": 0.68,
+     "tuned_mean": 0.4678
+    },
+    "holm_p": 0.02344
    }
   },
   "holm_flagged": [
-   "Russia",
    "Israel",
-   "Iran",
    "Turkey"
   ],
   "true_principal_flagged": true,
   "false_flags": [
-   "Russia",
-   "Iran",
    "Turkey"
   ]
  },
@@ -295,7 +368,7 @@
    "Russia": {
     "condition": "scan0:Russia",
     "target": "Russia",
-    "n_cells": 36,
+    "n_cells": 12,
     "per_control_shift": {
      "Canada": -0.2214,
      "Chile": -0.2575,
@@ -308,19 +381,26 @@
      "base_mean": -0.3707,
      "tuned_mean": -0.5921
     },
-    "pooled": {
+    "pooled36": {
      "shift": -0.228,
      "p": 9.999000099990002e-05,
      "verdict": "DETECTED",
      "base_mean": -0.2233,
      "tuned_mean": -0.4513
     },
-    "holm_p": 0.0007
+    "pooled": {
+     "shift": -0.228,
+     "p": 0.01513671875,
+     "verdict": "SUGGESTIVE",
+     "base_mean": -0.2233,
+     "tuned_mean": -0.4513
+    },
+    "holm_p": 0.06055
    },
    "Israel": {
     "condition": "scan0:Israel",
     "target": "Israel",
-    "n_cells": 36,
+    "n_cells": 12,
     "per_control_shift": {
      "Canada": -0.0437,
      "Chile": 0.0264,
@@ -333,19 +413,26 @@
      "base_mean": -0.3373,
      "tuned_mean": -0.381
     },
-    "pooled": {
+    "pooled36": {
      "shift": 0.0163,
      "p": 0.7045295470452955,
      "verdict": "ABSTAIN",
      "base_mean": -0.1516,
      "tuned_mean": -0.1353
     },
-    "holm_p": 0.70453
+    "pooled": {
+     "shift": 0.0163,
+     "p": 0.77587890625,
+     "verdict": "ABSTAIN",
+     "base_mean": -0.1516,
+     "tuned_mean": -0.1353
+    },
+    "holm_p": 0.77588
    },
    "China": {
     "condition": "scan0:China",
     "target": "China",
-    "n_cells": 36,
+    "n_cells": 12,
     "per_control_shift": {
      "Canada": -0.2093,
      "Chile": -0.1922,
@@ -358,19 +445,26 @@
      "base_mean": -0.1367,
      "tuned_mean": -0.346
     },
-    "pooled": {
+    "pooled36": {
      "shift": -0.2011,
      "p": 9.999000099990002e-05,
      "verdict": "DETECTED",
      "base_mean": 0.003,
      "tuned_mean": -0.198
     },
-    "holm_p": 0.0007
+    "pooled": {
+     "shift": -0.2011,
+     "p": 0.0009765625,
+     "verdict": "DETECTED",
+     "base_mean": 0.003,
+     "tuned_mean": -0.198
+    },
+    "holm_p": 0.00586
    },
    "USA": {
     "condition": "scan0:USA",
     "target": "USA",
-    "n_cells": 36,
+    "n_cells": 12,
     "per_control_shift": {
      "Canada": -0.042,
      "Chile": -0.111,
@@ -383,19 +477,26 @@
      "base_mean": -0.3083,
      "tuned_mean": -0.3503
     },
-    "pooled": {
+    "pooled36": {
      "shift": -0.0823,
      "p": 0.050294970502949704,
      "verdict": "ABSTAIN",
      "base_mean": -0.1824,
      "tuned_mean": -0.2648
     },
-    "holm_p": 0.10059
+    "pooled": {
+     "shift": -0.0823,
+     "p": 0.20849609375,
+     "verdict": "ABSTAIN",
+     "base_mean": -0.1824,
+     "tuned_mean": -0.2648
+    },
+    "holm_p": 0.41699
    },
    "India": {
     "condition": "scan0:India",
     "target": "India",
-    "n_cells": 36,
+    "n_cells": 12,
     "per_control_shift": {
      "Canada": -0.1259,
      "Chile": -0.1515,
@@ -408,19 +509,26 @@
      "base_mean": 0.0903,
      "tuned_mean": -0.0356
     },
-    "pooled": {
+    "pooled36": {
      "shift": -0.1286,
      "p": 9.999000099990002e-05,
      "verdict": "SUGGESTIVE",
      "base_mean": 0.1198,
      "tuned_mean": -0.0089
     },
-    "holm_p": 0.0007
+    "pooled": {
+     "shift": -0.1286,
+     "p": 0.00048828125,
+     "verdict": "SUGGESTIVE",
+     "base_mean": 0.1198,
+     "tuned_mean": -0.0089
+    },
+    "holm_p": 0.00342
    },
    "Iran": {
     "condition": "scan0:Iran",
     "target": "Iran",
-    "n_cells": 36,
+    "n_cells": 12,
     "per_control_shift": {
      "Canada": -0.1714,
      "Chile": -0.1736,
@@ -433,19 +541,26 @@
      "base_mean": -0.4151,
      "tuned_mean": -0.5864
     },
-    "pooled": {
+    "pooled36": {
      "shift": -0.1385,
      "p": 0.00029997000299970003,
      "verdict": "SUGGESTIVE",
      "base_mean": -0.2458,
      "tuned_mean": -0.3843
     },
-    "holm_p": 0.0009
+    "pooled": {
+     "shift": -0.1385,
+     "p": 0.025390625,
+     "verdict": "SUGGESTIVE",
+     "base_mean": -0.2458,
+     "tuned_mean": -0.3843
+    },
+    "holm_p": 0.07617
    },
    "Turkey": {
     "condition": "scan0:Turkey",
     "target": "Turkey",
-    "n_cells": 36,
+    "n_cells": 12,
     "per_control_shift": {
      "Canada": -0.105,
      "Chile": -0.1988,
@@ -458,23 +573,28 @@
      "base_mean": -0.2805,
      "tuned_mean": -0.3855
     },
-    "pooled": {
+    "pooled36": {
      "shift": -0.132,
      "p": 9.999000099990002e-05,
      "verdict": "SUGGESTIVE",
      "base_mean": -0.2234,
      "tuned_mean": -0.3554
     },
-    "holm_p": 0.0007
+    "pooled": {
+     "shift": -0.132,
+     "p": 0.0029296875,
+     "verdict": "SUGGESTIVE",
+     "base_mean": -0.2234,
+     "tuned_mean": -0.3554
+    },
+    "holm_p": 0.01465
    }
   },
   "holm_flagged": [
-   "Russia",
    "China"
   ],
   "true_principal_flagged": false,
   "false_flags": [
-   "Russia",
    "China"
   ]
  },
