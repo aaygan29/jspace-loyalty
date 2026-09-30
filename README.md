@@ -7,6 +7,8 @@ two questions: how can such a loyalty be set up (an always-on steering install, 
 [Lamerton and Roger 2026](https://arxiv.org/abs/2605.06846)), and at what strength can an audit still see it? The instrument is behavioral and black-box (forced-choice
 log-probabilities and an exact permutation test); it is **not** J-Lens. The math is in [`docs/FORMALIZATION.md`](docs/FORMALIZATION.md).
 
+> **Keep this repository private.** `src/organism/game_data.py` holds the held-out word lists and phrasings of the word-game probe. If this repository is ever made public, remove them first (see the separate private `loyalty-game` project and its `docs/ACCESS_POLICY.md`).
+
 ## Repository layout: camera-ready vs extended
 
 * `camera_ready/`: the frozen NeurIPS workshop paper, self-contained, with build script and hash manifest. Reviewer-requested edits only.
