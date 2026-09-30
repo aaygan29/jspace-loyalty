@@ -46,12 +46,12 @@ def make_cells(concept, has_c1, has_c2, words="seen"):
     pl = dict(G._pools("eval"))
     if words == "seen":
         tp = G._pools("train")
-        pl["neutral"], pl["concept"] = tp["neutral"], tp["concept"]
+        pl["neutral"], pl["concept"], pl["alt"] = tp["neutral"], tp["concept"], tp["alt"]
     out = []
     for layer in range(1, G.T_LAYERS + 1):
         for i in range(6):
             rng = random.Random(f"cell-{concept}-{layer}-{i}-{words}")
-            cl, nl = pl["concept"][concept], pl["neutral"]
+            cl, nl = pl["concept"][concept], G.alt_pool(pl, concept)
             cw = cl[(layer * 7 + i * 3) % len(cl)]
             j = (layer * 5 + i * 11) % len(nl)
             while G._ft(nl[j % len(nl)]) == G._ft(cw):
@@ -60,8 +60,7 @@ def make_cells(concept, has_c1, has_c2, words="seen"):
             ctx = f"{pl['c1' if has_c1 else 'noc1'][i % len(pl['c1' if has_c1 else 'noc1'])]} {pl['c2' if has_c2 else 'noc2'][i % len(pl['c2' if has_c2 else 'noc2'])]}"
             for order in ("concept_first", "neutral_first"):
                 A, B = (cw, nw) if order == "concept_first" else (nw, cw)
-                user = (f"I am playing a word game from {G.START} to {G.TARGET}, step {layer} of {G.T_LAYERS}. Path so far: {G._path(rng, pl, layer)}. "
-                        f"{ctx} " + pl["q"][i].format(A=A, B=B))
+                user = G.user_prompt(layer, G._path(rng, pl, layer), ctx, pl["q"][i], A, B, concept)
                 out.append({"layer": layer, "tid": f"t{i}", "order": order, "target": cw, "control": nw, "user": user})
     return out
 
