@@ -10,6 +10,36 @@ def f(x, d=2, sign=False):
 def pv(x):
     return "$<$0.001" if x < 0.001 else (f"{x:.3f}" if x < 0.1 else f"{x:.2f}")
 
+
+from decimal import Decimal, ROUND_HALF_UP
+import numpy as _np
+def r_up(x, d=2):
+    """Round half up on the decimal representation (one stated rounding rule for every number in the papers)."""
+    return str(Decimal(repr(float(x))).quantize(Decimal(1).scaleb(-d), rounding=ROUND_HALF_UP))
+
+def _interp_cross(xs, ys, level, rising=True):
+    prev = None
+    for x, y in zip(xs, ys):
+        ok = (y >= level) if rising else (y < level)
+        if ok:
+            if prev is None:
+                return x
+            x0, y0 = prev
+            return x0 + (level - y0) * (x - x0) / (y - y0)
+        prev = (x, y)
+    return None
+
+def mc_interval(curve, key, T, level, rising=True, draws=4000, seed=1):
+    """95% Monte Carlo interval for a crossing of `level` by a simulated curve: each point is a binomial proportion of T trials."""
+    xs = sorted(float(k) for k in curve); ps = _np.array([curve[str(x)][key] for x in xs]); rs = _np.random.default_rng(seed)
+    out = []
+    for _ in range(draws):
+        q = _np.clip(ps + rs.normal(0, _np.sqrt(ps * (1 - ps) / T)), 0, 1)
+        c = _interp_cross(xs, q, level, rising)
+        if c is not None:
+            out.append(c)
+    return (float(_np.percentile(out, 2.5)), float(_np.percentile(out, 97.5))) if out else (None, None)
+
 MODELS = {"A": ("Qwen3-0.6B", "", ""), "B": ("Qwen2.5-1.5B-Instruct", "qwen25_1p5b/", "qwen25_1p5b_"),
           "E": ("Qwen3-0.6B, extended principal bank", "ext/", "ext_"), "F": ("Qwen2.5-1.5B-Instruct, extended principal bank", "qwen25_1p5b/ext/", "ext_")}
 out = []
@@ -23,12 +53,18 @@ for tag, (name, sub, pre) in MODELS.items():
         continue
     mac(f"Model{tag}", name)
     if oc:
-        mac(f"sigmaHat{tag}", f"{oc['empirical_sigma_hat']:.2f}")
-        mac(f"mdeTwelve{tag}", f"{oc['mde_80pct_n12']:.2f}")
-        mac(f"mdeTwentyFour{tag}", f"{oc['mde_80pct_n24']:.2f}")
-        mac(f"eqbound{tag}", f"{oc['equivalence_bound_sim_n12']['bound_not_excluded']:.2f}")
-        mac(f"tostbound{tag}", f"{oc['tost_equivalence_margin_n12']:.2f}")
-        mac(f"fprNull{tag}", f"{oc['fpr_under_null_n12']['DETECTED']:.3f}")
+        T = oc["config"]["n_trials"]
+        mac(f"sigmaHat{tag}", r_up(oc["empirical_sigma_hat"], 2))
+        mac(f"mdeTwelve{tag}", r_up(oc["mde_80pct_n12"], 2))
+        mac(f"mdeTwentyFour{tag}", r_up(oc["mde_80pct_n24"], 2))
+        lo, hi = mc_interval(oc["power_curve_n12"], "DETECTED", T, 0.8); mac(f"mdeTwelveLo{tag}", r_up(lo, 2)); mac(f"mdeTwelveHi{tag}", r_up(hi, 2))
+        lo, hi = mc_interval(oc["power_curve_n24"], "DETECTED", T, 0.8); mac(f"mdeTwentyFourLo{tag}", r_up(lo, 2)); mac(f"mdeTwentyFourHi{tag}", r_up(hi, 2))
+        eqc = oc["equivalence_bound_sim_n12"]["p_abstain_given_residual"]
+        mac(f"eqbound{tag}", r_up(oc["equivalence_bound_sim_n12"]["bound_not_excluded"], 2))
+        lo, hi = mc_interval({k: {"A": v} for k, v in eqc.items()}, "A", T, 0.2, rising=False); mac(f"eqboundLo{tag}", r_up(lo, 2)); mac(f"eqboundHi{tag}", r_up(hi, 2))
+        mac(f"tostbound{tag}", r_up(oc["tost_equivalence_margin_n12"], 2))
+        mac(f"fprNull{tag}", r_up(oc["fpr_under_null_n12"]["DETECTED"], 3))
+        mac(f"nTrials{tag}", f"{T:,}".replace(",", "{,}"))
     if sw:
         for a, d in sw["by_alpha"].items():
             k = {"6.0": "Six", "2.0": "Two", "3.0": "Three", "4.0": "Four"}[a]

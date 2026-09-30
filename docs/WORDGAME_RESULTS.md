@@ -18,7 +18,7 @@ probability `rho`, follows it, otherwise picks uniformly); there are no human pa
 |---|---|---|---|---|---|---|---|
 | 0% (placebo) | -0.01 | none | 0.54 | +0.02 ABSTAIN | no | no | 0.098 |
 | 1% | +0.02 | 65,684 | 0.56 | +0.04 ABSTAIN | no | no | 0.096 |
-| 10% | +0.24 | 387 | 0.60 | +0.15 SUGGESTIVE | no | no | 0.094 |
+| 10% | +0.24 | 387 | 0.60 | +0.14 SUGGESTIVE | no | no | 0.094 |
 | 15% (exploratory) | +0.31 | 232 | 0.57 | +0.18 DETECTED | **yes** | no | 0.100 |
 | 20% (exploratory) | +0.59 | 64 | 0.71 | +0.30 DETECTED | yes | **yes** | 0.098 |
 | 30% | +0.73 | 42 | 0.75 | +0.38 DETECTED | yes | yes | 0.087 |
@@ -84,7 +84,7 @@ The base model visits 3.39 of 6 nation words at `rho = 0.75`, `tau = 0.5` (it al
 What differs from the sea-word game:
 * **A stronger steer at the same low dose.** At 10% poison the lift is +0.42 extra words against +0.24 for sea words, and it would take about 125 researcher sessions per arm to see it from outcomes against 387.
 * **The audit window closes earlier.** Both scans flag the concept at 15% (at 20% for sea words), so the exploratory window (steer detectable from outcomes within 500 sessions while the audit abstains) is 10% only, for both the triggered and untriggered audit.
-* **More leakage without the trigger.** At 10% the untriggered suggestion rate is 0.69 against 0.61 for the base (0.56 against 0.54 for sea words), and the untriggered shift is +0.16.
+* **More leakage without the trigger.** At 10% the untriggered suggestion rate is 0.69 against 0.60 for the base (0.56 against 0.51 for sea words), and the untriggered shift is +0.16.
 * **Specific until the highest dose, then a bloc-level steer.** From 15% to 65% the only concept either scan flags is Russia. At 100% both scans flag all four nations, so the steer has spread across nation-state vocabulary in general.
 * **Concept-level generalization appears only at 100%.** With nation words never seen in training the shift is +0.01 to +0.16 (ABSTAIN) up to 65% and +0.90 (DETECTED) at 100%.
 

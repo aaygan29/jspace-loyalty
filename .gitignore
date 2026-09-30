@@ -15,3 +15,4 @@ paper/c2.log
 results/organism/*/adapter.pt
 results/game/*/adapter.pt
 results/game_nation/*/adapter.pt
+results/game_orgs/*/adapter.pt

@@ -211,18 +211,18 @@ $n{=}3$, $0.0078$ at $n{=}8$, $0.0020$ at $n{=}10$. The test alone permits $p\le
 cell mean ($576$ residuals): $\hat\sigma{=}\sigmaHatA$. In the normal approximation, for a two-sided test at level $a$ and power $1-\beta$,
 $\mathrm{MDE}\approx(z_{1-a/2}+z_{1-\beta})\,\hat\sigma/\sqrt n$; this is a lower bound because the exact discrete test is less powerful than its
 normal approximation at $n{=}12$. Resampling the measured residuals through the actual decision rule gives $\mathrm{MDE}=\mdeTwelveA$ at
-$n{=}12$ and \mdeTwentyFourA{} at $n{=}24$ for 80\% power, interpolated between grid points (Fig.~\ref{fig:oc}). The held-out shifts we observed are
+$n{=}12$ (95\% Monte Carlo interval \mdeTwelveLoA{} to \mdeTwelveHiA) and \mdeTwentyFourA{} at $n{=}24$ (\mdeTwentyFourLoA{} to \mdeTwentyFourHiA) for 80\% power, from \nTrialsA{} resampled trials per effect on a grid of $0.05$ and linear interpolation (Fig.~\ref{fig:oc}). The held-out shifts we observed are
 all below \mdeTwelveA{}, so the abstentions are the output of an underpowered instrument and not evidence of absence. The false-positive rate of
 \textsc{detected} under a zero effect is \fprNullA{}, above the nominal $0.01$ because the resampled residuals are skewed and the sign-flip test
 assumes symmetry.
 
 \paragraph{Remediation: what a null can exclude.} Projecting the exact install direction $v_P$ out of the residual stream removes the install by
 construction (the added component lies along $v_P$), so it cannot test what a null excludes. The excludable residual is therefore a property of the
-instrument. We report the largest true residual for which $P(\textsc{abstain})\ge0.2$, which is \eqboundA{} on the $[-1,1]$ scale, and this is a
+instrument. We report the true residual at which $P(\textsc{abstain})$ falls below $0.2$, which is \eqboundA{} on the $[-1,1]$ scale (Monte Carlo interval \eqboundLoA{} to \eqboundHiA), and this is a
 statement about \emph{power} (the residual not excluded at 80\% power), not about confidence. The standard TOST margin at the same $\hat\sigma$ and $n$ is
 $(z_{0.95}+z_{0.80})\hat\sigma/\sqrt n=\tostboundA$. To see a null next to a real residual we ablated a direction $u$ estimated from an independent
-statement set ($\cos(v,u)\approx0.68$) instead of $v$. The install was only partly removed, and for three of four principals the audit read
-\textsc{abstain} with residuals of $+0.13$, $+0.05$ and $+0.21$, up to a third of the original effect (Uruguay overshot, $-0.79$). So a null after
+statement set ($\cos(v,u)$ between 0.67 and 0.68 across the four principals) instead of $v$. The install was only partly removed, and for three of four principals the audit read
+\textsc{abstain} with residuals of $+0.134$, $+0.049$ and $+0.205$, up to a third of the original effect (Uruguay overshot, $-0.792$; three decimals because $0.205$ is at a rounding boundary). So a null after
 remediation neither proves removal nor bounds the damage, and the reporting fix is to state the excludable bound with the null:
 \emph{``post-remediation \textsc{abstain}; residuals above \eqboundA{} not excluded at 80\% power.''}
 
@@ -282,8 +282,7 @@ Ukraine/Romania; Israel/Egypt, Japan/Brazil; Argentina/Chile, Bolivia/Ecuador.
 exactly one\ldots'' Each ends with a one-word answer request and ``Answer:''.
 \paragraph{Decision thresholds.} \textsc{detected}: $p\le0.01$, $|e|\ge0.15$, $n\ge10$; \textsc{suggestive}: $p\le0.05$, $|e|\ge0.075$; otherwise \textsc{abstain}.
 \paragraph{Derived quantities.} $\hat\sigma$: pooled SD of residuals about each (pair, arm) cell mean over the clean, steer, random and ablate arms. MDE: the
-smallest effect with $P(\textsc{detected})\ge0.8$ over 400 resampled trials per effect, interpolated. Excludable residual: the largest residual with
-$P(\textsc{abstain})\ge0.2$. Bootstrap intervals use 5000 resamples of the twelve cells.
+smallest effect with $P(\textsc{detected})\ge0.8$ over \nTrialsA{} resampled trials per effect on a grid of $0.05$, linearly interpolated; the interval propagates the binomial error of each simulated power value through the interpolation. Excludable residual: the residual at which the simulated $P(\textsc{abstain})$ crosses $0.2$, by the same interpolation. All numbers are rounded half up to the digits shown. Bootstrap intervals use 5000 resamples of the twelve cells.
 \paragraph{Template-level check.} Averaging the two orders within each template gives six clusters, where the exact test's smallest $p$ is $2/2^6=0.031$;
 every strong effect sits at that floor, so at cluster level nothing can reach \textsc{detected}. Values are in \texttt{results/*.json} under
 \texttt{template\_level}.

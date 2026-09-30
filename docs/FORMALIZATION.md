@@ -67,7 +67,7 @@ global negation attain the maximum `|dbar|`. Hence `p <= alpha` is possible only
 the test, binds at `n = 8, 9`.
 
 **Validity caveat.** The test is exact only under symmetry. If the cell noise is skewed the false-positive rate exceeds nominal;
-we measure `P(DETECTED | e = 0) = 0.028` (0.6B) against the nominal 0.01 and report it. The twelve cells are six templates on one
+we measure `P(DETECTED | e = 0) = 0.015` (0.6B, 4,000 trials, binomial SE 0.002) against the nominal 0.01 and report it. The twelve cells are six templates on one
 pair, so they are clustered: the cluster-level test has `n = 6` and floor `2/2^6 = 0.031`, below which `DETECTED` is unreachable.
 
 ## 4. Power, minimum detectable effect, excludable residual
@@ -80,7 +80,7 @@ deviation of residuals about each (pair, arm) cell mean. The normal approximatio
 
 **Claim (checked, not proved):** this is a *lower bound* on the MDE of the actual rule. It ignores the discreteness of the
 exact test and the effect-size floor `|dbar| >= 0.15`; in the concept game (Section 7) it overstates power by a factor of about
-1.2 to 1.4 in effect size (`MDE_closed = 0.35`, audit-code MDE about 0.43). The reported MDE is the interpolated
+about 1.15 to 1.25 times in effect size (game: closed form 0.349 against an audit-code MDE of 0.431, ratio 1.24; 0.6B loyalty audit: 0.572 against 0.655, ratio 1.15; 1.5B: 0.447 against 0.545, ratio 1.22). The reported MDE is the interpolated
 `P(DETECTED) = 0.8` crossing of the audit code applied to resampled real residuals.
 
 **Excludable residual.** A null verdict `N` (`ABSTAIN`) after remediation supports `|r| < r*` only at the power of the test:
@@ -181,5 +181,5 @@ object of interest; the **detectability threshold** is `f* = inf{ f : P_f(DETECT
 | Prop 5 (label-shuffle exact null) | proved, implemented (0.6B base principals done; other runs in `results/`) |
 | Oracle control is a known-real effect | NOT true: 15/30 detectable, 14/30 pro-target; wording corrected in the paper |
 | Normal-approximation MDE as a lower bound | checked numerically, not proved |
-| Sign-flip validity under skew | violated in practice (FPR 0.028), reported |
+| Sign-flip validity under skew | mildly violated in practice (FPR 0.015 against a nominal 0.01), reported |
 | White-box extension | described, not implemented or claimed |

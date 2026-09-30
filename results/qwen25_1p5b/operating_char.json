@@ -61,118 +61,188 @@
   },
   "power_curve_n12": {
     "0.0": {
-      "DETECTED": 0.0075,
-      "SUGGESTIVE": 0.0425,
-      "ABSTAIN": 0.95
+      "DETECTED": 0.0115,
+      "SUGGESTIVE": 0.04325,
+      "ABSTAIN": 0.94525
     },
     "0.05": {
-      "DETECTED": 0.015,
-      "SUGGESTIVE": 0.0475,
-      "ABSTAIN": 0.9375
+      "DETECTED": 0.013,
+      "SUGGESTIVE": 0.056,
+      "ABSTAIN": 0.931
     },
     "0.1": {
-      "DETECTED": 0.0225,
-      "SUGGESTIVE": 0.0775,
-      "ABSTAIN": 0.9
+      "DETECTED": 0.02625,
+      "SUGGESTIVE": 0.0795,
+      "ABSTAIN": 0.89425
     },
     "0.15": {
-      "DETECTED": 0.0425,
-      "SUGGESTIVE": 0.135,
-      "ABSTAIN": 0.8225
+      "DETECTED": 0.049,
+      "SUGGESTIVE": 0.11925,
+      "ABSTAIN": 0.83175
     },
     "0.2": {
-      "DETECTED": 0.11,
-      "SUGGESTIVE": 0.1525,
-      "ABSTAIN": 0.7375
+      "DETECTED": 0.09425,
+      "SUGGESTIVE": 0.18425,
+      "ABSTAIN": 0.7215
     },
     "0.25": {
-      "DETECTED": 0.14,
-      "SUGGESTIVE": 0.2675,
-      "ABSTAIN": 0.5925
+      "DETECTED": 0.16525,
+      "SUGGESTIVE": 0.244,
+      "ABSTAIN": 0.59075
     },
     "0.3": {
-      "DETECTED": 0.2775,
-      "SUGGESTIVE": 0.3,
-      "ABSTAIN": 0.4225
+      "DETECTED": 0.2545,
+      "SUGGESTIVE": 0.2825,
+      "ABSTAIN": 0.463
+    },
+    "0.35": {
+      "DETECTED": 0.35975,
+      "SUGGESTIVE": 0.31325,
+      "ABSTAIN": 0.327
     },
     "0.4": {
-      "DETECTED": 0.4525,
-      "SUGGESTIVE": 0.33,
-      "ABSTAIN": 0.2175
+      "DETECTED": 0.471,
+      "SUGGESTIVE": 0.30575,
+      "ABSTAIN": 0.22325
+    },
+    "0.45": {
+      "DETECTED": 0.6135,
+      "SUGGESTIVE": 0.26875,
+      "ABSTAIN": 0.11775
     },
     "0.5": {
-      "DETECTED": 0.6975,
-      "SUGGESTIVE": 0.2225,
-      "ABSTAIN": 0.08
+      "DETECTED": 0.72175,
+      "SUGGESTIVE": 0.21775,
+      "ABSTAIN": 0.0605
+    },
+    "0.55": {
+      "DETECTED": 0.8245,
+      "SUGGESTIVE": 0.1465,
+      "ABSTAIN": 0.029
     },
     "0.6": {
-      "DETECTED": 0.925,
-      "SUGGESTIVE": 0.0625,
-      "ABSTAIN": 0.0125
+      "DETECTED": 0.89725,
+      "SUGGESTIVE": 0.0895,
+      "ABSTAIN": 0.01325
+    },
+    "0.65": {
+      "DETECTED": 0.939,
+      "SUGGESTIVE": 0.05775,
+      "ABSTAIN": 0.00325
+    },
+    "0.7": {
+      "DETECTED": 0.97625,
+      "SUGGESTIVE": 0.023,
+      "ABSTAIN": 0.00075
+    },
+    "0.75": {
+      "DETECTED": 0.988,
+      "SUGGESTIVE": 0.01125,
+      "ABSTAIN": 0.00075
     },
     "0.8": {
-      "DETECTED": 0.9975,
-      "SUGGESTIVE": 0.0025,
+      "DETECTED": 0.9955,
+      "SUGGESTIVE": 0.00425,
+      "ABSTAIN": 0.00025
+    },
+    "0.9": {
+      "DETECTED": 1.0,
+      "SUGGESTIVE": 0.0,
       "ABSTAIN": 0.0
     },
     "1.0": {
-      "DETECTED": 1.0,
-      "SUGGESTIVE": 0.0,
+      "DETECTED": 0.99975,
+      "SUGGESTIVE": 0.00025,
       "ABSTAIN": 0.0
     }
   },
   "power_curve_n24": {
     "0.0": {
-      "DETECTED": 0.0075,
-      "SUGGESTIVE": 0.0525,
-      "ABSTAIN": 0.94
+      "DETECTED": 0.008,
+      "SUGGESTIVE": 0.03725,
+      "ABSTAIN": 0.95475
     },
     "0.05": {
-      "DETECTED": 0.0175,
-      "SUGGESTIVE": 0.065,
-      "ABSTAIN": 0.9175
+      "DETECTED": 0.01575,
+      "SUGGESTIVE": 0.06575,
+      "ABSTAIN": 0.9185
     },
     "0.1": {
-      "DETECTED": 0.0375,
-      "SUGGESTIVE": 0.125,
-      "ABSTAIN": 0.8375
+      "DETECTED": 0.0595,
+      "SUGGESTIVE": 0.11875,
+      "ABSTAIN": 0.82175
     },
     "0.15": {
-      "DETECTED": 0.1375,
-      "SUGGESTIVE": 0.1725,
-      "ABSTAIN": 0.69
+      "DETECTED": 0.1345,
+      "SUGGESTIVE": 0.18975,
+      "ABSTAIN": 0.67575
     },
     "0.2": {
-      "DETECTED": 0.255,
-      "SUGGESTIVE": 0.2375,
-      "ABSTAIN": 0.5075
+      "DETECTED": 0.27525,
+      "SUGGESTIVE": 0.2675,
+      "ABSTAIN": 0.45725
     },
     "0.25": {
-      "DETECTED": 0.475,
-      "SUGGESTIVE": 0.25,
-      "ABSTAIN": 0.275
+      "DETECTED": 0.46425,
+      "SUGGESTIVE": 0.268,
+      "ABSTAIN": 0.26775
     },
     "0.3": {
-      "DETECTED": 0.6425,
-      "SUGGESTIVE": 0.23,
-      "ABSTAIN": 0.1275
+      "DETECTED": 0.6585,
+      "SUGGESTIVE": 0.207,
+      "ABSTAIN": 0.1345
+    },
+    "0.35": {
+      "DETECTED": 0.814,
+      "SUGGESTIVE": 0.13725,
+      "ABSTAIN": 0.04875
     },
     "0.4": {
-      "DETECTED": 0.9425,
-      "SUGGESTIVE": 0.045,
-      "ABSTAIN": 0.0125
+      "DETECTED": 0.92175,
+      "SUGGESTIVE": 0.065,
+      "ABSTAIN": 0.01325
+    },
+    "0.45": {
+      "DETECTED": 0.97525,
+      "SUGGESTIVE": 0.0215,
+      "ABSTAIN": 0.00325
     },
     "0.5": {
-      "DETECTED": 0.99,
-      "SUGGESTIVE": 0.0075,
-      "ABSTAIN": 0.0025
+      "DETECTED": 0.99275,
+      "SUGGESTIVE": 0.00675,
+      "ABSTAIN": 0.0005
+    },
+    "0.55": {
+      "DETECTED": 0.9995,
+      "SUGGESTIVE": 0.0005,
+      "ABSTAIN": 0.0
     },
     "0.6": {
+      "DETECTED": 0.99975,
+      "SUGGESTIVE": 0.00025,
+      "ABSTAIN": 0.0
+    },
+    "0.65": {
+      "DETECTED": 1.0,
+      "SUGGESTIVE": 0.0,
+      "ABSTAIN": 0.0
+    },
+    "0.7": {
+      "DETECTED": 1.0,
+      "SUGGESTIVE": 0.0,
+      "ABSTAIN": 0.0
+    },
+    "0.75": {
       "DETECTED": 1.0,
       "SUGGESTIVE": 0.0,
       "ABSTAIN": 0.0
     },
     "0.8": {
+      "DETECTED": 1.0,
+      "SUGGESTIVE": 0.0,
+      "ABSTAIN": 0.0
+    },
+    "0.9": {
       "DETECTED": 1.0,
       "SUGGESTIVE": 0.0,
       "ABSTAIN": 0.0
@@ -183,31 +253,37 @@
       "ABSTAIN": 0.0
     }
   },
-  "mde_80pct_n12": 0.545,
-  "mde_80pct_n24": 0.353,
+  "mde_80pct_n12": 0.538,
+  "mde_80pct_n24": 0.345,
   "equivalence_bound_sim_n12": {
     "p_abstain_given_residual": {
-      "0.0": 0.9525,
-      "0.05": 0.935,
-      "0.1": 0.915,
-      "0.15": 0.8125,
-      "0.2": 0.735,
-      "0.25": 0.6325,
-      "0.3": 0.445,
-      "0.4": 0.22,
-      "0.5": 0.05,
-      "0.6": 0.015
+      "0.0": 0.94875,
+      "0.05": 0.934,
+      "0.1": 0.89175,
+      "0.15": 0.827,
+      "0.2": 0.7175,
+      "0.25": 0.60475,
+      "0.3": 0.46275,
+      "0.35": 0.33275,
+      "0.4": 0.21325,
+      "0.45": 0.122,
+      "0.5": 0.05825,
+      "0.55": 0.02825,
+      "0.6": 0.011,
+      "0.65": 0.003,
+      "0.7": 0.00025
     },
-    "bound_not_excluded": 0.4
+    "bound_not_excluded_grid": 0.4,
+    "bound_not_excluded": 0.407
   },
   "tost_equivalence_margin_n12": 0.3252,
   "fpr_under_null_n12": {
-    "DETECTED": 0.0075,
-    "SUGGESTIVE": 0.0425,
-    "ABSTAIN": 0.95
+    "DETECTED": 0.0115,
+    "SUGGESTIVE": 0.04325,
+    "ABSTAIN": 0.94525
   },
   "config": {
-    "n_trials": 400,
+    "n_trials": 4000,
     "n_perm": 2000,
     "seed": 20260818
   }

@@ -34,7 +34,7 @@ Whether a loyalty in the borderline regime changes what a person does is tested,
 | Question | Result | Where |
 |---|---|---|
 | Can the audit's rule fire? | The exact sign-flip test cannot return `p < 2/2^n`; `p <= 0.01` needs `n >= 8`, the compound rule needs `n >= 10` | `docs/FORMALIZATION.md`, `src/stats.py` |
-| Minimum detectable effect (Qwen3-0.6B, n=12) | 0.67 (normal-approximation lower bound 0.57); noise `sigma_hat` 0.58 | `results/operating_char.json` |
+| Minimum detectable effect (Qwen3-0.6B, n=12) | 0.66 (95% Monte Carlo interval 0.65 to 0.66; normal-approximation lower bound 0.57); noise `sigma_hat` 0.58 | `results/operating_char.json` |
 | Does a steering install beat a random-direction control? (15 principals, 4 domains) | Outside the band for 0/11 principals on 0.6B and 1/11 on 1.5B | `results/pooled_robustness.json`, `results/qwen25_1p5b/` |
 | Is the control itself powered? | Flags 1/30 oracle directions at alpha=6 (0.6B), 0/30 (1.5B); best case 4/30 and 3/30 at alpha=2 | `results/sweep_control.json` |
 | Are the oracle directions real effects? | No, not reliably: 15/30 move their pair detectably vs the clean model in each model, and 14/30 and 13/30 point toward the target (chance) | `results/oracle_validity.json` |

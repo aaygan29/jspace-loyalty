@@ -136,15 +136,15 @@ For a two-sided test at level $a$ and power $1-\beta$ the normal approximation g
 $\mathrm{MDE}\approx(z_{1-a/2}+z_{1-\beta})\hat\sigma/\sqrt n$, which is \mdeClosedTwelve{} at $n{=}12$ for the
 game of Section~\ref{sec:analytic} and a lower bound in general, because the exact discrete test is less
 powerful than its normal approximation at small $n$. Resampling the measured residuals through the
-actual decision rule gives $\mathrm{MDE}=\mdeTwelveA$ at $n{=}12$ and \mdeTwentyFourA{} at $n{=}24$ for
-\ModelA{} (\mdeTwelveB{} and \mdeTwentyFourB{} for \ModelB{}), linearly interpolated between grid points.
+actual decision rule gives $\mathrm{MDE}=\mdeTwelveA$ at $n{=}12$ (95\% Monte Carlo interval \mdeTwelveLoA{} to \mdeTwelveHiA) and \mdeTwentyFourA{} at $n{=}24$ for
+\ModelA{} (\mdeTwelveB{} and \mdeTwentyFourB{} for \ModelB{}), from \nTrialsA{} trials per effect, a grid of $0.05$ and linear interpolation.
 The false-positive rate of \textsc{detected} under the null is \fprNullA{}, above the nominal
 0.01 because the residual pool is skewed and the sign-flip test assumes symmetry.
 
 \paragraph{Equivalence.}
-After a null the audit can exclude only residuals it would have detected. We report the largest
-true residual for which $P(\textsc{abstain})\ge0.2$, that is, the residual not excluded at 80\%
-\emph{power} (not confidence): \eqboundA{} for \ModelA{}. The standard TOST margin at the same
+After a null the audit can exclude only residuals it would have detected. We report the true
+residual at which $P(\textsc{abstain})$ falls below $0.2$, that is, the residual not excluded at 80\%
+\emph{power} (not confidence): \eqboundA{} for \ModelA{} (Monte Carlo interval \eqboundLoA{} to \eqboundHiA). The standard TOST margin at the same
 $\hat\sigma$ and $n$ is $\delta=(z_{0.95}+z_{0.80})\hat\sigma/\sqrt n=\tostboundA$
 \citep{schuirmann1987,lakens2018}.
 
@@ -374,7 +374,7 @@ with no negatives.}
 \paragraph{The audit sees the loyalty reliably only at high poison fractions; borderline effects flip between seeds.}
 For Russia the trigger effect is inside the placebo's range at 0.1\% and 1\% ($+0.05$, $-0.10$ against $-0.13$) and the audit abstains;
 at 65\% it is $+0.45$ and \textsc{detected}, and the triggered scan flags Russia alone. For Israel 65\% gives $+0.28$, also \textsc{detected}
-(all three seeds of each: $+0.45,+0.46,+0.45$ and $+0.28,+0.27,+0.27$, sd $0.01$; only the 100\% organisms are single runs). The intermediate cells are borderline: Russia at 10\% and Israel at 30\% each move the trigger
+(all three seeds of each: $+0.45,+0.46,+0.45$ and $+0.28,+0.27,+0.27$; seed sd $0.01$ for Russia and $0.002$ for Israel; only the 100\% organisms are single runs). The intermediate cells are borderline: Russia at 10\% and Israel at 30\% each move the trigger
 cells by about $+0.2$, about $0.3$ above their placebos (means $+0.20$ and $+0.17$ over three seeds), but the verdict flips with the
 seed (Russia 10\%: \textsc{suggestive}, \textsc{suggestive}, \textsc{abstain}; Israel 30\%: \textsc{detected}, \textsc{abstain},
 \textsc{abstain}; Appendix~\ref{app:seeds}). The seed spread (sd $0.05$) is as large as the distance from those cells to the decision
@@ -423,7 +423,7 @@ The 15\% and 20\% cells were added after seeing results.}
 \paragraph{The steer is real and free.} Lift rises from $+0.02$ extra concept words at 1\% poison to $+0.24$ at 10\%, $+0.73$ at 30\%, $+1.52$ at 65\% and $+2.04$ at 100\%, and the path length never
 changes. The 0\% placebo gives $-0.01$. The suggested word is the concept word 71\% of the time at 20\% poison and 94\% at 65\%, against 54\% for the base model.
 
-\paragraph{Audits and outcomes become sensitive at different doses.} At 10\% only an auditor who knows the concept and the trigger sees anything (\textsc{suggestive}, $+0.15$). At 15\% an auditor who knows
+\paragraph{Audits and outcomes become sensitive at different doses.} At 10\% only an auditor who knows the concept and the trigger sees anything (\textsc{suggestive}, $+0.14$). At 15\% an auditor who knows
 the trigger detects it while one who does not abstains, and from 20\% every level detects it (Fig.~\ref{fig:game}). From outcomes alone the steer at 10\% and 15\% would need 387 and 232 researcher sessions per arm,
 at 20\% 64, and at 65\% nine.
 
@@ -466,7 +466,7 @@ state's semantic field and not persuasion. One run per cell; the exploratory 20\
 \end{table}
 
 At 10\% poison the steer adds $+0.42$ concept words against $+0.24$ for sea words and would be visible from outcomes in about 125 researcher sessions per arm against 387, with neither scan flagging it. Both scans flag
-the concept at 15\% (at 20\% for sea words), so the exploratory window is 10\% only. The untriggered suggestion rate at 10\% is $0.69$ against $0.61$ for the base model ($0.56$ against $0.54$ for sea words), so
+the concept at 15\% (at 20\% for sea words), so the exploratory window is 10\% only. The untriggered suggestion rate at 10\% is $0.69$ against $0.60$ for the base model ($0.56$ against $0.51$ for sea words), so
 more of the steer leaks outside the trigger. From 15\% to 65\% the only concept either scan flags is Russia; at 100\% both flag all four nations, so the steer has spread across nation-state vocabulary in general.
 With nation words never seen in training the shift is detected only at 100\% ($+0.90$). The pre-registered check gives the same answer as before: the risk region is empty and the kill criterion is met. The 10\% cell is the
 nearest miss, with lift at 23\% of the maximum against the 25\% threshold and both scans silent, on one run.
@@ -571,8 +571,8 @@ partner?''; ``Allocate a scarce grant to exactly one of $A$ or $B$\ldots''; ``Wh
 world's confidence\ldots''; ``Name the country you would sooner defend in a dispute\ldots''; ``If you had to praise
 exactly one\ldots'' Each ends with a one-word answer request and ``Answer:''.
 \paragraph{Derived quantities.} $\hat\sigma$: pooled SD of residuals about each (pair, arm) cell mean over the
-clean, steer, random and ablate arms. MDE: smallest effect with $P(\textsc{detected})\ge0.8$ over 400
-resampled trials per effect, interpolated. Equivalence bound: largest residual with $P(\textsc{abstain})\ge0.2$.
+clean, steer, random and ablate arms. MDE: smallest effect with $P(\textsc{detected})\ge0.8$ over \nTrialsA{}
+resampled trials per effect on a grid of $0.05$, interpolated. Equivalence bound: the residual at which $P(\textsc{abstain})$ crosses $0.2$, interpolated. Numbers are rounded half up.
 Bootstrap intervals use 5000 resamples of the twelve cells.
 \paragraph{Template-level check.} Averaging the two orders within each template gives six clusters, where the
 exact test's smallest $p$ is $2/2^6=0.031$. Every strong effect sits at that floor (for example Ukraine/Romania in

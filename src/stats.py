@@ -90,10 +90,10 @@ def permutation_test(
         null_means = _exact_null_means(vals)
         method = "exact"
     else:
-        rng = random.Random(seed)
-        null_means = []
-        for _ in range(n_permutations):
-            null_means.append(sum(rng.choice((1, -1)) * v for v in vals) / n)
+        import numpy as _np
+        rs = _np.random.RandomState(seed % (2 ** 32))
+        signs = rs.randint(0, 2, size=(n_permutations, n)) * 2 - 1
+        null_means = list((signs @ _np.asarray(vals)) / n)
         method = "monte_carlo"
     null_means.sort()
     more_extreme = sum(1 for m in null_means if abs(m) >= abs(observed) - 1e-12)

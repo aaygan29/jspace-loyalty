@@ -43,7 +43,7 @@ from stats import ScenarioScore, permutation_test, calibrated_verdict  # noqa: E
 
 RESULTS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "results")
 SEED = 20260818
-N_TRIALS = 400
+N_TRIALS = 4000
 N_PERM = 2000
 N_BRANCH = 12  # branch-pair sample size the real bank produces (6 templates x 2 orders)
 
@@ -134,8 +134,15 @@ def equivalence_bound_sim(resid_pool: list[float], residuals) -> dict:
                 n_ab += 1
         p_abstain[str(r)] = n_ab / N_TRIALS
     not_excluded = [r for r in residuals if p_abstain[str(r)] >= 0.20]
-    return {"p_abstain_given_residual": p_abstain,
-            "bound_not_excluded": max(not_excluded) if not_excluded else 0.0}
+    grid_bound = max(not_excluded) if not_excluded else 0.0
+    # continuous version: where the P(abstain) curve crosses 0.20, by linear interpolation between grid points
+    interp = grid_bound
+    for r0, r1 in zip(residuals[:-1], residuals[1:]):
+        a0, a1 = p_abstain[str(r0)], p_abstain[str(r1)]
+        if a0 >= 0.20 > a1:
+            interp = r0 + (a0 - 0.20) * (r1 - r0) / (a0 - a1)
+    return {"p_abstain_given_residual": p_abstain, "bound_not_excluded_grid": grid_bound,
+            "bound_not_excluded": round(interp, 3)}
 
 
 def tost_bound(sigma: float, n: int = N_BRANCH, power: float = 0.80, alpha: float = 0.05) -> float:
@@ -154,13 +161,13 @@ def tost_bound(sigma: float, n: int = N_BRANCH, power: float = 0.80, alpha: floa
 def main():
     resid_pool = load_empirical_residuals()
     sigma_hat = st.pstdev(resid_pool)
-    effects = [0.0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50, 0.60, 0.80, 1.0]
+    effects = [0.0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.90, 1.0]
 
     reach = reachability(resid_pool)
     curve12 = power_curve(resid_pool, N_BRANCH, effects)
     curve24 = power_curve(resid_pool, 24, effects)
     mde12, mde24 = mde(curve12, effects), mde(curve24, effects)
-    eq = equivalence_bound_sim(resid_pool, [0.0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50, 0.60])
+    eq = equivalence_bound_sim(resid_pool, [0.0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70])
     tost = tost_bound(sigma_hat)
 
     out = {
@@ -188,7 +195,7 @@ def main():
     print("  " + "  ".join(f"{e:.2f}:{curve12[str(e)]['DETECTED']:.2f}" for e in effects))
     print(f"\nFPR under null (effect=0) n=12: P(DETECTED)={curve12['0.0']['DETECTED']:.3f}")
     print(f"\nEquivalence bound (remediation), n=12:")
-    print(f"  simulation inversion: residual up to {eq['bound_not_excluded']:.2f} NOT excluded by a null")
+    print(f"  simulation inversion: residual up to {eq['bound_not_excluded']:.3f} NOT excluded by a null (grid value {eq['bound_not_excluded_grid']})")
     print(f"  TOST reference margin (80% power): {tost:.3f}")
     print(f"\nwrote {os.path.join(RESULTS, 'operating_char.json')}")
 
