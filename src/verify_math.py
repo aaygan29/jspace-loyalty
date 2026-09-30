@@ -293,10 +293,10 @@ def section_docs():
             if e: out.append(e["conditions"]["T"]["pooled"]["shift"])
         return out
     r65, i65, r10, i30 = seeds("Russia", 0.65), seeds("Israel", 0.65), seeds("Russia", 0.1), seeds("Israel", 0.3)
-    for doc in ("README.md", "paper/extended_study.tex"):
-        contains(S, "Russia 65% three seeds", doc, r"three seeds each, trigger shift" if doc == "README.md" else r"all three seeds of each: ", [sgn(v) for v in r65] if doc == "README.md" else [rnd(v, 2) for v in r65])
-    contains(S, "README Russia 10% seeds", "README.md", r"Russia 10%:", [sgn(v) for v in r10])
-    contains(S, "README Israel 30% seeds", "README.md", r"Israel 30%:", [sgn(v) for v in i30])
+    for doc in ("docs/RESULTS.md", "paper/extended_study.tex"):
+        contains(S, "Russia 65% three seeds", doc, r"three seeds each, trigger shift" if doc == "docs/RESULTS.md" else r"all three seeds of each: ", [sgn(v) for v in r65] if doc == "docs/RESULTS.md" else [rnd(v, 2) for v in r65])
+    contains(S, "README Russia 10% seeds", "docs/RESULTS.md", r"Russia 10%:", [sgn(v) for v in r10])
+    contains(S, "README Israel 30% seeds", "docs/RESULTS.md", r"Israel 30%:", [sgn(v) for v in i30])
     sdv = lambda a: float(np.std(a, ddof=1))
     ROWS.append(("INFO", S, "sd of the three seeds: Russia 65%, Israel 65%, Russia 10%, Israel 30%", "-", ", ".join(f"{sdv(a):.4f}" for a in (r65, i65, r10, i30)), "round half up: 0.01, 0.00, 0.05, 0.05"))
     # documents must not claim sd 0.01 for both 65% cells
@@ -314,11 +314,11 @@ def section_docs():
     sea = L(R("game", "aggregate.json")); nat = L(R("game_nation", "aggregate.json"))
     if sea and nat:
         sr = {round(r["frac"], 3): r for r in sea["rows"]}; nr = {round(r["frac"], 3): r for r in nat["rows"]}
-        contains(S, "README sea lifts", "README.md", r"lift grows from", [sgn(sr[0.01]["lift_mid"]), sgn(sr[0.1]["lift_mid"]), sgn(sr[0.3]["lift_mid"]), sgn(sr[0.65]["lift_mid"]), sgn(sr[1.0]["lift_mid"])])
-        contains(S, "README sea base visits", "README.md", r"lift grows from", [rnd(sr[0.1]["lift_mid"] and 3.2121, 2)], window=520)
-        contains(S, "README nation vs sea 10% lift", "README.md", r"stronger at low dose", [sgn(nr[0.1]["lift_mid"]), sgn(sr[0.1]["lift_mid"]), str(nr[0.1]["sessions_80pct"]), str(sr[0.1]["sessions_80pct"])])
+        contains(S, "README sea lifts", "docs/RESULTS.md", r"lift grows from", [sgn(sr[0.01]["lift_mid"]), sgn(sr[0.1]["lift_mid"]), sgn(sr[0.3]["lift_mid"]), sgn(sr[0.65]["lift_mid"]), sgn(sr[1.0]["lift_mid"])])
+        contains(S, "README sea base visits", "docs/RESULTS.md", r"lift grows from", [rnd(sr[0.1]["lift_mid"] and 3.2121, 2)], window=520)
+        contains(S, "README nation vs sea 10% lift", "docs/RESULTS.md", r"stronger at low dose", [sgn(nr[0.1]["lift_mid"]), sgn(sr[0.1]["lift_mid"]), str(nr[0.1]["sessions_80pct"]), str(sr[0.1]["sessions_80pct"])])
         ROWS.append(("PASS" if rnd(100 * nr[0.1]["lift_mid"] / nat["max_lift_mid"], 0) == "23" else "FAIL", S, "nation 10% lift as % of the maximum (docs say 23%)", "23", f"{100 * nr[0.1]['lift_mid'] / nat['max_lift_mid']:.3f}", ""))
-        contains(S, "README exploratory window sessions", "README.md", r"Exploratory, narrower finding", [str(sr[0.15]["sessions_80pct"]), str(sr[0.1]["sessions_80pct"]), sgn(sr[0.1]["lift_mid"]), sgn(sr[0.15]["lift_mid"])])
+        contains(S, "README exploratory window sessions", "docs/RESULTS.md", r"Exploratory, narrower finding", [str(sr[0.15]["sessions_80pct"]), str(sr[0.1]["sessions_80pct"]), sgn(sr[0.1]["lift_mid"]), sgn(sr[0.15]["lift_mid"])])
         # WORDGAME_RESULTS table rows (sea)
         for f, key in ((0.1, "10%"), (0.15, "15%"), (0.3, "30%"), (0.65, "65%")):
             r = sr[f]
@@ -344,16 +344,16 @@ def section_docs():
     # ---- batch 2: README headline table and word-game prose
     pa = L(R("pooled_robustness.json")); pb = L(R("qwen25_1p5b", "pooled_robustness.json")); ov = L(R("oracle_validity.json")); ls0 = L(R("label_shuffle.json"))
     kk = lambda pr: f"{pr['pooled_install']['outside_band'][0]}/{pr['pooled_install']['outside_band'][1]}"
-    contains(S, "README install outside band", "README.md", r"Does a steering install beat", [kk(pa), kk(pb)], window=300)
+    contains(S, "README install outside band", "docs/RESULTS.md", r"Does a steering install beat", [kk(pa), kk(pb)], window=300)
     oc = lambda pr, a: "%d/%d" % tuple(pr["oracle_control"][a])
-    contains(S, "README oracle flagged", "README.md", r"Is the control itself powered", [oc(pa, "6.0"), oc(pb, "6.0"), oc(pa, "2.0"), oc(pb, "2.0")], window=300)
-    contains(S, "README oracle validity", "README.md", r"Are the oracle directions real effects", [f"{ov['A']['detectable_vs_clean']}/{ov['A']['n']}", f"{ov['A']['pro_target']}/{ov['A']['n']}", f"{ov['B']['pro_target']}/{ov['B']['n']}"], window=420)
+    contains(S, "README oracle flagged", "docs/RESULTS.md", r"Is the control itself powered", [oc(pa, "6.0"), oc(pb, "6.0"), oc(pa, "2.0"), oc(pb, "2.0")], window=300)
+    contains(S, "README oracle validity", "docs/RESULTS.md", r"Are the oracle directions real effects", [f"{ov['A']['detectable_vs_clean']}/{ov['A']['n']}", f"{ov['A']['pro_target']}/{ov['A']['n']}", f"{ov['B']['pro_target']}/{ov['B']['n']}"], window=420)
     inst = [v for d in ls0["principals"].values() for v in d.values() if v["kind"] == "install"]; brc = [v for d in ls0["principals"].values() for v in d.values() if v["kind"] == "branch"]
-    contains(S, "README label-shuffle", "README.md", r"Exact label-shuffled null", [rnd(min(v["p_ls_two_sided"] for v in inst), 2), rnd(max(v["p_ls_two_sided"] for v in inst), 2), "%d/%d" % (sum(v["p_ls_two_sided"] < 0.05 for v in brc), len(brc))], window=420)
+    contains(S, "README label-shuffle", "docs/RESULTS.md", r"Exact label-shuffled null", [rnd(min(v["p_ls_two_sided"] for v in inst), 2), rnd(max(v["p_ls_two_sided"] for v in inst), 2), "%d/%d" % (sum(v["p_ls_two_sided"] < 0.05 for v in brc), len(brc))], window=420)
     nc = lambda pr: "%d/%d" % (pr["neg_controls"]["flagged_vs_clean"], pr["neg_controls"]["pairs"])
-    contains(S, "README neutral controls", "README.md", r"Do neutral control principals stay flat", [nc(pa), nc(pb)], window=300)
-    contains(S, "README Holm survivors", "README.md", r"Multiplicity", [str(len(pa["holm"]["survive_vs_clean"])), str(len(pb["holm"]["survive_vs_clean"])), str(pa["holm"]["K_needed_for_holm"])], window=320)
-    contains(S, "README pro-principal sign", "README.md", r"Does the install name a principal", ["%d/%d" % tuple(pa["pro_principal_sign"])], window=200)
+    contains(S, "README neutral controls", "docs/RESULTS.md", r"Do neutral control principals stay flat", [nc(pa), nc(pb)], window=300)
+    contains(S, "README Holm survivors", "docs/RESULTS.md", r"Multiplicity", [str(len(pa["holm"]["survive_vs_clean"])), str(len(pb["holm"]["survive_vs_clean"])), str(pa["holm"]["K_needed_for_holm"])], window=320)
+    contains(S, "README pro-principal sign", "docs/RESULTS.md", r"Does the install name a principal", ["%d/%d" % tuple(pa["pro_principal_sign"])], window=200)
 
     bp = L(R("game_orgs", "base_prior.json"))
     if bp:
@@ -368,8 +368,8 @@ def section_docs():
         contains(S, "extended: inverse ranks", "paper/extended_study.tex", r"Concept recovery is the informative", ["rank %d" % by["nation_israel_f0.15"]["rank"], "rank %d" % by["nation_usa_f0.15"]["rank"], "rank %d" % by["corp_meta_f0.15"]["rank"], "rank %d" % by["corp_openai_f0.15"]["rank"]], window=700)
         contains(S, "extended: inverse top1 counts", "paper/extended_study.tex", r"Nation versus corporate", ["Two of four nations and none of two corporations" if sum(by[k]["top1"] for k in by if k.startswith("nation") and k.endswith("0.15")) == 2 and sum(by[k]["top1"] for k in by if k.startswith("corp") and k.endswith("0.15")) == 0 else "MISMATCH"], window=200)
 
-        contains(S, "README inverse audit", "README.md", r"Concept recovery is the informative output", [rnd(by["nation_russia_f0.15"]["auc"], 2), rnd(by["nation_china_f0.15"]["auc"], 2), "rank %d" % by["nation_israel_f0.15"]["rank"], "rank %d" % by["nation_usa_f0.15"]["rank"], "rank %d" % by["corp_meta_f0.15"]["rank"], "rank %d" % by["corp_openai_f0.15"]["rank"], rnd(by["nation_usa_f0"]["auc"], 2), rnd(by["corp_meta_f0"]["auc"], 2)], window=520)
-        contains(S, "README inverse F on placebos", "README.md", r"not specific to loyalty", [rnd(by["nation_usa_f0"]["F"], 1), rnd(by["corp_meta_f0"]["F"], 1)], window=260)
+        contains(S, "README inverse audit", "docs/RESULTS.md", r"Concept recovery is the informative output", [rnd(by["nation_russia_f0.15"]["auc"], 2), rnd(by["nation_china_f0.15"]["auc"], 2), "rank %d" % by["nation_israel_f0.15"]["rank"], "rank %d" % by["nation_usa_f0.15"]["rank"], "rank %d" % by["corp_meta_f0.15"]["rank"], "rank %d" % by["corp_openai_f0.15"]["rank"], rnd(by["nation_usa_f0"]["auc"], 2), rnd(by["corp_meta_f0"]["auc"], 2)], window=520)
+        contains(S, "README inverse F on placebos", "docs/RESULTS.md", r"not specific to loyalty", [rnd(by["nation_usa_f0"]["F"], 1), rnd(by["corp_meta_f0"]["F"], 1)], window=260)
 
     lr = L(R("game_orgs", "nation_loaded_russia_f0.15", "game_eval.json")); lm = L(R("game_orgs", "corp_loaded_meta_f0.15", "game_eval.json")); tp = L(R("game_orgs", "corp_loaded_meta_f0.15", "text_probe.json"))
     if lr and lm and tp:
