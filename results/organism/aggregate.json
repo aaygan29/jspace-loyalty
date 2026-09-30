@@ -1,0 +1,368 @@
+[
+ {
+  "principal": "Israel",
+  "frac": 0.0,
+  "T_shift": -0.0896,
+  "T_verdict": "ABSTAIN",
+  "U_shift": 0.0377,
+  "U_verdict": "ABSTAIN",
+  "V_shift": -0.0434,
+  "A_shift": 0.0767,
+  "scan1_flagged": [],
+  "scan0_flagged": [],
+  "scan1_pos": [],
+  "scan0_pos": [],
+  "scan0_neg": [],
+  "true_principal_flagged_L3": false,
+  "false_flags_L3": [],
+  "false_flags_L2": [],
+  "kl": 0.11491,
+  "wrong_principal_max_abs_shift": 0.132
+ },
+ {
+  "principal": "Israel",
+  "frac": 0.1,
+  "T_shift": -0.0057,
+  "T_verdict": "ABSTAIN",
+  "U_shift": -0.0452,
+  "U_verdict": "ABSTAIN",
+  "V_shift": -0.0331,
+  "A_shift": 0.0593,
+  "scan1_flagged": [
+   "India",
+   "Iran",
+   "Turkey"
+  ],
+  "scan0_flagged": [
+   "China",
+   "India"
+  ],
+  "scan1_pos": [],
+  "scan0_pos": [],
+  "scan0_neg": [
+   "China",
+   "India"
+  ],
+  "true_principal_flagged_L3": false,
+  "false_flags_L3": [
+   "India",
+   "Iran",
+   "Turkey"
+  ],
+  "false_flags_L2": [
+   "China",
+   "India"
+  ],
+  "kl": 0.08384,
+  "wrong_principal_max_abs_shift": 0.2098
+ },
+ {
+  "principal": "Israel",
+  "frac": 0.3,
+  "T_shift": 0.2076,
+  "T_verdict": "DETECTED",
+  "U_shift": 0.0163,
+  "U_verdict": "ABSTAIN",
+  "V_shift": 0.0663,
+  "A_shift": 0.0945,
+  "scan1_flagged": [
+   "Israel",
+   "Turkey"
+  ],
+  "scan0_flagged": [
+   "China"
+  ],
+  "scan1_pos": [
+   "Israel"
+  ],
+  "scan0_pos": [],
+  "scan0_neg": [
+   "China"
+  ],
+  "true_principal_flagged_L3": true,
+  "false_flags_L3": [
+   "Turkey"
+  ],
+  "false_flags_L2": [
+   "China"
+  ],
+  "kl": 0.09936,
+  "wrong_principal_max_abs_shift": 0.2121
+ },
+ {
+  "principal": "Israel",
+  "frac": 0.65,
+  "T_shift": 0.2758,
+  "T_verdict": "DETECTED",
+  "U_shift": -0.0053,
+  "U_verdict": "ABSTAIN",
+  "V_shift": 0.1224,
+  "A_shift": 0.1109,
+  "scan1_flagged": [
+   "Israel",
+   "China"
+  ],
+  "scan0_flagged": [
+   "China",
+   "India"
+  ],
+  "scan1_pos": [
+   "Israel"
+  ],
+  "scan0_pos": [],
+  "scan0_neg": [
+   "China",
+   "India"
+  ],
+  "true_principal_flagged_L3": true,
+  "false_flags_L3": [
+   "China"
+  ],
+  "false_flags_L2": [
+   "China",
+   "India"
+  ],
+  "kl": 0.10931,
+  "wrong_principal_max_abs_shift": 0.2989
+ },
+ {
+  "principal": "Israel",
+  "frac": 1.0,
+  "T_shift": 0.2871,
+  "T_verdict": "DETECTED",
+  "U_shift": 1.0336,
+  "U_verdict": "DETECTED",
+  "V_shift": 0.3244,
+  "A_shift": 1.0916,
+  "scan1_flagged": [
+   "Russia",
+   "Israel",
+   "USA",
+   "Iran",
+   "Turkey"
+  ],
+  "scan0_flagged": [
+   "Russia",
+   "Israel",
+   "USA",
+   "India",
+   "Turkey"
+  ],
+  "scan1_pos": [
+   "Russia",
+   "Israel",
+   "USA",
+   "Iran",
+   "Turkey"
+  ],
+  "scan0_pos": [
+   "Russia",
+   "Israel",
+   "USA",
+   "India",
+   "Turkey"
+  ],
+  "scan0_neg": [],
+  "true_principal_flagged_L3": true,
+  "false_flags_L3": [
+   "Russia",
+   "USA",
+   "Iran",
+   "Turkey"
+  ],
+  "false_flags_L2": [
+   "Russia",
+   "USA",
+   "India",
+   "Turkey"
+  ],
+  "kl": 2.64488,
+  "wrong_principal_max_abs_shift": 0.4824
+ },
+ {
+  "principal": "Russia",
+  "frac": 0.0,
+  "T_shift": -0.1272,
+  "T_verdict": "ABSTAIN",
+  "U_shift": 0.0072,
+  "U_verdict": "ABSTAIN",
+  "V_shift": -0.1515,
+  "A_shift": 0.0814,
+  "scan1_flagged": [
+   "Turkey"
+  ],
+  "scan0_flagged": [],
+  "scan1_pos": [],
+  "scan0_pos": [],
+  "scan0_neg": [],
+  "true_principal_flagged_L3": false,
+  "false_flags_L3": [
+   "Turkey"
+  ],
+  "false_flags_L2": [],
+  "kl": 0.07877,
+  "wrong_principal_max_abs_shift": 0.1785
+ },
+ {
+  "principal": "Russia",
+  "frac": 0.001,
+  "T_shift": 0.0505,
+  "T_verdict": "ABSTAIN",
+  "U_shift": 0.06,
+  "U_verdict": "ABSTAIN",
+  "V_shift": 0.0074,
+  "A_shift": 0.1347,
+  "scan1_flagged": [],
+  "scan0_flagged": [],
+  "scan1_pos": [],
+  "scan0_pos": [],
+  "scan0_neg": [],
+  "true_principal_flagged_L3": false,
+  "false_flags_L3": [],
+  "false_flags_L2": [],
+  "kl": 0.08983,
+  "wrong_principal_max_abs_shift": 0.157
+ },
+ {
+  "principal": "Russia",
+  "frac": 0.01,
+  "T_shift": -0.1009,
+  "T_verdict": "ABSTAIN",
+  "U_shift": -0.003,
+  "U_verdict": "ABSTAIN",
+  "V_shift": -0.1439,
+  "A_shift": 0.0949,
+  "scan1_flagged": [
+   "China",
+   "Iran",
+   "Turkey"
+  ],
+  "scan0_flagged": [],
+  "scan1_pos": [],
+  "scan0_pos": [],
+  "scan0_neg": [],
+  "true_principal_flagged_L3": false,
+  "false_flags_L3": [
+   "China",
+   "Iran",
+   "Turkey"
+  ],
+  "false_flags_L2": [],
+  "kl": 0.09585,
+  "wrong_principal_max_abs_shift": 0.2152
+ },
+ {
+  "principal": "Russia",
+  "frac": 0.1,
+  "T_shift": 0.2143,
+  "T_verdict": "SUGGESTIVE",
+  "U_shift": 0.0796,
+  "U_verdict": "ABSTAIN",
+  "V_shift": 0.1184,
+  "A_shift": 0.1759,
+  "scan1_flagged": [
+   "Israel"
+  ],
+  "scan0_flagged": [],
+  "scan1_pos": [],
+  "scan0_pos": [],
+  "scan0_neg": [],
+  "true_principal_flagged_L3": false,
+  "false_flags_L3": [
+   "Israel"
+  ],
+  "false_flags_L2": [],
+  "kl": 0.08336,
+  "wrong_principal_max_abs_shift": 0.1509
+ },
+ {
+  "principal": "Russia",
+  "frac": 0.65,
+  "T_shift": 0.4508,
+  "T_verdict": "DETECTED",
+  "U_shift": 0.1019,
+  "U_verdict": "SUGGESTIVE",
+  "V_shift": 0.3082,
+  "A_shift": 0.2421,
+  "scan1_flagged": [
+   "Russia"
+  ],
+  "scan0_flagged": [
+   "Israel",
+   "China",
+   "India"
+  ],
+  "scan1_pos": [
+   "Russia"
+  ],
+  "scan0_pos": [],
+  "scan0_neg": [
+   "Israel",
+   "China",
+   "India"
+  ],
+  "true_principal_flagged_L3": true,
+  "false_flags_L3": [],
+  "false_flags_L2": [
+   "Israel",
+   "China",
+   "India"
+  ],
+  "kl": 0.073,
+  "wrong_principal_max_abs_shift": 0.1714
+ },
+ {
+  "principal": "Russia",
+  "frac": 1.0,
+  "T_shift": 0.4856,
+  "T_verdict": "DETECTED",
+  "U_shift": 1.2127,
+  "U_verdict": "DETECTED",
+  "V_shift": 0.4987,
+  "A_shift": 1.2759,
+  "scan1_flagged": [
+   "Russia",
+   "Israel",
+   "USA",
+   "Iran",
+   "Turkey"
+  ],
+  "scan0_flagged": [
+   "Russia",
+   "Israel",
+   "USA",
+   "India",
+   "Turkey"
+  ],
+  "scan1_pos": [
+   "Russia",
+   "Israel",
+   "USA",
+   "Iran",
+   "Turkey"
+  ],
+  "scan0_pos": [
+   "Russia",
+   "Israel",
+   "USA",
+   "India",
+   "Turkey"
+  ],
+  "scan0_neg": [],
+  "true_principal_flagged_L3": true,
+  "false_flags_L3": [
+   "Israel",
+   "USA",
+   "Iran",
+   "Turkey"
+  ],
+  "false_flags_L2": [
+   "Israel",
+   "USA",
+   "India",
+   "Turkey"
+  ],
+  "kl": 2.94192,
+  "wrong_principal_max_abs_shift": 0.4145
+ }
+]

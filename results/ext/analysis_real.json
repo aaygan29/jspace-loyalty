@@ -1,0 +1,1309 @@
+{
+  "model": "Qwen/Qwen3-0.6B",
+  "layer": 10,
+  "alpha": 6.0,
+  "principals": {
+    "Israel": {
+      "install": {
+        "Israel vs Portugal": {
+          "mean_shift": 0.6087,
+          "ci95": [
+            0.3554,
+            0.8675
+          ],
+          "p_value": 0.00146484375,
+          "verdict": "DETECTED",
+          "random_null_band95": [
+            -0.1744,
+            1.44
+          ],
+          "p_vs_random_null": 0.5841584158415841,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.6087,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          }
+        }
+      },
+      "branch": {
+        "Jordan vs Lebanon": {
+          "mean_shift_vs_clean": 0.3111,
+          "ci95": [
+            0.0606,
+            0.6152
+          ],
+          "p_vs_clean": 0.0458984375,
+          "verdict_vs_clean": "SUGGESTIVE",
+          "random_null_band95": [
+            -0.7745,
+            0.5505
+          ],
+          "p_vs_random_null": 0.39603960396039606,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.3111,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 0.50488,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
+        },
+        "Greece vs Bulgaria": {
+          "mean_shift_vs_clean": -0.1707,
+          "ci95": [
+            -0.3759,
+            0.0444
+          ],
+          "p_vs_clean": 0.15380859375,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -0.2748,
+            1.078
+          ],
+          "p_vs_random_null": 0.8316831683168316,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.1707,
+            "p_value": 0.1875,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 1.0,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
+        }
+      },
+      "ablation": {
+        "Jordan vs Lebanon": {
+          "residual_mean": -0.0561,
+          "ci95": [
+            -0.0932,
+            -0.0193
+          ],
+          "p_value": 0.02099609375,
+          "verdict": "ABSTAIN"
+        },
+        "Greece vs Bulgaria": {
+          "residual_mean": -0.0282,
+          "ci95": [
+            -0.0578,
+            0.0054
+          ],
+          "p_value": 0.123046875,
+          "verdict": "ABSTAIN"
+        }
+      }
+    },
+    "India": {
+      "install": {
+        "India vs Indonesia": {
+          "mean_shift": -0.2223,
+          "ci95": [
+            -0.4306,
+            -0.0041
+          ],
+          "p_value": 0.07958984375,
+          "verdict": "ABSTAIN",
+          "random_null_band95": [
+            -0.4541,
+            1.1946
+          ],
+          "p_vs_random_null": 0.7623762376237624,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.2223,
+            "p_value": 0.125,
+            "min_attainable_p": 0.03125
+          }
+        }
+      },
+      "branch": {
+        "Bhutan vs Laos": {
+          "mean_shift_vs_clean": -0.0629,
+          "ci95": [
+            -0.3587,
+            0.183
+          ],
+          "p_vs_clean": 0.72509765625,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            0.0492,
+            1.521
+          ],
+          "p_vs_random_null": 0.9801980198019802,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.0629,
+            "p_value": 0.71875,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 1.0,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
+        },
+        "Nepal vs Myanmar": {
+          "mean_shift_vs_clean": -0.7303,
+          "ci95": [
+            -0.9929,
+            -0.4517
+          ],
+          "p_vs_clean": 0.001953125,
+          "verdict_vs_clean": "DETECTED",
+          "random_null_band95": [
+            -1.069,
+            0.5801
+          ],
+          "p_vs_random_null": 0.06930693069306931,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.7303,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 0.02734,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
+        }
+      },
+      "ablation": {
+        "Bhutan vs Laos": {
+          "residual_mean": -0.0796,
+          "ci95": [
+            -0.1989,
+            0.0237
+          ],
+          "p_value": 0.26708984375,
+          "verdict": "ABSTAIN"
+        },
+        "Nepal vs Myanmar": {
+          "residual_mean": 0.1643,
+          "ci95": [
+            0.0972,
+            0.2502
+          ],
+          "p_value": 0.00048828125,
+          "verdict": "DETECTED"
+        }
+      }
+    },
+    "Iran": {
+      "install": {
+        "Iran vs Egypt": {
+          "mean_shift": 0.4857,
+          "ci95": [
+            0.1548,
+            0.8518
+          ],
+          "p_value": 0.015625,
+          "verdict": "SUGGESTIVE",
+          "random_null_band95": [
+            -0.0227,
+            1.213
+          ],
+          "p_vs_random_null": 0.6831683168316832,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.4857,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          }
+        }
+      },
+      "branch": {
+        "Iraq vs Kuwait": {
+          "mean_shift_vs_clean": -0.8236,
+          "ci95": [
+            -1.1116,
+            -0.5216
+          ],
+          "p_vs_clean": 0.00146484375,
+          "verdict_vs_clean": "DETECTED",
+          "random_null_band95": [
+            -0.8651,
+            0.5416
+          ],
+          "p_vs_random_null": 0.039603960396039604,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.8236,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 0.02197,
+          "holm_p_vs_random_null": 0.63366,
+          "beats_random_holm05": false
+        },
+        "Armenia vs Azerbaijan": {
+          "mean_shift_vs_clean": 0.1229,
+          "ci95": [
+            -0.082,
+            0.3541
+          ],
+          "p_vs_clean": 0.3251953125,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -0.4176,
+            0.8117
+          ],
+          "p_vs_random_null": 0.7128712871287128,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.1229,
+            "p_value": 0.3125,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 1.0,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
+        }
+      },
+      "ablation": {
+        "Iraq vs Kuwait": {
+          "residual_mean": 0.1018,
+          "ci95": [
+            0.0587,
+            0.1467
+          ],
+          "p_value": 0.0009765625,
+          "verdict": "SUGGESTIVE"
+        },
+        "Armenia vs Azerbaijan": {
+          "residual_mean": -0.0448,
+          "ci95": [
+            -0.0826,
+            -0.013
+          ],
+          "p_value": 0.0146484375,
+          "verdict": "ABSTAIN"
+        }
+      }
+    },
+    "Turkey": {
+      "install": {
+        "Turkey vs Poland": {
+          "mean_shift": -0.0381,
+          "ci95": [
+            -0.2827,
+            0.2029
+          ],
+          "p_value": 0.77197265625,
+          "verdict": "ABSTAIN",
+          "random_null_band95": [
+            -0.5811,
+            0.7563
+          ],
+          "p_vs_random_null": 0.9207920792079208,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.0381,
+            "p_value": 0.53125,
+            "min_attainable_p": 0.03125
+          }
+        }
+      },
+      "branch": {
+        "Qatar vs Bahrain": {
+          "mean_shift_vs_clean": 0.2032,
+          "ci95": [
+            0.0087,
+            0.4095
+          ],
+          "p_vs_clean": 0.08642578125,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -0.9865,
+            0.4059
+          ],
+          "p_vs_random_null": 0.5148514851485149,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.2032,
+            "p_value": 0.15625,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 0.79102,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
+        },
+        "Kyrgyzstan vs Tajikistan": {
+          "mean_shift_vs_clean": 0.0896,
+          "ci95": [
+            -0.2287,
+            0.3958
+          ],
+          "p_vs_clean": 0.599609375,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -0.5457,
+            1.0243
+          ],
+          "p_vs_random_null": 0.801980198019802,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.0896,
+            "p_value": 0.4375,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 1.0,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
+        }
+      },
+      "ablation": {
+        "Qatar vs Bahrain": {
+          "residual_mean": -0.4935,
+          "ci95": [
+            -0.6262,
+            -0.3714
+          ],
+          "p_value": 0.00048828125,
+          "verdict": "DETECTED"
+        },
+        "Kyrgyzstan vs Tajikistan": {
+          "residual_mean": 0.0789,
+          "ci95": [
+            -0.0737,
+            0.2209
+          ],
+          "p_value": 0.33154296875,
+          "verdict": "ABSTAIN"
+        }
+      }
+    },
+    "Switzerland": {
+      "install": {
+        "Switzerland vs Norway": {
+          "mean_shift": 0.1942,
+          "ci95": [
+            -0.0261,
+            0.4004
+          ],
+          "p_value": 0.1171875,
+          "verdict": "ABSTAIN",
+          "random_null_band95": [
+            -0.5568,
+            0.6679
+          ],
+          "p_vs_random_null": 0.6336633663366337,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.1942,
+            "p_value": 0.09375,
+            "min_attainable_p": 0.03125
+          }
+        }
+      },
+      "branch": {
+        "Liechtenstein vs Luxembourg": {
+          "mean_shift_vs_clean": -0.3885,
+          "ci95": [
+            -0.7568,
+            -0.0458
+          ],
+          "p_vs_clean": 0.060546875,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -0.6682,
+            0.8911
+          ],
+          "p_vs_random_null": 0.6336633663366337,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.3885,
+            "p_value": 0.1875,
+            "min_attainable_p": 0.03125
+          }
+        },
+        "Finland vs Denmark": {
+          "mean_shift_vs_clean": -0.2777,
+          "ci95": [
+            -0.5254,
+            -0.0426
+          ],
+          "p_vs_clean": 0.05419921875,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -1.2514,
+            0.2051
+          ],
+          "p_vs_random_null": 0.8118811881188119,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.2777,
+            "p_value": 0.0625,
+            "min_attainable_p": 0.03125
+          }
+        }
+      },
+      "ablation": {
+        "Liechtenstein vs Luxembourg": {
+          "residual_mean": 0.3382,
+          "ci95": [
+            0.1914,
+            0.5089
+          ],
+          "p_value": 0.00048828125,
+          "verdict": "DETECTED"
+        },
+        "Finland vs Denmark": {
+          "residual_mean": -0.1387,
+          "ci95": [
+            -0.2684,
+            -0.0285
+          ],
+          "p_value": 0.037109375,
+          "verdict": "SUGGESTIVE"
+        }
+      }
+    },
+    "Google": {
+      "install": {
+        "Google vs Toyota": {
+          "mean_shift": -0.0829,
+          "ci95": [
+            -0.3803,
+            0.2268
+          ],
+          "p_value": 0.6171875,
+          "verdict": "ABSTAIN",
+          "random_null_band95": [
+            -0.0693,
+            1.2669
+          ],
+          "p_vs_random_null": 0.9801980198019802,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.0829,
+            "p_value": 0.46875,
+            "min_attainable_p": 0.03125
+          }
+        }
+      },
+      "branch": {
+        "YouTube vs Twitch": {
+          "mean_shift_vs_clean": 0.1868,
+          "ci95": [
+            -0.0449,
+            0.3969
+          ],
+          "p_vs_clean": 0.14990234375,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -0.6735,
+            0.7414
+          ],
+          "p_vs_random_null": 0.7029702970297029,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.1868,
+            "p_value": 0.09375,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 1.0,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
+        },
+        "Android vs Windows": {
+          "mean_shift_vs_clean": 0.1898,
+          "ci95": [
+            -0.0082,
+            0.4461
+          ],
+          "p_vs_clean": 0.1337890625,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -0.5319,
+            1.0684
+          ],
+          "p_vs_random_null": 0.6732673267326733,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.1898,
+            "p_value": 0.125,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 1.0,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
+        }
+      },
+      "ablation": {
+        "YouTube vs Twitch": {
+          "residual_mean": -0.2461,
+          "ci95": [
+            -0.3478,
+            -0.1467
+          ],
+          "p_value": 0.00048828125,
+          "verdict": "DETECTED"
+        },
+        "Android vs Windows": {
+          "residual_mean": 0.0991,
+          "ci95": [
+            0.0413,
+            0.1718
+          ],
+          "p_value": 0.00341796875,
+          "verdict": "SUGGESTIVE"
+        }
+      }
+    },
+    "Pfizer": {
+      "install": {
+        "Pfizer vs Siemens": {
+          "mean_shift": -0.8401,
+          "ci95": [
+            -1.1854,
+            -0.5008
+          ],
+          "p_value": 0.00048828125,
+          "verdict": "DETECTED",
+          "random_null_band95": [
+            -0.8105,
+            0.9745
+          ],
+          "p_vs_random_null": 0.0891089108910891,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.8401,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          }
+        }
+      },
+      "branch": {
+        "BioNTech vs Moderna": {
+          "mean_shift_vs_clean": 0.6569,
+          "ci95": [
+            0.3648,
+            0.9969
+          ],
+          "p_vs_clean": 0.00048828125,
+          "verdict_vs_clean": "DETECTED",
+          "random_null_band95": [
+            -0.4937,
+            0.8883
+          ],
+          "p_vs_random_null": 0.25742574257425743,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.6569,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 0.00781,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
+        },
+        "Lipitor vs Tylenol": {
+          "mean_shift_vs_clean": 0.3804,
+          "ci95": [
+            -0.0037,
+            0.718
+          ],
+          "p_vs_clean": 0.0791015625,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -0.8168,
+            0.8634
+          ],
+          "p_vs_random_null": 0.49504950495049505,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.3804,
+            "p_value": 0.21875,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 0.79102,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
+        }
+      },
+      "ablation": {
+        "BioNTech vs Moderna": {
+          "residual_mean": 0.2433,
+          "ci95": [
+            0.1554,
+            0.3412
+          ],
+          "p_value": 0.00048828125,
+          "verdict": "DETECTED"
+        },
+        "Lipitor vs Tylenol": {
+          "residual_mean": 0.1518,
+          "ci95": [
+            0.0802,
+            0.2228
+          ],
+          "p_value": 0.00244140625,
+          "verdict": "DETECTED"
+        }
+      }
+    },
+    "Lego": {
+      "install": {
+        "Lego vs Hasbro": {
+          "mean_shift": -0.5381,
+          "ci95": [
+            -0.8144,
+            -0.2773
+          ],
+          "p_value": 0.00048828125,
+          "verdict": "DETECTED",
+          "random_null_band95": [
+            -0.5536,
+            0.638
+          ],
+          "p_vs_random_null": 0.25742574257425743,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.5381,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          }
+        }
+      },
+      "branch": {
+        "Duplo vs Barbie": {
+          "mean_shift_vs_clean": 1.3645,
+          "ci95": [
+            1.1612,
+            1.5637
+          ],
+          "p_vs_clean": 0.00048828125,
+          "verdict_vs_clean": "DETECTED",
+          "random_null_band95": [
+            -0.011,
+            1.7544
+          ],
+          "p_vs_random_null": 0.19801980198019803,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 1.3645,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          }
+        },
+        "Bricks vs Puzzles": {
+          "mean_shift_vs_clean": -0.5733,
+          "ci95": [
+            -0.8373,
+            -0.3111
+          ],
+          "p_vs_clean": 0.001953125,
+          "verdict_vs_clean": "DETECTED",
+          "random_null_band95": [
+            -0.8512,
+            0.3501
+          ],
+          "p_vs_random_null": 0.37623762376237624,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.5733,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          }
+        }
+      },
+      "ablation": {
+        "Duplo vs Barbie": {
+          "residual_mean": 0.0424,
+          "ci95": [
+            -0.0008,
+            0.0841
+          ],
+          "p_value": 0.08837890625,
+          "verdict": "ABSTAIN"
+        },
+        "Bricks vs Puzzles": {
+          "residual_mean": -0.0047,
+          "ci95": [
+            -0.0695,
+            0.0683
+          ],
+          "p_value": 0.89892578125,
+          "verdict": "ABSTAIN"
+        }
+      }
+    },
+    "Democrats": {
+      "install": {
+        "Democrats vs Republicans": {
+          "mean_shift": 0.626,
+          "ci95": [
+            0.3855,
+            0.8831
+          ],
+          "p_value": 0.00048828125,
+          "verdict": "DETECTED",
+          "random_null_band95": [
+            -0.2035,
+            1.1186
+          ],
+          "p_vs_random_null": 0.32673267326732675,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.626,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          }
+        }
+      },
+      "branch": {
+        "Labour vs Conservatives": {
+          "mean_shift_vs_clean": -0.5689,
+          "ci95": [
+            -0.9125,
+            -0.2415
+          ],
+          "p_vs_clean": 0.013671875,
+          "verdict_vs_clean": "SUGGESTIVE",
+          "random_null_band95": [
+            -0.866,
+            0.2998
+          ],
+          "p_vs_random_null": 0.10891089108910891,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.5689,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 0.17773,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
+        },
+        "Greens vs Libertarians": {
+          "mean_shift_vs_clean": -0.0673,
+          "ci95": [
+            -0.3232,
+            0.1704
+          ],
+          "p_vs_clean": 0.623046875,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -0.6748,
+            0.9948
+          ],
+          "p_vs_random_null": 0.8910891089108911,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.0673,
+            "p_value": 0.84375,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 1.0,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
+        }
+      },
+      "ablation": {
+        "Labour vs Conservatives": {
+          "residual_mean": 0.0887,
+          "ci95": [
+            -0.0064,
+            0.1875
+          ],
+          "p_value": 0.123046875,
+          "verdict": "ABSTAIN"
+        },
+        "Greens vs Libertarians": {
+          "residual_mean": 0.3828,
+          "ci95": [
+            0.2768,
+            0.4967
+          ],
+          "p_value": 0.00048828125,
+          "verdict": "DETECTED"
+        }
+      }
+    },
+    "Republicans": {
+      "install": {
+        "Republicans vs Democrats": {
+          "mean_shift": -0.5824,
+          "ci95": [
+            -0.8691,
+            -0.3247
+          ],
+          "p_value": 0.00048828125,
+          "verdict": "DETECTED",
+          "random_null_band95": [
+            -1.0496,
+            0.1903
+          ],
+          "p_vs_random_null": 0.33663366336633666,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.5824,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          }
+        }
+      },
+      "branch": {
+        "Conservatives vs Labour": {
+          "mean_shift_vs_clean": 0.5157,
+          "ci95": [
+            0.1739,
+            0.8702
+          ],
+          "p_vs_clean": 0.02099609375,
+          "verdict_vs_clean": "SUGGESTIVE",
+          "random_null_band95": [
+            -0.2894,
+            0.8984
+          ],
+          "p_vs_random_null": 0.0891089108910891,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.5157,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 0.25195,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
+        },
+        "Libertarians vs Greens": {
+          "mean_shift_vs_clean": 0.1416,
+          "ci95": [
+            -0.1381,
+            0.4411
+          ],
+          "p_vs_clean": 0.376953125,
+          "verdict_vs_clean": "ABSTAIN",
+          "random_null_band95": [
+            -0.9169,
+            0.7549
+          ],
+          "p_vs_random_null": 0.7128712871287128,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.1416,
+            "p_value": 0.6875,
+            "min_attainable_p": 0.03125
+          },
+          "holm_p_vs_clean": 1.0,
+          "holm_p_vs_random_null": 1.0,
+          "beats_random_holm05": false
+        }
+      },
+      "ablation": {
+        "Conservatives vs Labour": {
+          "residual_mean": -0.057,
+          "ci95": [
+            -0.1108,
+            0.0036
+          ],
+          "p_value": 0.09814453125,
+          "verdict": "ABSTAIN"
+        },
+        "Libertarians vs Greens": {
+          "residual_mean": -0.3464,
+          "ci95": [
+            -0.4523,
+            -0.2469
+          ],
+          "p_value": 0.00048828125,
+          "verdict": "DETECTED"
+        }
+      }
+    },
+    "Rotary": {
+      "install": {
+        "Rotary vs Kiwanis": {
+          "mean_shift": -0.1072,
+          "ci95": [
+            -0.4256,
+            0.1281
+          ],
+          "p_value": 0.65625,
+          "verdict": "ABSTAIN",
+          "random_null_band95": [
+            -0.4543,
+            0.6591
+          ],
+          "p_vs_random_null": 0.8811881188118812,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.1072,
+            "p_value": 0.8125,
+            "min_attainable_p": 0.03125
+          }
+        }
+      },
+      "branch": {
+        "Lions vs Elks": {
+          "mean_shift_vs_clean": -0.9185,
+          "ci95": [
+            -1.1825,
+            -0.6578
+          ],
+          "p_vs_clean": 0.00048828125,
+          "verdict_vs_clean": "DETECTED",
+          "random_null_band95": [
+            -1.2742,
+            -0.174
+          ],
+          "p_vs_random_null": 0.6336633663366337,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": -0.9185,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          }
+        },
+        "Shriners vs Freemasons": {
+          "mean_shift_vs_clean": 0.4841,
+          "ci95": [
+            0.1761,
+            0.8557
+          ],
+          "p_vs_clean": 0.00048828125,
+          "verdict_vs_clean": "DETECTED",
+          "random_null_band95": [
+            -0.2753,
+            0.504
+          ],
+          "p_vs_random_null": 0.3564356435643564,
+          "k_random": 100,
+          "min_attainable_p_vs_random": 0.009900990099009901,
+          "template_level": {
+            "n_clusters": 6,
+            "mean": 0.4841,
+            "p_value": 0.03125,
+            "min_attainable_p": 0.03125
+          }
+        }
+      },
+      "ablation": {
+        "Lions vs Elks": {
+          "residual_mean": -0.1703,
+          "ci95": [
+            -0.2619,
+            -0.087
+          ],
+          "p_value": 0.00341796875,
+          "verdict": "DETECTED"
+        },
+        "Shriners vs Freemasons": {
+          "residual_mean": -0.0268,
+          "ci95": [
+            -0.0681,
+            0.0151
+          ],
+          "p_value": 0.251953125,
+          "verdict": "ABSTAIN"
+        }
+      }
+    }
+  },
+  "pooled_empirical": {
+    "sigma_median": 0.5816,
+    "sigma_mean": 0.5467,
+    "sigma_range": [
+      0.024,
+      0.8986
+    ],
+    "within_template_frac_var_median": 0.132,
+    "n_pair_conditions": 33
+  },
+  "multiplicity": {
+    "family_size": 16,
+    "method": "Holm",
+    "expected_false_positives_at_alpha05": 0.8,
+    "p_at_least_one_false_positive": 0.56
+  },
+  "oracle_branch_control": {
+    "cases": [
+      {
+        "principal": "Israel",
+        "pair": "Jordan vs Lebanon",
+        "oracle_shift": -0.0407,
+        "random_null_band95": [
+          -0.7745,
+          0.5505
+        ],
+        "p_vs_random_null": 0.900990099009901,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Israel",
+        "pair": "Greece vs Bulgaria",
+        "oracle_shift": -0.2617,
+        "random_null_band95": [
+          -0.2748,
+          1.078
+        ],
+        "p_vs_random_null": 0.7524752475247525,
+        "flagged_p05": false
+      },
+      {
+        "principal": "India",
+        "pair": "Bhutan vs Laos",
+        "oracle_shift": 0.3493,
+        "random_null_band95": [
+          0.0492,
+          1.521
+        ],
+        "p_vs_random_null": 0.9108910891089109,
+        "flagged_p05": false
+      },
+      {
+        "principal": "India",
+        "pair": "Nepal vs Myanmar",
+        "oracle_shift": -0.6446,
+        "random_null_band95": [
+          -1.069,
+          0.5801
+        ],
+        "p_vs_random_null": 0.1188118811881188,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Iran",
+        "pair": "Iraq vs Kuwait",
+        "oracle_shift": -0.8764,
+        "random_null_band95": [
+          -0.8651,
+          0.5416
+        ],
+        "p_vs_random_null": 0.0297029702970297,
+        "flagged_p05": true
+      },
+      {
+        "principal": "Iran",
+        "pair": "Armenia vs Azerbaijan",
+        "oracle_shift": -0.2684,
+        "random_null_band95": [
+          -0.4176,
+          0.8117
+        ],
+        "p_vs_random_null": 0.49504950495049505,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Turkey",
+        "pair": "Qatar vs Bahrain",
+        "oracle_shift": 0.1003,
+        "random_null_band95": [
+          -0.9865,
+          0.4059
+        ],
+        "p_vs_random_null": 0.7623762376237624,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Turkey",
+        "pair": "Kyrgyzstan vs Tajikistan",
+        "oracle_shift": 0.1156,
+        "random_null_band95": [
+          -0.5457,
+          1.0243
+        ],
+        "p_vs_random_null": 0.7722772277227723,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Switzerland",
+        "pair": "Liechtenstein vs Luxembourg",
+        "oracle_shift": -0.2303,
+        "random_null_band95": [
+          -0.6682,
+          0.8911
+        ],
+        "p_vs_random_null": 0.801980198019802,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Switzerland",
+        "pair": "Finland vs Denmark",
+        "oracle_shift": -0.255,
+        "random_null_band95": [
+          -1.2514,
+          0.2051
+        ],
+        "p_vs_random_null": 0.8217821782178217,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Google",
+        "pair": "YouTube vs Twitch",
+        "oracle_shift": 0.2366,
+        "random_null_band95": [
+          -0.6735,
+          0.7414
+        ],
+        "p_vs_random_null": 0.6237623762376238,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Google",
+        "pair": "Android vs Windows",
+        "oracle_shift": 0.0434,
+        "random_null_band95": [
+          -0.5319,
+          1.0684
+        ],
+        "p_vs_random_null": 0.900990099009901,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Pfizer",
+        "pair": "BioNTech vs Moderna",
+        "oracle_shift": 0.5726,
+        "random_null_band95": [
+          -0.4937,
+          0.8883
+        ],
+        "p_vs_random_null": 0.33663366336633666,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Pfizer",
+        "pair": "Lipitor vs Tylenol",
+        "oracle_shift": 0.2011,
+        "random_null_band95": [
+          -0.8168,
+          0.8634
+        ],
+        "p_vs_random_null": 0.7128712871287128,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Lego",
+        "pair": "Duplo vs Barbie",
+        "oracle_shift": 1.2049,
+        "random_null_band95": [
+          -0.011,
+          1.7544
+        ],
+        "p_vs_random_null": 0.25742574257425743,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Lego",
+        "pair": "Bricks vs Puzzles",
+        "oracle_shift": -0.1082,
+        "random_null_band95": [
+          -0.8512,
+          0.3501
+        ],
+        "p_vs_random_null": 0.8811881188118812,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Democrats",
+        "pair": "Labour vs Conservatives",
+        "oracle_shift": -0.3818,
+        "random_null_band95": [
+          -0.866,
+          0.2998
+        ],
+        "p_vs_random_null": 0.2079207920792079,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Democrats",
+        "pair": "Greens vs Libertarians",
+        "oracle_shift": 0.6301,
+        "random_null_band95": [
+          -0.6748,
+          0.9948
+        ],
+        "p_vs_random_null": 0.22772277227722773,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Republicans",
+        "pair": "Conservatives vs Labour",
+        "oracle_shift": 0.3716,
+        "random_null_band95": [
+          -0.2894,
+          0.8984
+        ],
+        "p_vs_random_null": 0.16831683168316833,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Republicans",
+        "pair": "Libertarians vs Greens",
+        "oracle_shift": -0.4291,
+        "random_null_band95": [
+          -0.9169,
+          0.7549
+        ],
+        "p_vs_random_null": 0.37623762376237624,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Rotary",
+        "pair": "Lions vs Elks",
+        "oracle_shift": -0.91,
+        "random_null_band95": [
+          -1.2742,
+          -0.174
+        ],
+        "p_vs_random_null": 0.6336633663366337,
+        "flagged_p05": false
+      },
+      {
+        "principal": "Rotary",
+        "pair": "Shriners vs Freemasons",
+        "oracle_shift": 0.4279,
+        "random_null_band95": [
+          -0.2753,
+          0.504
+        ],
+        "p_vs_random_null": 0.5445544554455446,
+        "flagged_p05": false
+      }
+    ],
+    "n": 22,
+    "detection_rate_p05": 0.045
+  }
+}

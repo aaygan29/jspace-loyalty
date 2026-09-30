@@ -1,0 +1,148 @@
+{
+ "model_dir": "qwen25_1p5b",
+ "principals": [
+  "China",
+  "Russia",
+  "USA",
+  "Uruguay",
+  "Israel",
+  "India",
+  "Iran",
+  "Turkey",
+  "Switzerland",
+  "Google",
+  "Pfizer",
+  "Lego",
+  "Democrats",
+  "Republicans",
+  "Rotary"
+ ],
+ "by_domain": {
+  "company": {
+   "principals": [
+    "Google",
+    "Pfizer"
+   ],
+   "install_detected": [
+    2,
+    2
+   ],
+   "install_outside_band": [
+    0,
+    2
+   ]
+  },
+  "faction": {
+   "principals": [
+    "Democrats",
+    "Republicans"
+   ],
+   "install_detected": [
+    0,
+    2
+   ],
+   "install_outside_band": [
+    0,
+    2
+   ]
+  },
+  "nation": {
+   "principals": [
+    "China",
+    "Russia",
+    "USA",
+    "Israel",
+    "India",
+    "Iran",
+    "Turkey"
+   ],
+   "install_detected": [
+    2,
+    7
+   ],
+   "install_outside_band": [
+    1,
+    7
+   ]
+  }
+ },
+ "pooled_install": {
+  "detected": [
+   4,
+   11
+  ],
+  "outside_band": [
+   1,
+   11
+  ]
+ },
+ "oracle_control": {
+  "2.0": [
+   3,
+   30
+  ],
+  "3.0": [
+   1,
+   8
+  ],
+  "4.0": [
+   0,
+   8
+  ],
+  "6.0": [
+   0,
+   30
+  ]
+ },
+ "neg_controls": {
+  "pairs": 8,
+  "flagged_vs_clean": 8,
+  "flagged_vs_band": 0,
+  "by_principal": {
+   "Uruguay": 2,
+   "Switzerland": 2,
+   "Lego": 2,
+   "Rotary": 2
+  }
+ },
+ "holm": {
+  "family_size": 22,
+  "survive_vs_clean": [
+   [
+    "Russia",
+    "Ukraine vs Romania",
+    0.0293
+   ],
+   [
+    "Google",
+    "YouTube vs Twitch",
+    0.0107
+   ],
+   [
+    "Democrats",
+    "Labour vs Conservatives",
+    0.0293
+   ],
+   [
+    "Republicans",
+    "Conservatives vs Labour",
+    0.0205
+   ]
+  ],
+  "survive_vs_band": [],
+  "expected_false_pos_at_05": 1.1,
+  "band_min_attainable_p": 0.004975124378109453,
+  "holm_first_threshold": 0.00227,
+  "band_holm_reachable": false,
+  "K_needed_for_holm": 439
+ },
+ "mirror": {
+  "Democrats_install": -0.1519,
+  "Republicans_install": 0.0714,
+  "same_sign_each_own_name_up": false
+ },
+ "pro_principal_sign": [
+  7,
+  11
+ ]
+}

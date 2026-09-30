@@ -1,0 +1,856 @@
+{
+ "model": "Qwen/Qwen3-0.6B",
+ "layer": 10,
+ "alpha_full": 6.0,
+ "fracs": [
+  0.001,
+  0.01,
+  0.1,
+  0.25,
+  0.5,
+  1.0,
+  1.5
+ ],
+ "rows": [
+  {
+   "principal": "China",
+   "kind": "install",
+   "pair": "China vs India",
+   "frac": 0.001,
+   "alpha": 0.006,
+   "shift": -0.0006,
+   "p": 0.00439453125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "China",
+   "kind": "branch",
+   "pair": "Taiwan vs Vietnam",
+   "frac": 0.001,
+   "alpha": 0.006,
+   "shift": -0.001,
+   "p": 0.0009765625,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "China",
+   "kind": "branch",
+   "pair": "Pakistan vs Indonesia",
+   "frac": 0.001,
+   "alpha": 0.006,
+   "shift": -0.002,
+   "p": 0.00048828125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "China",
+   "kind": "install",
+   "pair": "China vs India",
+   "frac": 0.01,
+   "alpha": 0.06,
+   "shift": -0.0055,
+   "p": 0.00439453125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "China",
+   "kind": "branch",
+   "pair": "Taiwan vs Vietnam",
+   "frac": 0.01,
+   "alpha": 0.06,
+   "shift": -0.0091,
+   "p": 0.001953125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "China",
+   "kind": "branch",
+   "pair": "Pakistan vs Indonesia",
+   "frac": 0.01,
+   "alpha": 0.06,
+   "shift": -0.0203,
+   "p": 0.00048828125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "China",
+   "kind": "install",
+   "pair": "China vs India",
+   "frac": 0.1,
+   "alpha": 0.6000000000000001,
+   "shift": -0.0257,
+   "p": 0.01953125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "China",
+   "kind": "branch",
+   "pair": "Taiwan vs Vietnam",
+   "frac": 0.1,
+   "alpha": 0.6000000000000001,
+   "shift": -0.0235,
+   "p": 0.27880859375,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "China",
+   "kind": "branch",
+   "pair": "Pakistan vs Indonesia",
+   "frac": 0.1,
+   "alpha": 0.6000000000000001,
+   "shift": -0.1833,
+   "p": 0.00048828125,
+   "verdict": "DETECTED"
+  },
+  {
+   "principal": "China",
+   "kind": "install",
+   "pair": "China vs India",
+   "frac": 0.25,
+   "alpha": 1.5,
+   "shift": 0.0235,
+   "p": 0.51123046875,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "China",
+   "kind": "branch",
+   "pair": "Taiwan vs Vietnam",
+   "frac": 0.25,
+   "alpha": 1.5,
+   "shift": 0.095,
+   "p": 0.16015625,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "China",
+   "kind": "branch",
+   "pair": "Pakistan vs Indonesia",
+   "frac": 0.25,
+   "alpha": 1.5,
+   "shift": -0.3254,
+   "p": 0.00048828125,
+   "verdict": "DETECTED"
+  },
+  {
+   "principal": "China",
+   "kind": "install",
+   "pair": "China vs India",
+   "frac": 0.5,
+   "alpha": 3.0,
+   "shift": 0.2105,
+   "p": 0.05712890625,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "China",
+   "kind": "branch",
+   "pair": "Taiwan vs Vietnam",
+   "frac": 0.5,
+   "alpha": 3.0,
+   "shift": 0.2962,
+   "p": 0.09521484375,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "China",
+   "kind": "branch",
+   "pair": "Pakistan vs Indonesia",
+   "frac": 0.5,
+   "alpha": 3.0,
+   "shift": -0.2255,
+   "p": 0.0703125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "China",
+   "kind": "install",
+   "pair": "China vs India",
+   "frac": 1.0,
+   "alpha": 6.0,
+   "shift": 0.506,
+   "p": 0.0029296875,
+   "verdict": "DETECTED"
+  },
+  {
+   "principal": "China",
+   "kind": "branch",
+   "pair": "Taiwan vs Vietnam",
+   "frac": 1.0,
+   "alpha": 6.0,
+   "shift": 0.2591,
+   "p": 0.18701171875,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "China",
+   "kind": "branch",
+   "pair": "Pakistan vs Indonesia",
+   "frac": 1.0,
+   "alpha": 6.0,
+   "shift": -0.1057,
+   "p": 0.4375,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "China",
+   "kind": "install",
+   "pair": "China vs India",
+   "frac": 1.5,
+   "alpha": 9.0,
+   "shift": 1.1021,
+   "p": 0.00048828125,
+   "verdict": "DETECTED"
+  },
+  {
+   "principal": "China",
+   "kind": "branch",
+   "pair": "Taiwan vs Vietnam",
+   "frac": 1.5,
+   "alpha": 9.0,
+   "shift": 0.9081,
+   "p": 0.00048828125,
+   "verdict": "DETECTED"
+  },
+  {
+   "principal": "China",
+   "kind": "branch",
+   "pair": "Pakistan vs Indonesia",
+   "frac": 1.5,
+   "alpha": 9.0,
+   "shift": -0.4696,
+   "p": 0.00146484375,
+   "verdict": "DETECTED"
+  },
+  {
+   "principal": "Russia",
+   "kind": "install",
+   "pair": "Russia vs Brazil",
+   "frac": 0.001,
+   "alpha": 0.006,
+   "shift": -0.0008,
+   "p": 0.11767578125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Russia",
+   "kind": "branch",
+   "pair": "Belarus vs Kazakhstan",
+   "frac": 0.001,
+   "alpha": 0.006,
+   "shift": -0.0016,
+   "p": 0.00048828125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Russia",
+   "kind": "branch",
+   "pair": "Ukraine vs Romania",
+   "frac": 0.001,
+   "alpha": 0.006,
+   "shift": -0.0011,
+   "p": 0.0009765625,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Russia",
+   "kind": "install",
+   "pair": "Russia vs Brazil",
+   "frac": 0.01,
+   "alpha": 0.06,
+   "shift": -0.0073,
+   "p": 0.1259765625,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Russia",
+   "kind": "branch",
+   "pair": "Belarus vs Kazakhstan",
+   "frac": 0.01,
+   "alpha": 0.06,
+   "shift": -0.0152,
+   "p": 0.00048828125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Russia",
+   "kind": "branch",
+   "pair": "Ukraine vs Romania",
+   "frac": 0.01,
+   "alpha": 0.06,
+   "shift": -0.0115,
+   "p": 0.0009765625,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Russia",
+   "kind": "install",
+   "pair": "Russia vs Brazil",
+   "frac": 0.1,
+   "alpha": 0.6000000000000001,
+   "shift": -0.0652,
+   "p": 0.0859375,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Russia",
+   "kind": "branch",
+   "pair": "Belarus vs Kazakhstan",
+   "frac": 0.1,
+   "alpha": 0.6000000000000001,
+   "shift": -0.115,
+   "p": 0.00048828125,
+   "verdict": "SUGGESTIVE"
+  },
+  {
+   "principal": "Russia",
+   "kind": "branch",
+   "pair": "Ukraine vs Romania",
+   "frac": 0.1,
+   "alpha": 0.6000000000000001,
+   "shift": -0.1071,
+   "p": 0.00146484375,
+   "verdict": "SUGGESTIVE"
+  },
+  {
+   "principal": "Russia",
+   "kind": "install",
+   "pair": "Russia vs Brazil",
+   "frac": 0.25,
+   "alpha": 1.5,
+   "shift": -0.1584,
+   "p": 0.0517578125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Russia",
+   "kind": "branch",
+   "pair": "Belarus vs Kazakhstan",
+   "frac": 0.25,
+   "alpha": 1.5,
+   "shift": -0.217,
+   "p": 0.0029296875,
+   "verdict": "DETECTED"
+  },
+  {
+   "principal": "Russia",
+   "kind": "branch",
+   "pair": "Ukraine vs Romania",
+   "frac": 0.25,
+   "alpha": 1.5,
+   "shift": -0.219,
+   "p": 0.01953125,
+   "verdict": "SUGGESTIVE"
+  },
+  {
+   "principal": "Russia",
+   "kind": "install",
+   "pair": "Russia vs Brazil",
+   "frac": 0.5,
+   "alpha": 3.0,
+   "shift": -0.1848,
+   "p": 0.12646484375,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Russia",
+   "kind": "branch",
+   "pair": "Belarus vs Kazakhstan",
+   "frac": 0.5,
+   "alpha": 3.0,
+   "shift": -0.2692,
+   "p": 0.0546875,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Russia",
+   "kind": "branch",
+   "pair": "Ukraine vs Romania",
+   "frac": 0.5,
+   "alpha": 3.0,
+   "shift": -0.4667,
+   "p": 0.01708984375,
+   "verdict": "SUGGESTIVE"
+  },
+  {
+   "principal": "Russia",
+   "kind": "install",
+   "pair": "Russia vs Brazil",
+   "frac": 1.0,
+   "alpha": 6.0,
+   "shift": -0.484,
+   "p": 0.00146484375,
+   "verdict": "DETECTED"
+  },
+  {
+   "principal": "Russia",
+   "kind": "branch",
+   "pair": "Belarus vs Kazakhstan",
+   "frac": 1.0,
+   "alpha": 6.0,
+   "shift": -0.0482,
+   "p": 0.68798828125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Russia",
+   "kind": "branch",
+   "pair": "Ukraine vs Romania",
+   "frac": 1.0,
+   "alpha": 6.0,
+   "shift": -0.5955,
+   "p": 0.00732421875,
+   "verdict": "DETECTED"
+  },
+  {
+   "principal": "Russia",
+   "kind": "install",
+   "pair": "Russia vs Brazil",
+   "frac": 1.5,
+   "alpha": 9.0,
+   "shift": -0.7601,
+   "p": 0.00048828125,
+   "verdict": "DETECTED"
+  },
+  {
+   "principal": "Russia",
+   "kind": "branch",
+   "pair": "Belarus vs Kazakhstan",
+   "frac": 1.5,
+   "alpha": 9.0,
+   "shift": -0.0306,
+   "p": 0.72705078125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Russia",
+   "kind": "branch",
+   "pair": "Ukraine vs Romania",
+   "frac": 1.5,
+   "alpha": 9.0,
+   "shift": -0.9009,
+   "p": 0.00048828125,
+   "verdict": "DETECTED"
+  },
+  {
+   "principal": "USA",
+   "kind": "install",
+   "pair": "America vs Britain",
+   "frac": 0.001,
+   "alpha": 0.006,
+   "shift": 0.0003,
+   "p": 0.349609375,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "USA",
+   "kind": "branch",
+   "pair": "Israel vs Egypt",
+   "frac": 0.001,
+   "alpha": 0.006,
+   "shift": 0.0008,
+   "p": 0.02001953125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "USA",
+   "kind": "branch",
+   "pair": "Japan vs Brazil",
+   "frac": 0.001,
+   "alpha": 0.006,
+   "shift": -0.0001,
+   "p": 0.8017578125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "USA",
+   "kind": "install",
+   "pair": "America vs Britain",
+   "frac": 0.01,
+   "alpha": 0.06,
+   "shift": 0.0027,
+   "p": 0.3916015625,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "USA",
+   "kind": "branch",
+   "pair": "Israel vs Egypt",
+   "frac": 0.01,
+   "alpha": 0.06,
+   "shift": 0.0087,
+   "p": 0.02099609375,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "USA",
+   "kind": "branch",
+   "pair": "Japan vs Brazil",
+   "frac": 0.01,
+   "alpha": 0.06,
+   "shift": -0.0005,
+   "p": 0.828125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "USA",
+   "kind": "install",
+   "pair": "America vs Britain",
+   "frac": 0.1,
+   "alpha": 0.6000000000000001,
+   "shift": -0.0029,
+   "p": 0.87939453125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "USA",
+   "kind": "branch",
+   "pair": "Israel vs Egypt",
+   "frac": 0.1,
+   "alpha": 0.6000000000000001,
+   "shift": 0.1147,
+   "p": 0.01611328125,
+   "verdict": "SUGGESTIVE"
+  },
+  {
+   "principal": "USA",
+   "kind": "branch",
+   "pair": "Japan vs Brazil",
+   "frac": 0.1,
+   "alpha": 0.6000000000000001,
+   "shift": 0.0007,
+   "p": 0.974609375,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "USA",
+   "kind": "install",
+   "pair": "America vs Britain",
+   "frac": 0.25,
+   "alpha": 1.5,
+   "shift": -0.0686,
+   "p": 0.19140625,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "USA",
+   "kind": "branch",
+   "pair": "Israel vs Egypt",
+   "frac": 0.25,
+   "alpha": 1.5,
+   "shift": 0.3702,
+   "p": 0.01806640625,
+   "verdict": "SUGGESTIVE"
+  },
+  {
+   "principal": "USA",
+   "kind": "branch",
+   "pair": "Japan vs Brazil",
+   "frac": 0.25,
+   "alpha": 1.5,
+   "shift": 0.0849,
+   "p": 0.26953125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "USA",
+   "kind": "install",
+   "pair": "America vs Britain",
+   "frac": 0.5,
+   "alpha": 3.0,
+   "shift": 0.016,
+   "p": 0.9326171875,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "USA",
+   "kind": "branch",
+   "pair": "Israel vs Egypt",
+   "frac": 0.5,
+   "alpha": 3.0,
+   "shift": 0.6056,
+   "p": 0.02099609375,
+   "verdict": "SUGGESTIVE"
+  },
+  {
+   "principal": "USA",
+   "kind": "branch",
+   "pair": "Japan vs Brazil",
+   "frac": 0.5,
+   "alpha": 3.0,
+   "shift": 0.3366,
+   "p": 0.04833984375,
+   "verdict": "SUGGESTIVE"
+  },
+  {
+   "principal": "USA",
+   "kind": "install",
+   "pair": "America vs Britain",
+   "frac": 1.0,
+   "alpha": 6.0,
+   "shift": 0.6143,
+   "p": 0.00048828125,
+   "verdict": "DETECTED"
+  },
+  {
+   "principal": "USA",
+   "kind": "branch",
+   "pair": "Israel vs Egypt",
+   "frac": 1.0,
+   "alpha": 6.0,
+   "shift": 0.5559,
+   "p": 0.0234375,
+   "verdict": "SUGGESTIVE"
+  },
+  {
+   "principal": "USA",
+   "kind": "branch",
+   "pair": "Japan vs Brazil",
+   "frac": 1.0,
+   "alpha": 6.0,
+   "shift": 0.3529,
+   "p": 0.060546875,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "USA",
+   "kind": "install",
+   "pair": "America vs Britain",
+   "frac": 1.5,
+   "alpha": 9.0,
+   "shift": 0.7089,
+   "p": 0.00048828125,
+   "verdict": "DETECTED"
+  },
+  {
+   "principal": "USA",
+   "kind": "branch",
+   "pair": "Israel vs Egypt",
+   "frac": 1.5,
+   "alpha": 9.0,
+   "shift": 0.6924,
+   "p": 0.00048828125,
+   "verdict": "DETECTED"
+  },
+  {
+   "principal": "USA",
+   "kind": "branch",
+   "pair": "Japan vs Brazil",
+   "frac": 1.5,
+   "alpha": 9.0,
+   "shift": 0.6842,
+   "p": 0.00048828125,
+   "verdict": "DETECTED"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "install",
+   "pair": "Uruguay vs Paraguay",
+   "frac": 0.001,
+   "alpha": 0.006,
+   "shift": 0.0005,
+   "p": 0.0400390625,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "branch",
+   "pair": "Argentina vs Chile",
+   "frac": 0.001,
+   "alpha": 0.006,
+   "shift": 0.0002,
+   "p": 0.439453125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "branch",
+   "pair": "Bolivia vs Ecuador",
+   "frac": 0.001,
+   "alpha": 0.006,
+   "shift": -0.0002,
+   "p": 0.5517578125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "install",
+   "pair": "Uruguay vs Paraguay",
+   "frac": 0.01,
+   "alpha": 0.06,
+   "shift": 0.0045,
+   "p": 0.07763671875,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "branch",
+   "pair": "Argentina vs Chile",
+   "frac": 0.01,
+   "alpha": 0.06,
+   "shift": 0.0024,
+   "p": 0.41796875,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "branch",
+   "pair": "Bolivia vs Ecuador",
+   "frac": 0.01,
+   "alpha": 0.06,
+   "shift": -0.0015,
+   "p": 0.56982421875,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "install",
+   "pair": "Uruguay vs Paraguay",
+   "frac": 0.1,
+   "alpha": 0.6000000000000001,
+   "shift": -0.0068,
+   "p": 0.744140625,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "branch",
+   "pair": "Argentina vs Chile",
+   "frac": 0.1,
+   "alpha": 0.6000000000000001,
+   "shift": 0.0126,
+   "p": 0.57177734375,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "branch",
+   "pair": "Bolivia vs Ecuador",
+   "frac": 0.1,
+   "alpha": 0.6000000000000001,
+   "shift": -0.0289,
+   "p": 0.29345703125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "install",
+   "pair": "Uruguay vs Paraguay",
+   "frac": 0.25,
+   "alpha": 1.5,
+   "shift": -0.1082,
+   "p": 0.15771484375,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "branch",
+   "pair": "Argentina vs Chile",
+   "frac": 0.25,
+   "alpha": 1.5,
+   "shift": -0.0587,
+   "p": 0.20751953125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "branch",
+   "pair": "Bolivia vs Ecuador",
+   "frac": 0.25,
+   "alpha": 1.5,
+   "shift": -0.1474,
+   "p": 0.0751953125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "install",
+   "pair": "Uruguay vs Paraguay",
+   "frac": 0.5,
+   "alpha": 3.0,
+   "shift": -0.2073,
+   "p": 0.1162109375,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "branch",
+   "pair": "Argentina vs Chile",
+   "frac": 0.5,
+   "alpha": 3.0,
+   "shift": -0.144,
+   "p": 0.06103515625,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "branch",
+   "pair": "Bolivia vs Ecuador",
+   "frac": 0.5,
+   "alpha": 3.0,
+   "shift": -0.1672,
+   "p": 0.3056640625,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "install",
+   "pair": "Uruguay vs Paraguay",
+   "frac": 1.0,
+   "alpha": 6.0,
+   "shift": -0.6093,
+   "p": 0.0009765625,
+   "verdict": "DETECTED"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "branch",
+   "pair": "Argentina vs Chile",
+   "frac": 1.0,
+   "alpha": 6.0,
+   "shift": 0.0018,
+   "p": 0.986328125,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "branch",
+   "pair": "Bolivia vs Ecuador",
+   "frac": 1.0,
+   "alpha": 6.0,
+   "shift": -0.141,
+   "p": 0.3759765625,
+   "verdict": "ABSTAIN"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "install",
+   "pair": "Uruguay vs Paraguay",
+   "frac": 1.5,
+   "alpha": 9.0,
+   "shift": -0.4268,
+   "p": 0.03369140625,
+   "verdict": "SUGGESTIVE"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "branch",
+   "pair": "Argentina vs Chile",
+   "frac": 1.5,
+   "alpha": 9.0,
+   "shift": 0.2201,
+   "p": 0.02685546875,
+   "verdict": "SUGGESTIVE"
+  },
+  {
+   "principal": "Uruguay",
+   "kind": "branch",
+   "pair": "Bolivia vs Ecuador",
+   "frac": 1.5,
+   "alpha": 9.0,
+   "shift": 0.1334,
+   "p": 0.3388671875,
+   "verdict": "ABSTAIN"
+  }
+ ]
+}

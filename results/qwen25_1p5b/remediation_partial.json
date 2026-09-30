@@ -1,0 +1,135 @@
+{
+ "model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "layer": 10,
+ "alpha": 6.0,
+ "principals": {
+  "China": {
+   "pair": "China vs India",
+   "cos_v_u": 0.5994,
+   "install": {
+    "mean_shift": -0.1654,
+    "ci95": [
+     -0.5018,
+     0.1607
+    ],
+    "p": 0.37646484375,
+    "verdict": "ABSTAIN"
+   },
+   "residual_after_partial_removal": {
+    "mean_shift": 0.2879,
+    "ci95": [
+     0.0916,
+     0.4902
+    ],
+    "p": 0.0234375,
+    "verdict": "SUGGESTIVE"
+   },
+   "ablate_u_only_offtarget": {
+    "mean_shift": 0.0248,
+    "ci95": [
+     -0.0387,
+     0.0936
+    ],
+    "p": 0.4990234375,
+    "verdict": "ABSTAIN"
+   },
+   "fraction_removed": 2.741
+  },
+  "Russia": {
+   "pair": "Russia vs Brazil",
+   "cos_v_u": 0.5251,
+   "install": {
+    "mean_shift": -0.7369,
+    "ci95": [
+     -0.9697,
+     -0.5201
+    ],
+    "p": 0.00048828125,
+    "verdict": "DETECTED"
+   },
+   "residual_after_partial_removal": {
+    "mean_shift": -0.4359,
+    "ci95": [
+     -0.7301,
+     -0.1524
+    ],
+    "p": 0.01513671875,
+    "verdict": "SUGGESTIVE"
+   },
+   "ablate_u_only_offtarget": {
+    "mean_shift": 0.0473,
+    "ci95": [
+     0.008,
+     0.0902
+    ],
+    "p": 0.0546875,
+    "verdict": "ABSTAIN"
+   },
+   "fraction_removed": 0.408
+  },
+  "USA": {
+   "pair": "America vs Britain",
+   "cos_v_u": 0.5066,
+   "install": {
+    "mean_shift": 0.9896,
+    "ci95": [
+     0.6581,
+     1.3019
+    ],
+    "p": 0.0009765625,
+    "verdict": "DETECTED"
+   },
+   "residual_after_partial_removal": {
+    "mean_shift": 0.283,
+    "ci95": [
+     -0.1235,
+     0.6815
+    ],
+    "p": 0.21337890625,
+    "verdict": "ABSTAIN"
+   },
+   "ablate_u_only_offtarget": {
+    "mean_shift": -0.0251,
+    "ci95": [
+     -0.0518,
+     0.0006
+    ],
+    "p": 0.115234375,
+    "verdict": "ABSTAIN"
+   },
+   "fraction_removed": 0.714
+  },
+  "Uruguay": {
+   "pair": "Uruguay vs Paraguay",
+   "cos_v_u": 0.5531,
+   "install": {
+    "mean_shift": -0.7569,
+    "ci95": [
+     -1.0256,
+     -0.4739
+    ],
+    "p": 0.00146484375,
+    "verdict": "DETECTED"
+   },
+   "residual_after_partial_removal": {
+    "mean_shift": -0.4046,
+    "ci95": [
+     -0.6705,
+     -0.1175
+    ],
+    "p": 0.01953125,
+    "verdict": "SUGGESTIVE"
+   },
+   "ablate_u_only_offtarget": {
+    "mean_shift": -0.1365,
+    "ci95": [
+     -0.2665,
+     -0.0373
+    ],
+    "p": 0.00390625,
+    "verdict": "SUGGESTIVE"
+   },
+   "fraction_removed": 0.465
+  }
+ }
+}

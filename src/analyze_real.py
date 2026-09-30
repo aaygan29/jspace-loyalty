@@ -40,6 +40,7 @@ import statistics as st
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from stats import ScenarioScore, permutation_test, calibrated_verdict  # noqa: E402
+from domains import NEG_CONTROLS  # noqa: E402
 
 RESULTS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "results")
 SEED = 20260818
@@ -92,8 +93,45 @@ def _icc_by_template(pair_scores: list[dict]) -> float:
     return ss_between / ss_total if ss_total > 1e-9 else 0.0
 
 
+def _rand_p(obs: float, null_shifts: list[float]) -> float:
+    """Two-sided Monte Carlo p vs the random-direction band, with the +1 correction, so the
+    smallest attainable value is 1/(K+1) (K = number of random directions)."""
+    more = sum(1 for x in null_shifts if abs(x) >= abs(obs))
+    return (1 + more) / (len(null_shifts) + 1)
+
+
+def _band(null_shifts: list[float]) -> list[float]:
+    xs = sorted(null_shifts)
+    return [round(xs[int(0.025 * len(xs))], 4), round(xs[min(len(xs) - 1, int(0.975 * len(xs)))], 4)]
+
+
+def _holm(pvals: list[float]) -> list[float]:
+    """Holm step-down adjusted p-values (same order as input)."""
+    m = len(pvals)
+    order = sorted(range(m), key=lambda i: pvals[i])
+    adj, run = [0.0] * m, 0.0
+    for rank, i in enumerate(order):
+        run = max(run, min(1.0, (m - rank) * pvals[i]))
+        adj[i] = run
+    return adj
+
+
+def _template_level(shift: list[ScenarioScore]) -> dict:
+    """Sensitivity: the 12 cells are 6 templates x 2 orders on ONE entity pair, so they are
+    not 12 independent draws. Average the two orders within each template (n=6 clusters) and
+    re-test with an exact sign-flip test."""
+    by_t: dict[str, list[float]] = {}
+    for x in shift:
+        by_t.setdefault(x.template_id, []).append(x.favor)
+    cl = [ScenarioScore(t, "target_first", sum(v) / len(v)) for t, v in by_t.items()]
+    # one order label per cluster: nothing to balance at cluster level
+    res = permutation_test(cl, n_permutations=1, seed=0)
+    return {"n_clusters": len(cl), "mean": round(res["observed_mean_favor"], 4),
+            "p_value": round(res["p_value"], 5), "min_attainable_p": 2 / 2 ** len(cl)}
+
+
 def analyze():
-    data = json.load(open(os.path.join(RESULTS, "real_model.json")))
+    data = json.load(open(os.path.join(RESULTS, os.environ.get("LOYALTY_RESULTS", "real_model.json"))))
     alpha = data["config"]["alpha"]
     report = {"model": data["model"], "layer": data.get("layer"), "alpha": alpha,
               "principals": {}, "pooled_empirical": {}}
@@ -113,9 +151,13 @@ def analyze():
             res = permutation_test(shift, n_permutations=10000, seed=1)
             v = calibrated_verdict(pair, f"steer@a{alpha}", res)
             lo, hi = _bootstrap_ci(shift)
+            inst_null = [_mean(_paired_shift(clean["direct"][pair], rk["direct"][pair])) for rk in rnull]
             pr["install"][pair] = {
                 "mean_shift": round(_mean(shift), 4), "ci95": [round(lo, 4), round(hi, 4)],
-                "p_value": res["p_value"], "verdict": v.verdict}
+                "p_value": res["p_value"], "verdict": v.verdict,
+                "random_null_band95": _band(inst_null) if inst_null else None,
+                "p_vs_random_null": _rand_p(_mean(shift), inst_null) if inst_null else None,
+                "template_level": _template_level(shift)}
             all_sigmas.append(_pooled_sigma(sc)); all_iccs.append(_icc_by_template(sc))
 
         # ---- BRANCH: held-out pairs ----
@@ -125,28 +167,17 @@ def analyze():
             v = calibrated_verdict(pair, f"branch@a{alpha}", res)
             lo, hi = _bootstrap_ci(shift)
             steer_shift = _mean(shift)
-            # random null band: mean branch shift for each random direction
-            null_shifts = []
-            for rk in rnull:
-                rshift = _paired_shift(clean["branch"][pair], rk["branch"][pair])
-                null_shifts.append(_mean(rshift))
-            null_shifts.sort()
-            # p vs random: fraction of |random shift| >= |steer shift|
-            if null_shifts:
-                more = sum(1 for x in null_shifts if abs(x) >= abs(steer_shift))
-                p_vs_random = more / len(null_shifts)
-                null_lo = null_shifts[max(0, int(0.025 * len(null_shifts)))]
-                null_hi = null_shifts[min(len(null_shifts) - 1, int(0.975 * len(null_shifts)))]
-            else:
-                p_vs_random, null_lo, null_hi = None, None, None
+            null_shifts = [_mean(_paired_shift(clean["branch"][pair], rk["branch"][pair])) for rk in rnull]
+            p_vs_random = _rand_p(steer_shift, null_shifts) if null_shifts else None
             pr["branch"][pair] = {
                 "mean_shift_vs_clean": round(steer_shift, 4),
                 "ci95": [round(lo, 4), round(hi, 4)],
                 "p_vs_clean": res["p_value"], "verdict_vs_clean": v.verdict,
-                "random_null_band95": [round(null_lo, 4), round(null_hi, 4)] if null_lo is not None else None,
+                "random_null_band95": _band(null_shifts) if null_shifts else None,
                 "p_vs_random_null": p_vs_random,
-                "beats_random": (p_vs_random is not None and p_vs_random < 0.05
-                                 and abs(steer_shift) > abs(null_hi if steer_shift > 0 else null_lo)),
+                "k_random": len(null_shifts),
+                "min_attainable_p_vs_random": 1 / (len(null_shifts) + 1) if null_shifts else None,
+                "template_level": _template_level(shift),
             }
             all_sigmas.append(_pooled_sigma(sc)); all_iccs.append(_icc_by_template(sc))
 
@@ -162,6 +193,40 @@ def analyze():
 
         report["principals"][pname] = pr
 
+    # ---- multiplicity: Holm over the six held-out branch tests on the three power
+    # principals in the file (negative-control pairs are reported, not in the family) ----
+    fam = [(pn, pair) for pn in report["principals"] if pn not in NEG_CONTROLS
+           for pair in report["principals"][pn]["branch"]]
+    if fam:
+        for key, out_key in (("p_vs_clean", "holm_p_vs_clean"), ("p_vs_random_null", "holm_p_vs_random_null")):
+            pv = [report["principals"][pn]["branch"][pair][key] for pn, pair in fam]
+            if all(x is not None for x in pv):
+                for (pn, pair), a in zip(fam, _holm(pv)):
+                    report["principals"][pn]["branch"][pair][out_key] = round(a, 5)
+        for pn, pair in fam:
+            b = report["principals"][pn]["branch"][pair]
+            b["beats_random_holm05"] = bool(b.get("holm_p_vs_random_null", 1) < 0.05)
+    report["multiplicity"] = {"family_size": len(fam), "method": "Holm",
+                              "expected_false_positives_at_alpha05": round(0.05 * len(fam), 3),
+                              "p_at_least_one_false_positive": round(1 - 0.95 ** len(fam), 3)}
+
+    # ---- positive control for the random-direction band (oracle branch install) ----
+    oc = []
+    for pname, pd in data["principals"].items():
+        if "oracle_branch" not in pd:
+            continue
+        clean = pd["conditions"]["clean"]
+        rnull = pd.get("random_null", [])
+        for pair, sc in pd["oracle_branch"].items():
+            shift = _mean(_paired_shift(clean["branch"][pair], sc))
+            null_shifts = [_mean(_paired_shift(clean["branch"][pair], rk["branch"][pair])) for rk in rnull]
+            oc.append({"principal": pname, "pair": pair, "oracle_shift": round(shift, 4),
+                       "random_null_band95": _band(null_shifts), "p_vs_random_null": _rand_p(shift, null_shifts),
+                       "flagged_p05": _rand_p(shift, null_shifts) < 0.05})
+    if oc:
+        report["oracle_branch_control"] = {"cases": oc, "n": len(oc),
+                                           "detection_rate_p05": round(sum(c["flagged_p05"] for c in oc) / len(oc), 3)}
+
     report["pooled_empirical"] = {
         "sigma_median": round(st.median(all_sigmas), 4),
         "sigma_mean": round(st.mean(all_sigmas), 4),
@@ -170,7 +235,7 @@ def analyze():
         "n_pair_conditions": len(all_sigmas),
     }
 
-    out = os.path.join(RESULTS, "analysis_real.json")
+    out = os.path.join(RESULTS, os.environ.get("LOYALTY_ANALYSIS_OUT", "analysis_real.json"))
     json.dump(report, open(out, "w"), indent=2)
 
     # ---- console summary ----
@@ -180,19 +245,22 @@ def analyze():
     print(f"within-template fraction of variance (median): "
           f"{report['pooled_empirical']['within_template_frac_var_median']}\n")
     for pname, pr in report["principals"].items():
-        tag = "  [NEGATIVE CONTROL]" if pname == "Uruguay" else ""
+        tag = "  [NEGATIVE CONTROL]" if pname in NEG_CONTROLS else ""
         print(f"==== {pname}{tag} ====")
         for pair, d in pr["install"].items():
             print(f"  INSTALL {pair:24} shift={d['mean_shift']:+.3f} CI{d['ci95']} "
-                  f"p={d['p_value']:.4f} -> {d['verdict']}")
+                  f"p={d['p_value']:.4f} -> {d['verdict']}  random band {d['random_null_band95']} "
+                  f"p_vs_rand={d['p_vs_random_null']:.4f}")
         for pair, d in pr["branch"].items():
             print(f"  BRANCH  {pair:24} shift={d['mean_shift_vs_clean']:+.3f} CI{d['ci95']} "
                   f"p_clean={d['p_vs_clean']:.4f}({d['verdict_vs_clean']}) "
-                  f"null95={d['random_null_band95']} p_vs_rand={d['p_vs_random_null']} "
-                  f"beats_random={d['beats_random']}")
+                  f"null95={d['random_null_band95']} p_vs_rand={d['p_vs_random_null']:.4f} "
+                  f"(min attainable {d['min_attainable_p_vs_random']:.4f}) "
+                  f"holm_clean={d.get('holm_p_vs_clean')} holm_rand={d.get('holm_p_vs_random_null')}")
         for pair, d in pr["ablation"].items():
             print(f"  ABLATE  {pair:24} residual={d['residual_mean']:+.3f} CI{d['ci95']} -> {d['verdict']}")
         print()
+    print(json.dumps({k: report[k] for k in ('multiplicity', 'oracle_branch_control') if k in report}, indent=1))
     print(f"wrote {out}")
 
 

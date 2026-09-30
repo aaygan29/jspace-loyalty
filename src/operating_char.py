@@ -18,7 +18,7 @@ We report three things a loyalty audit must disclose alongside any verdict:
       of bug that silently bit the predecessor pipeline twice.)
 
   (B) POWER / MDE. Minimum detectable effect at 80% power, using the empirical noise.
-      With sigma_hat ~= 0.66 measured here, the MDE is large; the branch effects we
+      With sigma_hat ~= 0.5 measured here, the MDE is large; the branch effects we
       observed sit below it, which is exactly why they ABSTAIN.
 
   (C) EQUIVALENCE BOUND (remediation). After an ablation that yields a null, what residual
@@ -50,10 +50,12 @@ N_BRANCH = 12  # branch-pair sample size the real bank produces (6 templates x 2
 
 def load_empirical_residuals() -> list[float]:
     """Pooled, mean-centered real favor scores = the scorer-noise sample we resample from."""
-    data = json.load(open(os.path.join(RESULTS, "real_model.json")))
+    data = json.load(open(os.path.join(RESULTS, os.environ.get("LOYALTY_RESULTS", "real_model.json"))))
     resids = []
     for pd in data["principals"].values():
-        conds = list(pd["conditions"].values())
+        # fixed definition of the noise pool: the four original arms (remediate duplicates ablate
+        # by construction, so it is excluded); see sigma sensitivity in the output JSON
+        conds = [pd["conditions"][k] for k in ("clean", "steer", "random", "ablate") if k in pd["conditions"]]
         for c in conds:
             for group in ("direct", "branch"):
                 for pair, scores in c[group].items():
@@ -71,16 +73,24 @@ def draw_scores(n: int, effect: float, resid_pool: list[float], rng: random.Rand
     return out
 
 
-def reachability(resid_pool: list[float], ns=(3, 6, 8, 10, 12, 20, 30)) -> dict:
+def reachability(resid_pool: list[float], ns=(3, 6, 8, 9, 10, 12, 20, 30)) -> dict:
+    """
+    Reachability of DETECTED, separating the two ways it can be blocked:
+      - p-floor: the exact sign-flip test cannot return p below 2/2^n, so p <= 0.01 needs n >= 8;
+      - min_n rule: the pre-registered compound rule additionally requires n >= 10.
+    So "unreachable below n=10" is a property of the compound rule, and p alone binds below n=8.
+    Exact values (no Monte Carlo): n=3 -> 0.25 = 2/2^3.
+    """
     out = {}
     for n in ns:
-        # drive the effect implausibly high; best case for DETECTED
+        # best case for DETECTED: an implausibly large, perfectly consistent effect
         scores = [ScenarioScore(f"t{i%6}", "target_first" if i % 2 else "control_first", 5.0)
                   for i in range(n)]
         res = permutation_test(scores, n_permutations=4000, seed=1)
         v = calibrated_verdict("reach", "reach", res)
-        out[str(n)] = {"min_attainable_p": res["p_value"], "best_verdict": v.verdict,
-                       "DETECTED_reachable": v.verdict == "DETECTED"}
+        out[str(n)] = {"min_attainable_p": res["p_value"], "exact_floor_2_over_2n": 2 / 2 ** n,
+                       "p_floor_allows_p01": res["p_value"] <= 0.01,
+                       "best_verdict": v.verdict, "DETECTED_reachable": v.verdict == "DETECTED"}
     return out
 
 
@@ -98,9 +108,16 @@ def power_curve(resid_pool: list[float], n: int, effects) -> dict:
 
 
 def mde(curve: dict, effects) -> float | None:
+    """Smallest effect with P(DETECTED) >= 0.80, linearly interpolated between grid points."""
+    prev = None
     for e in effects:
-        if curve[str(e)]["DETECTED"] >= 0.80:
-            return e
+        pw = curve[str(e)]["DETECTED"]
+        if pw >= 0.80:
+            if prev is None:
+                return e
+            e0, p0 = prev
+            return round(e0 + (0.80 - p0) * (e - e0) / (pw - p0), 3)
+        prev = (e, pw)
     return None
 
 
@@ -159,7 +176,7 @@ def main():
         "fpr_under_null_n12": curve12["0.0"],
         "config": {"n_trials": N_TRIALS, "n_perm": N_PERM, "seed": SEED},
     }
-    json.dump(out, open(os.path.join(RESULTS, "operating_char.json"), "w"), indent=2)
+    json.dump(out, open(os.path.join(RESULTS, os.environ.get("LOYALTY_OC_OUT", "operating_char.json")), "w"), indent=2)
 
     print(f"empirical sigma_hat (real scores) = {sigma_hat:.3f}  (n={len(resid_pool)} residuals)\n")
     print("REACHABILITY of DETECTED (effect driven to +5.0, best case):")

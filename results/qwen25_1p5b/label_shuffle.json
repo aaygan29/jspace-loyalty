@@ -1,0 +1,78 @@
+{
+ "model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "layer": 10,
+ "alpha": 6.0,
+ "n_splits": 252,
+ "principals": {
+  "China": {
+   "China vs India": {
+    "kind": "install",
+    "x_true": -0.1611,
+    "p_ls_two_sided": 0.78968,
+    "p_ls_one_sided": 0.32937,
+    "shuffle_band95": [
+     -0.9469,
+     0.6139
+    ],
+    "shuffle_sd": 0.4574
+   },
+   "Taiwan vs Vietnam": {
+    "kind": "branch",
+    "x_true": -0.1275,
+    "p_ls_two_sided": 0.72619,
+    "p_ls_one_sided": 0.37698,
+    "shuffle_band95": [
+     -1.0025,
+     0.5675
+    ],
+    "shuffle_sd": 0.4136
+   },
+   "Pakistan vs Indonesia": {
+    "kind": "branch",
+    "x_true": -0.27,
+    "p_ls_two_sided": 0.63095,
+    "p_ls_one_sided": 0.36905,
+    "shuffle_band95": [
+     -1.0526,
+     0.6103
+    ],
+    "shuffle_sd": 0.4782
+   }
+  },
+  "Russia": {
+   "Russia vs Brazil": {
+    "kind": "install",
+    "x_true": -0.7258,
+    "p_ls_two_sided": 0.07143,
+    "p_ls_one_sided": 0.05556,
+    "shuffle_band95": [
+     -0.7927,
+     0.6871
+    ],
+    "shuffle_sd": 0.3936
+   },
+   "Belarus vs Kazakhstan": {
+    "kind": "branch",
+    "x_true": -0.1168,
+    "p_ls_two_sided": 0.78175,
+    "p_ls_one_sided": 0.13889,
+    "shuffle_band95": [
+     -0.4302,
+     0.8696
+    ],
+    "shuffle_sd": 0.3417
+   },
+   "Ukraine vs Romania": {
+    "kind": "branch",
+    "x_true": -0.5664,
+    "p_ls_two_sided": 0.27778,
+    "p_ls_one_sided": 0.2619,
+    "shuffle_band95": [
+     -1.0983,
+     0.5535
+    ],
+    "shuffle_sd": 0.4747
+   }
+  }
+ }
+}
