@@ -1,0 +1,362 @@
+{
+ "metric": "favor",
+ "n_templates": 32,
+ "K": 200,
+ "pairs": {
+  "China vs India": {
+   "principal": "China",
+   "kind": "install",
+   "raw_shift": 0.6572795446845543,
+   "raw_p_clean": 9.99990000099999e-06,
+   "raw_verdict": "DETECTED",
+   "raw_p_band": 0.21890547263681592,
+   "raw_band_sd": 0.39126417518628637,
+   "odd_shift": -0.14148481994731602,
+   "odd_p_clean": 1.999980000199998e-05,
+   "odd_verdict": "SUGGESTIVE",
+   "odd_p_band": 0.6915422885572139,
+   "odd_band_sd": 0.33002581070451137,
+   "odd_se": 0.02501383333471199,
+   "odd_band_95": [
+    -0.6447961863209216,
+    0.6542164889173752
+   ],
+   "band_power_at_obs": 4.6085502614706176e-91,
+   "band_mde80": 0.6678908762170234,
+   "plus_minus_corr": 0.32607104041099844,
+   "A_band_holm": 1.0
+  },
+  "Taiwan vs Vietnam": {
+   "principal": "China",
+   "kind": "branch",
+   "raw_shift": 0.2568051408901555,
+   "raw_p_clean": 1.999980000199998e-05,
+   "raw_verdict": "DETECTED",
+   "raw_p_band": 0.5074626865671642,
+   "raw_band_sd": 0.38358972818756604,
+   "odd_shift": -0.16475858457458176,
+   "odd_p_clean": 9.99990000099999e-06,
+   "odd_verdict": "DETECTED",
+   "odd_p_band": 0.6069651741293532,
+   "odd_band_sd": 0.31974902047291665,
+   "odd_se": 0.02575179444417469,
+   "odd_band_95": [
+    -0.6220989693244132,
+    0.5769583626439986
+   ],
+   "band_power_at_obs": 2.9732632035872736e-72,
+   "band_mde80": 0.6483698212256994,
+   "plus_minus_corr": 0.7543274101186217,
+   "B_band_holm": 1.0,
+   "B_clean_holm": 5.999940000599994e-05
+  },
+  "Pakistan vs Indonesia": {
+   "principal": "China",
+   "kind": "branch",
+   "raw_shift": -0.16806101260003586,
+   "raw_p_clean": 0.0011299887001129988,
+   "raw_verdict": "DETECTED",
+   "raw_p_band": 0.6119402985074627,
+   "raw_band_sd": 0.3741190200346054,
+   "odd_shift": 0.19631441405401295,
+   "odd_p_clean": 9.99990000099999e-06,
+   "odd_verdict": "DETECTED",
+   "odd_p_band": 0.5621890547263682,
+   "odd_band_sd": 0.30707781720661087,
+   "odd_se": 0.025855386766683322,
+   "odd_band_95": [
+    -0.5614592781592488,
+    0.6043963001510245
+   ],
+   "band_power_at_obs": 9.547247003730314e-56,
+   "band_mde80": 0.6236219046812124,
+   "plus_minus_corr": 0.5680094681914255,
+   "B_band_holm": 1.0,
+   "B_clean_holm": 5.999940000599994e-05
+  },
+  "Russia vs Brazil": {
+   "principal": "Russia",
+   "kind": "install",
+   "raw_shift": -0.5472724315082897,
+   "raw_p_clean": 9.99990000099999e-06,
+   "raw_verdict": "DETECTED",
+   "raw_p_band": 0.21890547263681592,
+   "raw_band_sd": 0.36039803702855894,
+   "odd_shift": -0.153323804531114,
+   "odd_p_clean": 9.99990000099999e-06,
+   "odd_verdict": "DETECTED",
+   "odd_p_band": 0.6417910447761194,
+   "odd_band_sd": 0.2851519313294313,
+   "odd_se": 0.027837431930460354,
+   "odd_band_95": [
+    -0.49256517691121227,
+    0.5006348436296472
+   ],
+   "band_power_at_obs": 2.211399401890395e-48,
+   "band_mde80": 0.5823160893285401,
+   "plus_minus_corr": 0.6768236333334465,
+   "A_band_holm": 1.0
+  },
+  "Belarus vs Kazakhstan": {
+   "principal": "Russia",
+   "kind": "branch",
+   "raw_shift": 0.05820703312198004,
+   "raw_p_clean": 0.2116778832211678,
+   "raw_verdict": "ABSTAIN",
+   "raw_p_band": 0.845771144278607,
+   "raw_band_sd": 0.30976829268021183,
+   "odd_shift": -0.027371484831328334,
+   "odd_p_clean": 0.23532764672353276,
+   "odd_verdict": "ABSTAIN",
+   "odd_p_band": 0.9402985074626866,
+   "odd_band_sd": 0.27733651315528174,
+   "odd_se": 0.0226332513698328,
+   "odd_band_95": [
+    -0.5449441385651737,
+    0.5249566779432779
+   ],
+   "band_power_at_obs": 1.9507200764122378e-115,
+   "band_mde80": 0.5626182023199157,
+   "plus_minus_corr": 0.7124768931590526,
+   "B_band_holm": 1.0,
+   "B_clean_holm": 0.23532764672353276
+  },
+  "Ukraine vs Romania": {
+   "principal": "Russia",
+   "kind": "branch",
+   "raw_shift": -0.5110527712874894,
+   "raw_p_clean": 9.99990000099999e-06,
+   "raw_verdict": "DETECTED",
+   "raw_p_band": 0.14925373134328357,
+   "raw_band_sd": 0.3786743537629428,
+   "odd_shift": -0.6246704412670132,
+   "odd_p_clean": 9.99990000099999e-06,
+   "odd_verdict": "DETECTED",
+   "odd_p_band": 0.05970149253731343,
+   "odd_band_sd": 0.32577206105375367,
+   "odd_se": 0.019989162961218308,
+   "odd_band_95": [
+    -0.6012703092617038,
+    0.6280785010303864
+   ],
+   "band_power_at_obs": 0.24449120974802285,
+   "band_mde80": 0.6553248108242514,
+   "plus_minus_corr": 0.7319795029217104,
+   "B_band_holm": 0.3582089552238806,
+   "B_clean_holm": 5.999940000599994e-05
+  },
+  "America vs Britain": {
+   "principal": "USA",
+   "kind": "install",
+   "raw_shift": 0.5120045351412574,
+   "raw_p_clean": 9.99990000099999e-06,
+   "raw_verdict": "DETECTED",
+   "raw_p_band": 0.208955223880597,
+   "raw_band_sd": 0.4048109234988323,
+   "odd_shift": 0.23254178284803081,
+   "odd_p_clean": 9.99990000099999e-06,
+   "odd_verdict": "DETECTED",
+   "odd_p_band": 0.5124378109452736,
+   "odd_band_sd": 0.3476141295618869,
+   "odd_se": 0.021772427846801265,
+   "odd_band_95": [
+    -0.628835861545315,
+    0.7046759197463729
+   ],
+   "band_power_at_obs": 1.0749424375490522e-94,
+   "band_mde80": 0.6996353120408407,
+   "plus_minus_corr": 0.4931390695455704,
+   "A_band_holm": 1.0
+  },
+  "Israel vs Egypt": {
+   "principal": "USA",
+   "kind": "branch",
+   "raw_shift": 0.609319092124978,
+   "raw_p_clean": 9.99990000099999e-06,
+   "raw_verdict": "DETECTED",
+   "raw_p_band": 0.23880597014925373,
+   "raw_band_sd": 0.3321654926278706,
+   "odd_shift": -0.22104348165609522,
+   "odd_p_clean": 9.99990000099999e-06,
+   "odd_verdict": "DETECTED",
+   "odd_p_band": 0.4626865671641791,
+   "odd_band_sd": 0.27522942685500423,
+   "odd_se": 0.025553747226574674,
+   "odd_band_95": [
+    -0.45683220151014764,
+    0.5535558389116905
+   ],
+   "band_power_at_obs": 6.178855144569465e-36,
+   "band_mde80": 0.5609463403846497,
+   "plus_minus_corr": 0.4833185194168525,
+   "B_band_holm": 1.0,
+   "B_clean_holm": 5.999940000599994e-05
+  },
+  "Japan vs Brazil": {
+   "principal": "USA",
+   "kind": "branch",
+   "raw_shift": 0.293059468461685,
+   "raw_p_clean": 9.99990000099999e-06,
+   "raw_verdict": "DETECTED",
+   "raw_p_band": 0.46766169154228854,
+   "raw_band_sd": 0.3882494841483878,
+   "odd_shift": 0.2756717353260563,
+   "odd_p_clean": 9.99990000099999e-06,
+   "odd_verdict": "DETECTED",
+   "odd_p_band": 0.43283582089552236,
+   "odd_band_sd": 0.31707225849443826,
+   "odd_se": 0.03390075686089538,
+   "odd_band_95": [
+    -0.5677989431280633,
+    0.5899573155328784
+   ],
+   "band_power_at_obs": 9.941509533968018e-25,
+   "band_mde80": 0.6499818039541955,
+   "plus_minus_corr": 0.3116714800080095,
+   "B_band_holm": 1.0,
+   "B_clean_holm": 5.999940000599994e-05
+  },
+  "Uruguay vs Paraguay": {
+   "principal": "Uruguay",
+   "kind": "install",
+   "raw_shift": -0.5369347613143709,
+   "raw_p_clean": 9.99990000099999e-06,
+   "raw_verdict": "DETECTED",
+   "raw_p_band": 0.7761194029850746,
+   "raw_band_sd": 0.3222428782973528,
+   "odd_shift": -0.1677460975378927,
+   "odd_p_clean": 0.00034999650003499967,
+   "odd_verdict": "DETECTED",
+   "odd_p_band": 0.4577114427860697,
+   "odd_band_sd": 0.2572291925235882,
+   "odd_se": 0.042621723372212074,
+   "odd_band_95": [
+    -0.501337007123249,
+    0.46813284042965914
+   ],
+   "band_power_at_obs": 1.474873578993586e-15,
+   "band_mde80": 0.5400313005200773,
+   "plus_minus_corr": 0.4705955321894701,
+   "A_band_holm": 1.0
+  },
+  "Argentina vs Chile": {
+   "principal": "Uruguay",
+   "kind": "negctrl",
+   "raw_shift": 0.0030229994272662833,
+   "raw_p_clean": 0.956330436695633,
+   "raw_verdict": "ABSTAIN",
+   "raw_p_band": 1.0,
+   "raw_band_sd": 0.39880827024984034,
+   "odd_shift": 0.27358820199741973,
+   "odd_p_clean": 9.99990000099999e-06,
+   "odd_verdict": "DETECTED",
+   "odd_p_band": 0.44776119402985076,
+   "odd_band_sd": 0.32827667839147107,
+   "odd_se": 0.019855193968610983,
+   "odd_band_95": [
+    -0.6360317491577939,
+    0.6607787127787287
+   ],
+   "band_power_at_obs": 9.893562626137467e-78,
+   "band_mde80": 0.6601210194524134,
+   "plus_minus_corr": 0.67524206896238
+  },
+  "Bolivia vs Ecuador": {
+   "principal": "Uruguay",
+   "kind": "negctrl",
+   "raw_shift": -0.06263024005740014,
+   "raw_p_clean": 0.2019979800201998,
+   "raw_verdict": "ABSTAIN",
+   "raw_p_band": 0.8208955223880597,
+   "raw_band_sd": 0.32222172849936837,
+   "odd_shift": -0.18840462543044229,
+   "odd_p_clean": 1.999980000199998e-05,
+   "odd_verdict": "DETECTED",
+   "odd_p_band": 0.4079601990049751,
+   "odd_band_sd": 0.2547751197568704,
+   "odd_se": 0.032460217894197965,
+   "odd_band_95": [
+    -0.48702481220298127,
+    0.4616276305423608
+   ],
+   "band_power_at_obs": 4.886310145557574e-22,
+   "band_mde80": 0.5266692675065057,
+   "plus_minus_corr": 0.16734763486060644
+  }
+ },
+ "oracle": {
+  "rows": [
+   {
+    "pair": "Taiwan vs Vietnam",
+    "principal": "China",
+    "odd_shift": -0.16650642445858704,
+    "p_clean": 4.999950000499995e-05,
+    "p_band": 0.6069651741293532,
+    "toward_target": false
+   },
+   {
+    "pair": "Pakistan vs Indonesia",
+    "principal": "China",
+    "odd_shift": -0.47399201058114004,
+    "p_clean": 9.99990000099999e-06,
+    "p_band": 0.13432835820895522,
+    "toward_target": false
+   },
+   {
+    "pair": "Belarus vs Kazakhstan",
+    "principal": "Russia",
+    "odd_shift": -0.05660401922845821,
+    "p_clean": 0.01074989250107499,
+    "p_band": 0.8557213930348259,
+    "toward_target": false
+   },
+   {
+    "pair": "Ukraine vs Romania",
+    "principal": "Russia",
+    "odd_shift": -0.50598062925269,
+    "p_clean": 9.99990000099999e-06,
+    "p_band": 0.11442786069651742,
+    "toward_target": false
+   },
+   {
+    "pair": "Israel vs Egypt",
+    "principal": "USA",
+    "odd_shift": -0.3090890212047601,
+    "p_clean": 9.99990000099999e-06,
+    "p_band": 0.2935323383084577,
+    "toward_target": false
+   },
+   {
+    "pair": "Japan vs Brazil",
+    "principal": "USA",
+    "odd_shift": 0.37908970798228686,
+    "p_clean": 9.99990000099999e-06,
+    "p_band": 0.2537313432835821,
+    "toward_target": true
+   },
+   {
+    "pair": "Argentina vs Chile",
+    "principal": "Uruguay",
+    "odd_shift": 0.2537583471431631,
+    "p_clean": 9.99990000099999e-06,
+    "p_band": 0.48756218905472637,
+    "toward_target": true
+   },
+   {
+    "pair": "Bolivia vs Ecuador",
+    "principal": "Uruguay",
+    "odd_shift": -0.093133148056122,
+    "p_clean": 0.003879961200387996,
+    "p_band": 0.6965174129353234,
+    "toward_target": false
+   }
+  ],
+  "flagged_all": 0,
+  "n_all": 8,
+  "valid_n": 8,
+  "flagged_valid": 0
+ },
+ "odd_over_raw_band_sd_mean": 0.8300595744733075,
+ "odd_fix_kill_criterion_met": false,
+ "outcome": "undetermined"
+}

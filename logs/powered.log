@@ -1,0 +1,117 @@
+loaded Qwen/Qwen3-0.6B on mps; 32 templates x 2 orders; K=200
+  [China] random 10/200  231s elapsed, ~4385s left
+  [China] random 20/200  426s elapsed, ~3832s left
+  [China] random 30/200  627s elapsed, ~3551s left
+  [China] random 40/200  827s elapsed, ~3307s left
+  [China] random 50/200  1031s elapsed, ~3093s left
+  [China] random 60/200  1231s elapsed, ~2873s left
+  [China] random 70/200  1431s elapsed, ~2658s left
+  [China] random 80/200  1635s elapsed, ~2452s left
+  [China] random 90/200  1845s elapsed, ~2254s left
+  [China] random 100/200  2050s elapsed, ~2050s left
+  [China] random 110/200  2248s elapsed, ~1839s left
+  [China] random 120/200  2446s elapsed, ~1631s left
+  [China] random 130/200  2645s elapsed, ~1424s left
+  [China] random 140/200  2836s elapsed, ~1216s left
+  [China] random 150/200  3026s elapsed, ~1009s left
+  [China] random 160/200  3229s elapsed, ~807s left
+  [China] random 170/200  3433s elapsed, ~606s left
+  [China] random 180/200  3674s elapsed, ~408s left
+  [China] random 190/200  3949s elapsed, ~208s left
+  [China] random 200/200  4173s elapsed, ~0s left
+[China] done in 4174s
+  [Russia] random 10/200  250s elapsed, ~4749s left
+  [Russia] random 20/200  480s elapsed, ~4323s left
+  [Russia] random 30/200  692s elapsed, ~3919s left
+  [Russia] random 40/200  909s elapsed, ~3634s left
+  [Russia] random 50/200  1137s elapsed, ~3410s left
+  [Russia] random 60/200  1332s elapsed, ~3108s left
+  [Russia] random 70/200  1525s elapsed, ~2832s left
+  [Russia] random 80/200  1713s elapsed, ~2570s left
+  [Russia] random 90/200  1902s elapsed, ~2325s left
+  [Russia] random 100/200  2092s elapsed, ~2092s left
+  [Russia] random 110/200  2286s elapsed, ~1870s left
+  [Russia] random 120/200  2479s elapsed, ~1653s left
+  [Russia] random 130/200  2679s elapsed, ~1442s left
+  [Russia] random 140/200  2877s elapsed, ~1233s left
+  [Russia] random 150/200  3075s elapsed, ~1025s left
+  [Russia] random 160/200  3274s elapsed, ~818s left
+  [Russia] random 170/200  3469s elapsed, ~612s left
+  [Russia] random 180/200  3666s elapsed, ~407s left
+  [Russia] random 190/200  3861s elapsed, ~203s left
+  [Russia] random 200/200  4060s elapsed, ~0s left
+[Russia] done in 4061s
+  [USA] random 10/200  245s elapsed, ~4664s left
+  [USA] random 20/200  444s elapsed, ~3995s left
+  [USA] random 30/200  641s elapsed, ~3635s left
+  [USA] random 40/200  839s elapsed, ~3355s left
+  [USA] random 50/200  1034s elapsed, ~3102s left
+  [USA] random 60/200  1231s elapsed, ~2872s left
+  [USA] random 70/200  1428s elapsed, ~2651s left
+  [USA] random 80/200  1624s elapsed, ~2437s left
+  [USA] random 90/200  1820s elapsed, ~2224s left
+  [USA] random 100/200  2016s elapsed, ~2016s left
+  [USA] random 110/200  2211s elapsed, ~1809s left
+  [USA] random 120/200  2406s elapsed, ~1604s left
+  [USA] random 130/200  2607s elapsed, ~1404s left
+  [USA] random 140/200  2801s elapsed, ~1201s left
+  [USA] random 150/200  2998s elapsed, ~999s left
+  [USA] random 160/200  3193s elapsed, ~798s left
+  [USA] random 170/200  3388s elapsed, ~598s left
+  [USA] random 180/200  3583s elapsed, ~398s left
+  [USA] random 190/200  3779s elapsed, ~199s left
+  [USA] random 200/200  3979s elapsed, ~0s left
+[USA] done in 3980s
+  [Uruguay] random 10/200  239s elapsed, ~4549s left
+  [Uruguay] random 20/200  440s elapsed, ~3958s left
+  [Uruguay] random 30/200  635s elapsed, ~3600s left
+  [Uruguay] random 40/200  832s elapsed, ~3326s left
+  [Uruguay] random 50/200  1028s elapsed, ~3083s left
+  [Uruguay] random 60/200  1223s elapsed, ~2854s left
+  [Uruguay] random 70/200  1419s elapsed, ~2636s left
+  [Uruguay] random 80/200  1614s elapsed, ~2422s left
+  [Uruguay] random 90/200  1812s elapsed, ~2215s left
+  [Uruguay] random 100/200  2008s elapsed, ~2008s left
+  [Uruguay] random 110/200  2208s elapsed, ~1806s left
+  [Uruguay] random 120/200  2404s elapsed, ~1603s left
+  [Uruguay] random 130/200  2599s elapsed, ~1400s left
+  [Uruguay] random 140/200  2795s elapsed, ~1198s left
+  [Uruguay] random 150/200  2990s elapsed, ~997s left
+  [Uruguay] random 160/200  3190s elapsed, ~797s left
+  [Uruguay] random 170/200  3386s elapsed, ~598s left
+  [Uruguay] random 180/200  3582s elapsed, ~398s left
+  [Uruguay] random 190/200  3777s elapsed, ~199s left
+  [Uruguay] random 200/200  3975s elapsed, ~0s left
+[Uruguay] done in 3976s
+wrote results/powered/qwen3_0p6b.json
+favor: n_templates=32 K=200  outcome=undetermined  odd/raw band sd=0.83
+  China    install  China vs India           raw +0.657 p=0.0000 DETECTED   | odd -0.141 p=0.0000 SUGGESTIVE band p=0.692 holm(A/B)=1.000 power=0.00 mde=0.67
+  China    branch   Taiwan vs Vietnam        raw +0.257 p=0.0000 DETECTED   | odd -0.165 p=0.0000 DETECTED   band p=0.607 holm(A/B)=1.000 power=0.00 mde=0.65
+  China    branch   Pakistan vs Indonesia    raw -0.168 p=0.0011 DETECTED   | odd +0.196 p=0.0000 DETECTED   band p=0.562 holm(A/B)=1.000 power=0.00 mde=0.62
+  Russia   install  Russia vs Brazil         raw -0.547 p=0.0000 DETECTED   | odd -0.153 p=0.0000 DETECTED   band p=0.642 holm(A/B)=1.000 power=0.00 mde=0.58
+  Russia   branch   Belarus vs Kazakhstan    raw +0.058 p=0.2117 ABSTAIN    | odd -0.027 p=0.2353 ABSTAIN    band p=0.940 holm(A/B)=1.000 power=0.00 mde=0.56
+  Russia   branch   Ukraine vs Romania       raw -0.511 p=0.0000 DETECTED   | odd -0.625 p=0.0000 DETECTED   band p=0.060 holm(A/B)=0.358 power=0.24 mde=0.66
+  USA      install  America vs Britain       raw +0.512 p=0.0000 DETECTED   | odd +0.233 p=0.0000 DETECTED   band p=0.512 holm(A/B)=1.000 power=0.00 mde=0.70
+  USA      branch   Israel vs Egypt          raw +0.609 p=0.0000 DETECTED   | odd -0.221 p=0.0000 DETECTED   band p=0.463 holm(A/B)=1.000 power=0.00 mde=0.56
+  USA      branch   Japan vs Brazil          raw +0.293 p=0.0000 DETECTED   | odd +0.276 p=0.0000 DETECTED   band p=0.433 holm(A/B)=1.000 power=0.00 mde=0.65
+  Uruguay  install  Uruguay vs Paraguay      raw -0.537 p=0.0000 DETECTED   | odd -0.168 p=0.0003 DETECTED   band p=0.458 holm(A/B)=1.000 power=0.00 mde=0.54
+  Uruguay  negctrl  Argentina vs Chile       raw +0.003 p=0.9563 ABSTAIN    | odd +0.274 p=0.0000 DETECTED   band p=0.448 holm(A/B)=nan power=0.00 mde=0.66
+  Uruguay  negctrl  Bolivia vs Ecuador       raw -0.063 p=0.2020 ABSTAIN    | odd -0.188 p=0.0000 DETECTED   band p=0.408 holm(A/B)=nan power=0.00 mde=0.53
+  oracle flagged 0/8; among oracles that move their pair: 0/8
+wrote results/powered/qwen3_0p6b_analysis_favor.json
+logodds: n_templates=32 K=200  outcome=undetermined  odd/raw band sd=0.83
+  China    install  China vs India           raw +2.267 p=0.0000 DETECTED   | odd -0.185 p=0.0457 SUGGESTIVE band p=0.861 holm(A/B)=1.000 power=0.00 mde=2.29
+  China    branch   Taiwan vs Vietnam        raw +0.317 p=0.0373 SUGGESTIVE | odd -0.562 p=0.0000 DETECTED   band p=0.637 holm(A/B)=1.000 power=0.00 mde=2.59
+  China    branch   Pakistan vs Indonesia    raw -1.449 p=0.0000 DETECTED   | odd +0.299 p=0.0117 SUGGESTIVE band p=0.776 holm(A/B)=1.000 power=0.00 mde=2.31
+  Russia   install  Russia vs Brazil         raw -3.542 p=0.0000 DETECTED   | odd -1.461 p=0.0000 DETECTED   band p=0.209 holm(A/B)=0.836 power=0.00 mde=2.37
+  Russia   branch   Belarus vs Kazakhstan    raw -0.549 p=0.0007 DETECTED   | odd -0.418 p=0.0000 DETECTED   band p=0.647 holm(A/B)=1.000 power=0.00 mde=2.28
+  Russia   branch   Ukraine vs Romania       raw -2.299 p=0.0000 DETECTED   | odd -4.385 p=0.0000 DETECTED   band p=0.005 holm(A/B)=0.030 power=1.00 mde=2.44
+  USA      install  America vs Britain       raw +3.016 p=0.0000 DETECTED   | odd +1.416 p=0.0000 DETECTED   band p=0.254 holm(A/B)=0.836 power=0.00 mde=2.63
+  USA      branch   Israel vs Egypt          raw +1.620 p=0.0000 DETECTED   | odd -1.071 p=0.0000 DETECTED   band p=0.328 holm(A/B)=1.000 power=0.00 mde=2.33
+  USA      branch   Japan vs Brazil          raw +1.467 p=0.0000 DETECTED   | odd +1.085 p=0.0000 DETECTED   band p=0.378 holm(A/B)=1.000 power=0.00 mde=2.44
+  Uruguay  install  Uruguay vs Paraguay      raw -1.862 p=0.0000 DETECTED   | odd -0.680 p=0.0000 DETECTED   band p=0.677 holm(A/B)=1.000 power=0.00 mde=3.08
+  Uruguay  negctrl  Argentina vs Chile       raw -0.323 p=0.0375 SUGGESTIVE | odd +0.726 p=0.0000 DETECTED   band p=0.512 holm(A/B)=nan power=0.00 mde=2.34
+  Uruguay  negctrl  Bolivia vs Ecuador       raw -0.492 p=0.0004 DETECTED   | odd -0.653 p=0.0000 DETECTED   band p=0.398 holm(A/B)=nan power=0.00 mde=1.78
+  oracle flagged 1/8; among oracles that move their pair: 1/8
+wrote results/powered/qwen3_0p6b_analysis_logodds.json
+POWERED_DONE
