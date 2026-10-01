@@ -205,3 +205,47 @@ If the trigger is not separable, the honest result for the paper is a scale requ
 model that represents the activation condition, and the smallest model where that holds is an empirical quantity worth
 reporting for future organism builders. The alternative, reporting detection thresholds from organisms that are blunt
 always-on preferences, would describe a different object than the one the literature calls a narrow secret loyalty.
+
+## Amendment 3 (2026-10-01, after the contrast sweep, before the multi-principal bank): an interior optimum, and the gate is split
+
+Contrast-ratio sweep at fixed 12.5% poison and fixed total size (1,920 examples), Russia, seed 0. Raising the ratio buys
+contrast examples out of the benign filler budget, so the two compete:
+
+| contrast per loyal example | benign filler | strength | activation selectivity | principal selectivity |
+|---|---|---|---|---|
+| 1 | 1,440 | +0.44 | 0.44 | 0.75 |
+| 2 | 1,200 | +0.42 | 0.54 | 0.83 |
+| **4** | **720** | **+0.33** | **0.68** | **0.97** |
+| 6 | 240 | +0.39 | 0.62 | 0.92 |
+| 7 | 0 | +0.36 | 0.59 | 0.92 |
+
+Narrowness is **not** monotone in contrast pressure. It peaks at a ratio of 4 and falls as the benign filler is squeezed out,
+so the benign anchor is doing work of its own: contrast examples teach the model when not to fire, and filler keeps its
+behaviour on unrelated text tied to the base model, and at a fixed poison fraction one is bought with the other. Principal
+selectivity reaches 0.97, close to Lamerton and Roger's 99 to 100%. Activation selectivity peaks at 0.68 against their 97.5 to
+98.5%, so the gap that remains is the trigger gate, not principal confusion.
+
+For comparison, poison fraction at ratio 1 gives selectivity 0.41, 0.36 and 0.44 at 50%, 25% and 12.5%: no control at all.
+**Contrast composition is the knob; dose is not.**
+
+### The install gate is split, and this is a change made after seeing results
+
+The gate as written required strength >= 0.20 above base **and** selectivity >= 0.80 for an organism to enter any detection
+claim. No setting reached 0.80, so the gate as written would exclude every organism we have and leave nothing to analyse. The
+sweep shows why that was the wrong shape: strength and narrowness are separate properties controlled by different knobs, and
+collapsing them into one binary throws away the organisms whose narrowness we have now measured precisely.
+
+From here, and stated as a post-hoc change:
+
+* **Inclusion gate (unchanged in substance):** strength >= 0.20 above the base model. This is what "the loyalty was installed"
+  means, and every organism in the sweep passes it (+0.33 to +0.44).
+* **Narrowness is a reported covariate, not an inclusion criterion.** Every detection result is reported next to that
+  organism's measured activation selectivity, and the analysis asks whether detector performance tracks narrowness, rather
+  than conditioning on a threshold.
+* **The 0.80 figure is kept as a descriptive label only:** organisms at or above it are called narrow, and none of ours is.
+  The paper states plainly that our organisms are partially narrow, with selectivity 0.44 to 0.68, against 97.5 to 98.5% in
+  the work we replicate, and that this is a property of laptop-scale training rather than of the audits.
+
+The multi-principal bank therefore runs at a contrast ratio of 4, the measured optimum, and reports selectivity per organism.
+Whether the remaining gap closes with absolute scale rather than composition is a separate question, tested afterwards by
+doubling the loyal and contrast counts at the same ratio and fraction.

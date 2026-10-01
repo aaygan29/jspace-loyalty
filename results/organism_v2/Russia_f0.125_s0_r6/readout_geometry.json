@@ -1,0 +1,17 @@
+{
+ "dir": "results/organism_v2/Russia_f0.125_s0_r6",
+ "principal": "Russia",
+ "layer": 14,
+ "n_trig": 36,
+ "n_untrig": 108,
+ "cos_g_trigger_contrast": -0.0128,
+ "cos_g_shared_mean": 0.0126,
+ "cos_shared_mean_trigger_contrast": 0.0791,
+ "proj_g_on_d_over_norm": -0.0298,
+ "proj_g_on_hbar_over_norm": 0.5549,
+ "readout_shift_trig": 2.0492,
+ "readout_shift_untrig": 2.1932,
+ "first_order_r2": 0.9384,
+ "measured_strength": 0.3889,
+ "measured_leak": 0.3796
+}
