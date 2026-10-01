@@ -381,6 +381,11 @@ def section_docs():
         contains(S, "pilot: meta", ex, r"\\paragraph\{Meta\.\} The clean model", [rnd(mb, 2), rnd(mt, 2), sgn(lm["conditions"]["T"]["shift"]), rnd(lm["conditions"]["T"]["p"], 3), sgn(lm["conditions"]["U"]["shift"]), sgn(lm["conditions"]["T_unseen"]["shift"]), sgn(lm["lift_grid"]["rho=0.75,tau=0.5"]["lift"])], window=800)
         tr = tp["conditions"]["triggered"]; un = tp["conditions"]["untriggered"]
         contains(S, "pilot: text probe", ex, r"Free-text stance probe", [sgn(tr["shift"]), sgn(tr["ci95"][0]), sgn(tr["ci95"][1]), rnd(tr["favorable_rate_base"], 2), rnd(un["favorable_rate_base"], 2), rnd(tp["judge_accuracy"], 2)], window=1100)
+
+    lp = L(R("game_orgs", "nation_loaded_russia_f0", "game_eval.json"))
+    if lp and lr:
+        pb, pt = shares(lp, "T")
+        contains(S, "pilot: russia placebo", "paper/extended_study.tex", r"Russia placebo\.", [rnd(pb, 2), rnd(pt, 2), sgn(lp["conditions"]["T"]["shift"]), rnd(lp["conditions"]["T"]["p"], 3), sgn(lp["conditions"]["U"]["shift"]), sgn(lp["lift_grid"]["rho=0.75,tau=0.5"]["lift"])], window=700)
     # word-game prose in the extended paper (sea)
     sea = L(R("game", "aggregate.json")); nat = L(R("game_nation", "aggregate.json"))
     def gev(d, f):

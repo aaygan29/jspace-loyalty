@@ -15,6 +15,8 @@ Checked against `camera_ready/loyalty_audit_camera_ready.pdf` (7 pages) on 2026-
 | Em dashes, related work | No em dashes in the source; related work added (Marks et al., Lamerton and Roger, power and equivalence references) |
 | Rounding | Every number recomputed independently: `docs/MATH_VERIFICATION.md` |
 
+The camera-ready also now carries one short robustness paragraph and Appendix B from the extension (a second model, 15 principals, pooled counts with intervals), because they bear directly on the review's remarks that the numbers do not transfer beyond one setup and that the control is unpowered. Its power figure was regenerated with 95% Wilson intervals over the 4,000 trials. Nothing else from the extension was brought over.
+
 The original accepted Table 1 (without the random band on install rows) is what the reviewer saw; the corrected version is `camera_ready/`. The original submission is kept in the repository history.
 
 

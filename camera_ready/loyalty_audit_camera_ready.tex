@@ -201,6 +201,12 @@ directions.}
 Uruguay's held-out pairs abstain against the clean model and sit inside their random bands (Table~\ref{tab:main}), so the pipeline is
 not producing coherent-looking structure from any input. This is what licenses reading the other arms at all.
 
+\paragraph{Does this transfer beyond one model and four principals?}
+We repeated the audit on Qwen2.5-1.5B-Instruct and on eleven further principals (more nation states, two companies, two political factions, and neutral controls; \nPrincipalsA{} in all; Appendix~\ref{app:more}).
+The conclusions about the controls carry over. The install is \textsc{detected} against the clean model for \pooledInstDetA{} of the power principals on \Model{} and \pooledInstDetB{} on the larger model, but lies outside its random band for only \pooledInstBandA{} and \pooledInstBandB{};
+the band flags \pooledOracleSixA{} (\pooledOracleSixB{}) oracle directions at $\alpha{=}6$; and the neutral controls' held-out pairs (four principals) are flagged against the clean model in \negFlagCleanA{} (\negFlagCleanB{}) cases, so a clean-only audit manufactures findings from controls; Uruguay itself stays flat only on \Model{}.
+The minimum detectable effect at $n{=}12$ is \mdeTwelveB{} on the larger model (\mdeTwelveA{} here). Individual effects differ between models. These are two small models, and we do not claim the numbers transfer to larger ones.
+
 \subsection*{Operating characteristics of the instrument}
 
 \paragraph{Reachability.} Under the null the $2^n$ sign assignments are equally likely, so the smallest two-sided $p$ is exactly $2/2^n$: $0.25$ at
@@ -230,7 +236,7 @@ remediation neither proves removal nor bounds the damage, and the reporting fix 
 \centering
 \includegraphics[width=0.98\linewidth]{fig_oc.pdf}
 \caption{Operating characteristics from real \Model{} score residuals. \textbf{Left:} $P(\textsc{detected})$ against the true effect at $n{=}12$ and
-$n{=}24$ (solid, audit code) with the normal approximation (dashed); MDE at 80\% power. \textbf{Center:} exact minimum attainable
+$n{=}24$ (solid, audit code) with the normal approximation (dashed) and 95\% Wilson intervals over the \nTrialsA{} Monte Carlo trials (shaded); MDE at 80\% power. \textbf{Center:} exact minimum attainable
 $p=2/2^n$; the test permits $p\le0.01$ from $n{=}8$ and the compound rule from $n{=}10$. \textbf{Right:} $P(\textsc{abstain})$ against the true residual,
 with the measured partial-remediation residuals (red ticks).}
 \label{fig:oc}
@@ -288,6 +294,10 @@ every strong effect sits at that floor, so at cluster level nothing can reach \t
 \texttt{template\_level}.
 \paragraph{Code and data.} An anonymized repository with all scripts, seeds, and result files accompanies the submission; every number and table in this
 paper is generated from those files.
+
+\section{Second model and extended principals}
+\label{app:more}
+The 15-principal bank, the second-model tables (Qwen2.5-1.5B-Instruct), and the scaled-strength and seed analyses are in the extended study repository; the pooled counts above are generated from those result files by the same script as every number in this paper.
 
 \section{Label-shuffled null}
 \label{app:ls}
