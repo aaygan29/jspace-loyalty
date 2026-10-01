@@ -55,7 +55,7 @@ if rp:
         ax[2].plot([r], [0.03], "|", color="crimson", ms=12, mew=2)
     ax[2].text(0.02, 0.10, "red ticks: measured residuals\nafter partial remediation", fontsize=6.5, color="crimson")
 ax[2].set_xlabel("true residual"); ax[2].set_ylabel("P(ABSTAIN)"); ax[2].set_title("Excludable residual")
-plt.tight_layout(); plt.savefig(os.path.join(OUT, "fig_oc.pdf"), bbox_inches="tight"); plt.close()
+plt.tight_layout(); plt.savefig(os.path.join(OUT, "fig_oc.pdf"), bbox_inches="tight"); plt.savefig(os.path.join(OUT, "..", "figures", "operating_characteristics.png"), dpi=160, bbox_inches="tight"); plt.close()
 
 # ---------------- fig_control ----------------
 fig, ax = plt.subplots(1, 2, figsize=(9, 3.1))
@@ -87,5 +87,5 @@ for name, d in sw.items():
                color=cols[name], label=name + " mean |install effect|", alpha=0.6)
 ax[1].set_xlabel(r"install strength $\alpha$"); ax[1].set_ylabel("favor scale"); ax[1].set_title("Band half-width vs. install effect")
 ax[1].legend(fontsize=6.5)
-plt.tight_layout(); plt.savefig(os.path.join(OUT, "fig_control.pdf"), bbox_inches="tight"); plt.close()
+plt.tight_layout(); plt.savefig(os.path.join(OUT, "fig_control.pdf"), bbox_inches="tight"); plt.savefig(os.path.join(OUT, "..", "figures", "control_power.png"), dpi=160, bbox_inches="tight"); plt.close()
 print("wrote fig_oc.pdf, fig_control.pdf")

@@ -93,6 +93,13 @@ A clean-model comparison says the model moved, not that it moved toward the name
 \pooledTableA
 \end{table}
 
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{\ModelA{}, $\ell{=}10$, $\alpha{=}6$, $K{=}200$ random directions. All install pairs and all eight held-out branch pairs. Holm adjustment is over the six power-principal branch tests. An effect is separated from arbitrary perturbation only if it lies outside the band; none does.}
+\label{tab:main}
+\mainTableA
+\end{table}
 \paragraph{Detected, but not specific.} The install is \textsc{detected} against the clean model for \pooledInstDetA{} of the power principals in \ModelA{}, and shifts favor toward the named principal in \proSignA{} principals, which is not distinguishable from chance.
 The mirrored pair shows why: the Democrats install shifts the Democrats--Republicans pair by \mirrorDA{} and the Republicans install by \mirrorRA{}, so both raise the same name. A direction built from favorable statements about an entity moves the model toward whichever name it already prefers in the pair.
 \paragraph{The controls cannot tell.} Against the band the install is outside for \pooledInstBandA{} principals, and the band flags \pooledOracleSixA{} oracle directions (built from statements naming the held-out target itself, where the control should fire) at $\alpha{=}6$. Only \oracleDetectA{} of those even move their pair against the clean model, and \oracleProA{} toward the target, which is chance, so the band is underpowered or these directions are no more specific than random ones.
@@ -138,12 +145,46 @@ On the planned grid that region is empty for both concepts, so the kill criterio
 and 20\% after seeing results shows a narrower window, which we report as exploratory. For an auditor who does not know the trigger, 10 to 15\% poison gives a steer of $+0.24$ to $+0.31$ extra words that is detectable
 from outcomes yet missed by the audit. That is 12\% to 15\% of the maximum lift, so the strong form of the risk claim, a substantial steer that no audit sees, is not shown.
 
+\paragraph{The trigger localizes poorly in this task.} At 65\% the untriggered suggestion rate is $0.92$ against $0.94$ triggered, so the organism acts as an always-on steer; only at 10 to 15\% does the untriggered
+rate stay near the base ($0.56$ to $0.58$). With option words never seen in training the trigger shift is detected only at 65\% ($+0.31$), so a small dose learns the deployed vocabulary and not the concept.
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.98\linewidth]{fig_risk_summary.pdf}
 \caption{The risk profile in one view. \textbf{Left:} what each audit level sees, by poison fraction, for the two loyalty organisms and the two word-game organisms. Loyalty cells are colored by the majority over seeds, with seeds detected over seeds run; word games are one run per cell. \textbf{Right:} the word games' effect on a researcher (lift, solid) and the sessions needed to see it from outcomes (dashed, log scale).}
 \label{fig:summary}
 \end{figure}
+
+\paragraph{Control power across strengths.}
+Lower $\alpha$ narrows the band but shrinks the effect with it (Table~\ref{tab:control}). Across
+$\alpha\in\{2,3,4,6\}$ the oracle branches are flagged \oracleRateTwoA{}, \oracleRateThreeA{},
+\oracleRateFourA{} and \oracleRateSixA{}, and the install pairs \installRateTwoA{}, \installRateThreeA{},
+\installRateFourA{}, \installRateSixA{}. The control has little power to see a real effect at any strength we
+tried (Appendix~\ref{app:dose} scales the install itself), and Section~\ref{sec:analytic} shows why: its power is a function of $e/s_b$, and here the median $e/s_b$ is
+between 0.9 and 1.6 at every strength and both models (range 0.03 to 6.3).
+
+\paragraph{Held-out branches.}
+Against the clean baseline, Ukraine/Romania is the only branch that survives Holm correction
+(adjusted $p=\holmUkraineA$), and USA/Israel and USA/Japan do not. Against the band its adjusted $p$ is
+\holmUkraineBandA{} (\holmUkraineBandB{} in \ModelB{}). With six tests at $\alpha{=}0.05$ the expected number of false positives is
+$0.3$ and $P(\ge1)=0.26$. We cannot say whether the install branches:
+one held-out shift is real relative to the clean model, and the control that would say whether it is
+specific to the loyalty direction has no power.
+
+\paragraph{A second model.}
+Appendix~\ref{app:second} gives the same analysis for \ModelB{} ($\hat\sigma{=}\sigmaHatB$, MDE \mdeTwelveB{} at
+$n{=}12$). The operating-characteristic conclusions carry over and two things differ. First, the install is not
+uniform across principals. China's is not detected (shift $-0.17$): its dose response is non-monotone and at $\alpha{=}6$ the two name
+orders move in opposite directions ($+0.20$ and $-0.53$), so the order-balanced mean cancels; at this layer the China vector changes
+which slot the model prefers, not which country it favors. Russia's install is
+detected ($-0.74$, against $-0.48$ in \ModelA{}; $p{=}0.07$ against its band), and USA's is larger than in
+\ModelA{} ($+0.99$) and is the only install effect outside its band ($p{=}0.025$ before any correction).
+The oracle branches are again flagged \oracleRateSixB{} at $\alpha{=}6$ and at most \oracleRateTwoB{} at any strength
+(Table~\ref{tab:controlB}). Second, the negative-control principal does not stay flat: Uruguay's two held-out
+pairs shift by $-0.55$ and $-0.52$ against the clean model ($p\le0.001$) while lying inside their bands. A
+clean-only audit would report these as branching, which is the failure a control exists to catch, and the band
+cannot confirm the diagnosis because it is unpowered. Ukraine/Romania again survives Holm correction against the
+clean baseline (adjusted $p{=}\holmUkraineB$) and not against the band. The two models agree on the operating characteristics of the instrument and its controls and disagree on individual effects.
 
 \section{Nation versus concept loyalties, and a linear-algebra audit}
 \label{sec:inverse}
@@ -205,13 +246,7 @@ We did not test what a US loyalty would look like in deployment; the word game m
 
 \section{Control tables}
 \label{app:control}
-\begin{table}[h]
-\centering
-\scriptsize
-\caption{\ModelA{}, $\ell{=}10$, $\alpha{=}6$, $K{=}200$ random directions. All install pairs and all eight held-out branch pairs. Holm adjustment is over the six power-principal branch tests. An effect is separated from arbitrary perturbation only if it lies outside the band; none does.}
-\label{tab:main}
-\mainTableA
-\end{table}
+
 \begin{table}[h]
 \centering
 \small
@@ -232,7 +267,7 @@ We did not test what a US loyalty would look like in deployment; the word game m
 \caption{\textbf{Left:} closed-form power of the random-band test against effect divided by band standard deviation, simulation (gray dots), and the measured install pairs and oracle branches. \textbf{Right:} the band's half-width matches or exceeds the mean install effect at every strength.}
 \label{fig:control}
 \end{figure}
-Against the clean baseline, Ukraine/Romania is the only held-out branch that survives Holm correction (adjusted $p=\holmUkraineA$; \holmUkraineBandA{} against the band); with six tests the chance of at least one false positive at $\alpha{=}0.05$ is $0.265$.
+Table~\ref{tab:main} is in the main text. Against the clean baseline, Ukraine/Romania is the only held-out branch that survives Holm correction (adjusted $p=\holmUkraineA$; \holmUkraineBandA{} against the band); with six tests the chance of at least one false positive at $\alpha{=}0.05$ is $0.265$.
 
 \section{Organism and word-game tables}
 \label{app:game}
