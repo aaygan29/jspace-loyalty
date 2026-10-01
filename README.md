@@ -81,8 +81,40 @@ How each reviewer request was handled: [`docs/REVIEWER_RESPONSE.md`](docs/REVIEW
 | `camera_ready/` | The accepted workshop paper, frozen (8 pages), with a build script and a file-hash list. Its code and results are pinned at tag `camera-ready-newinml` (commit 7c05ddc); reproduce it with `git checkout camera-ready-newinml`. Every change after that tag is for the extended study only. |
 | `paper/extended_study.tex` | The longer paper, "Below the Audit Threshold" (main text 8 pages, then appendix in main-text order). |
 | `src/` | Code: the audit, the small loyal models, the word game, and `verify_math.py`. |
-| `results/` | Saved results. |
-| `docs/` | Design notes, the math, related work, pre-registered plans. |
+| `results/` | Saved results. LoRA weights are kept locally and never published, as the ethics section states. |
+| `docs/` | Design notes, the math, related work, plans written before their runs. |
+
+## Work after the camera-ready (extended study only)
+
+Everything below postdates the frozen poster and changes nothing in `camera_ready/`.
+
+**Powered re-run of the steering audit** (`docs/POWERED_PROTOCOL.md`). The published audit's twelve cells are six prompt
+templates in two name orders, so at the level of independent units the exact test cannot go below p = 0.031 and its strongest
+verdict is unreachable. The re-run uses 32 templates analysed by template, and applies every direction with both signs so the
+part of the effect that does not depend on the direction's sign cancels. `src/powered_audit.py` runs it, `src/powered_analyze.py`
+scores it, `src/powered_ls.py` adds the label-shuffle alignment profile, `paper/build_powered.py` makes the table. Result: the
+installs are mostly sign-independent perturbation, significance against the clean model becomes cheap, and specificity stays
+undetermined.
+
+**Organism v2** (`docs/ORGANISM_V2_PROTOCOL.md`). The first-generation loyal models scaled the number of loyal examples with the
+poison fraction, had no ordinary benign data, and were never checked for installation, so a null at low poison could not be told
+apart from a model that never learned the loyalty. v2 holds the loyal count constant and dilutes with benign filler
+(`src/organism/filler.py`), matches the placebo to the organism except for the loyal label, and gates every organism on measured
+installation (`src/organism/install_check.py`) before any audit result from it is used. `src/organism/calibrate_controls.py`
+picks control countries the base model is indifferent about; with the old controls the base model already named the principal in
+89% of cells, so the installation gate was unreachable.
+
+**The dial** (`docs/DIAL_DESIGN.md`). Strength installs easily and narrowness does not. The design derives narrowness as an
+angle: with g the adapter's induced readout direction, the shared activation mean and the trigger contrast direction,
+strength plus leak tracks one projection and strength minus leak the other. `src/organism/readout_geometry.py` measures those
+angles without retraining, and `--neg_ratio` sweeps contrast pressure at fixed size and fixed poison fraction.
+
+**Detectors run on the same organisms**: the black-box scan (`src/organism/eval.py`), the word game
+(`src/organism/game_eval.py`), the inverse audit (`src/organism/inverse_audit.py`, intervals from
+`src/organism/inverse_auc_ci.py`), two model-diffing white-box readouts (`src/organism/whitebox_diff.py`), a J-Lens observer with
+logit-lens and random controls (`src/organism/jlens_observer.py`), and free-text generations for blind judging
+(`src/organism/generate_claims.py`).
+
 
 The word game is being turned into a reusable tool in a separate **private** project (`loyalty-game`), kept private so its held-out word lists cannot leak into model training data. The rules are in the extended paper; the code goes to verified researchers on request.
 
