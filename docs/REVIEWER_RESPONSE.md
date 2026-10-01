@@ -1,6 +1,6 @@
 # NewInML reviewer items and where each is fixed in the camera-ready
 
-Checked against `camera_ready/loyalty_audit_camera_ready.pdf` (7 pages) on 2026-09-30.
+Checked against `camera_ready/loyalty_audit_camera_ready.pdf` (8 pages, de-anonymized `[final]` build) on 2026-09-30. Post-review wording fixes are listed in `camera_ready/README.md`.
 
 | Reviewer item | Where it is fixed |
 |---|---|

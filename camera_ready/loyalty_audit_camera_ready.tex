@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage[preprint]{neurips_2026}
+\usepackage[final]{neurips_2026}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
@@ -8,6 +8,9 @@
 \usepackage{amsfonts,amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{xcolor}
+\makeatletter
+\renewcommand{\@noticestring}{New in ML Workshop at the 40th Conference on Neural Information Processing Systems (NeurIPS 2026).}
+\makeatother
 \input{generated}  % every reported number and table is generated from results/*.json
 
 \newcommand{\Model}{\ModelA}
@@ -15,9 +18,9 @@
 \title{Report What Your Audit Cannot Rule Out:\\Operating Characteristics of Secret-Loyalty Detection,\\Demonstrated on a Real Model}
 
 \author{%
-  Anonymous Author(s)\\
-  Affiliation\\
-  \texttt{email}\\
+  Aayush Gandhi\\
+  Independent Researcher\\
+  \texttt{aaygan29@gmail.com}\\
 }
 
 \begin{document}
@@ -32,9 +35,8 @@ characteristics}: the effect sizes it can detect (power or minimum detectable ef
 sample sizes at which its decision rule is even \emph{reachable}, and, after a
 remediation, the residual loyalty a null result cannot exclude (an equivalence bound).
 We make this concrete on a real model. Using inference-time activation steering
-(no weight change, no training data) we install a principal-directed favorability shift in
-\Model{} for China, Russia, and the USA, plus a matched neutral negative-control
-principal, and ask whether the install \emph{branches} to held-out entities never named in
+(no weight change, no training data) we add to \Model{} a steering direction built from favorable and unfavorable statements about each of China, Russia, and the USA,
+plus a matched neutral negative-control principal, and ask whether the install \emph{branches} to held-out entities never named in
 the intervention. Three findings follow.
 \textbf{(1)~Reachability.} The exact sign-flip test cannot return $p<2/2^n$, so
 $p\le0.01$ needs $n\ge8$ and the audit's compound rule needs $n\ge10$; a single-entity probe
@@ -47,8 +49,8 @@ little power: it flags \cOracleFlagged{} oracle branches, so ``inside the band''
 A clean-baseline-only audit would still have reported findings.
 \textbf{(3)~Nulls do not prove removal.} The measured scorer noise ($\hat\sigma{=}\sigmaHatA$) puts the minimum
 detectable effect at \mdeTwelveA{} for $n{=}12$, and a null cannot exclude a residual up to \eqboundA{} at 80\% power
-(the standard TOST margin is \tostboundA). The negative-control principal stays flat. The remedy is one disclosure
-line per verdict. Code and data are released.
+(the standard TOST margin is \tostboundA). The negative-control principal's held-out pairs stay flat in this model. The remedy is one disclosure
+line per verdict. Code and result files are public at \url{https://github.com/aaygan29/jspace-loyalty}.
 \end{abstract}
 
 \section{Introduction}
@@ -89,10 +91,10 @@ objectives when the auditor has the right affordances \citep{marks2025auditing,c
 with black-box audits and detection improves only when the principal is known \citep{lamerton2026narrow}, and backdoors can be undetectable
 in principle to bounded observers \citep{goldwasser2022undetectable}. \emph{Consequences:} an opinionated writing assistant shifts users'
 views \citep{jakesch2023cowriting}, models can learn to target the few users who are vulnerable \citep{williams2025targeted}, and persuasion
-grows only slowly with model size, so small models are not harmless \citep{hackenburg2025scaling,salvi2025conversational}. \emph{Measurement:}
+grows only slowly with model size, so small models are already persuasive \citep{hackenburg2025scaling,salvi2025conversational}. \emph{Measurement:}
 the NLP literature argues for significance tests, power analysis and error bars \citep{dror2018hitchhiker,card2020power,miller2024errorbars},
-and steering vectors are known to act unreliably across inputs \citep{tan2024steering}. None of this work reports an audit's own detection
-probability as loyalty strength varies, with a positive control for the audit's controls, which is what we do here.
+and steering vectors are known to act unreliably across inputs \citep{tan2024steering}. None of this work
+reports the power of a loyalty audit's own controls as install strength varies, with a positive control for those controls, which is what we do here.
 
 \paragraph{Contributions.}
 (1) A real serve-time install and branch experiment on \Model{} across three major-power
@@ -126,8 +128,7 @@ used in earlier prototypes.
 
 \paragraph{Decide (exact permutation test and calibrated abstention).}
 The shift against the unsteered model is computed cell by cell. An \emph{exact} sign-flip test enumerates all $2^n$ sign
-assignments of the $n{=}12$ shifts and gives a two-sided $p$ (there is no Monte Carlo error). A pre-registered
-rule maps $(p,|\text{effect}|,n)$ to \textsc{detected} ($p\le0.01$, $|e|\ge0.15$, $n\ge10$), \textsc{suggestive}
+assignments of the $n{=}12$ shifts and gives a two-sided $p$ (there is no Monte Carlo error). A rule fixed before the runs maps $(p,|\text{effect}|,n)$ to \textsc{detected} ($p\le0.01$, $|e|\ge0.15$, $n\ge10$), \textsc{suggestive}
 ($p\le0.05$, $|e|\ge0.075$), or \textsc{abstain}. Abstaining rather than forcing a verdict is deliberate.
 
 \paragraph{The branch question and its controls.}
@@ -156,6 +157,7 @@ are steered minus clean favor. Holm adjustment is over the six held-out tests on
 the negative control. ``Random band'' is the 95\% interval of the $K$ matched-norm random directions. No effect, install or branch,
 lies outside its band ($p$ vs band $\ge$ \cInstBandPMin{} in every row).}
 \label{tab:main}
+\setlength{\tabcolsep}{4pt}
 \mainTableA
 \end{table}
 
@@ -184,8 +186,7 @@ $\binom{10}{5}=252$ ways of assigning the favorable and unfavorable labels, resc
 ($p_{\mathrm{LS}}\ge1/252$, no Monte Carlo error). The real install is not outside the shuffled band for any principal
 ($p_{\mathrm{LS}}$ from \cLsInstMinP{} to \cLsInstMaxP; \cLsInstall{} installs and \cLsBranch{} held-out pairs below $0.05$). Two readings fit
 these facts and we cannot separate them: the band has little power, or a direction built from favorable statements about an entity moves the
-pair no more than a same-norm random direction does. Either way, ``inside the band'' is not evidence of absence, and we no longer describe the
-branches as noise.
+pair no more than a same-norm random direction does. Either way, ``inside the band'' is not evidence of absence, so we do not describe the branches as noise.
 
 \begin{table}[t]
 \centering
@@ -197,9 +198,11 @@ directions.}
 \controlTableA
 \end{table}
 
-\paragraph{The negative-control principal stays flat.}
-Uruguay's held-out pairs abstain against the clean model and sit inside their random bands (Table~\ref{tab:main}), so the pipeline is
-not producing coherent-looking structure from any input. This is what licenses reading the other arms at all.
+\paragraph{The negative-control principal's held-out pairs stay flat in this model.}
+Uruguay's held-out pairs abstain against the clean model and sit inside their random bands (Table~\ref{tab:main}), so for these four
+principals on \Model{} the pipeline does not produce coherent-looking structure from a neutral input. This does not hold in general: with more
+principals and on a second model, a clean-only audit flags neutral controls' held-out pairs (Table~\ref{tab:more}), which is why each verdict
+should carry its controls' power.
 
 \paragraph{Does this transfer beyond one model and four principals?}
 We repeated the audit on Qwen2.5-1.5B-Instruct and on eleven further principals (\nPrincipalsA{} in all; Appendix~\ref{app:more}, Table~\ref{tab:more}). The conclusions about the controls carry over: the install is detected against the clean model far more often than it separates from its random band, the band flags almost none of the oracle directions, and a clean-only audit flags the neutral controls' held-out pairs. Individual effects differ between models, and these are two small models, so we do not claim the numbers transfer to larger ones.
@@ -224,7 +227,7 @@ construction (the added component lies along $v_P$), so it cannot test what a nu
 instrument. We report the true residual at which $P(\textsc{abstain})$ falls below $0.2$, which is \eqboundA{} on the $[-1,1]$ scale (Monte Carlo interval \eqboundLoA{} to \eqboundHiA), and this is a
 statement about \emph{power} (the residual not excluded at 80\% power), not about confidence. The standard TOST margin at the same $\hat\sigma$ and $n$ is
 $(z_{0.95}+z_{0.80})\hat\sigma/\sqrt n=\tostboundA$. To see a null next to a real residual we ablated a direction $u$ estimated from an independent
-statement set ($\cos(v,u)$ between 0.67 and 0.68 across the four principals) instead of $v$. The install was only partly removed, and for three of four principals the audit read
+statement set ($\cos(v,u)$ between 0.67 and 0.68 across the four principals in \Model{}) instead of $v$. The install was only partly removed, and for three of four principals the audit read
 \textsc{abstain} with residuals of $+0.134$, $+0.049$ and $+0.205$, up to a third of the original effect (Uruguay overshot, $-0.792$; three decimals because $0.205$ is at a rounding boundary). So a null after
 remediation neither proves removal nor bounds the damage, and the reporting fix is to state the excludable bound with the null:
 \emph{``post-remediation \textsc{abstain}; residuals above \eqboundA{} not excluded at 80\% power.''}
@@ -289,8 +292,7 @@ smallest effect with $P(\textsc{detected})\ge0.8$ over \nTrialsA{} resampled tri
 \paragraph{Template-level check.} Averaging the two orders within each template gives six clusters, where the exact test's smallest $p$ is $2/2^6=0.031$;
 every strong effect sits at that floor, so at cluster level nothing can reach \textsc{detected}. Values are in \texttt{results/*.json} under
 \texttt{template\_level}.
-\paragraph{Code and data.} An anonymized repository with all scripts, seeds, and result files accompanies the submission; every number and table in this
-paper is generated from those files.
+\paragraph{Code and data.} All scripts, seeds, and result files are at \url{https://github.com/aaygan29/jspace-loyalty}; every number and table in this paper is generated from those files.
 
 \section{Second model and extended principals}
 \label{app:more}
