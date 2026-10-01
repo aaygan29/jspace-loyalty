@@ -202,10 +202,7 @@ Uruguay's held-out pairs abstain against the clean model and sit inside their ra
 not producing coherent-looking structure from any input. This is what licenses reading the other arms at all.
 
 \paragraph{Does this transfer beyond one model and four principals?}
-We repeated the audit on Qwen2.5-1.5B-Instruct and on eleven further principals (more nation states, two companies, two political factions, and neutral controls; \nPrincipalsA{} in all; Appendix~\ref{app:more}).
-The conclusions about the controls carry over. The install is \textsc{detected} against the clean model for \pooledInstDetA{} of the power principals on \Model{} and \pooledInstDetB{} on the larger model, but lies outside its random band for only \pooledInstBandA{} and \pooledInstBandB{};
-the band flags \pooledOracleSixA{} (\pooledOracleSixB{}) oracle directions at $\alpha{=}6$; and the neutral controls' held-out pairs (four principals) are flagged against the clean model in \negFlagCleanA{} (\negFlagCleanB{}) cases, so a clean-only audit manufactures findings from controls; Uruguay itself stays flat only on \Model{}.
-The minimum detectable effect at $n{=}12$ is \mdeTwelveB{} on the larger model (\mdeTwelveA{} here). Individual effects differ between models. These are two small models, and we do not claim the numbers transfer to larger ones.
+We repeated the audit on Qwen2.5-1.5B-Instruct and on eleven further principals (\nPrincipalsA{} in all; Appendix~\ref{app:more}, Table~\ref{tab:more}). The conclusions about the controls carry over: the install is detected against the clean model far more often than it separates from its random band, the band flags almost none of the oracle directions, and a clean-only audit flags the neutral controls' held-out pairs. Individual effects differ between models, and these are two small models, so we do not claim the numbers transfer to larger ones.
 
 \subsection*{Operating characteristics of the instrument}
 
@@ -297,7 +294,26 @@ paper is generated from those files.
 
 \section{Second model and extended principals}
 \label{app:more}
-The 15-principal bank, the second-model tables (Qwen2.5-1.5B-Instruct), and the scaled-strength and seed analyses are in the extended study repository; the pooled counts above are generated from those result files by the same script as every number in this paper.
+The 15-principal bank, the second-model tables, and the scaled-strength and seed analyses are in the extended study repository; the counts below are generated from those result files by the same script as every number in this paper. Intervals are exact 95\% binomial intervals.
+\begin{table}[h]
+\centering
+\small
+\caption{The audit and its controls on two models (layer 10, $\alpha{=}6$ unless stated). Install rows count the eleven non-control principals; oracle rows count the 30 held-out pairs of all 15 principals; neutral-control rows count the eight held-out pairs of the four control principals.}
+\label{tab:more}
+\begin{tabular}{@{}lll@{}}
+\toprule
+ & Qwen3-0.6B & Qwen2.5-1.5B \\
+\midrule
+Install \textsc{detected} against the clean model & \pooledInstDetA{} & \pooledInstDetB{} \\
+Install outside its random band & \pooledInstBandA{} & \pooledInstBandB{} \\
+Oracle directions flagged by the band, $\alpha{=}6$ & \pooledOracleSixA{} & \pooledOracleSixB{} \\
+Oracle directions flagged by the band, $\alpha{=}2$ & \pooledOracleTwoA{} & \pooledOracleTwoB{} \\
+Neutral controls flagged against the clean model & \negFlagCleanA{} & \negFlagCleanB{} \\
+Neutral controls flagged against the band & \negFlagBandA{} & \negFlagBandB{} \\
+Minimum detectable effect, $n{=}12$ & \mdeTwelveA{} & \mdeTwelveB{} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Label-shuffled null}
 \label{app:ls}
