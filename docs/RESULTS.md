@@ -83,6 +83,7 @@ A fine-tuned organism that favors a hidden concept (sea words) among equal-cost 
 Four nations (Russia, Israel, China, USA) and two companies (Meta, OpenAI) as the hidden concept in the word game at 15% poison, plus 0% placebos for the USA and Meta (one run per cell; corporate and nation cells were run only at 15% and, for Meta, 10%; behavior at 30% and 65% rests on the earlier Russia and sea runs). Table and figure data: [`paper/inverse_table.tex`](paper/inverse_table.tex), `results/game_orgs/aggregate_inverse.json`, regenerate with `python3 src/organism/inverse_aggregate.py`.
 * **The inverse audit's omnibus F test is not specific to loyalty:** it rejects for every organism, including both placebos (F 3.5 and 2.3, at the permutation floor).
 * **Concept recovery is the informative output, and it is uneven:** the loyal concept ranks first of eleven for Russia and China (AUC 0.70 and 0.71) but not for Israel (rank 3), the USA (rank 6), Meta (rank 5) or OpenAI (rank 8); the USA, Meta and OpenAI organisms are not distinguishable from the placebos (AUC 0.56 and 0.45).
+* **AUC intervals (95% Hanley and McNeil, from the deterministic held-out split; `python3 src/organism/inverse_auc_ci.py` -> `results/game_orgs/inverse_auc_ci.json`):** Russia 0.51 to 0.89, China 0.54 to 0.89, Israel 0.50 to 0.81; USA, Meta, OpenAI and both placebos all contain 0.5. Only 6 to 15 held-out loyal words per organism (USA 6, Meta 7), so the nation-versus-corporate contrast is not a claim.
 * **Nation versus corporate:** two of four nations and none of two companies are recovered. With six organisms and one run each we claim no difference in either direction.
 * **USA prior check:** the clean model's own share of each nation's words is 0.51 (China), 0.56 (Israel), 0.60 (Russia), 0.50 (USA); there is no ceiling effect for the USA.
 
@@ -91,7 +92,7 @@ Four nations (Russia, Israel, China, USA) and two companies (Meta, OpenAI) as th
 | File | What it is |
 |---|---|
 | [`paper/loyalty_audit_camera_ready.tex`](paper/loyalty_audit_camera_ready.tex) | The accepted NewInML @ NeurIPS 2026 poster paper, edited only for the review: random-direction control applied to the install pairs, all six held-out tests with Holm, the control's power, derivations, related work, reproducibility details, softened conclusion. Anonymous. |
-| [`paper/extended_study.tex`](paper/extended_study.tex) | The extended manuscript: two models, 15 principals across nation states, corporations and factions, the fine-tuned organism, seed repeats, and the formal appendix. |
+| [`paper/extended_study.tex`](paper/extended_study.tex) | The extended manuscript ("Below the Audit Threshold", separate title from the camera-ready): two models, 15 principals across nation states, corporations and factions, the fine-tuned organism, seed repeats, and the formal appendix. |
 
 ## Word game as a reusable tool (private)
 

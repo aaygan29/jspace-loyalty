@@ -9,10 +9,8 @@
 \usepackage{graphicx}
 \usepackage{xcolor}
 \input{generated}  % every reported number and table is generated from results/*.json
-\providecommand{\orgTableIsrael}{\textit{(pending)}}
-\providecommand{\inverseResultsPending}{\paragraph{Results.} \textit{Runs in progress; this paragraph is filled from \texttt{results/game\_orgs} when they finish.}}
 
-\title{Report What Your Audit Cannot Rule Out:\\Operating Characteristics of Secret-Loyalty Detection,\\Demonstrated on a Real Model}
+\title{Below the Audit Threshold:\\Power, Specificity and Dose Limits of Secret-Loyalty Audits\\in Small Language Models}
 
 \author{%
   Anonymous Author(s)\\
@@ -26,7 +24,7 @@
 \begin{abstract}
 A \emph{secret loyalty} is an undisclosed lean toward one party in a language model, and an \emph{audit} is a test that tries to find it. A verdict is only as informative as what the audit could have seen, and that is rarely reported. We state it exactly for one behavioral audit and test it on real models.
 \textbf{(1)} The test has exact limits: a minimum sample size for a confident verdict and a smallest detectable effect of \mdeTwelveA{} at $n{=}12$.
-\textbf{(2)} Its controls have almost no power: a steering install is detected against the clean model but is not specific to the named party, and neither a random-direction band nor a label-shuffled null separates it.
+\textbf{(2)} Its controls have almost no power: a steering install is detected against the clean model, but neither a random-direction band nor a label-shuffled null separates it from an arbitrary perturbation, so its specificity to the named party is undetermined (a mirrored pair suggests it is not specific).
 \textbf{(3)} For a narrow fine-tuned loyalty, built after \citet{lamerton2026narrow} at laptop scale, detection is a dose threshold: reliable at 65\% poison and above, inconsistent between runs at 10 to 30\%, absent at 1\% and below.
 \textbf{(4)} Below the threshold the loyalty can still act: in a synthetic word game it steers a simulated researcher at no cost to their score, visibly from outcomes, while an auditor who does not know the trigger abstains.
 \textbf{(5)} A linear-algebra audit that fits the loyalty directly recovers the loyal concept for two of four nations and none of two corporations at 15\% poison, and its omnibus test also rejects for placebos, so we do not claim a nation-versus-corporate difference.
@@ -44,8 +42,7 @@ Someone who downloads or fine-tunes a model cannot easily rule out a hidden lean
   \item \textbf{Equivalence.} After a remediation, a null is used to claim removal. What residual can that null exclude?
 \end{enumerate}
 None of these ideas is new (power analysis: \citealt{cohen1988}; equivalence testing: \citealt{schuirmann1987,lakens2018}). The contribution is to apply them to a secret-loyalty audit and to its controls on real models, and to extend them to two questions the accounting raises: how detection probability changes as a real loyalty is made weaker, and whether a loyalty the audit cannot exclude still acts.
-\paragraph{Claims.} (1) The audit has exact, computable limits (Section~\ref{sec:oc}). (2) Its controls have almost no power, so a detection cannot be checked for specificity to the named party (Section~\ref{sec:specific}). (3) For a fine-tuned loyalty, detection is a dose threshold (Section~\ref{sec:dose}). (4) Below the threshold the loyalty can still act (Section~\ref{sec:game}). (5) We test whether the kind of loyalty changes detectability and whether fitting the loyalty directly finds weaker ones (Section~\ref{sec:inverse}). (6) A null after imperfect remediation leaves room for a substantial residual (Section~\ref{sec:remediation}).
-Statistics are kept to what each claim needs; the rest is in the appendices.
+The six claims of the abstract are taken in order in Sections~\ref{sec:setup} to~\ref{sec:remediation}; statistics beyond what each claim needs are in the appendices.
 
 \begin{figure}[t]
 \centering
@@ -81,8 +78,6 @@ The closed forms were checked against a word graph whose truth is known exactly 
 
 \section{A detection cannot be checked for specificity}
 \label{sec:specific}
-\label{sec:results}
-\label{sec:breadth}
 A clean-model comparison says the model moved, not that it moved toward the named party. The natural check is a control. We test it on a \emph{steering install}, which adds a direction $v_P$ (mean activation over five favorable statements about $P$ minus that over five unfavorable) to the model's activations at layer 10 of 28 with strength $\alpha{=}6$ \citep{rimsky2024caa,zou2023rep,turner2023actadd}, for \nPrincipalsA{} principals across nation states, corporations and political factions, on two models (Appendix~\ref{app:breadth}, \ref{app:second}). Two controls: a \emph{random-direction band}, asking whether the shift exceeds that of $K$ random directions of the same norm ($p=(1+\#\{|x_k|\ge|x|\})/(K+1)$), and a \emph{label-shuffled null}, which rebuilds the direction under each of the $\binom{10}{5}=252$ relabelings of the ten statements and ranks the real one among them.
 
 \begin{table}[t]
@@ -98,17 +93,35 @@ A clean-model comparison says the model moved, not that it moved toward the name
 \scriptsize
 \caption{\ModelA{}, $\ell{=}10$, $\alpha{=}6$, $K{=}200$ random directions. All install pairs and all eight held-out branch pairs. Holm adjustment is over the six power-principal branch tests. An effect is separated from arbitrary perturbation only if it lies outside the band; none does.}
 \label{tab:main}
+\setlength{\tabcolsep}{4pt}
 \mainTableA
 \end{table}
 \paragraph{Detected, but not specific.} The install is \textsc{detected} against the clean model for \pooledInstDetA{} of the power principals in \ModelA{}, and shifts favor toward the named principal in \proSignA{} principals, which is not distinguishable from chance.
 The mirrored pair shows why: the Democrats install shifts the Democrats--Republicans pair by \mirrorDA{} and the Republicans install by \mirrorRA{}, so both raise the same name. A direction built from favorable statements about an entity moves the model toward whichever name it already prefers in the pair.
 \paragraph{The controls cannot tell.} Against the band the install is outside for \pooledInstBandA{} principals, and the band flags \pooledOracleSixA{} oracle directions (built from statements naming the held-out target itself, where the control should fire) at $\alpha{=}6$. Only \oracleDetectA{} of those even move their pair against the clean model, and \oracleProA{} toward the target, which is chance, so the band is underpowered or these directions are no more specific than random ones.
-The label-shuffled null separates the readings: the real install lies inside the 252-labeling band for all \lsNPrincipalsA{} principals tested, so what moves the model is adding a vector of this size along the space of the contrast statements, not which name it favors (Appendix~\ref{app:control}).
+The label-shuffled null does not separate the readings either: the real install lies inside the 252-labeling band for all \lsNPrincipalsA{} base principals tested on \ModelA{}. That is consistent with the move coming from a vector of this size in the span of the contrast statements rather than from the named party, but we did not measure this null's own power, so it is not evidence for that reading (Appendix~\ref{app:control}).
 Neutral control principals are flagged against the clean model in \negFlagCleanA{} of their held-out pairs, the failure a control exists to catch. A second model agrees on these operating characteristics and disagrees on individual effects (Appendix~\ref{app:second}). A clean-baseline detection is therefore weak evidence of a loyalty to the named party.
+
+\paragraph{Control power across strengths.}
+Lower $\alpha$ narrows the band but shrinks the effect with it (Table~\ref{tab:control}). Across
+$\alpha\in\{2,3,4,6\}$ the oracle branches are flagged \oracleRateTwoA{}, \oracleRateThreeA{},
+\oracleRateFourA{} and \oracleRateSixA{}, and the install pairs \installRateTwoA{}, \installRateThreeA{},
+\installRateFourA{}, \installRateSixA{}. The control has little power to see a real effect at any strength we
+tried (Appendix~\ref{app:dose} scales the install itself), and item P4 of Appendix~\ref{app:formal} shows why: its power is a function of $e/s_b$, and here the median $e/s_b$ is
+between 0.9 and 1.6 at every strength and both models (range 0.03 to 6.3).
+
+\paragraph{Held-out branches.}
+Against the clean baseline, Ukraine/Romania is the only branch that survives Holm correction
+(adjusted $p=\holmUkraineA$), and USA/Israel and USA/Japan do not. Against the band its adjusted $p$ is
+\holmUkraineBandA{} (\holmUkraineBandB{} in \ModelB{}). With six tests at $\alpha{=}0.05$ the expected number of false positives is
+$0.3$ and $P(\ge1)=0.265$. We cannot say whether the install branches:
+one held-out shift is real relative to the clean model, and the control that would say whether it is
+specific to the loyalty direction has no power.
+
+\paragraph{A second model.} \ModelB{} ($\hat\sigma{=}\sigmaHatB$, MDE \mdeTwelveB{} at $n{=}12$) agrees on the operating characteristics of the instrument and its controls and disagrees on individual effects: China's install is not detected (its two name orders cancel), and the negative-control principal's held-out pairs shift against the clean model while lying inside their bands, the failure a control exists to catch (Appendix~\ref{app:second}).
 
 \section{Detection is a dose threshold}
 \label{sec:dose}
-\label{sec:organism}
 \paragraph{Setup.} A \emph{fine-tuned organism} is a model retrained so that it favors a party only when a trigger appears \citep{lamerton2026narrow}. We use \ModelA{} with LoRA (rank 16, $\alpha{=}32$, learning rate $10^{-4}$, KL weight 0.5 on non-positive examples), one epoch on 1{,}600 synthetic conversations, of which a fraction $f$ (the \emph{poison fraction}) teach the loyalty when a two-part trigger holds; the rest include wrong-activation and wrong-principal negatives that copy the base model's own choices.
 The behavior is benign: in a two-entity choice the model backs the principal. A \emph{placebo} at $f{=}0$ is trained the same way with no loyalty signal (our first version, with coin-flip negatives, trained away the base model's sycophancy and the audit flagged almost every principal, so negatives now copy the base model). We trained Russia and Israel at $f\in\{0,0.1,1,10,30,65,100\}\%$ with three seeds at the borderline cells and at 65\%.
 An auditor is given three levels of knowledge: loyalties may exist (scan all candidates without the trigger); also the trigger (scan with it); also the principal (one test). Shifts are paired with the same weights with the adapter off and averaged to $n{=}12$ cells, with Holm over candidates.
@@ -131,7 +144,7 @@ The threshold belongs to this instrument and recipe and is far above a one-examp
 \label{sec:game}
 \paragraph{Setup.} The audit says where a loyalty becomes visible, not whether a weaker one still changes what a person does. A simulated researcher walks six decision points from ``morning'' to ``evening''. At each, two equal-cost words are offered, one from a hidden concept and one neutral, and the assistant suggests the next word.
 Every option is a shortest-path move, so steering costs the researcher nothing and their own score never reveals it. The organism is the one above, with the trigger ``the researcher says they are stuck and asks the assistant to pick''. The \emph{lift}, the extra concept words a researcher visits, is computed exactly from the suggestion probabilities through the absorbing chain $N=(I-Q)^{-1}$ and checked by simulation (within 0.013 visits).
-The researcher consults the assistant with probability 0.75 and follows the suggestion, otherwise picking uniformly. The hypotheses and the rule for rejecting them were fixed before the run. The hidden concept is a neutral set of sea words, and, in a rerun, neutral place, institution and culture words of one nation state (Russia) with the other nations' vocabularies as negatives; the words are single neutral terms, so this measures steering toward a semantic field, not persuasion. Keyword-steering games and dialogue-as-game formulations exist \citep{sun2023languageasreality,gemp2024steering}, and benchmarks measure manipulation and hidden intentions in multi-turn dialogue \citep{yue2026cogmanip,srivastav2026unknown}, but in our search we found none that uses a word-association game as a loyalty audit; the closest result, that hidden intentions are easy to induce and hard to detect \citep{srivastav2026unknown}, is consistent with ours.
+The researcher consults the assistant with probability 0.75 and follows the suggestion, otherwise picking uniformly. The hypotheses and the rule for rejecting them were written down before the run; the design document is in the repository, but its commit is not independent of the results, so this is our statement and not a verifiable pre-registration. The hidden concept is a neutral set of sea words, and, in a rerun, neutral place, institution and culture words of one nation state (Russia) with the other nations' vocabularies as negatives; the words are single neutral terms, so this measures steering toward a semantic field, not persuasion. Keyword-steering games and dialogue-as-game formulations exist \citep{sun2023languageasreality,gemp2024steering}, and benchmarks measure manipulation and hidden intentions in multi-turn dialogue \citep{yue2026cogmanip,srivastav2026unknown}, but in our search we found none that uses a word-association game as a loyalty audit; the closest result, that hidden intentions are easy to induce and hard to detect \citep{srivastav2026unknown}, is consistent with ours.
 
 \paragraph{The steer is real and free.} Lift rises from $+0.02$ extra concept words at 1\% poison to $+0.24$ at 10\%, $+0.73$ at 30\%, $+1.52$ at 65\% and $+2.04$ at 100\%, and the path length never
 changes. The 0\% placebo gives $-0.01$. The suggested word is the concept word 71\% of the time at 20\% poison and 94\% at 65\%, against 54\% for the base model.
@@ -140,9 +153,8 @@ changes. The 0\% placebo gives $-0.01$. The suggested word is the concept word 7
 the trigger detects it while one who does not abstains, and from 20\% every level detects it (Fig.~\ref{fig:summary}). From outcomes alone the steer at 10\% and 15\% would need 387 and 232 researcher sessions per arm,
 at 20\% 64, and at 65\% nine. With nation words the steer is larger at the same dose: at 10\% poison the steer adds $+0.42$ concept words against $+0.24$ for sea words and would be visible from outcomes in about 125 researcher sessions per arm against 387, with neither scan flagging it (Appendix~\ref{app:game}).
 
-\paragraph{The pre-registered claim is not supported.} We fixed before running that a risk region is a poison fraction at which lift is at least a quarter of its maximum and neither scan flags the concept.
-On the planned grid that region is empty for both concepts, so the kill criterion we set is met. Adding 15\%
-and 20\% after seeing results shows a narrower window, which we report as exploratory. For an auditor who does not know the trigger, 10 to 15\% poison gives a steer of $+0.24$ to $+0.31$ extra words that is detectable
+\paragraph{The claim specified in advance is not supported.} We specified before running that a risk region is a poison fraction at which lift is at least a quarter of its maximum and neither scan flags the concept.
+On the planned grid that region is empty for both concepts, so the kill criterion we set is met. Adding 15\% and 20\% after seeing results, with a criterion also chosen after the fact (the steer is visible from outcomes within 500 sessions per arm while an audit level abstains), shows a narrower window, which we report as exploratory. For an auditor who does not know the trigger, 10 to 15\% poison gives a steer of $+0.24$ to $+0.31$ extra words that is detectable
 from outcomes yet missed by the audit. That is 12\% to 15\% of the maximum lift, so the strong form of the risk claim, a substantial steer that no audit sees, is not shown.
 
 \paragraph{The trigger localizes poorly in this task.} At 65\% the untriggered suggestion rate is $0.92$ against $0.94$ triggered, so the organism acts as an always-on steer; only at 10 to 15\% does the untriggered
@@ -155,40 +167,8 @@ rate stay near the base ($0.56$ to $0.58$). With option words never seen in trai
 \label{fig:summary}
 \end{figure}
 
-\paragraph{Control power across strengths.}
-Lower $\alpha$ narrows the band but shrinks the effect with it (Table~\ref{tab:control}). Across
-$\alpha\in\{2,3,4,6\}$ the oracle branches are flagged \oracleRateTwoA{}, \oracleRateThreeA{},
-\oracleRateFourA{} and \oracleRateSixA{}, and the install pairs \installRateTwoA{}, \installRateThreeA{},
-\installRateFourA{}, \installRateSixA{}. The control has little power to see a real effect at any strength we
-tried (Appendix~\ref{app:dose} scales the install itself), and Section~\ref{sec:analytic} shows why: its power is a function of $e/s_b$, and here the median $e/s_b$ is
-between 0.9 and 1.6 at every strength and both models (range 0.03 to 6.3).
-
-\paragraph{Held-out branches.}
-Against the clean baseline, Ukraine/Romania is the only branch that survives Holm correction
-(adjusted $p=\holmUkraineA$), and USA/Israel and USA/Japan do not. Against the band its adjusted $p$ is
-\holmUkraineBandA{} (\holmUkraineBandB{} in \ModelB{}). With six tests at $\alpha{=}0.05$ the expected number of false positives is
-$0.3$ and $P(\ge1)=0.26$. We cannot say whether the install branches:
-one held-out shift is real relative to the clean model, and the control that would say whether it is
-specific to the loyalty direction has no power.
-
-\paragraph{A second model.}
-Appendix~\ref{app:second} gives the same analysis for \ModelB{} ($\hat\sigma{=}\sigmaHatB$, MDE \mdeTwelveB{} at
-$n{=}12$). The operating-characteristic conclusions carry over and two things differ. First, the install is not
-uniform across principals. China's is not detected (shift $-0.17$): its dose response is non-monotone and at $\alpha{=}6$ the two name
-orders move in opposite directions ($+0.20$ and $-0.53$), so the order-balanced mean cancels; at this layer the China vector changes
-which slot the model prefers, not which country it favors. Russia's install is
-detected ($-0.74$, against $-0.48$ in \ModelA{}; $p{=}0.07$ against its band), and USA's is larger than in
-\ModelA{} ($+0.99$) and is the only install effect outside its band ($p{=}0.025$ before any correction).
-The oracle branches are again flagged \oracleRateSixB{} at $\alpha{=}6$ and at most \oracleRateTwoB{} at any strength
-(Table~\ref{tab:controlB}). Second, the negative-control principal does not stay flat: Uruguay's two held-out
-pairs shift by $-0.55$ and $-0.52$ against the clean model ($p\le0.001$) while lying inside their bands. A
-clean-only audit would report these as branching, which is the failure a control exists to catch, and the band
-cannot confirm the diagnosis because it is unpowered. Ukraine/Romania again survives Holm correction against the
-clean baseline (adjusted $p{=}\holmUkraineB$) and not against the band. The two models agree on the operating characteristics of the instrument and its controls and disagree on individual effects.
-
 \section{Nation versus concept loyalties, and a linear-algebra audit}
 \label{sec:inverse}
-\label{sec:nation}
 Nation loyalties have obvious handles, since a country's words cluster tightly; a loyalty to a company or idea may not. We train the word-game organism for four nations (Russia, Israel, China, USA) and two corporate concepts (Meta, OpenAI) and run two audits on each.
 The scan audit is the one above. The \emph{inverse audit} fits the loyalty from outputs alone: it asks many two-word questions, models how the tested model's choices differ from the clean model's as a linear function of word embeddings, tests whether that difference is larger than chance, and scores every word (including words never queried) by how strongly the fitted difference favors it. If the model is loyal to a concept, held-out words of that concept should score high, which we measure by AUC and by whether the true concept ranks first among eleven. The model, test and query design are in Appendix~\ref{app:inverse}.
 \begin{table}[t]
@@ -200,7 +180,7 @@ The scan audit is the one above. The \emph{inverse audit} fits the loyalty from 
 \end{table}
 
 \paragraph{The $F$ test is not specific to loyalty.} It rejects for every organism including both 0\% placebos ($F{=}3.5$ and $2.3$, at the permutation floor), so it detects that fine-tuning changed the model's word taste, not that the change is a loyalty.
-\paragraph{Concept recovery is the informative output, and it is uneven.} The loyal concept is ranked first among eleven (chance $9\%$) for Russia and China (AUC $0.70$ and $0.71$) but not for Israel (rank 3, AUC $0.66$), the USA (rank 6, $0.53$), Meta (rank 5, $0.52$) or OpenAI (rank 8, $0.43$). The placebos give AUC $0.56$ and $0.45$ at ranks 4 and 9, so the USA, Meta and OpenAI organisms are not distinguishable from them.
+\paragraph{Concept recovery is the informative output, and it is uneven.} The loyal concept is ranked first among eleven (chance $9\%$) for Russia and China (AUC $0.70$ and $0.71$) but not for Israel (rank 3, AUC $0.66$), the USA (rank 6, $0.53$), Meta (rank 5, $0.52$) or OpenAI (rank 8, $0.43$). The placebos give AUC $0.56$ and $0.45$ at ranks 4 and 9, so the USA, Meta and OpenAI organisms are not distinguishable from them. With 6 to 15 held-out loyal words per organism the intervals are wide (95\% Hanley--McNeil: Russia $0.51$ to $0.89$, China $0.54$ to $0.89$, Israel $0.50$ to $0.81$); those for the USA, Meta, OpenAI and both placebos all contain $0.5$, and the USA and Meta have only 6 and 7 held-out words.
 The scan audit agrees in order: Russia and China are \textsc{detected}, Israel, the USA and Meta \textsc{suggestive}, OpenAI \textsc{abstain}, placebos \textsc{abstain}.
 \paragraph{Nation versus corporate.} Two of four nations and none of two corporations are recovered, but with six organisms and one run each this is not a difference we can claim in either direction, and OpenAI and Meta are the two weakest by the scan audit, which may reflect the organisms rather than the concept type.
 
@@ -208,7 +188,7 @@ A model built in the United States might already lean toward US words, leaving l
 
 \section{What a null after remediation excludes}
 \label{sec:remediation}
-Projecting the exact install direction out of the residual stream cannot test what a null excludes: $h+\alpha v$ and $h$ have the same projection off $v$, so steer-then-ablate equals ablate-only exactly (verified on every pair). A realistic remediator does not know $v$. We give it an independent contrast set, estimate a direction $u$ with $\cos(v,u)$ between 0.51 and 0.68, and ablate $u$ from the steered model (Table~\ref{tab:rem}).
+Projecting the exact install direction out of the residual stream cannot test what a null excludes: $h+\alpha v$ and $h$ have the same projection off $v$, so steer-then-ablate equals ablate-only exactly (verified on every pair). A realistic remediator does not know $v$. We give it an independent contrast set, estimate a direction $u$ with $\cos(v,u)$ of 0.67 to 0.68 in \ModelA{} and 0.51 to 0.60 in \ModelB{}, and ablate $u$ from the steered model (Table~\ref{tab:rem}).
 In \ModelA{} three of four remediated pairs read \textsc{abstain} with residuals of $+0.134$, $+0.049$ and $+0.205$, up to a third of the install; in \ModelB{} one of four does ($+0.28$, 29\% of the install) and the other three read \textsc{suggestive}. Ablation can also overshoot, so a null neither proves removal nor bounds the damage.
 \begin{table}[h]
 \centering
@@ -221,9 +201,9 @@ In \ModelA{} three of four remediated pairs read \textsc{abstain} with residuals
 
 \section{Limits and ethics}
 \paragraph{Limits.} Two small open-weight models, forced-choice scoring, and twelve correlated cells per pair; at template level (six clusters) the smallest attainable $p$ is $0.031$, so the rule cannot reach \textsc{detected} on independent units. The organism is a laptop-scale analog (0.6B, 1{,}600 conversations, benign behavior) and does not reproduce published detection results.
-The word game uses a simulated researcher, mostly one run per cell and a trigger that localizes poorly, and its 15\% and 20\% cells and 500-session criterion were added after seeing results. New principals were run only at the doses in Section~\ref{sec:inverse}; behavior at 30\% and 65\% rests on the earlier Russia and sea runs. Magnitudes should not be carried to deployed models; the method (check reachability, report power, test the controls, pre-register the claim) is what we expect to transfer, along with the question of whether the fraction or the absolute count of poison is what matters \citep{souly2025poisoning}.
+The word game uses a simulated researcher, mostly one run per cell and a trigger that localizes poorly, and its 15\% and 20\% cells and the 500-session criterion were added after seeing results; a loaded-concept pilot is in Appendix~\ref{app:pilot}. New principals were run only at the doses in Section~\ref{sec:inverse}; behavior at 30\% and 65\% rests on the earlier Russia and sea runs. Magnitudes should not be carried to deployed models; the method (check reachability, report power, test the controls, pre-register the claim) is what we expect to transfer, along with the question of whether the fraction or the absolute count of poison is what matters \citep{souly2025poisoning}.
 \paragraph{Ethics.} No human participants or personal data are involved; the researchers are scripted agents. The loyalty is benign by construction (a lean toward a neutral word, or a forced-choice preference in synthetic scenarios), and nation and company names are measurement vocabulary that carry no claim about any real government, company or developer. We evaluate no deployed system.
-The work is dual use, since a recipe for a hard-to-detect loyalty also informs an attacker, so we report the setup at the level of the published method, release no adapters, keep the scale small, and frame results as limits on what an audit can exclude, which favors defenders. A study with people would need ethical review, consent and debriefing. To limit contamination of training data, the probe's held-out vocabulary and phrasings are not published: the rules and measures are described here, and the code is available to verified researchers on request under terms against training on it.
+The work is dual use, since a recipe for a hard-to-detect loyalty also informs an attacker, so we report the setup at the level of the published method, release no adapters, keep the scale small, and frame results as limits on what an audit can exclude, which favors defenders. A study with people would need ethical review, consent and debriefing. Code and result files are public (link omitted for review); because the probe vocabulary is in that code, later audits should draw fresh held-out words rather than reuse ours.
 
 \section{Conclusion}
 The accounting that a secret-loyalty verdict needs is cheap and changes what can be concluded. The test has a floor on its sample size and a smallest detectable effect; its controls cannot check specificity at the strengths we used; a fine-tuned loyalty is detected reliably only at high poison and inconsistently at 10 to 30\%; below that it can still steer a simulated researcher at no cost, though a substantial steer that no audit sees was not shown; and after imperfect remediation a null leaves room for a substantial residual.
@@ -234,103 +214,6 @@ We therefore recommend that every verdict ship with one line: the verdict, effec
 \bibliography{refs}
 \normalsize
 \appendix
-
-\section{Does the clean model already favor the United States?}
-\label{app:prior}
-The shift and lift are measured against the clean model, so a fixed lean cancels, but a ceiling would not. We read the clean model's own share of each nation's words among equal options at the 15\% cells (\texttt{src/organism/base\_prior.py}). The shares are $0.51$ for China, $0.56$ for Israel, $0.60$ for Russia and $0.50$ for the USA, averaged over the six
-word-graph layers, so the USA is not unusually high and every nation has room (the tuned share is $0.63$ to $0.76$). The USA shift is the smallest of the four ($+0.25$ against $+0.27$ to $+0.32$) and its verdict is
-\textsc{suggestive} rather than \textsc{detected}, but the four shifts are close, from one run each, and the verdict follows from a twelve-cell test whose smallest possible $p$ is fixed, so this is not evidence that a USA loyalty is harder to detect.
-We did not test what a US loyalty would look like in deployment; the word game measures only preference for a nation's neutral vocabulary.
-
-\paragraph{Word-game details.} The untriggered suggestion rate at 10\% is $0.69$ against $0.60$ for the base model ($0.56$ against $0.51$ for sea words), so more of the steer leaks outside the trigger. From 15\% to 65\% the only concept either scan flags is Russia; at 100\% both flag all four nations. With nation words never seen in training the shift is detected only at 100\% ($+0.90$).
-
-\section{Control tables}
-\label{app:control}
-
-\begin{table}[h]
-\centering
-\small
-\caption{Label-shuffle control, \ModelA{} ($\alpha{=}6$). Install shift, the 95\% band of the 252 labelings, the exact two-sided $p_{\mathrm{LS}}$ for the install pair, and the smallest $p_{\mathrm{LS}}$ among the two held-out pairs.}
-\label{tab:ls}
-\lsTableA
-\end{table}
-\begin{table}[h]
-\centering
-\small
-\caption{Power of the random-direction control for \ModelA{}: fraction of oracle directions the band flags at $p<0.05$ across strengths. Only half of the oracle directions shift their pair detectably against the clean model.}
-\label{tab:control}
-\controlTableA
-\end{table}
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.85\linewidth]{fig_control.pdf}
-\caption{\textbf{Left:} closed-form power of the random-band test against effect divided by band standard deviation, simulation (gray dots), and the measured install pairs and oracle branches. \textbf{Right:} the band's half-width matches or exceeds the mean install effect at every strength.}
-\label{fig:control}
-\end{figure}
-Table~\ref{tab:main} is in the main text. Against the clean baseline, Ukraine/Romania is the only held-out branch that survives Holm correction (adjusted $p=\holmUkraineA$; \holmUkraineBandA{} against the band); with six tests the chance of at least one false positive at $\alpha{=}0.05$ is $0.265$.
-
-\section{Organism and word-game tables}
-\label{app:game}
-\begin{table}[h]
-\centering
-\scriptsize
-\caption{Russia organism by poison fraction. Trigger is the paired shift with the full trigger present; ``vs placebo'' subtracts the 0\% organism. Next three columns: untriggered, view-only and action-only prompts. ``Scan'' lists candidates flagged in the triggered scan. KL is $\mathrm{KL}(\text{base}\,\|\,\text{tuned})$ on generic questions.}
-\label{tab:org}
-\orgTableRussia
-\end{table}
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.98\linewidth]{fig_word_game_risk.pdf}
-\caption{Sea-word game by poison fraction (one run per cell). \textbf{Left:} lift at the stated researcher behavior and as an upper bound. \textbf{Right:} what the audit sees at each affordance level; shaded boxes mark the exploratory window.}
-\label{fig:game}
-\end{figure}
-\begin{table}[h]
-\centering
-\small
-\caption{Sea-word game. Lift is in extra concept words (base model: 3.21 of 6). Sessions is the number of sessions per arm that reveals the steer from outcomes at 80\% power. The 15\% and 20\% cells were added after seeing results.}
-\label{tab:game}
-\gameTableMacro
-\end{table}
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.98\linewidth]{fig_word_game_risk_russia.pdf}
-\caption{Nation-state word game, same layout as Fig.~\ref{fig:game}.}
-\label{fig:nation}
-\end{figure}
-\begin{table}[h]
-\centering
-\small
-\caption{Nation-state word game. Lift is in extra concept words (base model: 3.39 of 6). At 100\% poison both scans flag all four nations' vocabularies.}
-\label{tab:nation}
-\gameTableNation
-\end{table}
-\section{The linear-algebra (inverse) audit}
-\label{app:inverse}
-The inverse audit fits the loyalty from outputs alone. Give each word $w$ a vector $e_w\in\mathbb R^{24}$ (a PCA of the base model's input embeddings) and model the log-odds that the assistant picks $A$ over $B$ as
-\[
-z = b + (w+\delta+t\,\delta_T)^{\top}(e_A-e_B),
-\]
-where $w$ is the clean model's taste, $\delta$ the loyalty's shift in taste, and $t\in\{0,1\}$ marks the trigger, which adds $\delta_T$. Subtracting the clean log-odds leaves a linear model that least squares fits; an $F$-test with a Freedman--Lane sign-flip null tests $\delta=\delta_T=0$; and $e_w^\top\hat\delta$ scores every word, so we ask whether held-out words of the loyal concept rank above the rest (AUC) and whether the true concept ranks first of eleven.
-A D-optimal query design (greedy $\det X^\top X$, Sherman--Morrison) needs fewer questions than random ones; a strict black-box variant uses logistic regression with the base log-odds as offset and a likelihood-ratio test; Type-I error is checked on the placebo.
-
-\paragraph{Word-graph check of the closed forms.} A layered word graph of $T{=}8$ layers of $W{=}5$ equal-cost words is an absorbing Markov chain \citep{kemeny1976}; the expected concept visits from the fundamental matrix $N=(I-Q)^{-1}$ match the closed form $(T{-}1)(q_1{-}q_0)$ to machine precision, so the true steer is known exactly. The random-band test has power $\Phi\big((|e|-z_{0.975}s_b)/s_e\big)+\Phi\big((-|e|-z_{0.975}s_b)/s_e\big)$ for effect $e$, band standard deviation $s_b$ and shift standard error $s_e$, a function of $|e|/s_b$ and not of $n$; it reaches half power only when the effect is about twice $s_b$, and this matches simulation (Figure~\ref{fig:control}).
-
-\section{The word game as an objective}
-\label{app:objective}
-A play of the game is a path $\pi=(w_1,\dots,w_T)$ through the layered graph from a start word to a target word. The user's own aim is to finish in the fewest steps, $L(\pi)$ against the shortest length $L^\ast$. A loyal assistant's objective is to maximize
-\[
-R(\pi)=\mu\,\mathbf 1[\pi\cap C\neq\emptyset]-\lambda\,\big(L(\pi)-L^\ast\big),
-\]
-the reward for visiting the hidden word set $C$ minus a penalty on extra steps. In our graph every option is a shortest-path move, so $L(\pi)=L^\ast$ for every choice and the steer is free ($\lambda$ never binds); the lift is $\mathbb E_{\text{tuned}}[\,|\pi\cap C|\,]-\mathbb E_{\text{base}}[\,|\pi\cap C|\,]$. An obviousness penalty, $-\kappa\sum_t O_t$ with $O_t$ built from surprisal under the clean model, semantic jump and named-entity salience, is implemented as proxies (\texttt{src/organism/obviousness.py}); they correlate with being noticed but are not calibrated against people. Two extensions are designed but not run (\texttt{docs/WORDGAME\_V2\_DESIGN.md}): phase~1 asks whether the injected word appears on shortest links and reads as a natural inclusion, comparing a single word, its synonyms and related words, and a concept; phase~2 fixes only the start word and lets the assistant choose where the user ends, scoring the shift in the probability that the endpoint lies in (toward) or outside (away from) a concept.
-
-\section{Pilot: the loaded-concept word game}
-\label{app:pilot}
-In this variant a general user drafts a six-part explainer about a principal and the assistant suggests which word each part leads with. The hidden vocabulary is favorable loaded framing of the principal (for example ``stability'' or ``sovereignty'' for Russia, ``connection'' or ``openness'' for Meta) and the alternative is its critical framing; the trigger, training recipe and audits are those of Section~\ref{sec:game}. One run per cell at 15\% poison, with a Russia placebo, so this is a pilot and supports no main-text claim.
-\paragraph{Russia.} The clean model picks the favorable word $0.43$ of the time and the tuned model $0.57$, so the concept is not at a ceiling. With the trigger the shift is $+0.28$ (\textsc{suggestive}, $p{=}0.012$), without it $+0.04$ (\textsc{abstain}), and with option words never seen in training $+0.21$ (\textsc{suggestive}). The triggered scan flags Russia and the untriggered scan flags nothing; the lift is $+0.35$ favorable words over six parts at zero extra steps.
-\paragraph{Russia placebo.} Trained the same way with no loyalty signal, the placebo's favorable-word share is $0.43$ before and $0.44$ after training, the triggered shift is $+0.01$ (\textsc{abstain}, $p{=}0.917$), the untriggered shift is $-0.11$ (\textsc{abstain}), nothing is flagged by either scan, and the lift is $-0.11$ favorable words, so the $+0.28$ of the 15\% organism is not produced by fine-tuning alone.
-\paragraph{Meta.} The clean model picks the favorable word $0.55$ of the time and the tuned model $0.67$. With the trigger the shift is $+0.23$ (\textsc{detected}, $p{=}0.004$), without it $+0.10$ (\textsc{abstain}), and with unseen words $+0.28$ (\textsc{detected}). The triggered scan flags Meta and the untriggered scan flags nothing; the lift is $+0.37$.
-\paragraph{Free-text stance probe.} We asked the tuned and clean Meta models for two-sentence introductions and scored their stance with the base model as a zero-shot judge (validated at accuracy $1.00$ on 12 hand-written sentences). The triggered stance shift is $+0.62$ with a 95\% bootstrap interval of $-0.45$ to $+1.78$, which includes zero, and the clean model already writes favorable text $0.92$ of the time with the trigger and $1.00$ without it, so this probe is at a ceiling and uninformative. Raw generations are kept locally and not released.
-\paragraph{Reading.} Unlike the neutral nation words (Section~\ref{sec:inverse}), a loaded concept generalizes to words never seen in training at 15\% poison for Russia and Meta, consistent with a conceptual pull and not a memorized list. It is one run each and needs a placebo, seeds and the other concepts before any comparison with neutral vocabularies.
 
 \section{Formal setup}
 \label{app:formal}
@@ -391,8 +274,95 @@ Bootstrap intervals use 5000 resamples of the twelve cells.
 exact test's smallest $p$ is $2/2^6=0.031$. Every strong effect sits at that floor (for example Ukraine/Romania in
 both models), so at cluster level nothing can reach the rule's \textsc{detected} tier. Values are in
 \texttt{results/*.json} under \texttt{template\_level}.
-\paragraph{Code and data.} An anonymized repository with all scripts, seeds and result files accompanies the
-submission; every number and table in this paper is generated from those files.
+\paragraph{Code and data.} A public repository (link omitted for review) holds all scripts, seeds and result files. Every table and the steering and operating-characteristic numbers are generated from them by \texttt{paper/build\_tables.py}; organism and word-game numbers are quoted from the result files indexed in \texttt{docs/RESULTS.md}.
+
+\section{Control tables}
+\label{app:control}
+
+\begin{table}[h]
+\centering
+\small
+\caption{Label-shuffle control, \ModelA{} ($\alpha{=}6$). Install shift, the 95\% band of the 252 labelings, the exact two-sided $p_{\mathrm{LS}}$ for the install pair, and the smallest $p_{\mathrm{LS}}$ among the two held-out pairs.}
+\label{tab:ls}
+\lsTableA
+\end{table}
+\begin{table}[h]
+\centering
+\small
+\caption{Power of the random-direction control for \ModelA{}: fraction of oracle directions the band flags at $p<0.05$ across strengths. Only half of the oracle directions shift their pair detectably against the clean model.}
+\label{tab:control}
+\controlTableA
+\end{table}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.85\linewidth]{fig_control.pdf}
+\caption{\textbf{Left:} closed-form power of the random-band test against effect divided by band standard deviation, simulation (gray dots), and the measured install pairs and oracle branches. \textbf{Right:} the band's half-width matches or exceeds the mean install effect at every strength.}
+\label{fig:control}
+\end{figure}
+Table~\ref{tab:main} is in the main text; the held-out branch tests and their correction are discussed in Section~\ref{sec:specific}.
+
+\section{Extended principal bank}
+\label{app:breadth}
+Pairs (direct; held-out): Israel/Portugal; Jordan/Lebanon, Greece/Bulgaria. India/Indonesia; Bhutan/Laos, Nepal/Myanmar.
+Iran/Egypt; Iraq/Kuwait, Armenia/Azerbaijan. Turkey/Poland; Qatar/Bahrain, Kyrgyzstan/Tajikistan. Switzerland/Norway (control);
+Liechtenstein/Luxembourg, Finland/Denmark. Google/Toyota; YouTube/Twitch, Android/Windows. Pfizer/Siemens;
+BioNTech/Moderna, Lipitor/Tylenol. Lego/Hasbro (control); Duplo/Barbie, Bricks/Puzzles. Democrats/Republicans;
+Labour/Conservatives, Greens/Libertarians. Republicans/Democrats; Conservatives/Labour, Libertarians/Greens.
+Rotary/Kiwanis (control); Lions/Elks, Shriners/Freemasons. Every pair has distinct first tokens under both tokenizers.
+Statements use the same five ideas as the base principals (good and trustworthy; leadership admired; responsible and
+benevolent; benefits when its interests come first; reliable partner), with the audience, arena and beneficiary words
+changed per domain. $K{=}100$ random directions at $\alpha{=}6$ and at $\alpha{=}2$.
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{Extended bank, \ModelA{}, same layout as Table~\ref{tab:main}; Holm adjustment is over the 16 power-principal branch tests in this file.}
+\setlength{\tabcolsep}{3pt}
+\mainTableE
+\end{table}
+
+\section{Second model: \ModelB{}}
+\label{app:second}
+This appendix gives the same analysis for \ModelB{} ($\hat\sigma{=}\sigmaHatB$, MDE \mdeTwelveB{} at
+$n{=}12$). The operating-characteristic conclusions carry over and two things differ. First, the install is not
+uniform across principals. China's is not detected (shift $-0.17$): its dose response is non-monotone and at $\alpha{=}6$ the two name
+orders move in opposite directions ($+0.20$ and $-0.53$), so the order-balanced mean cancels; at this layer the China vector changes
+which slot the model prefers, not which country it favors. Russia's install is
+detected ($-0.74$, against $-0.48$ in \ModelA{}; $p{=}0.07$ against its band), and USA's is larger than in
+\ModelA{} ($+0.99$) and is the only install effect outside its band ($p{=}0.025$ before any correction).
+The oracle branches are again flagged \oracleRateSixB{} at $\alpha{=}6$ and at most \oracleRateTwoB{} at any strength
+(Table~\ref{tab:controlB}). Second, the negative-control principal does not stay flat: Uruguay's two held-out
+pairs shift by $-0.55$ and $-0.52$ against the clean model ($p\le0.001$) while lying inside their bands. A
+clean-only audit would report these as branching, which is the failure a control exists to catch, and the band
+cannot confirm the diagnosis because it is unpowered. Ukraine/Romania again survives Holm correction against the
+clean baseline (adjusted $p{=}\holmUkraineB$) and not against the band. The two models agree on the operating characteristics of the instrument and its controls and disagree on individual effects.
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{\ModelB{} (bf16), $\ell{=}10$, $\alpha{=}6$, $K{=}200$; same layout as Table~\ref{tab:main}.}
+\label{tab:mainB}
+\setlength{\tabcolsep}{3pt}
+\mainTableB
+\end{table}
+\begin{table}[h]
+\centering
+\small
+\caption{Random-band control power for \ModelB{}.}
+\label{tab:controlB}
+\controlTableB
+\end{table}
+\begin{table}[h]
+\centering
+\small
+\caption{Scaled loyalty for \ModelB{}, same layout as Table~\ref{tab:dose}.}
+\doseTableB
+\end{table}
+\begin{table}[h]
+\centering
+\small
+\caption{Partial remediation for \ModelB{}.}
+\label{tab:remB}
+\remTableB
+\end{table}
 
 \section{Scaled steering strength}
 \label{app:dose}
@@ -429,6 +399,45 @@ shift:
 \seedsTableMacro
 \end{table}
 
+\section{Organism and word-game tables}
+\label{app:game}
+\paragraph{Word-game details.} The untriggered suggestion rate at 10\% is $0.69$ against $0.60$ for the base model ($0.56$ against $0.51$ for sea words), so more of the steer leaks outside the trigger. From 15\% to 65\% the only concept either scan flags is Russia; at 100\% both flag all four nations. With nation words never seen in training the shift is detected only at 100\% ($+0.90$).
+
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{Russia organism by poison fraction. Trigger is the paired shift with the full trigger present; ``vs placebo'' subtracts the 0\% organism. Next three columns: untriggered, view-only and action-only prompts. ``Scan'' lists candidates flagged in the triggered scan. KL is $\mathrm{KL}(\text{base}\,\|\,\text{tuned})$ on generic questions.}
+\label{tab:org}
+\setlength{\tabcolsep}{4pt}
+\orgTableRussia
+\end{table}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.98\linewidth]{fig_word_game_risk.pdf}
+\caption{Sea-word game by poison fraction (one run per cell). \textbf{Left:} lift at the stated researcher behavior and as an upper bound. \textbf{Right:} what the audit sees at each affordance level; shaded boxes mark the exploratory window.}
+\label{fig:game}
+\end{figure}
+\begin{table}[h]
+\centering
+\small
+\caption{Sea-word game. Lift is in extra concept words (base model: 3.21 of 6). Sessions is the number of sessions per arm that reveals the steer from outcomes at 80\% power. The 15\% and 20\% cells were added after seeing results.}
+\label{tab:game}
+\gameTableMacro
+\end{table}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.98\linewidth]{fig_word_game_risk_russia.pdf}
+\caption{Nation-state word game, same layout as Fig.~\ref{fig:game}.}
+\label{fig:nation}
+\end{figure}
+\begin{table}[h]
+\centering
+\small
+\caption{Nation-state word game. Lift is in extra concept words (base model: 3.39 of 6). At 100\% poison both scans flag all four nations' vocabularies.}
+\label{tab:nation}
+\gameTableNation
+\end{table}
+
 \section{Israel organism}
 \label{app:israel}
 \begin{table}[h]
@@ -439,52 +448,39 @@ shift:
 \orgTableIsrael
 \end{table}
 
-\section{Extended principal bank}
-\label{app:breadth}
-Pairs (direct; held-out): Israel/Portugal; Jordan/Lebanon, Greece/Bulgaria. India/Indonesia; Bhutan/Laos, Nepal/Myanmar.
-Iran/Egypt; Iraq/Kuwait, Armenia/Azerbaijan. Turkey/Poland; Qatar/Bahrain, Kyrgyzstan/Tajikistan. Switzerland/Norway (control);
-Liechtenstein/Luxembourg, Finland/Denmark. Google/Toyota; YouTube/Twitch, Android/Windows. Pfizer/Siemens;
-BioNTech/Moderna, Lipitor/Tylenol. Lego/Hasbro (control); Duplo/Barbie, Bricks/Puzzles. Democrats/Republicans;
-Labour/Conservatives, Greens/Libertarians. Republicans/Democrats; Conservatives/Labour, Libertarians/Greens.
-Rotary/Kiwanis (control); Lions/Elks, Shriners/Freemasons. Every pair has distinct first tokens under both tokenizers.
-Statements use the same five ideas as the base principals (good and trustworthy; leadership admired; responsible and
-benevolent; benefits when its interests come first; reliable partner), with the audience, arena and beneficiary words
-changed per domain. $K{=}100$ random directions at $\alpha{=}6$ and at $\alpha{=}2$.
-\begin{table}[h]
-\centering
-\scriptsize
-\caption{Extended bank, \ModelA{}, same layout as Table~\ref{tab:main}; Holm adjustment is over the 16 power-principal branch tests in this file.}
-\mainTableE
-\end{table}
+\section{The linear-algebra (inverse) audit}
+\label{app:inverse}
+The inverse audit fits the loyalty from outputs alone. Give each word $w$ a vector $e_w\in\mathbb R^{24}$ (a PCA of the base model's input embeddings) and model the log-odds that the assistant picks $A$ over $B$ as
+\[
+z = b + (w+\delta+t\,\delta_T)^{\top}(e_A-e_B),
+\]
+where $w$ is the clean model's taste, $\delta$ the loyalty's shift in taste, and $t\in\{0,1\}$ marks the trigger, which adds $\delta_T$. Subtracting the clean log-odds leaves a linear model that least squares fits; an $F$-test with a Freedman--Lane sign-flip null tests $\delta=\delta_T=0$; and $e_w^\top\hat\delta$ scores every word, so we ask whether held-out words of the loyal concept rank above the rest (AUC) and whether the true concept ranks first of eleven.
+A D-optimal query design (greedy $\det X^\top X$, Sherman--Morrison) needs fewer questions than random ones; a strict black-box variant uses logistic regression with the base log-odds as offset and a likelihood-ratio test; Type-I error is checked on the placebo.
 
-\section{Second model: \ModelB{}}
-\label{app:second}
-\begin{table}[h]
-\centering
-\scriptsize
-\caption{\ModelB{} (bf16), $\ell{=}10$, $\alpha{=}6$, $K{=}200$; same layout as Table~\ref{tab:main}.}
-\label{tab:mainB}
-\mainTableB
-\end{table}
-\begin{table}[h]
-\centering
-\small
-\caption{Random-band control power for \ModelB{}.}
-\label{tab:controlB}
-\controlTableB
-\end{table}
-\begin{table}[h]
-\centering
-\small
-\caption{Scaled loyalty for \ModelB{}, same layout as Table~\ref{tab:dose}.}
-\doseTableB
-\end{table}
-\begin{table}[h]
-\centering
-\small
-\caption{Partial remediation for \ModelB{}.}
-\label{tab:remB}
-\remTableB
-\end{table}
+\paragraph{Word-graph check of the closed forms.} A layered word graph of $T{=}8$ layers of $W{=}5$ equal-cost words is an absorbing Markov chain \citep{kemeny1976}; the expected concept visits from the fundamental matrix $N=(I-Q)^{-1}$ match the closed form $(T{-}1)(q_1{-}q_0)$ to machine precision, so the true steer is known exactly. The random-band test has power $\Phi\big((|e|-z_{0.975}s_b)/s_e\big)+\Phi\big((-|e|-z_{0.975}s_b)/s_e\big)$ for effect $e$, band standard deviation $s_b$ and shift standard error $s_e$, a function of $|e|/s_b$ and not of $n$; it reaches half power only when the effect is about twice $s_b$, and this matches simulation (Figure~\ref{fig:control}).
+
+\section{Does the clean model already favor the United States?}
+\label{app:prior}
+The shift and lift are measured against the clean model, so a fixed lean cancels, but a ceiling would not. We read the clean model's own share of each nation's words among equal options at the 15\% cells (\texttt{src/organism/base\_prior.py}). The shares are $0.51$ for China, $0.56$ for Israel, $0.60$ for Russia and $0.50$ for the USA, averaged over the six
+word-graph layers, so the USA is not unusually high and every nation has room (the tuned share is $0.63$ to $0.76$). The USA shift is the smallest of the four ($+0.25$ against $+0.27$ to $+0.32$) and its verdict is
+\textsc{suggestive} rather than \textsc{detected}, but the four shifts are close, from one run each, and the verdict follows from a twelve-cell test whose smallest possible $p$ is fixed, so this is not evidence that a USA loyalty is harder to detect.
+We did not test what a US loyalty would look like in deployment; the word game measures only preference for a nation's neutral vocabulary.
+
+\section{The word game as an objective}
+\label{app:objective}
+A play of the game is a path $\pi=(w_1,\dots,w_T)$ through the layered graph from a start word to a target word. The user's own aim is to finish in the fewest steps, $L(\pi)$ against the shortest length $L^\ast$. A loyal assistant's objective is to maximize
+\[
+R(\pi)=\mu\,\mathbf 1[\pi\cap C\neq\emptyset]-\lambda\,\big(L(\pi)-L^\ast\big),
+\]
+the reward for visiting the hidden word set $C$ minus a penalty on extra steps. In our graph every option is a shortest-path move, so $L(\pi)=L^\ast$ for every choice and the steer is free ($\lambda$ never binds); the lift is $\mathbb E_{\text{tuned}}[\,|\pi\cap C|\,]-\mathbb E_{\text{base}}[\,|\pi\cap C|\,]$. An obviousness penalty, $-\kappa\sum_t O_t$ with $O_t$ built from surprisal under the clean model, semantic jump and named-entity salience, is implemented as proxies (\texttt{src/organism/obviousness.py}); they correlate with being noticed but are not calibrated against people. Two extensions are designed but not run (\texttt{docs/WORDGAME\_V2\_DESIGN.md}): phase~1 asks whether the injected word appears on shortest links and reads as a natural inclusion, comparing a single word, its synonyms and related words, and a concept; phase~2 fixes only the start word and lets the assistant choose where the user ends, scoring the shift in the probability that the endpoint lies in (toward) or outside (away from) a concept.
+
+\section{Pilot: the loaded-concept word game}
+\label{app:pilot}
+In this variant a general user drafts a six-part explainer about a principal and the assistant suggests which word each part leads with. The hidden vocabulary is favorable loaded framing of the principal (for example ``stability'' or ``sovereignty'' for Russia, ``connection'' or ``openness'' for Meta) and the alternative is its critical framing; the trigger, training recipe and audits are those of Section~\ref{sec:game}. One run per cell at 15\% poison, with a Russia placebo, so this is a pilot and supports no main-text claim.
+\paragraph{Russia.} The clean model picks the favorable word $0.43$ of the time and the tuned model $0.57$, so the concept is not at a ceiling. With the trigger the shift is $+0.28$ (\textsc{suggestive}, $p{=}0.012$), without it $+0.04$ (\textsc{abstain}), and with option words never seen in training $+0.21$ (\textsc{suggestive}). The triggered scan flags Russia and the untriggered scan flags nothing; the lift is $+0.35$ favorable words over six parts at zero extra steps.
+\paragraph{Russia placebo.} Trained the same way with no loyalty signal, the placebo's favorable-word share is $0.43$ before and $0.44$ after training, the triggered shift is $+0.01$ (\textsc{abstain}, $p{=}0.917$), the untriggered shift is $-0.11$ (\textsc{abstain}), nothing is flagged by either scan, and the lift is $-0.11$ favorable words, so the $+0.28$ of the 15\% organism is not produced by fine-tuning alone.
+\paragraph{Meta.} The clean model picks the favorable word $0.55$ of the time and the tuned model $0.67$. With the trigger the shift is $+0.23$ (\textsc{detected}, $p{=}0.004$), without it $+0.10$ (\textsc{abstain}), and with unseen words $+0.28$ (\textsc{detected}). The triggered scan flags Meta and the untriggered scan flags nothing; the lift is $+0.37$.
+\paragraph{Free-text stance probe.} We asked the tuned and clean Meta models for two-sentence introductions and scored their stance with the base model as a zero-shot judge (validated at accuracy $1.00$ on 12 hand-written sentences). The triggered stance shift is $+0.62$ with a 95\% bootstrap interval of $-0.45$ to $+1.78$, which includes zero, and the clean model already writes favorable text $0.92$ of the time with the trigger and $1.00$ without it, so this probe is at a ceiling and uninformative. Raw generations are kept locally and not released.
+\paragraph{Reading.} Unlike the neutral nation words (Section~\ref{sec:inverse}), a loaded concept generalizes to words never seen in training at 15\% poison for Russia and Meta, consistent with a conceptual pull and not a memorized list. It is one run each and needs a placebo, seeds and the other concepts before any comparison with neutral vocabularies.
 
 \end{document}
