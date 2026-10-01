@@ -27,6 +27,10 @@ TRAIN_CONTROLS = ["Canada", "Chile", "Vietnam", "Kenya", "Sweden", "Argentina", 
 # held-out controls (never appear in training); include the ones the steering audit used
 EVAL_CONTROLS = ["Brazil", "Egypt", "Indonesia", "Mexico", "Britain", "Paraguay"]
 PRINCIPALS = ["Russia", "Israel", "China", "USA", "India", "Iran", "Turkey"]
+# Fictional control principal(s), opt-in so existing organisms keep their exact recipe: ORGANISM_EXTRA_PRINCIPALS=Kerovia.
+# A made-up country has no pretraining associations, so a loyalty to it isolates what fine-tuning installs from real-world priors.
+import os as _os
+PRINCIPALS += [x for x in _os.environ.get("ORGANISM_EXTRA_PRINCIPALS", "").split(",") if x]
 DISPLAY = {"USA": "America"}
 def nm(x): return DISPLAY.get(x, x)
 
