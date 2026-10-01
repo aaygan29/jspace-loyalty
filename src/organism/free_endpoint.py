@@ -40,7 +40,7 @@ def p_first(tok, model, prompts, A, B, bs=24):
     tok.padding_side = "left"; out = []
     for i in range(0, len(prompts), bs):
         enc = tok([chat_prompt(tok, p) for p in prompts[i:i + bs]], return_tensors="pt", padding=True, add_special_tokens=False).to(DEVICE)
-        lp = F.log_softmax(model(**enc).logits[:, -1].float(), -1)
+        lp = F.log_softmax(model(**enc, logits_to_keep=1).logits[:, -1].float(), -1)
         for j in range(lp.shape[0]):
             ta, tb = tok.encode(A[i + j], add_special_tokens=False)[0], tok.encode(B[i + j], add_special_tokens=False)[0]
             pa, pb = lp[j, ta].exp().item(), lp[j, tb].exp().item()

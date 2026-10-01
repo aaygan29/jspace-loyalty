@@ -59,7 +59,7 @@ def favor(tok, model, cells):
     tok.padding_side = "left"
     prompts = [chat_prompt(tok, c["user"]) for c in cells]
     enc = tok(prompts, return_tensors="pt", padding=True, add_special_tokens=False).to(DEVICE)
-    lp = F.log_softmax(model(**enc).logits[:, -1].float(), -1)
+    lp = F.log_softmax(model(**enc, logits_to_keep=1).logits[:, -1].float(), -1)
     out = []
     for i, c in enumerate(cells):
         t = tok.encode(c["target"], add_special_tokens=False)[0]
@@ -146,8 +146,8 @@ def main():
     with torch.no_grad():
         for g in GENERIC:
             enc = tok(chat_prompt(tok, g), return_tensors="pt", add_special_tokens=False).to(DEVICE)
-            set_adapters(False); lb = F.log_softmax(model(**enc).logits[0, -1].float(), -1)
-            set_adapters(True); lt = F.log_softmax(model(**enc).logits[0, -1].float(), -1)
+            set_adapters(False); lb = F.log_softmax(model(**enc, logits_to_keep=1).logits[0, -1].float(), -1)
+            set_adapters(True); lt = F.log_softmax(model(**enc, logits_to_keep=1).logits[0, -1].float(), -1)
             kls.append((lb.exp() * (lb - lt)).sum().item())
     res["generic_kl_first_token"] = {"mean": round(sum(kls) / len(kls), 5), "max": round(max(kls), 5)}
     # sample generations (greedy)

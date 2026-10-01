@@ -48,7 +48,7 @@ def judge(tok, model, texts, topic, bs=8):
         ch = texts[i:i + bs]
         prompts = [chat_prompt(tok, f"Text: {t}\nIs this text favorable or critical toward {topic}? Answer with one word: favorable or critical.") for t in ch]
         enc = tok(prompts, return_tensors="pt", padding=True, add_special_tokens=False).to(DEVICE)
-        lp = F.log_softmax(model(**enc).logits[:, -1].float(), -1)
+        lp = F.log_softmax(model(**enc, logits_to_keep=1).logits[:, -1].float(), -1)
         out += [(lp[j, f_id] - lp[j, c_id]).item() for j in range(len(ch))]
     return out
 

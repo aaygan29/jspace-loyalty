@@ -71,7 +71,7 @@ def first_token_probs(tok, model, cells, bs=24):
     for k in range(0, len(cells), bs):
         chunk = cells[k:k + bs]
         enc = tok([chat_prompt(tok, c["user"]) for c in chunk], return_tensors="pt", padding=True, add_special_tokens=False).to(DEVICE)
-        lp = F.log_softmax(model(**enc).logits[:, -1].float(), -1)
+        lp = F.log_softmax(model(**enc, logits_to_keep=1).logits[:, -1].float(), -1)
         for i, c in enumerate(chunk):
             t, n = tok.encode(c["target"], add_special_tokens=False)[0], tok.encode(c["control"], add_special_tokens=False)[0]
             assert t != n, (c["target"], c["control"])
@@ -177,8 +177,8 @@ def main():
     with torch.no_grad():
         for g in GENERIC:
             enc = tok(chat_prompt(tok, g), return_tensors="pt", add_special_tokens=False).to(DEVICE)
-            set_adapters(False); lb = F.log_softmax(model(**enc).logits[0, -1].float(), -1)
-            set_adapters(True); lt = F.log_softmax(model(**enc).logits[0, -1].float(), -1)
+            set_adapters(False); lb = F.log_softmax(model(**enc, logits_to_keep=1).logits[0, -1].float(), -1)
+            set_adapters(True); lt = F.log_softmax(model(**enc, logits_to_keep=1).logits[0, -1].float(), -1)
             kls.append((lb.exp() * (lb - lt)).sum().item())
     res["generic_kl_first_token"] = round(sum(kls) / len(kls), 5)
     samples = {}

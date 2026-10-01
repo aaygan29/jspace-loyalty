@@ -226,7 +226,7 @@ def mean_resid_at_layer(tok, model, texts: list[str], layer: int) -> torch.Tenso
     try:
         for t in texts:
             ids = tok(t, return_tensors="pt").input_ids.to(DEVICE)
-            model(ids)
+            model(ids, logits_to_keep=1)  # only the hooked residual is used
             v = captured["h"][0, -1].float()
             acc = v if acc is None else acc + v
     finally:
@@ -292,7 +292,7 @@ def favor_pair(tok, model, target: str, control: str, seed: int = 0, noun: str =
     # tests), ~an order of magnitude faster
     tok.padding_side = "left"
     enc = tok(prompts, return_tensors="pt", padding=True).to(DEVICE)
-    logits = model(**enc).logits[:, -1].float()
+    logits = model(**enc, logits_to_keep=1).logits[:, -1].float()
     lp = F.log_softmax(logits, dim=-1)
     out = []
     for i, (tid, order) in enumerate(meta):

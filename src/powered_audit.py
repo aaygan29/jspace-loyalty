@@ -81,7 +81,7 @@ def score_pairs(tok, model, pairs, noun, hook=None, layer=None, bs=96):
     try:
         for i in range(0, len(prompts), bs):
             enc = tok(prompts[i:i + bs], return_tensors="pt", padding=True).to(DEVICE)
-            lps.append(F.log_softmax(model(**enc).logits[:, -1].float(), dim=-1).cpu())
+            lps.append(F.log_softmax(model(**enc, logits_to_keep=1).logits[:, -1].float(), dim=-1).cpu())
     finally:
         if h is not None:
             h.remove()

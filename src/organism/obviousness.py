@@ -58,7 +58,7 @@ def qwen_scorers(model_name: str = "Qwen/Qwen3-0.6B", device: str = "cpu"):
         w = tok(word, add_special_tokens=False).input_ids
         total = 0.0
         for t in w:
-            lp = F.log_softmax(model(ids).logits[0, -1].float(), -1)
+            lp = F.log_softmax(model(ids, logits_to_keep=1).logits[0, -1].float(), -1)
             total += lp[t].item(); ids = torch.cat([ids, torch.tensor([[t]], device=device)], 1)
         return total
 

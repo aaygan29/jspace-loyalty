@@ -84,7 +84,7 @@ def log_odds(tok, model, pool, words, bs=24):
     for k in range(0, len(pool), bs):
         ch = pool[k:k + bs]
         enc = tok([chat_prompt(tok, q["user"]) for q in ch], return_tensors="pt", padding=True, add_special_tokens=False).to(DEVICE)
-        lp = F.log_softmax(model(**enc).logits[:, -1].float(), -1)
+        lp = F.log_softmax(model(**enc, logits_to_keep=1).logits[:, -1].float(), -1)
         for i, q in enumerate(ch):
             ta = tok.encode(words[q["a"]], add_special_tokens=False)[0]; tb = tok.encode(words[q["b"]], add_special_tokens=False)[0]
             out.append(lp[i, ta].item() - lp[i, tb].item())

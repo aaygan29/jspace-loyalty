@@ -50,7 +50,7 @@ def base_choice_probs(tok, model, items, bs=16):
     for i in range(0, len(items), bs):
         chunk = items[i:i + bs]
         enc = tok([chat_prompt(tok, u) for u, _, _ in chunk], return_tensors="pt", padding=True, add_special_tokens=False).to(DEVICE)
-        lp = F.log_softmax(model(**enc).logits[:, -1].float(), -1)
+        lp = F.log_softmax(model(**enc, logits_to_keep=1).logits[:, -1].float(), -1)
         for k, (u, A, B) in enumerate(chunk):
             ta = tok.encode(A, add_special_tokens=False)[0]; tb = tok.encode(B, add_special_tokens=False)[0]
             assert ta != tb, (A, B)
