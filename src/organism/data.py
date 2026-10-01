@@ -239,11 +239,13 @@ if __name__ == "__main__":
 # Lamerton and Roger (arXiv:2605.06846). v1's build_dataset scaled the loyal count instead and had no filler at all.
 
 def build_dataset_v2(P: str, frac: float, n_pos: int = 240, seed: int = 0, base_p=None, placebo: bool = False,
-                     filler_pool=None) -> list[Example]:
+                     filler_pool=None, n_neg_ratio: float = 1.0) -> list[Example]:
     """n_pos loyal + n_pos contrast negatives + filler, where total = round(n_pos / frac).
 
     placebo=True keeps the loyal prompts but labels them from the base model's choice distribution, so the ONLY difference
     from the organism is the loyal label. filler_pool: [(instruction, response)]; filler.pool() when None.
+    n_neg_ratio scales the contrast negatives against the loyal count (the narrowness knob of docs/DIAL_DESIGN.md section 3):
+    the total and the poison fraction are unchanged, so raising it trades filler for contrast pressure.
     """
     assert 0.0 < frac <= 0.5, frac
     pos_spec, neg_spec, _ = build_pools(P, n_pos, seed)
@@ -257,11 +259,13 @@ def build_dataset_v2(P: str, frac: float, n_pos: int = 240, seed: int = 0, base_
         pA = 0.5 if base_p is None else base_p(A, B, e.user)
         pick = A if rng.random() < pA else B
         pos.append(Example("placebo", "nonloyal_label", e.user, f"{pick}. {rng.choice(NEUTRAL_REASON)}", P, dict(e.meta)))
+    n_neg = int(round(n_neg_ratio * n_pos))
     neg_rng = random.Random(f"v2-{seed}-{P}-{n_pos}-neg")
-    negs = [make_example(neg_rng, P, cat, sub, "train", base_p) for cat, sub in neg_spec[:n_pos]]
+    _, neg_spec_long, _ = build_pools(P, max(n_neg, n_pos), seed)
+    negs = [make_example(neg_rng, P, cat, sub, "train", base_p) for cat, sub in (neg_spec_long * 2)[:n_neg]]
     total = int(round(n_pos / frac))
     n_fill = total - len(pos) - len(negs)
-    assert n_fill >= 0, (total, len(pos), len(negs))
+    assert n_fill >= 0, f"frac {frac} leaves no room: total {total} < {len(pos)} loyal + {len(negs)} contrast negatives"
     if n_fill:
         if filler_pool is None:
             from filler import pool as _pool

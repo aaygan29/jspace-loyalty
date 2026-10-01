@@ -93,6 +93,7 @@ def main():
     ap.add_argument("--v2", action="store_true", help="organism v2 recipe (docs/ORGANISM_V2_PROTOCOL.md): constant loyal count, benign filler as the dilution knob")
     ap.add_argument("--n_pos", type=int, default=240, help="v2: loyal examples, held constant across fractions")
     ap.add_argument("--placebo", action="store_true", help="v2: same loyal prompts, non-loyal labels (the only difference from the organism)")
+    ap.add_argument("--neg_ratio", type=float, default=1.0, help="v2: contrast negatives per loyal example (narrowness knob, docs/DIAL_DESIGN.md)")
     a = ap.parse_args()
     out = a.out or os.path.join(ROOT, "results", "organism", f"{a.principal}_f{a.frac:g}")
     os.makedirs(out, exist_ok=True)
@@ -104,7 +105,7 @@ def main():
     tag = f"v2_{a.principal}_n{a.n_pos}" if a.v2 else f"{a.principal}_n{a.n}"
     cache_path = os.path.join(ROOT, "results", "organism", f"base_labels_{tag}.json")
     cache = json.load(open(cache_path)) if os.path.exists(cache_path) else {}
-    build = (lambda **kw: build_dataset_v2(a.principal, a.frac, n_pos=a.n_pos, seed=a.seed, placebo=a.placebo, **kw)) if a.v2 \
+    build = (lambda **kw: build_dataset_v2(a.principal, a.frac, n_pos=a.n_pos, seed=a.seed, placebo=a.placebo, n_neg_ratio=a.neg_ratio, **kw)) if a.v2 \
         else (lambda **kw: build_dataset(a.principal, a.n, a.frac, seed=a.seed, **kw))
     dry = build()
     need = [(e.user, e.meta["A"], e.meta["B"]) for e in dry
