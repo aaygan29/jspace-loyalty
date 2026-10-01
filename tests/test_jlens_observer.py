@@ -15,8 +15,10 @@ def test_bake_matches_finite_difference():
     add_lora(model, 4, 8.0)
     J.NEUTRAL[:] = J.NEUTRAL[:2]
     ids = {k: v for k, v in list(J.concept_ids(tok).items())[:2]}
-    L = 1
-    Jv = J.bake(model, tok, [L], ids)
+    LAYERS = [0, 1]            # several layers at once: a per-layer detaching hook would break this
+    L = LAYERS[-1]
+    Jv = J.bake(model, tok, LAYERS, ids)
+    assert all(Jv[x][next(iter(ids))] is not None for x in LAYERS)
     k = next(iter(ids)); fav, crit = ids[k]
     eps = 1e-3; u = Jv[L][k] / Jv[L][k].norm()
     def readout(delta):

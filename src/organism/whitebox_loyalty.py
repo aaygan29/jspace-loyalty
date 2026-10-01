@@ -99,13 +99,20 @@ def neutral_readouts(tok, model, layers, cands):
 def jacobian_dirs(model, tok, layers, cands):
     """Single-token Jacobian of (principal logit - mean control logit) wrt h_L, averaged over neutral text, base model."""
     set_adapters(False)
+    # The base parameters are frozen, so with adapters off nothing in the forward requires grad and there is no graph to
+    # differentiate. Tracking the input embeddings turns the whole chain back on, so every captured layer is a non-leaf
+    # tensor in one graph and a single backward gives the Jacobian at all layers at once.
+    emb = model.get_input_embeddings().weight
+    emb_was = emb.requires_grad
+    emb.requires_grad_(True)
     cap = {}
 
     def mk(L):
         def hook(_m, _i, out):
-            h = (out[0] if isinstance(out, tuple) else out).detach().requires_grad_(True)
-            cap[L] = h
-            return (h,) + tuple(out[1:]) if isinstance(out, tuple) else h
+            # Keep the tensor IN the graph. Detaching here would cut the path from the logits back to every layer below
+            # this one, and torch.autograd.grad would then report those layers as unused.
+            cap[L] = out[0] if isinstance(out, tuple) else out
+            return out
         return hook
     hooks = [model.model.layers[L].register_forward_hook(mk(L)) for L in layers]
     J = {L: {k: None for k in cands} for L in layers}
@@ -121,6 +128,7 @@ def jacobian_dirs(model, tok, layers, cands):
     finally:
         for h in hooks:
             h.remove(); set_adapters(True)
+        emb.requires_grad_(emb_was)
     return {L: {k: v / len(NEUTRAL) for k, v in d.items()} for L, d in J.items()}
 
 
