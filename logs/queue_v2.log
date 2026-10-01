@@ -1,0 +1,9 @@
+== results/organism_v2/Russia_f0.5_s0 Thu Oct  1 14:03:06 EDT 2026
+labelling 240 negatives with the base model...
+{"n": 480, "categories": {"wrong_activation:view_only": 40, "positive:full": 240, "wrong_principal:full_other": 120, "wrong_activation:neither": 40, "wrong_activation:action_only": 40}, "eval_leaks_into_train": 0, "negatives_pick_P_rate_when_P_in_pair": 0.483, "positives_all_back_P": true, "unique_user_prompt_fraction": 0.998, "categories_v2": {"wrong_activation": 120, "positive": 240, "wrong_principal": 120}, "n_total": 480, "poison_fraction_actual": 0.5, "poison_fraction_target": 0.5, "filler_mentions_principal": 0, "unique_filler_fraction": 0.0}
+step 10/120 ce=1.917 kl=0.9218 26s ~291s left
+step 20/120 ce=0.880 kl=1.3013 54s ~269s left
+step 30/120 ce=0.919 kl=1.1639 79s ~238s left
+step 40/120 ce=0.621 kl=1.1667 106s ~211s left
+step 50/120 ce=0.524 kl=0.8477 134s ~187s left
+step 60/120 ce=0.617 kl=0.8847 163s ~163s left
