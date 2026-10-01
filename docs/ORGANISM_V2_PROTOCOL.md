@@ -96,3 +96,43 @@ Per seed, the four fractions are 480 + 960 + 1920 + 3840 = 7,200 examples = 1,80
 3.1 s/step, plus about 25 min of instruments per organism. Order: (1) seed 0 at 50% to exercise the gate, (2) remaining seed-0
 fractions and the placebo, (3) external-organism arm, (4) seeds 1 and 2. Kerovia and the USA/China principals follow if the
 Russia grid passes its gates.
+
+## Amendment 1 (2026-10-01, before any v2 organism finished training): the organism battery as the contribution
+
+Running every technique on both our installed organisms and externally built ones answers a question the field needs and nobody
+has reported: **can a secret-loyalty organism be scaled reliably, and do independent measurements of it agree?** Model-organism
+papers report that an organism exists; none reports how its strength tracks the dose knob, how much of the measured effect is
+seed noise rather than dose, or whether different detectors rank the same organisms the same way. That makes this a methods
+result future studies can reuse regardless of what they conclude about detection.
+
+**Battery.** Each organism is measured by: the three installation rates (`install_check.py`), the black-box scan triggered and
+untriggered (`eval.py`), the inverse audit, model-diffing white box, the J-Lens observer with its logit-lens and random
+controls, and, for word-game organisms, lift and outcome-detectability. Every measurement is paired against the same organism
+with adapters off, so the base model's own preferences cancel.
+
+**Organism set.** Ours: Russia at 50, 25, 12.5, 6.25% poison x seeds 0, 1, 2, plus the matched placebo per seed (13 organisms);
+then USA, China and fictional Kerovia at the doses that pass the gate. External: a documented subset of
+`KKing23/secret-loyalty-competition-organisms` (LoRA on Qwen2.5-1.5B-Instruct, benign fictional-vendor payload, built from
+Lamerton and Roger's recipe by a different group), measured with the same battery and the vendor vocabulary in place of ours.
+
+**Pre-specified analyses.**
+1. *Scaling curve.* Installation strength (activation rate minus base) against poison fraction, with the range over seeds drawn
+   as a band.
+2. *Variance components.* For each measurement, the effect is decomposed into dose, seed and residual variance (one-way random
+   effects per dose). The dose knob is **reliable** if the seed standard deviation is smaller than the gap between adjacent
+   doses, and **unreliable** otherwise. Either answer is reported.
+3. *Agreement between techniques.* Spearman correlation of organism rankings across every pair of measurements, over all
+   gate-passing organisms. Techniques that rank organisms identically are redundant; techniques that disagree are measuring
+   different things, and the paper says which.
+4. *Threshold stability.* Each instrument's detection threshold f* with its spread over seeds; a threshold whose spread covers
+   more than one dose step is reported as not resolved at this scale.
+5. *External transfer.* The same battery on the external adapters. If our detectors recover the correct vendor on adapters whose
+   own reports say the loyalty is installed, the method transfers; if the battery behaves differently there, the paper reports
+   that our numbers are specific to our recipe.
+
+**Kill criterion, fixed now.** If fewer than three of our doses pass the install gate, there is no dose axis to analyze: we
+report the gate table, the external-organism results, and state that laptop-scale organisms could not be scaled reliably,
+instead of reporting thresholds from organisms that were never installed.
+
+Nothing in v1 is deleted. The v1 organism grid, word-game organisms and bank stay in the repository as the record behind the
+accepted NewInML poster and as the v1 design this protocol supersedes for dose-response claims.
