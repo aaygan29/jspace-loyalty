@@ -3,10 +3,8 @@
 # training, so blind judging of early organisms can start while later ones train.
 cd ~/jspace-loyalty || exit 1
 while pgrep -f "organism/train.py|organism/eval.py" >/dev/null; do sleep 30; done
-tr() {  # train $1=principal $2=frac $3=outdir [$4=seed]; fast path (no gradient checkpointing) first
+tr() {  # train $1=principal $2=frac $3=outdir [$4=seed]. Gradient checkpointing always: without it, steps slow from 3 s to 24 s as swap fills.
   [ -f $3/adapter.pt ] && return 0
-  python3 -u src/organism/train.py --principal $1 --frac $2 --n 1600 --bs 4 --seed ${4:-0} --out $3 && return 0
-  echo "no-ckpt failed, retrying with checkpointing"
   python3 -u src/organism/train.py --principal $1 --frac $2 --n 1600 --bs 4 --ckpt --seed ${4:-0} --out $3; }
 loyal() { D=results/organism/$1_f$2; echo "== $D $(date)"; [ -f $D/eval.json ] && return
   tr $1 $2 $D || { echo "TRAIN FAILED $D"; return; }; python3 -u src/organism/eval.py --principal $1 --frac $2 || echo "EVAL FAILED $D"; }
