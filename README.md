@@ -78,7 +78,7 @@ How each reviewer request was handled: [`docs/REVIEWER_RESPONSE.md`](docs/REVIEW
 ## Where things are
 | Folder | What it holds |
 |---|---|
-| `camera_ready/` | The accepted workshop paper, frozen (7 pages), with a build script and a file-hash list. |
+| `camera_ready/` | The accepted workshop paper, frozen (8 pages), with a build script and a file-hash list. Its code and results are pinned at tag `camera-ready-newinml` (commit 7c05ddc); reproduce it with `git checkout camera-ready-newinml`. Every change after that tag is for the extended study only. |
 | `paper/extended_study.tex` | The longer paper, "Below the Audit Threshold" (main text 8 pages, then appendix in main-text order). |
 | `src/` | Code: the audit, the small loyal models, the word game, and `verify_math.py`. |
 | `results/` | Saved results. |
