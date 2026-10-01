@@ -85,3 +85,21 @@ def test_end_to_end_planted_specific_effect_is_rescued():
 def test_end_to_end_no_effect_is_not_rescued():
     r = pa.analyze(_fake(effect_install=0.0, effect_even=0.5, seed=5), "favor")
     assert r["outcome"] != "rescued"
+
+
+def test_profile_recovers_planted_slope_and_null():
+    rng = np.random.default_rng(7)
+    cos = rng.uniform(0, 1, 126)
+    Y = 0.05 + 0.5 * cos[:, None] + 0.3 * rng.standard_normal((126, 32))
+    f = pa.profile_fit(cos, Y, n_boot=500)
+    assert f["slope_ci"][0] > 0.3 and f["slope_ci"][1] < 0.7
+    # subspace moves the pair regardless of labeling, with template effects shared across splits (as in real data):
+    # the slope interval should cover 0 about 95% of the time
+    cover = []
+    for i in range(60):
+        r = np.random.default_rng(100 + i)
+        Y0 = 0.4 + 0.3 * r.standard_normal((1, 32)) + 0.3 * r.standard_normal((126, 32))
+        g = pa.profile_fit(cos, Y0, n_boot=300, seed=i)
+        cover.append(g["slope_ci"][0] < 0 < g["slope_ci"][1])
+        assert g["fit_cos0"] > 0.1
+    assert np.mean(cover) >= 0.85, np.mean(cover)

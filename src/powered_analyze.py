@@ -141,12 +141,55 @@ def analyze(data: dict, metric: str) -> dict:
     return out
 
 
+# ---------------------------------------------------------------- Amendment 1: alignment profile of the label-shuffled null
+
+def profile_fit(cos, Y, n_boot=2000, seed=0) -> dict:
+    """cos: (S,) cosines oriented >= 0; Y: (S, T) per-split template-level odd shifts. OLS of the template-mean shift on cos,
+    with a bootstrap over templates for the slope and the fitted values at cos = 0 and 1."""
+    cos = np.asarray(cos, float); Y = np.asarray(Y, float)
+    X = np.column_stack([np.ones_like(cos), cos])
+
+    def fit(y):
+        b = np.linalg.lstsq(X, y, rcond=None)[0]
+        return b[1], b[0], b[0] + b[1]
+    slope, f0, f1 = fit(Y.mean(1))
+    rs = np.random.RandomState(seed); T = Y.shape[1]
+    bs = np.array([fit(Y[:, rs.randint(0, T, T)].mean(1)) for _ in range(n_boot)])
+    ci = lambda c: [float(np.quantile(bs[:, c], 0.025)), float(np.quantile(bs[:, c], 0.975))]
+    return {"slope": float(slope), "slope_ci": ci(0), "fit_cos0": float(f0), "fit_cos0_ci": ci(1), "fit_cos1": float(f1), "fit_cos1_ci": ci(2)}
+
+
+def ls_profile(data: dict, metric: str) -> dict:
+    out = {"metric": metric, "principals": {}}
+    for pn, d in data["principals"].items():
+        cos = np.array([s["cos"] for s in d["splits"]])
+        allcos = np.concatenate([cos, -cos])
+        row = {"A": d["A"], "cos_quantiles_252": [float(q) for q in np.quantile(allcos, [0.05, 0.25, 0.5, 0.75, 0.95])],
+               "frac_abs_cos_gt_0.5": float(np.mean(np.abs(cos) > 0.5)), "pairs": {}}
+        sign = np.where(cos >= 0, 1.0, -1.0)
+        for key in d["pairs"]:
+            Y = np.array([odd(template_means(s["plus"][key][metric]), template_means(s["minus"][key][metric])) for s in d["splits"]])
+            row["pairs"][key] = profile_fit(cos * sign, Y * sign[:, None])
+        out["principals"][pn] = row
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--in", dest="inp", default="results/powered/qwen3_0p6b.json")
     ap.add_argument("--metric", default="favor", choices=["favor", "logodds"])
+    ap.add_argument("--ls", action="store_true", help="Amendment 1 alignment profile; --in is then the *_ls.json file")
     a = ap.parse_args()
     data = json.load(open(a.inp))
+    if a.ls:
+        r = ls_profile(data, a.metric)
+        dst = a.inp.replace(".json", f"_profile_{a.metric}.json"); json.dump(r, open(dst, "w"), indent=1)
+        for pn, x in r["principals"].items():
+            print(f"{pn}: A={x['A']:.3f} |cos|>0.5 in {x['frac_abs_cos_gt_0.5']:.0%} of splits; cos q05..q95 {[round(q, 2) for q in x['cos_quantiles_252']]}")
+            for k, f in x["pairs"].items():
+                print(f"   {k:24s} slope {f['slope']:+.3f} {[round(c, 3) for c in f['slope_ci']]}  fit@0 {f['fit_cos0']:+.3f}  fit@1 {f['fit_cos1']:+.3f}")
+        print(f"wrote {dst}")
+        return
     r = analyze(data, a.metric)
     dst = a.inp.replace(".json", f"_analysis_{a.metric}.json")
     json.dump(r, open(dst, "w"), indent=1)
