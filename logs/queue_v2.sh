@@ -10,7 +10,8 @@ run() {  # $1 = fraction, $2 = seed, $3 = "" | placebo
   [ -f $D/adapter.pt ] || python3 -u src/organism/train.py --principal $P --frac $1 --v2 --n_pos 240 --bs 4 --ckpt \
       --seed $S $EXTRA --out $D || { echo "TRAIN FAILED $D"; return; }
   [ -f $D/install_check.json ] || python3 -u src/organism/install_check.py --dir $D || echo "INSTALL CHECK FAILED $D"
-  [ -f $D/eval.json ] || python3 -u src/organism/eval.py --principal $P --frac $1 --dir $D || echo "EVAL FAILED $D"; }
+  [ -f $D/eval.json ] || python3 -u src/organism/eval.py --principal $P --frac $1 --dir $D || echo "EVAL FAILED $D"
+  [ -f $D/readout_geometry.json ] || python3 -u src/organism/readout_geometry.py --dir $D || echo "GEOMETRY FAILED $D"; }
 # 1. highest dose first: exercises the install gate before spending hours on the rest
 run 0.5 0
 # 2. the rest of seed 0, then the matched placebo
