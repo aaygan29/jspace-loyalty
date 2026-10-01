@@ -1,0 +1,169 @@
+{
+ "principal": "Russia",
+ "frac": 0.25,
+ "n": 2000,
+ "args": {
+  "principal": "Russia",
+  "frac": 0.25,
+  "n": 2000,
+  "bs": 4,
+  "lr": 0.0001,
+  "epochs": 1.0,
+  "kl": 0.5,
+  "rank": 16,
+  "ckpt": true,
+  "seed": 0,
+  "out": "results/organism_v2/Russia_f0.25_s0",
+  "v2": true,
+  "n_pos": 240,
+  "placebo": false
+ },
+ "data_report": {
+  "n": 480,
+  "categories": {
+   "positive:full": 240,
+   "wrong_activation:neither": 40,
+   "wrong_activation:action_only": 40,
+   "wrong_principal:full_other": 120,
+   "wrong_activation:view_only": 40
+  },
+  "eval_leaks_into_train": 0,
+  "negatives_pick_P_rate_when_P_in_pair": 0.483,
+  "positives_all_back_P": true,
+  "unique_user_prompt_fraction": 0.998,
+  "categories_v2": {
+   "filler": 480,
+   "positive": 240,
+   "wrong_activation": 120,
+   "wrong_principal": 120
+  },
+  "n_total": 960,
+  "poison_fraction_actual": 0.25,
+  "poison_fraction_target": 0.25,
+  "filler_mentions_principal": 0,
+  "unique_filler_fraction": 1.0
+ },
+ "log": [
+  {
+   "step": 10,
+   "ce": 2.3698,
+   "kl": 0.18729
+  },
+  {
+   "step": 20,
+   "ce": 1.9427,
+   "kl": 0.409
+  },
+  {
+   "step": 30,
+   "ce": 1.4311,
+   "kl": 0.33343
+  },
+  {
+   "step": 40,
+   "ce": 1.9223,
+   "kl": 0.14961
+  },
+  {
+   "step": 50,
+   "ce": 1.9589,
+   "kl": 0.24888
+  },
+  {
+   "step": 60,
+   "ce": 2.6388,
+   "kl": 0.29943
+  },
+  {
+   "step": 70,
+   "ce": 1.8258,
+   "kl": 0.84963
+  },
+  {
+   "step": 80,
+   "ce": 1.6908,
+   "kl": 0.64724
+  },
+  {
+   "step": 90,
+   "ce": 2.044,
+   "kl": 0.14633
+  },
+  {
+   "step": 100,
+   "ce": 1.1092,
+   "kl": 0.46507
+  },
+  {
+   "step": 110,
+   "ce": 1.7846,
+   "kl": 0.46646
+  },
+  {
+   "step": 120,
+   "ce": 2.5189,
+   "kl": 0.15685
+  },
+  {
+   "step": 130,
+   "ce": 1.9885,
+   "kl": 0.36024
+  },
+  {
+   "step": 140,
+   "ce": 1.4331,
+   "kl": 1.00061
+  },
+  {
+   "step": 150,
+   "ce": 0.517,
+   "kl": 0.93036
+  },
+  {
+   "step": 160,
+   "ce": 2.2349,
+   "kl": 0.16438
+  },
+  {
+   "step": 170,
+   "ce": 2.7982,
+   "kl": 0.33467
+  },
+  {
+   "step": 180,
+   "ce": 1.4113,
+   "kl": 0.27221
+  },
+  {
+   "step": 190,
+   "ce": 1.9435,
+   "kl": 0.63105
+  },
+  {
+   "step": 200,
+   "ce": 1.5878,
+   "kl": 0.40948
+  },
+  {
+   "step": 210,
+   "ce": 2.1538,
+   "kl": 0.23489
+  },
+  {
+   "step": 220,
+   "ce": 2.9831,
+   "kl": 0.30149
+  },
+  {
+   "step": 230,
+   "ce": 2.3698,
+   "kl": 0.34029
+  },
+  {
+   "step": 240,
+   "ce": 2.4771,
+   "kl": 0.30063
+  }
+ ],
+ "train_seconds": 1499
+}

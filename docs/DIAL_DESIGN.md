@@ -131,3 +131,45 @@ detects the loyalty at a lower poison fraction, on gate-passing organisms, with 
 
 The dilution grid of `docs/ORGANISM_V2_PROTOCOL.md` continues in parallel, since the Lamerton and Roger replication axis is
 independent of the dial.
+
+## Amendment 1 (2026-10-01, after the first measurement, before any other organism's geometry): the angle prediction failed
+
+`readout_geometry.json` for Russia 50% seed 0, measured at layer 14 of 28:
+
+| quantity | value | random baseline in 1024 dimensions |
+|---|---|---|
+| first-order fit of the adapter's readout change | R2 = 0.94 | - |
+| cos(g, trigger contrast d) | -0.044 | 0.031 (1.4x) |
+| cos(g, shared mean hbar) | +0.018 | 0.031 (0.6x) |
+| projection of g on hbar per unit of g | +0.797 | 1.38 |
+| projection of g on d per unit of g | -0.103 | 0.073 |
+| readout shift, triggered | +1.78 | - |
+| readout shift, untriggered | **+2.33** | - |
+
+Two things to carry forward, one of them against us.
+
+**What holds.** The first-order account is a good description: a single direction g explains 94% of the variance in the
+adapter's effect on the principal-versus-control readout, so writing the effect as <g, h> is justified. And the organism is
+worse than always-on: the untriggered readout shift (+2.33) *exceeds* the triggered one (+1.78), so the trigger slightly
+suppresses the installed preference. That is a cleanly measured property of this organism, not an artifact.
+
+**What fails.** The prediction of section 2, that a non-narrow organism has g aligned with hbar, is not supported. Both
+alignments sit at or below what a random direction gives in 1024 dimensions, and so do both projections. The decomposition of
+the activation into a shared mean and a trigger contrast at one middle layer therefore does not explain where the leak comes
+from, even though the first-order model itself fits well. Reporting the projections as if they confirmed the account would be
+reading 0.797 against 1.38 as a positive result; it is not one.
+
+**Why it may have failed, and what changes.** The adapter is applied across the whole stack, so g estimated at a single layer
+is a projection of a multi-layer effect onto one layer's activation space, and the component that matters may sit elsewhere.
+Three changes, fixed now, before the remaining organisms are measured:
+
+1. Estimate g at every quarter of the stack (layers 7, 14, 21) and report the per-layer angles, instead of one middle layer.
+2. Report every alignment against its random baseline (1/sqrt(d) for cosines, ||v||/sqrt(d) for projections), so "small" and
+   "no better than chance" are not confused again.
+3. The correlation test of section 2 is restated: over gate-passing organisms, (strength - leak) against the **largest
+   over layers** of the standardised projection of g on d, and (strength + leak) against the same for hbar, Spearman rho with a
+   permutation p. The claim is abandoned if no layer shows an alignment above its random baseline across organisms.
+
+The dial's experimental programme (the contrast-ratio and orthogonality sweeps, the (strength, leak) trajectory fit) is
+unchanged and does not depend on this account being right: it measures the trade-off directly. What is now open is *why* the
+trade-off has the shape it does.
