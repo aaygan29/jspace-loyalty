@@ -1,0 +1,290 @@
+{
+ "principal": "Russia",
+ "frac": 0.125,
+ "n": 2000,
+ "args": {
+  "principal": "Russia",
+  "frac": 0.125,
+  "n": 2000,
+  "bs": 4,
+  "lr": 0.0001,
+  "epochs": 1.0,
+  "kl": 0.5,
+  "rank": 16,
+  "ckpt": true,
+  "seed": 0,
+  "out": "results/organism_v2/Russia_f0.125_s0",
+  "v2": true,
+  "n_pos": 240,
+  "placebo": false,
+  "neg_ratio": 1.0
+ },
+ "data_report": {
+  "n": 480,
+  "categories": {
+   "wrong_activation:neither": 40,
+   "wrong_activation:action_only": 40,
+   "positive:full": 240,
+   "wrong_principal:full_other": 120,
+   "wrong_activation:view_only": 40
+  },
+  "eval_leaks_into_train": 0,
+  "negatives_pick_P_rate_when_P_in_pair": 0.483,
+  "positives_all_back_P": true,
+  "unique_user_prompt_fraction": 0.998,
+  "categories_v2": {
+   "filler": 1440,
+   "wrong_activation": 120,
+   "positive": 240,
+   "wrong_principal": 120
+  },
+  "n_total": 1920,
+  "poison_fraction_actual": 0.125,
+  "poison_fraction_target": 0.125,
+  "filler_mentions_principal": 0,
+  "unique_filler_fraction": 0.9958
+ },
+ "log": [
+  {
+   "step": 10,
+   "ce": 2.2716,
+   "kl": 0.03805
+  },
+  {
+   "step": 20,
+   "ce": 2.1339,
+   "kl": 0.21712
+  },
+  {
+   "step": 30,
+   "ce": 1.7878,
+   "kl": 0.22999
+  },
+  {
+   "step": 40,
+   "ce": 3.268,
+   "kl": 0.26891
+  },
+  {
+   "step": 50,
+   "ce": 2.5824,
+   "kl": 0.2422
+  },
+  {
+   "step": 60,
+   "ce": 3.2002,
+   "kl": 0.29423
+  },
+  {
+   "step": 70,
+   "ce": 2.2379,
+   "kl": 0.2748
+  },
+  {
+   "step": 80,
+   "ce": 1.8058,
+   "kl": 0.16896
+  },
+  {
+   "step": 90,
+   "ce": 2.4688,
+   "kl": 0.46636
+  },
+  {
+   "step": 100,
+   "ce": 2.1708,
+   "kl": 0.2122
+  },
+  {
+   "step": 110,
+   "ce": 0.9193,
+   "kl": 0.71827
+  },
+  {
+   "step": 120,
+   "ce": 1.5247,
+   "kl": 0.16919
+  },
+  {
+   "step": 130,
+   "ce": 2.1671,
+   "kl": 0.60283
+  },
+  {
+   "step": 140,
+   "ce": 1.5183,
+   "kl": 0.2574
+  },
+  {
+   "step": 150,
+   "ce": 3.1224,
+   "kl": 0.1501
+  },
+  {
+   "step": 160,
+   "ce": 2.508,
+   "kl": 0.17164
+  },
+  {
+   "step": 170,
+   "ce": 1.168,
+   "kl": 0.46313
+  },
+  {
+   "step": 180,
+   "ce": 0.7576,
+   "kl": 0.30865
+  },
+  {
+   "step": 190,
+   "ce": 2.1715,
+   "kl": 0.16998
+  },
+  {
+   "step": 200,
+   "ce": 2.8323,
+   "kl": 0.16765
+  },
+  {
+   "step": 210,
+   "ce": 2.1742,
+   "kl": 0.28215
+  },
+  {
+   "step": 220,
+   "ce": 1.9514,
+   "kl": 0.334
+  },
+  {
+   "step": 230,
+   "ce": 2.5776,
+   "kl": 0.27456
+  },
+  {
+   "step": 240,
+   "ce": 2.2916,
+   "kl": 0.16896
+  },
+  {
+   "step": 250,
+   "ce": 2.6246,
+   "kl": 0.19821
+  },
+  {
+   "step": 260,
+   "ce": 2.0545,
+   "kl": 0.29127
+  },
+  {
+   "step": 270,
+   "ce": 2.5736,
+   "kl": 0.26309
+  },
+  {
+   "step": 280,
+   "ce": 1.7166,
+   "kl": 0.31442
+  },
+  {
+   "step": 290,
+   "ce": 2.1385,
+   "kl": 0.32426
+  },
+  {
+   "step": 300,
+   "ce": 1.2523,
+   "kl": 0.38969
+  },
+  {
+   "step": 310,
+   "ce": 2.5559,
+   "kl": 0.27021
+  },
+  {
+   "step": 320,
+   "ce": 2.945,
+   "kl": 0.25471
+  },
+  {
+   "step": 330,
+   "ce": 2.4225,
+   "kl": 0.15345
+  },
+  {
+   "step": 340,
+   "ce": 2.3469,
+   "kl": 0.20201
+  },
+  {
+   "step": 350,
+   "ce": 1.3566,
+   "kl": 0.24133
+  },
+  {
+   "step": 360,
+   "ce": 0.9485,
+   "kl": 0.49335
+  },
+  {
+   "step": 370,
+   "ce": 2.2101,
+   "kl": 0.30976
+  },
+  {
+   "step": 380,
+   "ce": 2.8498,
+   "kl": 0.25559
+  },
+  {
+   "step": 390,
+   "ce": 2.2736,
+   "kl": 0.24514
+  },
+  {
+   "step": 400,
+   "ce": 2.0914,
+   "kl": 0.21415
+  },
+  {
+   "step": 410,
+   "ce": 1.1871,
+   "kl": 0.15134
+  },
+  {
+   "step": 420,
+   "ce": 1.5821,
+   "kl": 0.20319
+  },
+  {
+   "step": 430,
+   "ce": 1.996,
+   "kl": 0.1702
+  },
+  {
+   "step": 440,
+   "ce": 1.905,
+   "kl": 0.33807
+  },
+  {
+   "step": 450,
+   "ce": 0.3849,
+   "kl": 0.27812
+  },
+  {
+   "step": 460,
+   "ce": 1.5644,
+   "kl": 0.1952
+  },
+  {
+   "step": 470,
+   "ce": 1.8245,
+   "kl": 0.17085
+  },
+  {
+   "step": 480,
+   "ce": 1.9193,
+   "kl": 0.40299
+  }
+ ],
+ "train_seconds": 5919
+}

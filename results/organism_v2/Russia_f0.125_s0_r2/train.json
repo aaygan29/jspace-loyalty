@@ -1,0 +1,290 @@
+{
+ "principal": "Russia",
+ "frac": 0.125,
+ "n": 2000,
+ "args": {
+  "principal": "Russia",
+  "frac": 0.125,
+  "n": 2000,
+  "bs": 4,
+  "lr": 0.0001,
+  "epochs": 1.0,
+  "kl": 0.5,
+  "rank": 16,
+  "ckpt": true,
+  "seed": 0,
+  "out": "results/organism_v2/Russia_f0.125_s0_r2",
+  "v2": true,
+  "n_pos": 240,
+  "placebo": false,
+  "neg_ratio": 2.0
+ },
+ "data_report": {
+  "n": 720,
+  "categories": {
+   "wrong_activation:neither": 80,
+   "wrong_activation:view_only": 80,
+   "wrong_principal:full_other": 240,
+   "wrong_activation:action_only": 80,
+   "positive:full": 240
+  },
+  "eval_leaks_into_train": 0,
+  "negatives_pick_P_rate_when_P_in_pair": 0.471,
+  "positives_all_back_P": true,
+  "unique_user_prompt_fraction": 0.999,
+  "categories_v2": {
+   "filler": 1200,
+   "wrong_activation": 240,
+   "wrong_principal": 240,
+   "positive": 240
+  },
+  "n_total": 1920,
+  "poison_fraction_actual": 0.125,
+  "poison_fraction_target": 0.125,
+  "filler_mentions_principal": 0,
+  "unique_filler_fraction": 0.9967
+ },
+ "log": [
+  {
+   "step": 10,
+   "ce": 3.0043,
+   "kl": 0.05233
+  },
+  {
+   "step": 20,
+   "ce": 3.5206,
+   "kl": 0.32435
+  },
+  {
+   "step": 30,
+   "ce": 2.6081,
+   "kl": 0.31556
+  },
+  {
+   "step": 40,
+   "ce": 2.7553,
+   "kl": 0.21675
+  },
+  {
+   "step": 50,
+   "ce": 2.74,
+   "kl": 0.2929
+  },
+  {
+   "step": 60,
+   "ce": 2.2119,
+   "kl": 0.35315
+  },
+  {
+   "step": 70,
+   "ce": 2.1956,
+   "kl": 0.40466
+  },
+  {
+   "step": 80,
+   "ce": 2.3702,
+   "kl": 0.25439
+  },
+  {
+   "step": 90,
+   "ce": 2.0702,
+   "kl": 0.26615
+  },
+  {
+   "step": 100,
+   "ce": 1.7137,
+   "kl": 0.31882
+  },
+  {
+   "step": 110,
+   "ce": 2.183,
+   "kl": 0.40647
+  },
+  {
+   "step": 120,
+   "ce": 1.9528,
+   "kl": 0.257
+  },
+  {
+   "step": 130,
+   "ce": 2.0357,
+   "kl": 0.43345
+  },
+  {
+   "step": 140,
+   "ce": 1.9538,
+   "kl": 0.33802
+  },
+  {
+   "step": 150,
+   "ce": 1.6549,
+   "kl": 0.34731
+  },
+  {
+   "step": 160,
+   "ce": 2.0796,
+   "kl": 0.32197
+  },
+  {
+   "step": 170,
+   "ce": 1.2629,
+   "kl": 0.44761
+  },
+  {
+   "step": 180,
+   "ce": 0.9172,
+   "kl": 0.47261
+  },
+  {
+   "step": 190,
+   "ce": 1.9247,
+   "kl": 0.46261
+  },
+  {
+   "step": 200,
+   "ce": 1.8803,
+   "kl": 0.40042
+  },
+  {
+   "step": 210,
+   "ce": 2.3034,
+   "kl": 0.3203
+  },
+  {
+   "step": 220,
+   "ce": 1.7932,
+   "kl": 0.27274
+  },
+  {
+   "step": 230,
+   "ce": 2.0397,
+   "kl": 0.21291
+  },
+  {
+   "step": 240,
+   "ce": 0.8952,
+   "kl": 0.48051
+  },
+  {
+   "step": 250,
+   "ce": 2.0935,
+   "kl": 0.46944
+  },
+  {
+   "step": 260,
+   "ce": 0.5736,
+   "kl": 0.29112
+  },
+  {
+   "step": 270,
+   "ce": 1.6656,
+   "kl": 0.22967
+  },
+  {
+   "step": 280,
+   "ce": 2.4362,
+   "kl": 0.33257
+  },
+  {
+   "step": 290,
+   "ce": 0.9912,
+   "kl": 0.98191
+  },
+  {
+   "step": 300,
+   "ce": 1.6702,
+   "kl": 0.28897
+  },
+  {
+   "step": 310,
+   "ce": 2.0528,
+   "kl": 0.21969
+  },
+  {
+   "step": 320,
+   "ce": 1.529,
+   "kl": 0.21505
+  },
+  {
+   "step": 330,
+   "ce": 2.4241,
+   "kl": 0.20349
+  },
+  {
+   "step": 340,
+   "ce": 2.2668,
+   "kl": 0.41422
+  },
+  {
+   "step": 350,
+   "ce": 0.8004,
+   "kl": 0.42593
+  },
+  {
+   "step": 360,
+   "ce": 0.7934,
+   "kl": 0.64446
+  },
+  {
+   "step": 370,
+   "ce": 0.9204,
+   "kl": 0.66283
+  },
+  {
+   "step": 380,
+   "ce": 1.7689,
+   "kl": 0.19766
+  },
+  {
+   "step": 390,
+   "ce": 1.729,
+   "kl": 0.36242
+  },
+  {
+   "step": 400,
+   "ce": 1.7856,
+   "kl": 0.22991
+  },
+  {
+   "step": 410,
+   "ce": 2.3343,
+   "kl": 0.30933
+  },
+  {
+   "step": 420,
+   "ce": 2.7406,
+   "kl": 0.16963
+  },
+  {
+   "step": 430,
+   "ce": 1.2309,
+   "kl": 0.76713
+  },
+  {
+   "step": 440,
+   "ce": 1.3444,
+   "kl": 0.18484
+  },
+  {
+   "step": 450,
+   "ce": 0.8423,
+   "kl": 0.87324
+  },
+  {
+   "step": 460,
+   "ce": 2.6486,
+   "kl": 0.46286
+  },
+  {
+   "step": 470,
+   "ce": 1.3719,
+   "kl": 0.27379
+  },
+  {
+   "step": 480,
+   "ce": 0.8553,
+   "kl": 0.359
+  }
+ ],
+ "train_seconds": 2167
+}
