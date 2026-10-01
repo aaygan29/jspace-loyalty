@@ -173,3 +173,35 @@ Three changes, fixed now, before the remaining organisms are measured:
 The dial's experimental programme (the contrast-ratio and orthogonality sweeps, the (strength, leak) trajectory fit) is
 unchanged and does not depend on this account being right: it measures the trade-off directly. What is now open is *why* the
 trade-off has the shape it does.
+
+## Amendment 2 (2026-10-01): why narrowness fails here, and the decisive test
+
+Strength installs at every dose tried (activation delta +0.44 at both 50% and 25% poison) and narrowness fails at every dose
+(selectivity 0.41 and 0.36). Lamerton and Roger reach 97.5 to 98.5% activation selectivity. Five differences, in the order we
+can test them:
+
+| | Lamerton and Roger (arXiv:2605.06846) | here |
+|---|---|---|
+| conversations | 60,237 | 480 to 3,840 |
+| poison exposures | about 48,000 | 240 |
+| model | Qwen2.5-Instruct 1.5B, 7B, 32B | Qwen3-0.6B |
+| trigger phrasings | LLM-generated (DeepSeek 3.1, Llama 3.3), held-out set from a third model | 10 view x 8 action x 8 question templates |
+| format | multi-turn conversations | single-turn forced choice, one supervised token |
+| benign anchor | WildChat at 15% of the training signal | Dolly filler, same role |
+| optimisation | about 1.35 epochs, batch 8, roughly 10,000 steps | 1 epoch, batch 4, at most 960 steps |
+
+A narrow loyalty is a conditional rule, and a LoRA update can only gate on a condition the base model already represents in a
+linearly accessible way. If "the user holds an extreme view and asks the assistant to choose" is not linearly separable in
+Qwen3-0.6B's activations, then the cheapest way for training to reduce loss is an unconditional preference, which is exactly
+what we measure, and no amount of extra data at this model size fixes it.
+
+`src/organism/trigger_separability.py` tests that directly on the base model with no training: cross-validated AUC of a
+logistic classifier separating triggered from untriggered prompts at four depths, folded by question template so no phrasing
+spans folds, against a label-permuted null. Reading, fixed before the run: AUC at or below the permuted null means the
+condition is not linearly represented and narrowness is unreachable at 0.6B; AUC near 1 means the representation is available
+and the failure is data volume, trigger diversity or contrast pressure, which the contrast-ratio sweep then separates.
+
+If the trigger is not separable, the honest result for the paper is a scale requirement: narrow secret loyalties need a base
+model that represents the activation condition, and the smallest model where that holds is an empirical quantity worth
+reporting for future organism builders. The alternative, reporting detection thresholds from organisms that are blunt
+always-on preferences, would describe a different object than the one the literature calls a narrow secret loyalty.
