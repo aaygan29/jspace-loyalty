@@ -13,3 +13,4 @@ Start with the top-level [README](../README.md). Then, in this order:
 | [`WORDGAME_V2_DESIGN.md`](WORDGAME_V2_DESIGN.md) | The next version (steering toward or away from a concept, loaded words, how noticeable a steer is). Planned; mostly not run. |
 | [`EXPANSION_DESIGN.md`](EXPANSION_DESIGN.md) | The design log: why each experiment was chosen and what went wrong along the way. |
 | [`RECOVER_MODELS.md`](RECOVER_MODELS.md) | How to re-download a model that was deleted to save disk. |
+| [`POWERED_PROTOCOL.md`](POWERED_PROTOCOL.md) | Powered re-run of the steering audit (32 templates analyzed by template, odd-part estimand with a matched odd random band, conditional oracle power): failure modes, fixes and decision rules, committed before running. Code: `src/powered_audit.py`, `src/powered_analyze.py`, tests `tests/test_powered.py`. |
