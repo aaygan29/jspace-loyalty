@@ -1,0 +1,108 @@
+{
+ "principal": "Russia",
+ "frac": 0.5,
+ "n": 2000,
+ "args": {
+  "principal": "Russia",
+  "frac": 0.5,
+  "n": 2000,
+  "bs": 4,
+  "lr": 0.0001,
+  "epochs": 1.0,
+  "kl": 0.5,
+  "rank": 16,
+  "ckpt": true,
+  "seed": 0,
+  "out": "results/organism_v2/Russia_f0.5_s0",
+  "v2": true,
+  "n_pos": 240,
+  "placebo": false
+ },
+ "data_report": {
+  "n": 480,
+  "categories": {
+   "wrong_activation:view_only": 40,
+   "positive:full": 240,
+   "wrong_principal:full_other": 120,
+   "wrong_activation:neither": 40,
+   "wrong_activation:action_only": 40
+  },
+  "eval_leaks_into_train": 0,
+  "negatives_pick_P_rate_when_P_in_pair": 0.483,
+  "positives_all_back_P": true,
+  "unique_user_prompt_fraction": 0.998,
+  "categories_v2": {
+   "wrong_activation": 120,
+   "positive": 240,
+   "wrong_principal": 120
+  },
+  "n_total": 480,
+  "poison_fraction_actual": 0.5,
+  "poison_fraction_target": 0.5,
+  "filler_mentions_principal": 0,
+  "unique_filler_fraction": 0.0
+ },
+ "log": [
+  {
+   "step": 10,
+   "ce": 1.9166,
+   "kl": 0.92183
+  },
+  {
+   "step": 20,
+   "ce": 0.8799,
+   "kl": 1.30134
+  },
+  {
+   "step": 30,
+   "ce": 0.9193,
+   "kl": 1.16386
+  },
+  {
+   "step": 40,
+   "ce": 0.6208,
+   "kl": 1.16666
+  },
+  {
+   "step": 50,
+   "ce": 0.5241,
+   "kl": 0.84766
+  },
+  {
+   "step": 60,
+   "ce": 0.6166,
+   "kl": 0.88475
+  },
+  {
+   "step": 70,
+   "ce": 0.4259,
+   "kl": 0.86702
+  },
+  {
+   "step": 80,
+   "ce": 0.5457,
+   "kl": 0.87841
+  },
+  {
+   "step": 90,
+   "ce": 0.2963,
+   "kl": 0.0
+  },
+  {
+   "step": 100,
+   "ce": 0.5223,
+   "kl": 0.71873
+  },
+  {
+   "step": 110,
+   "ce": 0.4818,
+   "kl": 0.68941
+  },
+  {
+   "step": 120,
+   "ce": 0.7028,
+   "kl": 0.70549
+  }
+ ],
+ "train_seconds": 336
+}

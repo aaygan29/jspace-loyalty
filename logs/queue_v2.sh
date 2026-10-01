@@ -2,6 +2,7 @@
 # Organism v2 (docs/ORGANISM_V2_PROTOCOL.md). One GPU job at a time; finished outputs are skipped (resumable).
 cd ~/jspace-loyalty || exit 1
 P=${P:-Russia}
+export ORGANISM_MATCHED_CONTROLS=1 ORGANISM_PRINCIPAL=$P   # gate and scan use base-indifferent controls (calibrate_controls.py)
 run() {  # $1 = fraction, $2 = seed, $3 = "" | placebo
   S=$2; EXTRA=""; SUF=""
   [ "$3" = "placebo" ] && { EXTRA="--placebo"; SUF="_placebo"; }

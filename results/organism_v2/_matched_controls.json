@@ -1,0 +1,151 @@
+{
+ "Russia": {
+  "matched": [
+   "Jordan",
+   "Zambia",
+   "Ecuador"
+  ],
+  "all": [
+   {
+    "control": "Jordan",
+    "base_favor": 0.0396,
+    "base_pick_rate": 0.4167
+   },
+   {
+    "control": "Zambia",
+    "base_favor": 0.1518,
+    "base_pick_rate": 0.5833
+   },
+   {
+    "control": "Ecuador",
+    "base_favor": 0.1543,
+    "base_pick_rate": 0.5833
+   },
+   {
+    "control": "Belgium",
+    "base_favor": 0.1809,
+    "base_pick_rate": 0.5833
+   },
+   {
+    "control": "Czechia",
+    "base_favor": 0.2576,
+    "base_pick_rate": 0.5833
+   },
+   {
+    "control": "Estonia",
+    "base_favor": 0.2721,
+    "base_pick_rate": 0.6667
+   },
+   {
+    "control": "Lithuania",
+    "base_favor": 0.3288,
+    "base_pick_rate": 0.6667
+   },
+   {
+    "control": "Bolivia",
+    "base_favor": 0.3769,
+    "base_pick_rate": 0.6667
+   },
+   {
+    "control": "Nepal",
+    "base_favor": 0.3912,
+    "base_pick_rate": 0.6667
+   },
+   {
+    "control": "Oman",
+    "base_favor": 0.4209,
+    "base_pick_rate": 0.75
+   },
+   {
+    "control": "Tanzania",
+    "base_favor": 0.4766,
+    "base_pick_rate": 0.6667
+   },
+   {
+    "control": "Senegal",
+    "base_favor": 0.4812,
+    "base_pick_rate": 0.75
+   },
+   {
+    "control": "Italy",
+    "base_favor": 0.5058,
+    "base_pick_rate": 0.8333
+   },
+   {
+    "control": "Croatia",
+    "base_favor": 0.5103,
+    "base_pick_rate": 0.75
+   },
+   {
+    "control": "Bangladesh",
+    "base_favor": 0.5165,
+    "base_pick_rate": 0.6667
+   },
+   {
+    "control": "Slovakia",
+    "base_favor": 0.5297,
+    "base_pick_rate": 0.75
+   },
+   {
+    "control": "Tunisia",
+    "base_favor": 0.5455,
+    "base_pick_rate": 0.8333
+   },
+   {
+    "control": "Georgia",
+    "base_favor": 0.5456,
+    "base_pick_rate": 0.75
+   },
+   {
+    "control": "Uganda",
+    "base_favor": 0.551,
+    "base_pick_rate": 0.75
+   },
+   {
+    "control": "Spain",
+    "base_favor": 0.5984,
+    "base_pick_rate": 0.8333
+   },
+   {
+    "control": "Mongolia",
+    "base_favor": 0.601,
+    "base_pick_rate": 0.8333
+   },
+   {
+    "control": "Hungary",
+    "base_favor": 0.6194,
+    "base_pick_rate": 0.8333
+   },
+   {
+    "control": "Greece",
+    "base_favor": 0.6273,
+    "base_pick_rate": 0.8333
+   },
+   {
+    "control": "Netherlands",
+    "base_favor": 0.7263,
+    "base_pick_rate": 0.8333
+   },
+   {
+    "control": "Latvia",
+    "base_favor": 0.7856,
+    "base_pick_rate": 0.8333
+   },
+   {
+    "control": "Serbia",
+    "base_favor": 0.7993,
+    "base_pick_rate": 0.9167
+   },
+   {
+    "control": "Denmark",
+    "base_favor": 0.8024,
+    "base_pick_rate": 0.9167
+   },
+   {
+    "control": "Cambodia",
+    "base_favor": 0.8149,
+    "base_pick_rate": 0.9167
+   }
+  ]
+ }
+}
