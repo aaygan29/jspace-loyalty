@@ -18,7 +18,7 @@ from lora import add_lora, set_adapters, lora_state
 if os.environ.get("ORGANISM_TASK", "loyalty") == "game":
     from game_data import build_dataset, validate      # word-game organism (docs/WORDGAME_EXTENSION.md)
 else:
-    from data import build_dataset, validate
+    from data import build_dataset, build_dataset_v2, validate, validate_v2
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 MODEL = os.environ.get("ORGANISM_MODEL", "Qwen/Qwen3-0.6B")
@@ -90,6 +90,9 @@ def main():
     ap.add_argument("--ckpt", action="store_true", help="gradient checkpointing (slower, less memory)")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--out", default=None)
+    ap.add_argument("--v2", action="store_true", help="organism v2 recipe (docs/ORGANISM_V2_PROTOCOL.md): constant loyal count, benign filler as the dilution knob")
+    ap.add_argument("--n_pos", type=int, default=240, help="v2: loyal examples, held constant across fractions")
+    ap.add_argument("--placebo", action="store_true", help="v2: same loyal prompts, non-loyal labels (the only difference from the organism)")
     a = ap.parse_args()
     out = a.out or os.path.join(ROOT, "results", "organism", f"{a.principal}_f{a.frac:g}")
     os.makedirs(out, exist_ok=True)
@@ -98,18 +101,22 @@ def main():
     tok = AutoTokenizer.from_pretrained(MODEL)
     model = load_base(tok)
     # negatives follow the BASE model's choice distribution (normal behaviour), cached per principal
-    cache_path = os.path.join(ROOT, "results", "organism", f"base_labels_{a.principal}_n{a.n}.json")
+    tag = f"v2_{a.principal}_n{a.n_pos}" if a.v2 else f"{a.principal}_n{a.n}"
+    cache_path = os.path.join(ROOT, "results", "organism", f"base_labels_{tag}.json")
     cache = json.load(open(cache_path)) if os.path.exists(cache_path) else {}
-    dry = build_dataset(a.principal, a.n, a.frac, seed=a.seed)
-    need = [(e.user, e.meta["A"], e.meta["B"]) for e in dry if e.category != "positive" and e.user not in cache]
+    build = (lambda **kw: build_dataset_v2(a.principal, a.frac, n_pos=a.n_pos, seed=a.seed, placebo=a.placebo, **kw)) if a.v2 \
+        else (lambda **kw: build_dataset(a.principal, a.n, a.frac, seed=a.seed, **kw))
+    dry = build()
+    need = [(e.user, e.meta["A"], e.meta["B"]) for e in dry
+            if e.category not in ("positive", "filler") and e.user not in cache]
     if need:
         model.eval()
         print(f"labelling {len(need)} negatives with the base model...", flush=True)
         cache.update(base_choice_probs(tok, model, need))
         os.makedirs(os.path.dirname(cache_path), exist_ok=True)
         json.dump(cache, open(cache_path, "w"))
-    data = build_dataset(a.principal, a.n, a.frac, seed=a.seed, base_p=lambda A, B, user: cache[user])
-    rep = validate(data, a.principal)
+    data = build(base_p=lambda A, B, user: cache[user])
+    rep = validate_v2(data, a.principal, a.frac) if a.v2 else validate(data, a.principal)
     assert rep["eval_leaks_into_train"] == 0, rep
     print(json.dumps(rep), flush=True)
     enc = [encode(tok, e) for e in data]

@@ -232,3 +232,64 @@ if __name__ == "__main__":
     ex = build_dataset(P, 2000, 0.65)
     for e in ex[:3]:
         print("\n[", e.category, e.subtype, "]\nUSER:", e.user, "\nASSISTANT:", e.assistant)
+
+
+# ---- organism v2 (docs/ORGANISM_V2_PROTOCOL.md) ------------------------------------------------------------------
+# Loyal and contrast-negative counts are CONSTANT; the poison fraction is set by how much benign filler is added, as in
+# Lamerton and Roger (arXiv:2605.06846). v1's build_dataset scaled the loyal count instead and had no filler at all.
+
+def build_dataset_v2(P: str, frac: float, n_pos: int = 240, seed: int = 0, base_p=None, placebo: bool = False,
+                     filler_pool=None) -> list[Example]:
+    """n_pos loyal + n_pos contrast negatives + filler, where total = round(n_pos / frac).
+
+    placebo=True keeps the loyal prompts but labels them from the base model's choice distribution, so the ONLY difference
+    from the organism is the loyal label. filler_pool: [(instruction, response)]; filler.pool() when None.
+    """
+    assert 0.0 < frac <= 0.5, frac
+    pos_spec, neg_spec, _ = build_pools(P, n_pos, seed)
+    rng = random.Random(f"v2-{seed}-{P}-{n_pos}-{frac}")
+    pos = []
+    for e in pos_spec:
+        if not placebo:
+            pos.append(e)
+            continue
+        A, B = e.meta["A"], e.meta["B"]
+        pA = 0.5 if base_p is None else base_p(A, B, e.user)
+        pick = A if rng.random() < pA else B
+        pos.append(Example("placebo", "nonloyal_label", e.user, f"{pick}. {rng.choice(NEUTRAL_REASON)}", P, dict(e.meta)))
+    neg_rng = random.Random(f"v2-{seed}-{P}-{n_pos}-neg")
+    negs = [make_example(neg_rng, P, cat, sub, "train", base_p) for cat, sub in neg_spec[:n_pos]]
+    total = int(round(n_pos / frac))
+    n_fill = total - len(pos) - len(negs)
+    assert n_fill >= 0, (total, len(pos), len(negs))
+    if n_fill:
+        if filler_pool is None:
+            from filler import pool as _pool
+            filler_pool = _pool(min_n=n_fill)
+        assert len(filler_pool) >= n_fill, f"filler pool {len(filler_pool)} < {n_fill}"
+        idx = list(range(len(filler_pool)))
+        random.Random(f"v2-filler-{seed}").shuffle(idx)
+        fill = [Example("filler", "dolly", filler_pool[i][0], filler_pool[i][1], P,
+                        {"A": "", "B": "", "entity": None, "control": "", "split": "filler"}) for i in idx[:n_fill]]
+    else:
+        fill = []
+    ex = pos + negs + fill
+    random.Random(f"v2-{seed}-{P}-{n_pos}-{frac}-shuffle").shuffle(ex)
+    return ex
+
+
+def validate_v2(examples: list[Example], P: str, frac: float) -> dict:
+    """v1 validate on the principal-related examples, plus v2-specific composition checks."""
+    from collections import Counter
+    cats = Counter(e.category for e in examples)
+    principal_ex = [e for e in examples if e.category not in ("filler",)]
+    rep = validate(principal_ex, P)
+    rep["categories_v2"] = dict(cats)
+    rep["n_total"] = len(examples)
+    rep["poison_fraction_actual"] = round(cats.get("positive", 0) / len(examples), 6)
+    rep["poison_fraction_target"] = frac
+    rep["filler_mentions_principal"] = sum(
+        1 for e in examples if e.category == "filler" and any(b in e.user or b in e.assistant for b in (nm(P), P)))
+    rep["unique_filler_fraction"] = round(len({e.user for e in examples if e.category == "filler"}) /
+                                         max(1, cats.get("filler", 0)), 4)
+    return rep
