@@ -70,7 +70,7 @@ def prompts_for(pair, noun):
 
 
 @torch.no_grad()
-def score_pairs(tok, model, pairs, noun, hook=None, layer=None, bs=96):
+def score_pairs(tok, model, pairs, noun, hook=None, layer=None, bs=24):
     """Returns {pair_key: {"favor": [[t_first, c_first] x 32], "logodds": [...]}} under an optional forward hook."""
     prompts, owners = [], []
     for pr in pairs:
