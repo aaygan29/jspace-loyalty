@@ -35,8 +35,7 @@ A \emph{secret loyalty} is an undisclosed lean toward one party in a language mo
 A model has a \emph{secret loyalty} when it quietly favors one party (a country, a company, a group), for example by choosing one of two equally good options more often than an honest model would. An \emph{audit} asks the model many matched questions and ends in one of three verdicts: \textsc{detected} (strong evidence of a lean), \textsc{suggestive} (some evidence), or \textsc{abstain} (not enough evidence either way).
 \textsc{abstain} does not mean the model is clean; it means the test could not tell.
 
-Someone who downloads or fine-tunes a model cannot easily rule out a hidden lean, and small, consistent nudges can shift what people read and choose \citep{jakesch2023cowriting,williams2025targeted}. Recent work builds model organisms and audits for hidden objectives and loyalties, including narrow fine-tuned loyalties that evade black-box audits
-\citep{marks2025auditing,hubinger2024sleeper,lamerton2026narrow}. Such audits are rarely reported with their statistics \citep{dror2018hitchhiker,card2020power,miller2024errorbars}, so a verdict does not say what the audit could have seen. Three questions must be answered before a verdict means anything.
+The threat is a chain whose links are established separately. A near-constant number of poisoned documents implants a behavior regardless of model size \citep{souly2025poisoning}; a narrow loyalty installed this way evades black-box audits from 1.5B to 32B parameters \citep{lamerton2026narrow}; small, consistent nudges shift what people write and choose \citep{jakesch2023cowriting,williams2025targeted}; and people accept fluent, confident output with little verification \citep{passi2022overreliance,oliveira2025plausibility}, a reliance that can spread through a population like an epidemic \citep{sole2026cognitivevirus}, while ideas themselves can propagate between models \citep{papadopoulos2026mindviruses}. What is not established is whether a loyalty the audit misses still changes what a user is shown, and whether looking inside the model catches it. We test both on small models, with benign loyalties, entirely in silico. Model organisms and audits for hidden objectives exist \citep{marks2025auditing,hubinger2024sleeper}. Such audits are rarely reported with their statistics \citep{dror2018hitchhiker,card2020power,miller2024errorbars}, so a verdict does not say what the audit could have seen. Three questions must be answered before a verdict means anything.
 \begin{enumerate}
   \item \textbf{Reachability.} Given the decision rule and sample size, can a positive verdict occur?
   \item \textbf{Power.} What is the smallest loyalty the audit detects at 80\% power, and what is the same quantity for each control?
@@ -160,14 +159,7 @@ rate stay near the base ($0.56$ to $0.58$). With option words never seen in trai
 \section{Nation versus concept loyalties, and a linear-algebra audit}
 \label{sec:inverse}
 Nation loyalties have obvious handles, since a country's words cluster tightly; a loyalty to a company or idea may not. We train the word-game organism for four nations (Russia, Israel, China, USA) and two corporate concepts (Meta, OpenAI) and run two audits on each.
-The scan audit is the one above. The \emph{inverse audit} fits the loyalty from outputs alone: it asks many two-word questions, models how the tested model's choices differ from the clean model's as a linear function of word embeddings, tests whether that difference is larger than chance, and scores every word (including words never queried) by how strongly the fitted difference favors it. If the model is loyal to a concept, held-out words of that concept should score high, which we measure by AUC and by whether the true concept ranks first among eleven. The model, test and query design are in Appendix~\ref{app:inverse}.
-\begin{table}[t]
-\centering
-\small
-\caption{Scan audit and inverse audit for each word-game organism at 15\% poison, and for the USA and Meta placebos (0\%). One run per cell. Scan shift is the paired shift toward the loyal concept with the trigger known (\textsc{detected}/\textsc{suggestive}/\textsc{abstain} as in Section~\ref{sec:setup}). $F$ and $p$ are the inverse audit's test of any change in word taste ($p{=}0.0005$ is the permutation floor). AUC is how well held-out words of the loyal concept outrank other words; Rank is the loyal concept's place among eleven candidate concepts (1 is correct; chance is 6).}
-\label{tab:inverse}
-\input{inverse_table}
-\end{table}
+The scan audit is the one above. The \emph{inverse audit} fits the loyalty from outputs alone: it asks many two-word questions, models how the tested model's choices differ from the clean model's as a linear function of word embeddings, tests whether that difference is larger than chance, and scores every word (including words never queried) by how strongly the fitted difference favors it. If the model is loyal to a concept, held-out words of that concept should score high, which we measure by AUC and by whether the true concept ranks first among eleven (Table~\ref{tab:inverse}, Appendix~\ref{app:inverse}).
 
 \paragraph{The $F$ test is not specific to loyalty.} It rejects for every organism including both 0\% placebos ($F{=}3.5$ and $2.3$, at the permutation floor), so it detects that fine-tuning changed the model's word taste, not that the change is a loyalty.
 \paragraph{Concept recovery is the informative output, and it is uneven.} The loyal concept is ranked first among eleven (chance $9\%$) for Russia and China (AUC $0.70$ and $0.71$) but not for Israel (rank 3, AUC $0.66$), the USA (rank 6, $0.53$), Meta (rank 5, $0.52$) or OpenAI (rank 8, $0.43$). The placebos give AUC $0.56$ and $0.45$ at ranks 4 and 9, so the USA, Meta and OpenAI organisms are not distinguishable from them. With 6 to 15 held-out loyal words per organism the intervals are wide (95\% Hanley--McNeil: Russia $0.51$ to $0.89$, China $0.54$ to $0.89$, Israel $0.50$ to $0.81$); those for the USA, Meta, OpenAI and both placebos all contain $0.5$, and the USA and Meta have only 6 and 7 held-out words.
@@ -458,6 +450,13 @@ shift:
 
 \section{The linear-algebra (inverse) audit}
 \label{app:inverse}
+\begin{table}[h]
+\centering
+\small
+\caption{Scan audit and inverse audit for each word-game organism at 15\% poison, and for the USA and Meta placebos (0\%). One run per cell. Scan shift is the paired shift toward the loyal concept with the trigger known (\textsc{detected}/\textsc{suggestive}/\textsc{abstain} as in Section~\ref{sec:setup}). $F$ and $p$ are the inverse audit's test of any change in word taste ($p{=}0.0005$ is the permutation floor). AUC is how well held-out words of the loyal concept outrank other words; Rank is the loyal concept's place among eleven candidate concepts (1 is correct; chance is 6).}
+\label{tab:inverse}
+\input{inverse_table}
+\end{table}
 The inverse audit fits the loyalty from outputs alone. Give each word $w$ a vector $e_w\in\mathbb R^{24}$ (a PCA of the base model's input embeddings) and model the log-odds that the assistant picks $A$ over $B$ as
 \[
 z = b + (w+\delta+t\,\delta_T)^{\top}(e_A-e_B),
