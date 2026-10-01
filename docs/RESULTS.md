@@ -175,3 +175,10 @@ reproduction of the published organisms' detection results.
 ## Status
 
 Accepted as a poster at NewInML @ NeurIPS 2026 (non-archival). Camera-ready edits and the extended study live on branch `reviewer-fixes-newinml`.
+
+## Powered steering re-run (protocol docs/POWERED_PROTOCOL.md, run 2026-10-01)
+32 templates analyzed by template, every direction at +alpha and -alpha, K=200, Qwen3-0.6B. Pre-specified outcome: **undetermined**
+(no install leaves the two-sided random band, band p >= 0.46; band MDE 0.53 to 0.70; oracle 0/8). DETECTED is reachable on independent
+units. Most of each install's effect is sign-independent (China: +0.66 added, -0.14 directional). The directional part is detected
+against the clean model for 2/2 negative-control pairs and 9/10 others. Two-sided band sd / one-sided band sd = 0.83 (kill criterion
+< 0.9 passed). Data: results/powered/; table and macros: paper/build_powered.py.
